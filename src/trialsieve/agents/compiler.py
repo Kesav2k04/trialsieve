@@ -126,12 +126,59 @@ GROUNDED CONCEPTS
 =================
 {grounded}
 
+{examples}
+
 Return JSON only:
 
 {{"expr": <expr>,
   "unit_note": "which units the criterion is written in",
   "absence_note": "why each absent_means was chosen",
   "confidence": "high|medium|low"}}"""
+
+#: Worked examples. Added after a compiler run in which a small model produced
+#: correct clinical reasoning and malformed predicates: it wrote plausible-looking
+#: keys that the grammar does not define. Showing the shape costs a few hundred
+#: tokens per call and is amortised over the whole panel like everything else here.
+EXAMPLES = """WORKED EXAMPLES
+
+Criterion (inclusion): "HbA1c 6.5-10%"
+  Grounded: HbA1c (observation) codes ["4548-4"]
+  {"expr": {"op":"between",
+            "value":{"val":"observation","codes":["4548-4"],"unit":"%",
+                     "agg":"latest","within_days":null},
+            "low":6.5,"high":10.0,"inclusive":[true,true]}}
+
+Criterion (inclusion): "Age 18 - 85 years of age"
+  Grounded: none
+  {"expr": {"op":"between","value":{"val":"age"},"low":18,"high":85,
+            "inclusive":[true,true]}}
+
+Criterion (inclusion): "BMI greater than or equal to 27.0 kg/m^2"
+  Grounded: Body Mass Index (observation) codes ["39156-5"]
+  {"expr": {"op":"compare","cmp":">=",
+            "left":{"val":"derived","name":"bmi","within_days":null},
+            "right":{"val":"literal","number":27.0,"unit":"kg/m2"}}}
+
+Criterion (exclusion): "Myocardial infarction or stroke within 180 days before screening"
+  Grounded: myocardial infarction (condition) ["22298006","399211009"],
+            stroke (condition) ["230690007"]
+  {"expr": {"op":"or","args":[
+      {"op":"exists","query":{"domain":"condition","codes":["22298006","399211009"],
+                              "within_days":180,"absent_means":"unknown"}},
+      {"op":"exists","query":{"domain":"condition","codes":["230690007"],
+                              "within_days":180,"absent_means":"unknown"}}]}}
+  absent_means is "unknown" because a myocardial infarction may have been treated
+  at another hospital, and silence must not clear the patient.
+
+Criterion (inclusion): "at least one of: blood pressure >=130 systolic, or
+                        triglycerides >=150 mg/dL"
+  {"expr": {"op":"at_least","n":1,"args":[
+      {"op":"compare","cmp":">=","left":{"val":"derived","name":"systolic_bp",
+                                          "within_days":null},
+       "right":{"val":"literal","number":130,"unit":"mmHg"}},
+      {"op":"compare","cmp":">=","left":{"val":"observation","codes":["2571-8"],
+                                          "unit":"mg/dL","agg":"latest","within_days":null},
+       "right":{"val":"literal","number":150,"unit":"mg/dL"}}]}}"""
 
 
 #: Near-misses on the domain enum, mapped to the FHIR resource they mean.
@@ -208,7 +255,8 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
     cid = criterion["criterion_id"]
     traj = traj or Trajectory("compiler", cid)
     traj.instructions(PLAN_SYSTEM + "\n\n" + PLAN + "\n\n---\n\n" + EMIT_SYSTEM + "\n\n"
-                      + EMIT.replace("{grammar}", GRAMMAR), PROMPT_VERSION)
+                      + EMIT.replace("{grammar}", GRAMMAR).replace("{examples}", EXAMPLES),
+                      PROMPT_VERSION)
     traj.input(**{k: criterion[k] for k in ("criterion_id", "kind", "category", "source_text")})
 
     base = {"criterion_id": cid, "nct_id": criterion.get("nct_id", ""),
@@ -283,7 +331,8 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
     emit = ask_json(client, traj,
                     [{"role": "system", "content": EMIT_SYSTEM},
                      {"role": "user", "content": EMIT.format(
-                         grammar=GRAMMAR, grounded=_render_grounded(grounded), **criterion)}],
+                         grammar=GRAMMAR, grounded=_render_grounded(grounded),
+                         examples=EXAMPLES, **criterion)}],
                     _v_emit_scoped, tag=f"compile-emit:{cid}", prompt_version=PROMPT_VERSION)
 
     rec = {**base, "compilable": True, "expr": emit["expr"],
