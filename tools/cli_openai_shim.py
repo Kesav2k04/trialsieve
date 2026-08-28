@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import threading
@@ -25,7 +26,16 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 LOCK = threading.Semaphore(4)
 CLI = "gemini"
-TIMEOUT = 600
+BACKEND = "gemini"
+DEFAULT_MODEL = "gemini-2.5-flash"
+TIMEOUT = 900
+
+
+def _rm(p: str) -> None:
+    try:
+        os.unlink(p)
+    except OSError:
+        pass
 _stats = {"calls": 0, "errors": 0, "wall": 0.0}
 
 
@@ -113,17 +123,28 @@ class Handler(BaseHTTPRequestHandler):
         except Exception as exc:
             return self._json(400, {"error": {"message": f"bad request: {exc}"}})
 
-        model = req.get("model") or "gemini-2.5-flash"
+        model = req.get("model") or DEFAULT_MODEL
         prompt = render(req.get("messages") or [])
         t0 = time.time()
+        outfile = None
+        if BACKEND == "codex":
+            import tempfile
+            fd, outfile = tempfile.mkstemp(suffix=".txt", prefix="shim-")
+            os.close(fd)
+            argv = [CLI, "exec", "--skip-git-repo-check", "-m", model,
+                    "--output-last-message", outfile, prompt]
+        else:
+            argv = [CLI, "-m", model, "-p", prompt]
+
         with LOCK:
             try:
-                proc = subprocess.run(
-                    [CLI, "-m", model, "-p", prompt],
-                    capture_output=True, text=True, encoding="utf-8", errors="replace",
-                    timeout=TIMEOUT, stdin=subprocess.DEVNULL)
+                proc = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8",
+                                      errors="replace", timeout=TIMEOUT,
+                                      stdin=subprocess.DEVNULL)
             except subprocess.TimeoutExpired:
                 _stats["errors"] += 1
+                if outfile:
+                    _rm(outfile)
                 return self._json(504, {"error": {"message": f"{CLI} timed out after {TIMEOUT}s"}})
         dt = time.time() - t0
         _stats["calls"] += 1
@@ -131,11 +152,23 @@ class Handler(BaseHTTPRequestHandler):
 
         if proc.returncode != 0:
             _stats["errors"] += 1
+            if outfile:
+                _rm(outfile)
             return self._json(502, {"error": {
                 "message": f"{CLI} exited {proc.returncode}",
-                "detail": (proc.stderr or "")[-2000:]}})
+                "detail": ((proc.stderr or "") + (proc.stdout or ""))[-2000:]}})
 
-        text = strip_noise(proc.stdout)
+        if outfile:
+            try:
+                with open(outfile, encoding="utf-8", errors="replace") as fh:
+                    text = fh.read().strip()
+            except OSError:
+                text = ""
+            _rm(outfile)
+            if not text:
+                text = strip_noise(proc.stdout)
+        else:
+            text = strip_noise(proc.stdout)
         self._json(200, {
             "id": f"chatcmpl-shim-{_stats['calls']}",
             "object": "chat.completion",
@@ -155,12 +188,18 @@ def main() -> int:
     ap.add_argument("--port", type=int, default=8080)
     ap.add_argument("--cli", default="gemini")
     ap.add_argument("--concurrency", type=int, default=4)
+    ap.add_argument("--backend", choices=["gemini", "codex"], default=None)
+    ap.add_argument("--default-model", default=None)
     a = ap.parse_args()
+    globals()["BACKEND"] = a.backend or ("codex" if "codex" in a.cli else "gemini")
+    globals()["DEFAULT_MODEL"] = a.default_model or ("gpt-5.1-codex" if globals()["BACKEND"] == "codex" else "gemini-2.5-flash")
     CLI = resolve_cli(a.cli)
     globals()["LOCK"] = threading.Semaphore(a.concurrency)
     srv = ThreadingHTTPServer(("127.0.0.1", a.port), Handler)
     srv.daemon_threads = True
-    print(f"shim on http://127.0.0.1:{a.port}/v1 backed by {CLI}, concurrency {a.concurrency}",
+    print(f"shim on http://127.0.0.1:{a.port}/v1 backed by {CLI} "
+          f"[{globals()['BACKEND']}, default model {globals()['DEFAULT_MODEL']}], "
+          f"concurrency {a.concurrency}",
           flush=True)
     try:
         srv.serve_forever()
