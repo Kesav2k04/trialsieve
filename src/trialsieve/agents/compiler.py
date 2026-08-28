@@ -22,7 +22,7 @@ from ..trace import Trajectory
 from .common import ask_json, require
 from .grounder import ground
 
-PROMPT_VERSION = "compiler-v1"
+PROMPT_VERSION = "compiler-v2"
 
 GRAMMAR = """PREDICATE GRAMMAR
 
@@ -87,6 +87,17 @@ Criterion ({kind}, category {category}):
 A criterion is checkable ONLY if every part of it can be settled from coded
 record data: demographics, coded diagnoses, coded medications, coded procedures,
 or numeric laboratory and vital-sign values, with dates.
+
+The record carries an index date: the day this prescreen is being run. Study
+events that have not happened yet are anchored to it. "at screening", "at
+randomisation", "at the time of signing the informed consent form", "at baseline",
+"prior to randomisation" all mean "as of the index date", and a window measured
+back from one of them is measured back from the index date. That substitution is
+what prescreening is, so it does not make a criterion uncheckable. Say in `reason`
+that you used it, so the reviewer sees the assumption.
+
+What stays uncheckable is the participant, not the calendar: whether they will
+consent, whether they are able to comply, what the investigator will judge.
 
 It is NOT checkable if it needs any of:
   - consent, willingness, capacity, ability to comply or to attend

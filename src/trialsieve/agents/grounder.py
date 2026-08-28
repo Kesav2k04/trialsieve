@@ -28,7 +28,7 @@ from ..llm import Client
 from ..trace import Trajectory
 from .common import ask_json, require
 
-PROMPT_VERSION = "grounder-v1"
+PROMPT_VERSION = "grounder-v2"
 
 EXPAND_SYSTEM = """You are a clinical terminologist. You expand a clinical concept into the
 specific named things a medical record would actually store for it."""
@@ -68,6 +68,15 @@ Select every candidate that genuinely represents the concept. Judge by what the
 entry means, not by whether the words look similar. A different measurement that
 shares a word is not a match: "Respiratory rate" is not a glomerular filtration
 rate, and "Chronic sinusitis" is not chronic kidney disease.
+
+The display text beside each code is whatever the source system chose to store.
+It is frequently abbreviated, locally worded, or vaguer than the code it labels,
+and it is not the code's definition. Judge the concept the code denotes. Where you
+recognise a code and its display disagree about how specific the concept is, the
+code decides, and name the code you relied on in `why` for the ones you rejected.
+This does not license guessing: a code you do not recognise is judged on its
+display like any other candidate, and a display that is vaguer than the concept is
+still a reason to reject a code you have no independent knowledge of.
 
 For a drug class, select the entries whose ingredient belongs to that class.
 Different strengths or formulations of the same ingredient are all matches.
