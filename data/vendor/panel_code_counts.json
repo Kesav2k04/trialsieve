@@ -1,0 +1,2703 @@
+{
+ "panel": "data/vendor/panel.jsonl.gz",
+ "n_patients": 385,
+ "note": "Rows and distinct patients per code in the panel actually screened. The terminology catalog counts the whole source corpus, which is a larger and different set: 7 percent of catalog codes appear in no panel patient.",
+ "counts": {
+  "1000126": {
+   "rows": 60,
+   "patients": 47
+  },
+  "1014676": {
+   "rows": 1,
+   "patients": 1
+  },
+  "1014678": {
+   "rows": 2,
+   "patients": 2
+  },
+  "10230-1": {
+   "rows": 12,
+   "patients": 2
+  },
+  "10383002": {
+   "rows": 41,
+   "patients": 30
+  },
+  "104091002": {
+   "rows": 279,
+   "patients": 82
+  },
+  "104326007": {
+   "rows": 145,
+   "patients": 80
+  },
+  "1043400": {
+   "rows": 42,
+   "patients": 40
+  },
+  "104375008": {
+   "rows": 145,
+   "patients": 80
+  },
+  "104435004": {
+   "rows": 19,
+   "patients": 17
+  },
+  "10480-2": {
+   "rows": 3,
+   "patients": 3
+  },
+  "1049221": {
+   "rows": 26,
+   "patients": 15
+  },
+  "1049504": {
+   "rows": 92,
+   "patients": 11
+  },
+  "1049625": {
+   "rows": 147,
+   "patients": 16
+  },
+  "1049630": {
+   "rows": 20,
+   "patients": 20
+  },
+  "10509002": {
+   "rows": 182,
+   "patients": 153
+  },
+  "105531004": {
+   "rows": 68,
+   "patients": 68
+  },
+  "105585": {
+   "rows": 1,
+   "patients": 1
+  },
+  "106258": {
+   "rows": 15,
+   "patients": 14
+  },
+  "106892": {
+   "rows": 815,
+   "patients": 8
+  },
+  "10834-0": {
+   "rows": 380,
+   "patients": 44
+  },
+  "1091392": {
+   "rows": 1,
+   "patients": 1
+  },
+  "10939881000119104": {
+   "rows": 73,
+   "patients": 66
+  },
+  "1094107": {
+   "rows": 32,
+   "patients": 25
+  },
+  "109838007": {
+   "rows": 1,
+   "patients": 1
+  },
+  "110030002": {
+   "rows": 6,
+   "patients": 6
+  },
+  "110359009": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1121000119107": {
+   "rows": 53,
+   "patients": 53
+  },
+  "112790001": {
+   "rows": 1,
+   "patients": 1
+  },
+  "11466000": {
+   "rows": 16,
+   "patients": 16
+  },
+  "117010004": {
+   "rows": 145,
+   "patients": 80
+  },
+  "117015009": {
+   "rows": 105,
+   "patients": 91
+  },
+  "118001005": {
+   "rows": 128,
+   "patients": 79
+  },
+  "1190795": {
+   "rows": 5,
+   "patients": 5
+  },
+  "1225002": {
+   "rows": 13,
+   "patients": 12
+  },
+  "122548005": {
+   "rows": 4,
+   "patients": 4
+  },
+  "124171000119105": {
+   "rows": 19,
+   "patients": 19
+  },
+  "126906006": {
+   "rows": 4,
+   "patients": 4
+  },
+  "127013003": {
+   "rows": 8,
+   "patients": 8
+  },
+  "127783003": {
+   "rows": 20,
+   "patients": 3
+  },
+  "128188000": {
+   "rows": 2,
+   "patients": 2
+  },
+  "128613002": {
+   "rows": 16,
+   "patients": 16
+  },
+  "132281000119108": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1367439": {
+   "rows": 23,
+   "patients": 22
+  },
+  "14768001": {
+   "rows": 43,
+   "patients": 43
+  },
+  "14804-9": {
+   "rows": 57,
+   "patients": 9
+  },
+  "14959-1": {
+   "rows": 504,
+   "patients": 26
+  },
+  "15081005": {
+   "rows": 13,
+   "patients": 1
+  },
+  "1534809": {
+   "rows": 23,
+   "patients": 20
+  },
+  "1551000119108": {
+   "rows": 3,
+   "patients": 3
+  },
+  "156073000": {
+   "rows": 18,
+   "patients": 18
+  },
+  "1571000087109": {
+   "rows": 4,
+   "patients": 4
+  },
+  "157265008": {
+   "rows": 1,
+   "patients": 1
+  },
+  "15777000": {
+   "rows": 129,
+   "patients": 129
+  },
+  "1601380": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1605257": {
+   "rows": 11,
+   "patients": 11
+  },
+  "160903007": {
+   "rows": 5121,
+   "patients": 344
+  },
+  "160904001": {
+   "rows": 815,
+   "patients": 282
+  },
+  "160968000": {
+   "rows": 144,
+   "patients": 107
+  },
+  "16114001": {
+   "rows": 8,
+   "patients": 8
+  },
+  "162573006": {
+   "rows": 2,
+   "patients": 2
+  },
+  "162676008": {
+   "rows": 43,
+   "patients": 43
+  },
+  "162864005": {
+   "rows": 182,
+   "patients": 182
+  },
+  "16335031000119103": {
+   "rows": 44,
+   "patients": 2
+  },
+  "1649987": {
+   "rows": 6,
+   "patients": 6
+  },
+  "165829005": {
+   "rows": 145,
+   "patients": 80
+  },
+  "1659149": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1659263": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1660014": {
+   "rows": 5,
+   "patients": 5
+  },
+  "167271000": {
+   "rows": 145,
+   "patients": 80
+  },
+  "168594001": {
+   "rows": 6,
+   "patients": 6
+  },
+  "169230002": {
+   "rows": 211,
+   "patients": 92
+  },
+  "169553002": {
+   "rows": 88,
+   "patients": 45
+  },
+  "169673001": {
+   "rows": 16,
+   "patients": 11
+  },
+  "169690007": {
+   "rows": 145,
+   "patients": 80
+  },
+  "171207006": {
+   "rows": 2990,
+   "patients": 385
+  },
+  "173160006": {
+   "rows": 1,
+   "patients": 1
+  },
+  "1732136": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1732186": {
+   "rows": 8,
+   "patients": 1
+  },
+  "1734919": {
+   "rows": 8,
+   "patients": 1
+  },
+  "1736776": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1740467": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1742-6": {
+   "rows": 493,
+   "patients": 55
+  },
+  "1751-7": {
+   "rows": 493,
+   "patients": 55
+  },
+  "177157003": {
+   "rows": 2,
+   "patients": 2
+  },
+  "17861-6": {
+   "rows": 115,
+   "patients": 13
+  },
+  "180207008": {
+   "rows": 4,
+   "patients": 4
+  },
+  "180256009": {
+   "rows": 670,
+   "patients": 14
+  },
+  "180325003": {
+   "rows": 573,
+   "patients": 14
+  },
+  "1803932": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1804799": {
+   "rows": 11,
+   "patients": 11
+  },
+  "18262-6": {
+   "rows": 1611,
+   "patients": 291
+  },
+  "18286008": {
+   "rows": 126,
+   "patients": 14
+  },
+  "183450002": {
+   "rows": 2,
+   "patients": 2
+  },
+  "183856001": {
+   "rows": 3,
+   "patients": 3
+  },
+  "1856546": {
+   "rows": 17,
+   "patients": 15
+  },
+  "1860154": {
+   "rows": 17,
+   "patients": 3
+  },
+  "1860480": {
+   "rows": 4,
+   "patients": 4
+  },
+  "1860491": {
+   "rows": 92,
+   "patients": 11
+  },
+  "1870230": {
+   "rows": 35,
+   "patients": 35
+  },
+  "18946005": {
+   "rows": 35,
+   "patients": 29
+  },
+  "19123-9": {
+   "rows": 8,
+   "patients": 2
+  },
+  "19169002": {
+   "rows": 83,
+   "patients": 83
+  },
+  "1920-8": {
+   "rows": 493,
+   "patients": 55
+  },
+  "192127007": {
+   "rows": 3,
+   "patients": 3
+  },
+  "1946840": {
+   "rows": 1,
+   "patients": 1
+  },
+  "19490002": {
+   "rows": 8,
+   "patients": 8
+  },
+  "195662009": {
+   "rows": 240,
+   "patients": 176
+  },
+  "195967001": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1960-4": {
+   "rows": 13,
+   "patients": 1
+  },
+  "196416002": {
+   "rows": 14,
+   "patients": 14
+  },
+  "197319": {
+   "rows": 4,
+   "patients": 2
+  },
+  "197361": {
+   "rows": 139,
+   "patients": 12
+  },
+  "197378": {
+   "rows": 6,
+   "patients": 6
+  },
+  "1975-2": {
+   "rows": 491,
+   "patients": 53
+  },
+  "197541": {
+   "rows": 1,
+   "patients": 1
+  },
+  "197591": {
+   "rows": 4,
+   "patients": 4
+  },
+  "197604": {
+   "rows": 605,
+   "patients": 14
+  },
+  "197927001": {
+   "rows": 5,
+   "patients": 5
+  },
+  "198014": {
+   "rows": 7,
+   "patients": 6
+  },
+  "198031": {
+   "rows": 3,
+   "patients": 3
+  },
+  "198405": {
+   "rows": 2,
+   "patients": 2
+  },
+  "1988-5": {
+   "rows": 57,
+   "patients": 9
+  },
+  "198992004": {
+   "rows": 11,
+   "patients": 11
+  },
+  "199224": {
+   "rows": 2,
+   "patients": 2
+  },
+  "19926-5": {
+   "rows": 20,
+   "patients": 3
+  },
+  "19994-3": {
+   "rows": 13,
+   "patients": 1
+  },
+  "2001499": {
+   "rows": 20,
+   "patients": 20
+  },
+  "201834006": {
+   "rows": 7,
+   "patients": 7
+  },
+  "2019-8": {
+   "rows": 13,
+   "patients": 1
+  },
+  "2028-9": {
+   "rows": 115,
+   "patients": 13
+  },
+  "203082005": {
+   "rows": 9,
+   "patients": 9
+  },
+  "20454-5": {
+   "rows": 52,
+   "patients": 6
+  },
+  "204892": {
+   "rows": 6,
+   "patients": 4
+  },
+  "20505-4": {
+   "rows": 52,
+   "patients": 6
+  },
+  "20565-8": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "20570-8": {
+   "rows": 49,
+   "patients": 44
+  },
+  "2069-3": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "206905": {
+   "rows": 280,
+   "patients": 27
+  },
+  "2075-0": {
+   "rows": 115,
+   "patients": 13
+  },
+  "2085-9": {
+   "rows": 1611,
+   "patients": 291
+  },
+  "2093-3": {
+   "rows": 1611,
+   "patients": 291
+  },
+  "209387": {
+   "rows": 212,
+   "patients": 19
+  },
+  "21000-5": {
+   "rows": 802,
+   "patients": 384
+  },
+  "2123111": {
+   "rows": 993,
+   "patients": 23
+  },
+  "212446": {
+   "rows": 2,
+   "patients": 2
+  },
+  "2157-6": {
+   "rows": 57,
+   "patients": 9
+  },
+  "2160-0": {
+   "rows": 115,
+   "patients": 13
+  },
+  "21905-5": {
+   "rows": 4,
+   "patients": 4
+  },
+  "21906-3": {
+   "rows": 4,
+   "patients": 4
+  },
+  "21907-1": {
+   "rows": 4,
+   "patients": 4
+  },
+  "21908-9": {
+   "rows": 8,
+   "patients": 4
+  },
+  "21924-6": {
+   "rows": 1,
+   "patients": 1
+  },
+  "221360009": {
+   "rows": 2,
+   "patients": 2
+  },
+  "22253000": {
+   "rows": 2,
+   "patients": 2
+  },
+  "224295006": {
+   "rows": 48,
+   "patients": 48
+  },
+  "224299000": {
+   "rows": 234,
+   "patients": 234
+  },
+  "224355006": {
+   "rows": 12,
+   "patients": 12
+  },
+  "225158009": {
+   "rows": 1235,
+   "patients": 83
+  },
+  "22523008": {
+   "rows": 5,
+   "patients": 5
+  },
+  "225444004": {
+   "rows": 1,
+   "patients": 1
+  },
+  "2276-4": {
+   "rows": 65,
+   "patients": 11
+  },
+  "228557008": {
+   "rows": 166,
+   "patients": 12
+  },
+  "229064008": {
+   "rows": 420,
+   "patients": 42
+  },
+  "229095001": {
+   "rows": 31,
+   "patients": 1
+  },
+  "230265002": {
+   "rows": 1,
+   "patients": 1
+  },
+  "230690007": {
+   "rows": 18,
+   "patients": 18
+  },
+  "232353008": {
+   "rows": 6,
+   "patients": 6
+  },
+  "233604007": {
+   "rows": 11,
+   "patients": 11
+  },
+  "233678006": {
+   "rows": 7,
+   "patients": 7
+  },
+  "2339-0": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "23426006": {
+   "rows": 97,
+   "patients": 87
+  },
+  "234262008": {
+   "rows": 1,
+   "patients": 1
+  },
+  "2345-7": {
+   "rows": 115,
+   "patients": 13
+  },
+  "235595009": {
+   "rows": 1,
+   "patients": 1
+  },
+  "235919008": {
+   "rows": 2,
+   "patients": 2
+  },
+  "236077008": {
+   "rows": 2,
+   "patients": 2
+  },
+  "236931002": {
+   "rows": 1,
+   "patients": 1
+  },
+  "236974004": {
+   "rows": 10,
+   "patients": 9
+  },
+  "237001001": {
+   "rows": 11,
+   "patients": 10
+  },
+  "237602007": {
+   "rows": 24,
+   "patients": 24
+  },
+  "239872002": {
+   "rows": 6,
+   "patients": 6
+  },
+  "239873007": {
+   "rows": 17,
+   "patients": 17
+  },
+  "24079001": {
+   "rows": 6,
+   "patients": 6
+  },
+  "241055006": {
+   "rows": 1,
+   "patients": 1
+  },
+  "241929008": {
+   "rows": 1,
+   "patients": 1
+  },
+  "243174005": {
+   "rows": 1,
+   "patients": 1
+  },
+  "245134": {
+   "rows": 113,
+   "patients": 13
+  },
+  "24623002": {
+   "rows": 3,
+   "patients": 3
+  },
+  "248595008": {
+   "rows": 13,
+   "patients": 13
+  },
+  "2498-4": {
+   "rows": 8,
+   "patients": 2
+  },
+  "2500-7": {
+   "rows": 8,
+   "patients": 2
+  },
+  "2502-3": {
+   "rows": 8,
+   "patients": 2
+  },
+  "25064002": {
+   "rows": 11,
+   "patients": 11
+  },
+  "2514-8": {
+   "rows": 52,
+   "patients": 6
+  },
+  "252160004": {
+   "rows": 211,
+   "patients": 92
+  },
+  "25428-4": {
+   "rows": 52,
+   "patients": 6
+  },
+  "254637007": {
+   "rows": 2,
+   "patients": 2
+  },
+  "254837009": {
+   "rows": 5,
+   "patients": 5
+  },
+  "2571-8": {
+   "rows": 1611,
+   "patients": 291
+  },
+  "261352009": {
+   "rows": 34,
+   "patients": 34
+  },
+  "263102004": {
+   "rows": 15,
+   "patients": 14
+  },
+  "26453-1": {
+   "rows": 2,
+   "patients": 2
+  },
+  "26464-8": {
+   "rows": 2,
+   "patients": 2
+  },
+  "26515-7": {
+   "rows": 2,
+   "patients": 2
+  },
+  "266934004": {
+   "rows": 47,
+   "patients": 47
+  },
+  "266948004": {
+   "rows": 78,
+   "patients": 78
+  },
+  "267036007": {
+   "rows": 7,
+   "patients": 7
+  },
+  "267102003": {
+   "rows": 2,
+   "patients": 2
+  },
+  "268425006": {
+   "rows": 5,
+   "patients": 5
+  },
+  "268556000": {
+   "rows": 134,
+   "patients": 78
+  },
+  "26929004": {
+   "rows": 4,
+   "patients": 4
+  },
+  "269828009": {
+   "rows": 145,
+   "patients": 80
+  },
+  "269911007": {
+   "rows": 31,
+   "patients": 27
+  },
+  "2703-7": {
+   "rows": 13,
+   "patients": 1
+  },
+  "2708-6": {
+   "rows": 158,
+   "patients": 35
+  },
+  "2713-6": {
+   "rows": 3,
+   "patients": 3
+  },
+  "271442007": {
+   "rows": 136,
+   "patients": 77
+  },
+  "271737000": {
+   "rows": 125,
+   "patients": 125
+  },
+  "271825005": {
+   "rows": 9,
+   "patients": 9
+  },
+  "274031008": {
+   "rows": 22,
+   "patients": 17
+  },
+  "2744-1": {
+   "rows": 13,
+   "patients": 1
+  },
+  "274474001": {
+   "rows": 40,
+   "patients": 35
+  },
+  "274804006": {
+   "rows": 1235,
+   "patients": 83
+  },
+  "275272006": {
+   "rows": 3,
+   "patients": 3
+  },
+  "275833003": {
+   "rows": 136,
+   "patients": 77
+  },
+  "278860009": {
+   "rows": 88,
+   "patients": 88
+  },
+  "27942005": {
+   "rows": 1,
+   "patients": 1
+  },
+  "28163009": {
+   "rows": 145,
+   "patients": 80
+  },
+  "2823-3": {
+   "rows": 115,
+   "patients": 13
+  },
+  "28245-9": {
+   "rows": 32,
+   "patients": 11
+  },
+  "283371005": {
+   "rows": 5,
+   "patients": 5
+  },
+  "283385000": {
+   "rows": 20,
+   "patients": 19
+  },
+  "284549007": {
+   "rows": 12,
+   "patients": 12
+  },
+  "284551006": {
+   "rows": 12,
+   "patients": 12
+  },
+  "2857-1": {
+   "rows": 15,
+   "patients": 4
+  },
+  "287664005": {
+   "rows": 8,
+   "patients": 8
+  },
+  "288086009": {
+   "rows": 62,
+   "patients": 59
+  },
+  "2885-2": {
+   "rows": 493,
+   "patients": 55
+  },
+  "290045001": {
+   "rows": 31,
+   "patients": 1
+  },
+  "29303009": {
+   "rows": 7,
+   "patients": 4
+  },
+  "29463-7": {
+   "rows": 3813,
+   "patients": 383
+  },
+  "2947-0": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "2951-2": {
+   "rows": 115,
+   "patients": 13
+  },
+  "301011002": {
+   "rows": 20,
+   "patients": 18
+  },
+  "301807007": {
+   "rows": 62,
+   "patients": 37
+  },
+  "302870006": {
+   "rows": 26,
+   "patients": 26
+  },
+  "30385-9": {
+   "rows": 2,
+   "patients": 2
+  },
+  "30428-7": {
+   "rows": 2,
+   "patients": 2
+  },
+  "305340004": {
+   "rows": 2,
+   "patients": 2
+  },
+  "305351004": {
+   "rows": 3,
+   "patients": 2
+  },
+  "305428000": {
+   "rows": 11,
+   "patients": 11
+  },
+  "307731004": {
+   "rows": 7,
+   "patients": 7
+  },
+  "308136": {
+   "rows": 2435,
+   "patients": 69
+  },
+  "308182": {
+   "rows": 14,
+   "patients": 14
+  },
+  "308192": {
+   "rows": 1,
+   "patients": 1
+  },
+  "30832001": {
+   "rows": 4,
+   "patients": 4
+  },
+  "308971": {
+   "rows": 1,
+   "patients": 1
+  },
+  "309097": {
+   "rows": 6,
+   "patients": 6
+  },
+  "309362": {
+   "rows": 147,
+   "patients": 22
+  },
+  "3094-0": {
+   "rows": 115,
+   "patients": 13
+  },
+  "310325": {
+   "rows": 15,
+   "patients": 15
+  },
+  "310436": {
+   "rows": 4,
+   "patients": 4
+  },
+  "310798": {
+   "rows": 2609,
+   "patients": 80
+  },
+  "310861008": {
+   "rows": 145,
+   "patients": 80
+  },
+  "310965": {
+   "rows": 67,
+   "patients": 60
+  },
+  "311372": {
+   "rows": 2,
+   "patients": 2
+  },
+  "311791003": {
+   "rows": 32,
+   "patients": 11
+  },
+  "311989": {
+   "rows": 32,
+   "patients": 25
+  },
+  "311995": {
+   "rows": 3,
+   "patients": 3
+  },
+  "31208007": {
+   "rows": 17,
+   "patients": 15
+  },
+  "312617": {
+   "rows": 1,
+   "patients": 1
+  },
+  "312681000": {
+   "rows": 29,
+   "patients": 24
+  },
+  "312938": {
+   "rows": 1,
+   "patients": 1
+  },
+  "312961": {
+   "rows": 143,
+   "patients": 12
+  },
+  "313002": {
+   "rows": 2,
+   "patients": 2
+  },
+  "313191000": {
+   "rows": 1,
+   "patients": 1
+  },
+  "313782": {
+   "rows": 211,
+   "patients": 167
+  },
+  "313820": {
+   "rows": 3,
+   "patients": 3
+  },
+  "313988": {
+   "rows": 9,
+   "patients": 2
+  },
+  "314076": {
+   "rows": 2878,
+   "patients": 91
+  },
+  "314231": {
+   "rows": 701,
+   "patients": 38
+  },
+  "31676001": {
+   "rows": 145,
+   "patients": 80
+  },
+  "32167-9": {
+   "rows": 52,
+   "patients": 6
+  },
+  "32207-3": {
+   "rows": 802,
+   "patients": 384
+  },
+  "32465-7": {
+   "rows": 15,
+   "patients": 4
+  },
+  "32623-1": {
+   "rows": 802,
+   "patients": 384
+  },
+  "32624-9": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "32911000": {
+   "rows": 9,
+   "patients": 9
+  },
+  "33037-3": {
+   "rows": 2,
+   "patients": 2
+  },
+  "33195004": {
+   "rows": 34,
+   "patients": 1
+  },
+  "33728-7": {
+   "rows": 4,
+   "patients": 4
+  },
+  "33737001": {
+   "rows": 4,
+   "patients": 4
+  },
+  "33756-8": {
+   "rows": 19,
+   "patients": 17
+  },
+  "33762-6": {
+   "rows": 8,
+   "patients": 2
+  },
+  "33914-3": {
+   "rows": 1001,
+   "patients": 75
+  },
+  "33959-8": {
+   "rows": 57,
+   "patients": 9
+  },
+  "35025007": {
+   "rows": 11,
+   "patients": 1
+  },
+  "351266": {
+   "rows": 30,
+   "patients": 3
+  },
+  "359817006": {
+   "rows": 5,
+   "patients": 5
+  },
+  "35999006": {
+   "rows": 5,
+   "patients": 5
+  },
+  "361055000": {
+   "rows": 32,
+   "patients": 32
+  },
+  "367336001": {
+   "rows": 40,
+   "patients": 4
+  },
+  "367498001": {
+   "rows": 4,
+   "patients": 4
+  },
+  "368581000119106": {
+   "rows": 9,
+   "patients": 9
+  },
+  "36955009": {
+   "rows": 16,
+   "patients": 16
+  },
+  "36971009": {
+   "rows": 21,
+   "patients": 20
+  },
+  "370247008": {
+   "rows": 13,
+   "patients": 13
+  },
+  "370995009": {
+   "rows": 52,
+   "patients": 33
+  },
+  "371908008": {
+   "rows": 111,
+   "patients": 10
+  },
+  "38102005": {
+   "rows": 1,
+   "patients": 1
+  },
+  "38208-5": {
+   "rows": 508,
+   "patients": 53
+  },
+  "38265-5": {
+   "rows": 27,
+   "patients": 23
+  },
+  "384700001": {
+   "rows": 7,
+   "patients": 7
+  },
+  "38483-4": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "386394001": {
+   "rows": 40,
+   "patients": 29
+  },
+  "386516004": {
+   "rows": 168,
+   "patients": 59
+  },
+  "386661006": {
+   "rows": 30,
+   "patients": 30
+  },
+  "38822007": {
+   "rows": 11,
+   "patients": 9
+  },
+  "389087006": {
+   "rows": 9,
+   "patients": 9
+  },
+  "389221": {
+   "rows": 59,
+   "patients": 37
+  },
+  "39156-5": {
+   "rows": 3666,
+   "patients": 383
+  },
+  "392021009": {
+   "rows": 1,
+   "patients": 1
+  },
+  "395123002": {
+   "rows": 145,
+   "patients": 80
+  },
+  "395142003": {
+   "rows": 26,
+   "patients": 14
+  },
+  "396487001": {
+   "rows": 1,
+   "patients": 1
+  },
+  "398152000": {
+   "rows": 1,
+   "patients": 1
+  },
+  "398171003": {
+   "rows": 44,
+   "patients": 2
+  },
+  "398254007": {
+   "rows": 7,
+   "patients": 7
+  },
+  "39848009": {
+   "rows": 16,
+   "patients": 15
+  },
+  "399014008": {
+   "rows": 134,
+   "patients": 78
+  },
+  "399208008": {
+   "rows": 26,
+   "patients": 22
+  },
+  "40055000": {
+   "rows": 73,
+   "patients": 73
+  },
+  "40275004": {
+   "rows": 4,
+   "patients": 4
+  },
+  "403190006": {
+   "rows": 10,
+   "patients": 10
+  },
+  "403191005": {
+   "rows": 6,
+   "patients": 6
+  },
+  "403192003": {
+   "rows": 2,
+   "patients": 2
+  },
+  "40617009": {
+   "rows": 1,
+   "patients": 1
+  },
+  "40701008": {
+   "rows": 28,
+   "patients": 18
+  },
+  "408512008": {
+   "rows": 4,
+   "patients": 4
+  },
+  "408919008": {
+   "rows": 7,
+   "patients": 1
+  },
+  "410006001": {
+   "rows": 15,
+   "patients": 4
+  },
+  "410429000": {
+   "rows": 14,
+   "patients": 14
+  },
+  "415300000": {
+   "rows": 43,
+   "patients": 43
+  },
+  "417181009": {
+   "rows": 1,
+   "patients": 1
+  },
+  "418891003": {
+   "rows": 2,
+   "patients": 2
+  },
+  "422034002": {
+   "rows": 5,
+   "patients": 5
+  },
+  "422650009": {
+   "rows": 451,
+   "patients": 273
+  },
+  "423315002": {
+   "rows": 470,
+   "patients": 262
+  },
+  "423475008": {
+   "rows": 3,
+   "patients": 1
+  },
+  "424132000": {
+   "rows": 2,
+   "patients": 2
+  },
+  "424393004": {
+   "rows": 223,
+   "patients": 159
+  },
+  "426701000119108": {
+   "rows": 2,
+   "patients": 2
+  },
+  "42719-5": {
+   "rows": 2,
+   "patients": 2
+  },
+  "427419006": {
+   "rows": 4,
+   "patients": 4
+  },
+  "428211000124100": {
+   "rows": 2316,
+   "patients": 364
+  },
+  "428251008": {
+   "rows": 24,
+   "patients": 24
+  },
+  "429007001": {
+   "rows": 14,
+   "patients": 14
+  },
+  "430193006": {
+   "rows": 1678,
+   "patients": 377
+  },
+  "430701006": {
+   "rows": 6,
+   "patients": 3
+  },
+  "43075005": {
+   "rows": 1,
+   "patients": 1
+  },
+  "431182000": {
+   "rows": 106,
+   "patients": 10
+  },
+  "431855005": {
+   "rows": 8,
+   "patients": 8
+  },
+  "432231006": {
+   "rows": 1,
+   "patients": 1
+  },
+  "433112001": {
+   "rows": 11,
+   "patients": 11
+  },
+  "433114000": {
+   "rows": 4,
+   "patients": 4
+  },
+  "434363004": {
+   "rows": 4,
+   "patients": 4
+  },
+  "43724002": {
+   "rows": 4,
+   "patients": 4
+  },
+  "43878008": {
+   "rows": 39,
+   "patients": 39
+  },
+  "44054006": {
+   "rows": 27,
+   "patients": 27
+  },
+  "44261-6": {
+   "rows": 159,
+   "patients": 123
+  },
+  "443165006": {
+   "rows": 9,
+   "patients": 7
+  },
+  "443497002": {
+   "rows": 1,
+   "patients": 1
+  },
+  "443529005": {
+   "rows": 143,
+   "patients": 80
+  },
+  "444470001": {
+   "rows": 1,
+   "patients": 1
+  },
+  "44465007": {
+   "rows": 41,
+   "patients": 40
+  },
+  "444814009": {
+   "rows": 441,
+   "patients": 260
+  },
+  "44608003": {
+   "rows": 145,
+   "patients": 80
+  },
+  "446096008": {
+   "rows": 4,
+   "patients": 4
+  },
+  "446654005": {
+   "rows": 22,
+   "patients": 22
+  },
+  "44667-4": {
+   "rows": 4,
+   "patients": 4
+  },
+  "447365002": {
+   "rows": 5,
+   "patients": 5
+  },
+  "449214001": {
+   "rows": 5,
+   "patients": 3
+  },
+  "44963-7": {
+   "rows": 3,
+   "patients": 3
+  },
+  "449868002": {
+   "rows": 3,
+   "patients": 3
+  },
+  "4544-3": {
+   "rows": 872,
+   "patients": 383
+  },
+  "454711000124102": {
+   "rows": 2532,
+   "patients": 378
+  },
+  "4548-4": {
+   "rows": 1451,
+   "patients": 139
+  },
+  "45595009": {
+   "rows": 2,
+   "patients": 2
+  },
+  "45816000": {
+   "rows": 1,
+   "patients": 1
+  },
+  "46240-8": {
+   "rows": 32,
+   "patients": 11
+  },
+  "46288-7": {
+   "rows": 1,
+   "patients": 1
+  },
+  "46706006": {
+   "rows": 27,
+   "patients": 20
+  },
+  "47693006": {
+   "rows": 7,
+   "patients": 7
+  },
+  "477045": {
+   "rows": 14,
+   "patients": 14
+  },
+  "47758006": {
+   "rows": 145,
+   "patients": 80
+  },
+  "48065-7": {
+   "rows": 57,
+   "patients": 9
+  },
+  "483438": {
+   "rows": 1,
+   "patients": 1
+  },
+  "49436004": {
+   "rows": 14,
+   "patients": 14
+  },
+  "49727002": {
+   "rows": 27,
+   "patients": 27
+  },
+  "49765-1": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "51116004": {
+   "rows": 43,
+   "patients": 15
+  },
+  "5251000175109": {
+   "rows": 100,
+   "patients": 100
+  },
+  "52765003": {
+   "rows": 2,
+   "patients": 2
+  },
+  "53741008": {
+   "rows": 12,
+   "patients": 12
+  },
+  "54550000": {
+   "rows": 2,
+   "patients": 1
+  },
+  "54899-0": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "55277-8": {
+   "rows": 32,
+   "patients": 11
+  },
+  "55284-4": {
+   "rows": 31,
+   "patients": 1
+  },
+  "55680006": {
+   "rows": 15,
+   "patients": 15
+  },
+  "55758-7": {
+   "rows": 2532,
+   "patients": 378
+  },
+  "55822004": {
+   "rows": 39,
+   "patients": 39
+  },
+  "56018004": {
+   "rows": 7,
+   "patients": 7
+  },
+  "5602001": {
+   "rows": 4,
+   "patients": 4
+  },
+  "56051-6": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "562251": {
+   "rows": 91,
+   "patients": 78
+  },
+  "56799-0": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "5767-9": {
+   "rows": 104,
+   "patients": 6
+  },
+  "57676002": {
+   "rows": 4,
+   "patients": 4
+  },
+  "5770-3": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5778-6": {
+   "rows": 52,
+   "patients": 6
+  },
+  "57905-2": {
+   "rows": 19,
+   "patients": 17
+  },
+  "5792-7": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5794-3": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5797-6": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5799-2": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5802-4": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5803-2": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5804-0": {
+   "rows": 52,
+   "patients": 6
+  },
+  "5811-5": {
+   "rows": 52,
+   "patients": 6
+  },
+  "58150001": {
+   "rows": 6,
+   "patients": 6
+  },
+  "583214": {
+   "rows": 16,
+   "patients": 2
+  },
+  "5880005": {
+   "rows": 352,
+   "patients": 95
+  },
+  "5902-2": {
+   "rows": 57,
+   "patients": 9
+  },
+  "59032-3": {
+   "rows": 6,
+   "patients": 3
+  },
+  "5905-5": {
+   "rows": 105,
+   "patients": 9
+  },
+  "59460-6": {
+   "rows": 463,
+   "patients": 67
+  },
+  "59461-4": {
+   "rows": 463,
+   "patients": 67
+  },
+  "59557-9": {
+   "rows": 4,
+   "patients": 4
+  },
+  "59576-9": {
+   "rows": 521,
+   "patients": 84
+  },
+  "59621000": {
+   "rows": 129,
+   "patients": 129
+  },
+  "596926": {
+   "rows": 3,
+   "patients": 1
+  },
+  "597195": {
+   "rows": 8,
+   "patients": 1
+  },
+  "60027007": {
+   "rows": 15,
+   "patients": 14
+  },
+  "6072007": {
+   "rows": 2,
+   "patients": 2
+  },
+  "6075-6": {
+   "rows": 26,
+   "patients": 14
+  },
+  "608139": {
+   "rows": 2,
+   "patients": 2
+  },
+  "6082-2": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6085-5": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6095-4": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6106-9": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6158-0": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6189-5": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6206-7": {
+   "rows": 26,
+   "patients": 14
+  },
+  "62106007": {
+   "rows": 19,
+   "patients": 19
+  },
+  "6246-3": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6248-9": {
+   "rows": 26,
+   "patients": 14
+  },
+  "62564004": {
+   "rows": 8,
+   "patients": 8
+  },
+  "6273-7": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6276-0": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6298-4": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "6299-2": {
+   "rows": 1803,
+   "patients": 157
+  },
+  "6301-6": {
+   "rows": 57,
+   "patients": 9
+  },
+  "63512-8": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "63513-6": {
+   "rows": 32,
+   "patients": 11
+  },
+  "63586-2": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "64859006": {
+   "rows": 21,
+   "patients": 21
+  },
+  "65200003": {
+   "rows": 72,
+   "patients": 54
+  },
+  "65275009": {
+   "rows": 2,
+   "patients": 2
+  },
+  "65363002": {
+   "rows": 25,
+   "patients": 17
+  },
+  "65546002": {
+   "rows": 8,
+   "patients": 1
+  },
+  "65575008": {
+   "rows": 1,
+   "patients": 1
+  },
+  "65588006": {
+   "rows": 6,
+   "patients": 5
+  },
+  "65710008": {
+   "rows": 1,
+   "patients": 1
+  },
+  "65750-2": {
+   "rows": 139,
+   "patients": 85
+  },
+  "65966004": {
+   "rows": 13,
+   "patients": 12
+  },
+  "66348005": {
+   "rows": 114,
+   "patients": 75
+  },
+  "665078": {
+   "rows": 10,
+   "patients": 10
+  },
+  "66519-0": {
+   "rows": 3,
+   "patients": 3
+  },
+  "66524-0": {
+   "rows": 3,
+   "patients": 3
+  },
+  "66529-9": {
+   "rows": 3,
+   "patients": 3
+  },
+  "66534-9": {
+   "rows": 3,
+   "patients": 3
+  },
+  "66857006": {
+   "rows": 3,
+   "patients": 3
+  },
+  "6690-2": {
+   "rows": 915,
+   "patients": 384
+  },
+  "6768-6": {
+   "rows": 493,
+   "patients": 55
+  },
+  "67782005": {
+   "rows": 1,
+   "patients": 1
+  },
+  "67875-5": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "68254000": {
+   "rows": 35,
+   "patients": 34
+  },
+  "6833-8": {
+   "rows": 26,
+   "patients": 14
+  },
+  "6844-5": {
+   "rows": 26,
+   "patients": 14
+  },
+  "68496003": {
+   "rows": 23,
+   "patients": 21
+  },
+  "68962001": {
+   "rows": 4,
+   "patients": 4
+  },
+  "69031006": {
+   "rows": 3,
+   "patients": 3
+  },
+  "698354004": {
+   "rows": 2,
+   "patients": 2
+  },
+  "698754002": {
+   "rows": 1,
+   "patients": 1
+  },
+  "69896004": {
+   "rows": 2,
+   "patients": 2
+  },
+  "699253003": {
+   "rows": 5,
+   "patients": 5
+  },
+  "70274-6": {
+   "rows": 1822,
+   "patients": 377
+  },
+  "703151001": {
+   "rows": 16,
+   "patients": 16
+  },
+  "703423002": {
+   "rows": 49,
+   "patients": 3
+  },
+  "704-7": {
+   "rows": 105,
+   "patients": 9
+  },
+  "705129": {
+   "rows": 154,
+   "patients": 12
+  },
+  "706-2": {
+   "rows": 105,
+   "patients": 9
+  },
+  "706870000": {
+   "rows": 3,
+   "patients": 3
+  },
+  "706893006": {
+   "rows": 313,
+   "patients": 187
+  },
+  "70704007": {
+   "rows": 16,
+   "patients": 16
+  },
+  "710824005": {
+   "rows": 3277,
+   "patients": 382
+  },
+  "710841007": {
+   "rows": 1822,
+   "patients": 377
+  },
+  "711-2": {
+   "rows": 105,
+   "patients": 9
+  },
+  "713-8": {
+   "rows": 105,
+   "patients": 9
+  },
+  "713106006": {
+   "rows": 1054,
+   "patients": 326
+  },
+  "713197008": {
+   "rows": 5,
+   "patients": 5
+  },
+  "713458007": {
+   "rows": 48,
+   "patients": 48
+  },
+  "714812005": {
+   "rows": 41,
+   "patients": 30
+  },
+  "715252007": {
+   "rows": 410,
+   "patients": 177
+  },
+  "71651007": {
+   "rows": 24,
+   "patients": 4
+  },
+  "718-7": {
+   "rows": 921,
+   "patients": 384
+  },
+  "71802-3": {
+   "rows": 3305,
+   "patients": 382
+  },
+  "7200002": {
+   "rows": 1,
+   "patients": 1
+  },
+  "72106-8": {
+   "rows": 7,
+   "patients": 4
+  },
+  "72166-2": {
+   "rows": 3635,
+   "patients": 383
+  },
+  "72514-3": {
+   "rows": 3785,
+   "patients": 383
+  },
+  "7258-7": {
+   "rows": 26,
+   "patients": 14
+  },
+  "727762": {
+   "rows": 1,
+   "patients": 1
+  },
+  "72892002": {
+   "rows": 241,
+   "patients": 95
+  },
+  "731-0": {
+   "rows": 105,
+   "patients": 9
+  },
+  "73438004": {
+   "rows": 37,
+   "patients": 37
+  },
+  "73595000": {
+   "rows": 1824,
+   "patients": 372
+  },
+  "736-9": {
+   "rows": 105,
+   "patients": 9
+  },
+  "73761001": {
+   "rows": 185,
+   "patients": 99
+  },
+  "74016001": {
+   "rows": 5,
+   "patients": 5
+  },
+  "741062008": {
+   "rows": 356,
+   "patients": 196
+  },
+  "742-7": {
+   "rows": 105,
+   "patients": 9
+  },
+  "74400008": {
+   "rows": 24,
+   "patients": 24
+  },
+  "748856": {
+   "rows": 36,
+   "patients": 28
+  },
+  "748879": {
+   "rows": 36,
+   "patients": 32
+  },
+  "748962": {
+   "rows": 44,
+   "patients": 32
+  },
+  "749762": {
+   "rows": 44,
+   "patients": 33
+  },
+  "751-8": {
+   "rows": 105,
+   "patients": 9
+  },
+  "751905": {
+   "rows": 33,
+   "patients": 29
+  },
+  "752899": {
+   "rows": 4,
+   "patients": 4
+  },
+  "75325-1": {
+   "rows": 12,
+   "patients": 2
+  },
+  "75498004": {
+   "rows": 29,
+   "patients": 28
+  },
+  "75626-2": {
+   "rows": 1042,
+   "patients": 334
+  },
+  "757594": {
+   "rows": 63,
+   "patients": 37
+  },
+  "75893-8": {
+   "rows": 219,
+   "patients": 104
+  },
+  "762993000": {
+   "rows": 463,
+   "patients": 67
+  },
+  "762998009": {
+   "rows": 2,
+   "patients": 2
+  },
+  "763302001": {
+   "rows": 1042,
+   "patients": 334
+  },
+  "76437-3": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "76501-6": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "76504-0": {
+   "rows": 991,
+   "patients": 340
+  },
+  "76571007": {
+   "rows": 2,
+   "patients": 2
+  },
+  "76601001": {
+   "rows": 673,
+   "patients": 54
+  },
+  "76690-7": {
+   "rows": 32,
+   "patients": 11
+  },
+  "76746007": {
+   "rows": 1,
+   "patients": 1
+  },
+  "76916001": {
+   "rows": 1,
+   "patients": 1
+  },
+  "770-8": {
+   "rows": 105,
+   "patients": 9
+  },
+  "770349000": {
+   "rows": 3,
+   "patients": 3
+  },
+  "777-3": {
+   "rows": 915,
+   "patients": 384
+  },
+  "785-6": {
+   "rows": 915,
+   "patients": 384
+  },
+  "786-4": {
+   "rows": 915,
+   "patients": 384
+  },
+  "787-2": {
+   "rows": 915,
+   "patients": 384
+  },
+  "788-0": {
+   "rows": 113,
+   "patients": 11
+  },
+  "789-8": {
+   "rows": 915,
+   "patients": 384
+  },
+  "79586000": {
+   "rows": 12,
+   "patients": 12
+  },
+  "80146002": {
+   "rows": 2,
+   "patients": 2
+  },
+  "80271-0": {
+   "rows": 2,
+   "patients": 2
+  },
+  "80382-5": {
+   "rows": 17,
+   "patients": 17
+  },
+  "80383-3": {
+   "rows": 17,
+   "patients": 17
+  },
+  "80394007": {
+   "rows": 16,
+   "patients": 16
+  },
+  "80583007": {
+   "rows": 46,
+   "patients": 43
+  },
+  "807283": {
+   "rows": 31,
+   "patients": 28
+  },
+  "82423001": {
+   "rows": 15,
+   "patients": 15
+  },
+  "82589-3": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "82667-7": {
+   "rows": 1054,
+   "patients": 326
+  },
+  "8302-2": {
+   "rows": 3666,
+   "patients": 383
+  },
+  "8310-5": {
+   "rows": 435,
+   "patients": 214
+  },
+  "831533": {
+   "rows": 40,
+   "patients": 32
+  },
+  "833135": {
+   "rows": 1,
+   "patients": 1
+  },
+  "834061": {
+   "rows": 8,
+   "patients": 7
+  },
+  "834102": {
+   "rows": 26,
+   "patients": 26
+  },
+  "834357": {
+   "rows": 5,
+   "patients": 5
+  },
+  "835603": {
+   "rows": 87,
+   "patients": 11
+  },
+  "83664006": {
+   "rows": 1,
+   "patients": 1
+  },
+  "840539006": {
+   "rows": 33,
+   "patients": 33
+  },
+  "840544004": {
+   "rows": 34,
+   "patients": 34
+  },
+  "84229001": {
+   "rows": 12,
+   "patients": 12
+  },
+  "8462-4": {
+   "rows": 3940,
+   "patients": 383
+  },
+  "84757009": {
+   "rows": 10,
+   "patients": 10
+  },
+  "8478-0": {
+   "rows": 3,
+   "patients": 3
+  },
+  "8480-6": {
+   "rows": 3940,
+   "patients": 383
+  },
+  "849574": {
+   "rows": 104,
+   "patients": 91
+  },
+  "85318-4": {
+   "rows": 4,
+   "patients": 4
+  },
+  "85319-2": {
+   "rows": 4,
+   "patients": 4
+  },
+  "85337-4": {
+   "rows": 4,
+   "patients": 4
+  },
+  "85339-0": {
+   "rows": 4,
+   "patients": 4
+  },
+  "85343-2": {
+   "rows": 1,
+   "patients": 1
+  },
+  "85344-0": {
+   "rows": 1,
+   "patients": 1
+  },
+  "85352-3": {
+   "rows": 2,
+   "patients": 2
+  },
+  "85354-9": {
+   "rows": 3909,
+   "patients": 383
+  },
+  "855332": {
+   "rows": 605,
+   "patients": 14
+  },
+  "85548006": {
+   "rows": 28,
+   "patients": 23
+  },
+  "856987": {
+   "rows": 201,
+   "patients": 35
+  },
+  "857005": {
+   "rows": 9,
+   "patients": 9
+  },
+  "860975": {
+   "rows": 718,
+   "patients": 16
+  },
+  "861467": {
+   "rows": 21,
+   "patients": 19
+  },
+  "866148006": {
+   "rows": 991,
+   "patients": 340
+  },
+  "868187001": {
+   "rows": 220,
+   "patients": 60
+  },
+  "87433001": {
+   "rows": 3,
+   "patients": 3
+  },
+  "88020-3": {
+   "rows": 2,
+   "patients": 2
+  },
+  "88021-1": {
+   "rows": 2,
+   "patients": 2
+  },
+  "88039007": {
+   "rows": 1,
+   "patients": 1
+  },
+  "88040-1": {
+   "rows": 14,
+   "patients": 4
+  },
+  "88262-1": {
+   "rows": 3,
+   "patients": 3
+  },
+  "8867-4": {
+   "rows": 3774,
+   "patients": 383
+  },
+  "88805009": {
+   "rows": 2,
+   "patients": 2
+  },
+  "89204-2": {
+   "rows": 251,
+   "patients": 64
+  },
+  "89579-7": {
+   "rows": 65,
+   "patients": 11
+  },
+  "895994": {
+   "rows": 995,
+   "patients": 23
+  },
+  "896209": {
+   "rows": 30,
+   "patients": 2
+  },
+  "897718": {
+   "rows": 605,
+   "patients": 14
+  },
+  "90226004": {
+   "rows": 156,
+   "patients": 81
+  },
+  "904419": {
+   "rows": 16,
+   "patients": 16
+  },
+  "90470006": {
+   "rows": 1,
+   "patients": 1
+  },
+  "90560007": {
+   "rows": 3,
+   "patients": 3
+  },
+  "91145-3": {
+   "rows": 219,
+   "patients": 104
+  },
+  "91146-1": {
+   "rows": 219,
+   "patients": 104
+  },
+  "91148-7": {
+   "rows": 219,
+   "patients": 104
+  },
+  "91302008": {
+   "rows": 11,
+   "patients": 11
+  },
+  "92130-4": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92131-2": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92134-6": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92138-7": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92139-5": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92140-3": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92141-1": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92142-9": {
+   "rows": 17,
+   "patients": 17
+  },
+  "92691004": {
+   "rows": 4,
+   "patients": 4
+  },
+  "9279-1": {
+   "rows": 3774,
+   "patients": 383
+  },
+  "93025-5": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93026-3": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93027-1": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93028-9": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93029-7": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93030-5": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93031-3": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93033-9": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93034-7": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93035-4": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "93038-8": {
+   "rows": 3273,
+   "patients": 382
+  },
+  "94040-3": {
+   "rows": 17,
+   "patients": 17
+  },
+  "94260004": {
+   "rows": 1,
+   "patients": 1
+  },
+  "94531-1": {
+   "rows": 52,
+   "patients": 34
+  },
+  "95417003": {
+   "rows": 2,
+   "patients": 2
+  },
+  "966222": {
+   "rows": 1,
+   "patients": 1
+  },
+  "978950": {
+   "rows": 32,
+   "patients": 29
+  },
+  "993770": {
+   "rows": 26,
+   "patients": 3
+  },
+  "996740": {
+   "rows": 1,
+   "patients": 1
+  },
+  "997223": {
+   "rows": 1,
+   "patients": 1
+  },
+  "997488": {
+   "rows": 6,
+   "patients": 6
+  },
+  "997501": {
+   "rows": 3,
+   "patients": 3
+  },
+  "99999-0": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-1": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-10": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-11": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-2": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-3": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-4": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-5": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-6": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-7": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-8": {
+   "rows": 5,
+   "patients": 3
+  },
+  "99999-9": {
+   "rows": 5,
+   "patients": 3
+  }
+ }
+}

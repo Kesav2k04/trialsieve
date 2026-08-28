@@ -34,13 +34,21 @@ _DOMAIN = {"condition": "a diagnosis of", "medication": "a prescription for",
 
 
 def code_label(code: str, domain: str = "") -> str:
-    """The site's own display for a code, with how many patients carry it."""
-    hit = terminology.lookup(code) if hasattr(terminology, "lookup") else None
-    if not hit:
-        return code
-    n = hit.get("n_resources")
-    disp = hit.get("display", "")
-    tail = f", {n} in the panel" if isinstance(n, int) else ""
+    """The site's display for a code, and how many patients in this panel carry it.
+
+    The panel count is the number a reviewer needs. A code that is in the site's
+    vocabulary but on nobody's chart will make its criterion compile, run, and
+    quietly return nothing for every patient, which under a closed-world query
+    clears the entire panel on that criterion. Putting `0 patients` in front of
+    the person signing it is the cheapest possible guard against that.
+    """
+    hit = terminology.lookup(code)
+    disp = (hit or {}).get("display", "")
+    pc = terminology.panel_count(code)
+    if pc is None:
+        tail = ", 0 patients in this panel"
+    else:
+        tail = f", {pc['patients']} patient(s) in this panel"
     return f"{code} ({disp}{tail})" if disp else f"{code}{tail}"
 
 
@@ -147,7 +155,34 @@ def criterion(rec: dict) -> str:
                  "absence, which is how a patient gets ruled out on silence:")
         for q in closed:
             L.append(f"  - {query(q)}")
+
+    empty = empty_closed_world_codes(rec["expr"])
+    if empty:
+        L.append("")
+        L.append("STOP. These codes are in the site vocabulary but on no chart in this "
+                 "panel, and the query treats their absence as proof. Every patient "
+                 "will come back the same way, and it will look like a result:")
+        for code in empty:
+            L.append(f"  - {code_label(code)}")
     return "\n".join(L)
+
+
+def empty_closed_world_codes(e: dict) -> list[str]:
+    """Codes that no panel patient carries, used in a query that trusts absence.
+
+    This is the SGLT2 inhibitor hazard one level deeper. The grounder guards
+    against a concept with no code at all. It cannot guard against a concept whose
+    code exists in the vocabulary and on nobody's chart, because from the
+    grounder's side that looks like success: the criterion compiles, runs, returns
+    nothing for everyone, and clears the panel.
+    """
+    out: list[str] = []
+    for q in _closed_world_leaves(e):
+        for code in q.get("codes", []):
+            pc = terminology.panel_count(code)
+            if (pc is None or pc.get("patients", 0) == 0) and code not in out:
+                out.append(code)
+    return out
 
 
 def _walk(e: dict):

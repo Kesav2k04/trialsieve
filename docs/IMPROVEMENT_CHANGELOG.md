@@ -156,3 +156,56 @@ separately, and the index sorts on the second.
 
 **What it would have cost.** A claim of "N predicates revised after review" that was
 mostly field-name typos.
+
+---
+
+## 6. The reviewer was told a code was on 1,079 charts when it was on none
+
+**Found by** auditing the gold label distribution before any scored run. One
+criterion, "chronic or intermittent haemodialysis within 90 days", returned
+INDETERMINATE for all 385 patients. The corpus has 1,079 dialysis procedure rows,
+so that looked like a bug in the gold rule.
+
+**What was wrong.** It was not a bug in the gold rule. SNOMED 265764009 appears
+1,079 times in the Synthea corpus and **zero times in the 385-patient panel**. The
+panel is alive adults; the dialysis population is largely neither.
+
+The terminology catalog is built from the whole corpus, so it carried the corpus
+count. The predicate explainer printed that number with the words "in the panel"
+next to it. A reviewer signing that predicate would have read "1079 in the panel"
+about a code no patient in the panel carries.
+
+Measured across the whole vocabulary: **50 of 724 catalog codes, 7%, appear in no
+panel patient.** By domain: 19 of 136 medications, 16 of 191 conditions, 8 of 160
+procedures, 7 of 237 observations.
+
+**Why it matters beyond the wrong label.** This is the UNMAPPABLE hazard one level
+deeper. The grounder refuses a concept with no code at all, which is what stops an
+"SGLT2 inhibitor" exclusion from clearing the panel. It cannot refuse a concept
+whose code exists in the vocabulary and on nobody's chart, because from the
+grounder's side that is a successful mapping. The criterion compiles, runs, returns
+nothing for every patient, and under a closed-world query rules the same way for
+all 385 of them. It looks like a result.
+
+**What changed.**
+
+1. Per-code panel counts are computed from the panel actually screened and vendored
+   as `data/vendor/panel_code_counts.json`.
+2. The reviewer view reports the panel count, not the corpus count.
+3. A new check, `explain.empty_closed_world_codes`, puts a blocking notice in the
+   review packet when a closed-world query rests on a code no panel patient carries.
+
+**Evidence.**
+
+```
+$ python -c "from trialsieve import explain; ..."
+STOP. These codes are in the site vocabulary but on no chart in this panel, and
+the query treats their absence as proof. Every patient will come back the same
+way, and it will look like a result:
+  - 265764009 (Renal dialysis (procedure), 0 patients in this panel)
+```
+
+**What it would have cost.** A criterion that appeared to work, applied to every
+patient in the panel, resting on evidence that could not exist. The gold set caught
+it here because gold was written by hand and its distribution was audited. Nothing
+in the system would have caught it.

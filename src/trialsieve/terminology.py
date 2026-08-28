@@ -129,3 +129,29 @@ def lookup(code: str, domain: str | None = None) -> dict | None:
             if c.code == code:
                 return c.as_dict()
     return None
+
+
+PANEL_COUNTS = Path("data/vendor/panel_code_counts.json")
+
+
+@lru_cache(maxsize=1)
+def _panel_counts(path: str = str(PANEL_COUNTS)) -> dict[str, dict]:
+    """How often each code appears in the panel being screened, not in the corpus.
+
+    These are different numbers and the difference matters. The catalog is built
+    from the whole Synthea corpus; the panel is 385 alive adults drawn from it.
+    Seven percent of catalog codes appear in no panel patient at all, including
+    the dialysis procedure code, which has over a thousand rows in the corpus and
+    none here. A reviewer told "1079 in the panel" about a code no patient in the
+    panel carries has been handed a false statement in the one document that
+    exists to let them check.
+    """
+    f = Path(path)
+    if not f.exists():
+        return {}
+    return json.loads(f.read_text(encoding="utf-8")).get("counts", {})
+
+
+def panel_count(code: str) -> dict | None:
+    """Rows and distinct patients carrying this code in the screened panel."""
+    return _panel_counts().get(code)
