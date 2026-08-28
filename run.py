@@ -112,7 +112,7 @@ def t_reproduce(run: str = RUN) -> None:
     sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "TS,B0,B1")
 
     banner("score and report")
-    sh(PY, "scripts/report.py", "--run", run, "--out", "results/report.json")
+    sh(PY, "scripts/report.py", "--run", run, "--out", "results")
 
     t_verify(run)
     t_diff()
@@ -129,8 +129,8 @@ def _canonical(p: Path) -> str:
 def t_diff() -> None:
     """Byte-compare this machine's numbers against the ones in the writeup."""
     banner("compare against the published numbers")
-    mine = ROOT / "results" / "report.json"
-    theirs = PUBLISHED / "report.json"
+    mine = ROOT / "results" / "results.json"
+    theirs = PUBLISHED / "results.json"
     if not theirs.exists():
         print(f"no published baseline at {theirs}; nothing to compare against yet")
         return
@@ -204,7 +204,8 @@ def t_panel() -> None:
 def t_clean() -> None:
     """Remove derived output. Cassettes and vendored data survive on purpose."""
     banner("clean")
-    for p in [ROOT / "results" / "report.json", ROOT / "runs" / "tierA" / "compiled",
+    for p in [ROOT / "results" / "results.json", ROOT / "results" / "RESULTS.md",
+              ROOT / "runs" / "tierA" / "compiled",
               ROOT / "runs" / "tierA" / "cells"]:
         if p.is_dir():
             shutil.rmtree(p)

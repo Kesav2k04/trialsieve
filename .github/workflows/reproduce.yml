@@ -47,5 +47,6 @@ jobs:
         with:
           name: report
           path: |
-            results/report.json
+            results/results.json
+            results/RESULTS.md
             results/environment.json

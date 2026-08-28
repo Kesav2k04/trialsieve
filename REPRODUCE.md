@@ -45,9 +45,9 @@ carries the source URL and the sha256 of the archive they were built from, and
 4. **The arms are run** over the panel. This step calls no model at all. The
    compiled predicates are executed deterministically against every patient, which
    is the point of the architecture and the reason screening is free.
-5. **The report is scored** into `results/report.json`.
+5. **The report is scored** into `results/results.json`.
 6. **The four verification checks run** (see below).
-7. **The report is compared** byte for byte against `results/published/report.json`,
+7. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
 
 ## The four checks, and what each one rules out
@@ -96,12 +96,12 @@ time depends entirely on the model backend.
 | engine gate | 0 | 0.3 s |
 | load the 385-patient panel | 0 | 0.8 s |
 | replay the compile | 0 (all from cassettes) | seconds |
-| run the arms over the panel | 0 | see `results/report.json` |
+| run the arms over the panel | 0 | see `results/results.json` |
 | record a compile against `gpt-5.6-terra` | about 4.5 per criterion | about 36 s per call |
 
 Screening is free. That is the economic claim of the project stated as a runtime
 fact: the model reads the protocol once, and after that adding a patient costs
-arithmetic. `results/report.json` carries the recorded token counts for the run
+arithmetic. `results/results.json` carries the recorded token counts for the run
 that produced the published numbers.
 
 ## If the diff is not identical
