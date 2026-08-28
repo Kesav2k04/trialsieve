@@ -1,0 +1,51 @@
+name: reproduce
+
+# The claim this workflow exists to test is that a stranger with a clean machine
+# gets the published numbers. So it clones fresh, installs one package, and runs
+# the same entry point the README gives a reader. Nothing is cached and no
+# secret is available to it, which also means a live model call cannot silently
+# rescue a broken replay.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate:
+    name: engine gate, ${{ matrix.os }}, python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install --upgrade pip pytest
+      - name: engine gate
+        run: python run.py check
+
+  reproduce:
+    name: published numbers from a clean clone
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --upgrade pip pytest
+      - name: reproduce, offline
+        run: python run.py reproduce
+      - name: upload the report this run produced
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: |
+            results/report.json
+            results/environment.json
