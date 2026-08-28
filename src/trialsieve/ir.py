@@ -30,6 +30,21 @@ VALUE_KINDS = {"age", "sex", "observation", "literal", "derived", "count"}
 DOMAINS = {"condition", "medication", "procedure", "observation"}
 AGGS = {"latest", "min", "max", "any", "first"}
 
+#: Codes that contain the concept without establishing it.
+#:
+#: A site can hold a code that is genuinely broader than the criterion asks for.
+#: This corpus records every diabetes diagnosis under SNOMED 44054006, displayed
+#: as the single word "Diabetes", and has no separate code for type 2. A trial
+#: asking for type 2 diabetes therefore cannot be answered from the presence of
+#: that code, and can be answered from its absence: a patient with no diabetes
+#: code at all does not have type 2 diabetes either.
+#:
+#: That asymmetry is the whole reason this field exists. Treating a broader code
+#: as an exact match manufactures MEETS verdicts for a criterion the record
+#: cannot settle. Refusing the concept entirely throws away the half of the
+#: information that is real. `broader_codes` keeps both: present is UNKNOWN,
+#: absent is whatever `absent_means` says.
+
 #: What an empty result set means for a given domain.
 #: "false"   - closed world. The record is trusted to be complete for this query.
 #: "unknown" - open world. Silence in the record is not an answer.
@@ -86,6 +101,14 @@ def validate_query(q: Any, path: str = "query") -> None:
     codes = q.get("codes")
     if not isinstance(codes, list) or not codes or not all(isinstance(c, str) for c in codes):
         raise IRError(f"{path}: query needs a non-empty list of string codes")
+    broader = q.get("broader_codes")
+    if broader is not None:
+        if not isinstance(broader, list) or not all(isinstance(c, str) for c in broader):
+            raise IRError(f"{path}: broader_codes must be a list of string codes")
+        if set(broader) & set(codes):
+            raise IRError(
+                f"{path}: a code cannot be both exact and broader than the concept; "
+                f"overlapping: {sorted(set(broader) & set(codes))}")
     if q.get("absent_means") not in ABSENT_MEANS:
         raise IRError(
             f"{path}: absent_means must be 'false' (the record is trusted to be complete "

@@ -95,8 +95,13 @@ def query(q: dict) -> str:
     absent = ("and if there is none, the record is trusted and this is false"
               if q.get("absent_means") == "false"
               else "and if there is none, this is undetermined rather than false")
+    broader = q.get("broader_codes") or []
+    tail = ""
+    if broader:
+        tail = (f". If instead the record holds {_codes(broader, dom)}, which contains "
+                f"this concept without establishing it, the answer is undetermined")
     return (f"{_DOMAIN.get(dom, dom)} {_codes(q.get('codes', []), dom)}, "
-            f"{_window(q.get('within_days'))}, {absent}")
+            f"{_window(q.get('within_days'))}, {absent}{tail}")
 
 
 def expr(e: dict, indent: int = 0) -> str:

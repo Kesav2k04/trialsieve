@@ -28,7 +28,7 @@ from ..llm import Client
 from ..trace import Trajectory
 from .common import ask_json, require
 
-PROMPT_VERSION = "grounder-v2"
+PROMPT_VERSION = "grounder-v3"
 
 EXPAND_SYSTEM = """You are a clinical terminologist. You expand a clinical concept into the
 specific named things a medical record would actually store for it."""
@@ -81,11 +81,28 @@ still a reason to reject a code you have no independent knowledge of.
 For a drug class, select the entries whose ingredient belongs to that class.
 Different strengths or formulations of the same ingredient are all matches.
 
-If no candidate represents the concept, return an empty list. That is a normal
-and useful answer.
+A candidate can also be BROADER than the concept: it contains what the criterion
+asks for and other things as well. A site that records every diabetes diagnosis
+under one unspecified diabetes code has a code that is broader than "type 2
+diabetes mellitus". A site whose only asthma code is "chronic lower respiratory
+disease" has one that is broader than asthma.
+
+Put those in `broader_codes`, not in `codes`. The difference decides what happens
+to a patient. A code in `codes` proves the concept when it is present. A code in
+`broader_codes` cannot prove it, and the criterion comes back undetermined for
+that patient rather than satisfied. Its absence still counts: a patient with no
+diabetes code of any kind does not have type 2 diabetes either.
+
+Do not use `broader_codes` for a code that is merely related, or for a
+complication of the concept, or for a different thing that shares a word. Only
+for a code whose meaning genuinely contains the concept.
+
+If no candidate represents the concept and none contains it, return both lists
+empty. That is a normal and useful answer.
 
 Return JSON only:
-{{"codes": ["4548-4"], "rejected": [{{"code": "718-7", "why": "different analyte"}}],
+{{"codes": ["4548-4"], "broader_codes": [],
+  "rejected": [{{"code": "718-7", "why": "different analyte"}}],
   "confidence": "high"}}"""
 
 
@@ -101,6 +118,12 @@ def _v_select(p: Any) -> None:
     require(isinstance(p, dict), "top level must be an object")
     require(isinstance(p.get("codes"), list), "codes must be a list (possibly empty)")
     require(all(isinstance(c, str) for c in p["codes"]), "codes must be strings")
+    b = p.get("broader_codes", [])
+    require(isinstance(b, list) and all(isinstance(c, str) for c in b),
+            "broader_codes must be a list of strings (possibly empty)")
+    require(not (set(p["codes"]) & set(b)),
+            "a code cannot be in both codes and broader_codes; decide whether it "
+            "means the concept or merely contains it")
     require(p.get("confidence") in {"high", "medium", "low"},
             "confidence must be high, medium or low")
 
@@ -128,7 +151,7 @@ def ground(client: Client, concept: str, domain: str, intent: str = "",
 
     if not cands:
         rec = {"concept": concept, "domain": domain, "status": "UNMAPPABLE", "codes": [],
-               "expanded_names": names,
+               "broader_codes": [], "expanded_names": names,
                "reason": (f"no entry in this site's {domain} vocabulary matches any of "
                           f"{', '.join(names[:6])}"
                           + (" and others" if len(names) > 6 else "")),
@@ -149,6 +172,8 @@ def ground(client: Client, concept: str, domain: str, intent: str = "",
 
     valid = {c.code for c in cands}
     chosen = [c for c in sel["codes"] if c in valid]
+    broader = [c for c in (sel.get("broader_codes") or [])
+               if c in valid and c not in chosen]
     hallucinated = [c for c in sel["codes"] if c not in valid]
     if hallucinated:
         # Codes not on the candidate list are dropped rather than trusted: the
@@ -156,9 +181,24 @@ def ground(client: Client, concept: str, domain: str, intent: str = "",
         traj.validation_error(f"dropped {len(hallucinated)} code(s) not in the candidate "
                               f"list: {hallucinated}")
 
+    if not chosen and broader:
+        # The site has the concept, at a coarser grain than the criterion needs.
+        # That is not the same as not having it, and treating it as UNMAPPABLE
+        # throws away the half of the answer that is real: absence of the broader
+        # code rules the patient out, presence leaves the question open.
+        rec = {"concept": concept, "domain": domain, "status": "BROADER_ONLY",
+               "codes": [], "broader_codes": sorted(broader),
+               "expanded_names": names,
+               "displays": [c.display for c in cands if c.code in broader],
+               "reason": ("this vocabulary codes the concept only at a coarser grain; "
+                          "presence cannot settle the criterion and absence can"),
+               "rejected": sel.get("rejected", []), "confidence": sel["confidence"]}
+        traj.final(**rec)
+        return rec
+
     if not chosen:
         rec = {"concept": concept, "domain": domain, "status": "UNMAPPABLE", "codes": [],
-               "expanded_names": names,
+               "broader_codes": [], "expanded_names": names,
                "reason": ("the vocabulary returned candidates but none of them represents "
                           "the concept"),
                "rejected": sel.get("rejected", []), "confidence": sel["confidence"]}
@@ -169,6 +209,7 @@ def ground(client: Client, concept: str, domain: str, intent: str = "",
                if any(n.lower() in c.display.lower() for c in cands if c.code in chosen)}
     status = "MAPPED" if len(covered) >= max(1, len(names) // 3) else "PARTIAL"
     rec = {"concept": concept, "domain": domain, "status": status, "codes": sorted(chosen),
+           "broader_codes": sorted(broader),
            "expanded_names": names,
            "matched_names": sorted(covered),
            "unmatched_names": sorted(n for n in names if n.lower() not in covered),

@@ -22,7 +22,7 @@ from ..trace import Trajectory
 from .common import ask_json, require
 from .grounder import ground
 
-PROMPT_VERSION = "compiler-v2"
+PROMPT_VERSION = "compiler-v3"
 
 GRAMMAR = """PREDICATE GRAMMAR
 
@@ -47,6 +47,7 @@ value:
 
 query:
   {"domain":"condition|medication|procedure|observation","codes":["CODE",...],
+   "broader_codes":["CODE",...],
    "within_days":INT|null,"active_only":BOOL,"absent_means":"false|unknown"}
 
 RULES
@@ -65,6 +66,14 @@ RULES
                 for anything acute or recent.
   When in doubt choose "unknown". A wrong "false" rules a patient out of a trial
   on the strength of a gap in their record, and nobody ever audits that.
+* `broader_codes` are codes this site uses that CONTAIN the concept without
+  establishing it, listed for you in the GROUNDED CONCEPTS block. Copy them into
+  the query when they are given. They behave differently from `codes` on purpose:
+  a broader code found in the record makes the answer undetermined rather than
+  true, while finding nothing at all still means whatever `absent_means` says.
+  That is not a hedge, it is the actual state of knowledge. A site that records
+  one unspecified diabetes code cannot tell you a patient has type 2, and can
+  still tell you a patient has no diabetes of any kind.
 * Never invent a code. Use only codes from the GROUNDED CONCEPTS block.
 * An exclusion criterion is expressed as the thing that would EXCLUDE the
   patient. `exists(current SGLT2 inhibitor)` is a correct exclusion predicate.
@@ -255,8 +264,14 @@ def _render_grounded(g: list[dict]) -> str:
             continue
         pairs = ", ".join(f'"{c}"' for c in rec["codes"])
         names = "; ".join(d[:44] for d in rec.get("displays", [])[:6])
-        out.append(f"* {rec['concept']} ({rec['domain']}) [{rec['status']}]\n"
-                   f"    codes: [{pairs}]\n    meaning: {names}")
+        block = (f"* {rec['concept']} ({rec['domain']}) [{rec['status']}]\n"
+                 f"    codes: [{pairs}]\n    meaning: {names}")
+        if rec.get("broader_codes"):
+            wide = ", ".join(f'"{c}"' for c in rec["broader_codes"])
+            block += (f"\n    broader_codes: [{wide}]\n"
+                      f"    These contain the concept and do not establish it. Put them "
+                      f"in the query's broader_codes field, never in codes.")
+        out.append(block)
     return "\n".join(out)
 
 
@@ -304,6 +319,10 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
             cache[key] = ground(client, c["name"], c["domain"], c.get("intent", ""), traj)
         grounded.append(cache[key])
 
+    # BROADER_ONLY is not unmappable. The site has the concept at a coarser grain,
+    # which cannot prove the criterion and can still disprove it, so the criterion
+    # goes forward and the engine returns undetermined for the patients it cannot
+    # settle. Refusing here would discard every ruleout the coarse code supports.
     unmappable = [g for g in grounded if g["status"] == "UNMAPPABLE"]
     if unmappable:
         # The concept has no representation in these records, so no predicate over
@@ -321,6 +340,7 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
 
     # 3. emit the predicate, restricted to codes that exist
     allowed = {c for g in grounded for c in g["codes"]}
+    allowed |= {c for g in grounded for c in (g.get("broader_codes") or [])}
 
     def _v_emit_scoped(p: Any) -> None:
         _v_emit(p)
@@ -348,7 +368,9 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
 
     rec = {**base, "compilable": True, "expr": emit["expr"],
            "grounded": [{"concept": g["concept"], "domain": g["domain"],
-                         "status": g["status"], "codes": g["codes"]} for g in grounded],
+                         "status": g["status"], "codes": g["codes"],
+                         "broader_codes": g.get("broader_codes") or []}
+                        for g in grounded],
            "unit_note": emit.get("unit_note", ""),
            "absence_note": emit.get("absence_note", ""),
            "confidence": emit["confidence"],

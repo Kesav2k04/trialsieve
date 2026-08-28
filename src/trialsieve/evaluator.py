@@ -181,6 +181,7 @@ class Evaluator:
         days = q.get("within_days")
         active = bool(q.get("active_only"))
         absent = self.default_absent_means or q["absent_means"]
+        broader = q.get("broader_codes") or []
 
         if domain == "condition":
             rows = self.chart.conditions_for(codes, days, active)
@@ -200,6 +201,23 @@ class Evaluator:
                            r.resource_id) for r in rows]
 
         window = f" within {days} days of {self.chart.index_date}" if days else ""
+
+        if not rows and broader:
+            # Nothing matched the exact concept. Before absence is allowed to mean
+            # anything, check whether the record holds a code that contains the
+            # concept. If it does, the record is not silent, it is imprecise, and
+            # imprecise is UNKNOWN rather than FALSE.
+            b_rows = self._rows_for(domain, broader, days, active)
+            if b_rows:
+                b_ev = self._evidence_for(domain, b_rows)
+                names = ", ".join(sorted({_c(r) for r in b_rows}))
+                return Result(
+                    U,
+                    f"the record has {domain} code(s) {names}, which include this "
+                    f"concept but do not establish it; the site does not code the "
+                    f"distinction this criterion needs",
+                    evidence=b_ev, op="exists")
+
         if rows:
             # Evidence is kept whole. Truncation belongs to the renderer, and doing
             # it here once meant a count leaf silently capped at the display limit.
@@ -216,6 +234,33 @@ class Evaluator:
                           evidence=marker, op="exists")
         return Result(U, f"no matching {domain} record{window}; open-world, so undetermined",
                       evidence=marker, op="exists")
+
+    def _rows_for(self, domain: str, codes: list[str], days, active: bool):
+        if domain == "condition":
+            return self.chart.conditions_for(codes, days, active)
+        if domain == "medication":
+            return self.chart.medications_for(codes, days, active)
+        if domain == "procedure":
+            return self.chart.procedures_for(codes, days)
+        return self.chart.observations_for(codes, days)
+
+    @staticmethod
+    def _evidence_for(domain: str, rows) -> list[Evidence]:
+        if domain == "condition":
+            return [Evidence("condition", _c(r), _d(r), "present",
+                             str(r.onset or ""), r.resource_id,
+                             "broader than the concept") for r in rows]
+        if domain == "medication":
+            return [Evidence("medication", _c(r), _d(r), r.status or "",
+                             str(r.authored or ""), r.resource_id,
+                             "broader than the concept") for r in rows]
+        if domain == "procedure":
+            return [Evidence("procedure", _c(r), _d(r), "performed",
+                             str(r.performed or ""), r.resource_id,
+                             "broader than the concept") for r in rows]
+        return [Evidence("observation", _c(r), _d(r), _fmt(r.value),
+                         str(r.effective or ""), r.resource_id,
+                         "broader than the concept") for r in rows]
 
     # -- values -------------------------------------------------------------
     @staticmethod
