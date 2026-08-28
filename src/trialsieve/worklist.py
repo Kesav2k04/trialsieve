@@ -73,8 +73,14 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
     L.append("")
     L.append(f"**{t.get('title', '')}**")
     L.append("")
-    L.append(f"Panel of {n} patients screened on {generated or dt.date.today()}. "
-             f"Compiled criteria signed off by {reviewer or 'UNSIGNED'}.")
+    L.append(f"Panel of {n} patients screened on {generated or dt.date.today()}.")
+    L.append("")
+    if reviewer:
+        L.append(f"Compiled criteria reviewed and signed by {reviewer}.")
+    else:
+        L.append("**NOT FOR USE.** No human has reviewed the compiled criteria behind "
+                 "this document. It was produced with the sign-off gate overridden, "
+                 "which is a thing you can only do on purpose.")
     L.append("")
     L.append("> This list does not decide anything. It removes patients who are "
              "provably ineligible on a dated fact in their record, and it ranks "
