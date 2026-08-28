@@ -35,6 +35,12 @@ class Signoff:
     decision: str
     rationale: str
     signed_at: str
+    #: What the reviewer is qualified to say. Recorded because the ground rule
+    #: is that a qualified human reviews anything that could affect a person,
+    #: and a signature that does not say who signed it cannot be audited
+    #: against that rule. In this repository the value is not "clinician", and
+    #: the report says so rather than leaving it to be assumed.
+    reviewer_role: str = "unspecified"
 
     def as_dict(self) -> dict:
         return vars(self)

@@ -112,3 +112,20 @@ def domains() -> list[str]:
 
 def summary() -> dict[str, int]:
     return {d: len(v) for d, v in sorted(_load().items())}
+
+
+@lru_cache(maxsize=4096)
+def lookup(code: str, domain: str | None = None) -> dict | None:
+    """One code to its entry in this site's catalog, or nothing.
+
+    Used to render a predicate for review. A code the site has never recorded
+    returns None, and the reviewer sees the bare code, which is the correct and
+    slightly alarming thing to show them.
+    """
+    for dom, rows in _load().items():
+        if domain and dom != domain:
+            continue
+        for c in rows:
+            if c.code == code:
+                return c.as_dict()
+    return None

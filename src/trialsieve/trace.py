@@ -66,6 +66,16 @@ class Trajectory:
         self._add("critic_finding", verdict=verdict, finding=finding,
                   counterexample=counterexample)
 
+    def normalisation(self, what: str, before: Any, after: Any) -> None:
+        """A field the model got slightly wrong that the harness repaired itself.
+
+        Kept separate from `revision`. Silently accepting `laboratory_value`
+        where the grammar says `observation` is a real repair and belongs in the
+        record, but counting it alongside a predicate rewritten after a failed
+        counterexample would inflate the interesting number with housekeeping.
+        """
+        self._add("normalisation", what=what, before=before, after=after)
+
     def revision(self, what: str, before: Any, after: Any) -> None:
         self._add("revision", what=what, before=before, after=after)
 

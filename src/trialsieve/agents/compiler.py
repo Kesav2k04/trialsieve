@@ -284,7 +284,7 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
         raw = c.get("domain")
         c["domain"] = canon_domain(raw)
         if c["domain"] != raw:
-            traj.revision("normalised concept domain", raw, c["domain"])
+            traj.normalisation("normalised concept domain", raw, c["domain"])
         key = f"{c['domain']}::{c['name'].strip().lower()}"
         if key in cache:
             traj.tool_call("ground_cache.hit", key=key)

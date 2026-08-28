@@ -1,7 +1,28 @@
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
+
+# The Synthea archive and the unpacked bundles. 95 MB and 1.2 GB. The panel
+# built from them is vendored instead, with the archive's sha256 recorded in
+# data/vendor/panel_provenance.json.
 data/raw/
 data/work/
-runs/
-.pytest_cache/
+
+# Run output is ignored by default, then the parts a reader needs are added
+# back. Each level has to be un-ignored explicitly: git will not look inside an
+# excluded directory to find a negated pattern, so `!runs/tierA/cassettes/`
+# alone would match nothing.
+runs/*
+!runs/tierA/
+runs/tierA/*
+!runs/tierA/cassettes/
+!runs/tierA/trajectories/
+!runs/tierA/compiled/
+!runs/tierA/signoffs.jsonl
+!runs/tierA/manifest.json
+
+# Cells are one row per patient-criterion pair. Replay regenerates them from the
+# cassettes in seconds, and shipping several hundred thousand rows would bury
+# the things worth reading.
+runs/tierA/cells/

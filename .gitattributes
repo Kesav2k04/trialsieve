@@ -1,8 +1,9 @@
+# The cassette key is a hash of the canonical request, so line endings cannot
+# change it. The file digests a reader might take of a cassette are a different
+# matter, and a checkout that silently rewrote CRLF would make those differ by
+# platform. Everything textual is LF everywhere.
 * text=auto eol=lf
-*.json text eol=lf
-*.md text eol=lf
-*.py text eol=lf
-cassettes/** -text
-data/vendor/patients/** -text
 *.png binary
+*.gz binary
 *.zip binary
+*.mp4 binary

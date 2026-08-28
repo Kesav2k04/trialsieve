@@ -16,15 +16,20 @@ the reproduction path: judges replay cassettes or bring their own endpoint.
 from __future__ import annotations
 
 import argparse
+import atexit
 import json
 import os
+import pathlib
+import shutil
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 LOCK = threading.Semaphore(4)
+CLEAN_HOME = ""
 CLI = "gemini"
 BACKEND = "gemini"
 DEFAULT_MODEL = "gemini-2.5-flash"
@@ -57,6 +62,31 @@ def resolve_cli(name: str) -> str:
         if found:
             return found
     raise SystemExit(f"cannot find {name!r} on PATH")
+
+
+def clean_codex_home() -> str:
+    """A CODEX_HOME containing credentials and nothing else.
+
+    The codex CLI loads `$CODEX_HOME/AGENTS.md` into every request, and on a
+    working machine that file is full of the operator's personal instructions.
+    Those were reaching the clinical agents: a probe asked codex to quote the
+    first line of any instruction file it had been given and it returned the
+    first line of a local integration note. Recorded output shaped by a file
+    that is not in this repository is not reproducible by anyone else, so the
+    backend gets a home with the auth token in it and nothing else.
+
+    The directory lives in the system temp area, never in the repository, and
+    holds a copy of a credential file. It is removed at exit.
+    """
+    src = pathlib.Path.home() / ".codex" / "auth.json"
+    home = pathlib.Path(tempfile.mkdtemp(prefix="trialsieve-codexhome-"))
+    if src.exists():
+        shutil.copy2(src, home / "auth.json")
+    else:
+        print(f"warning: no {src}; codex may not be authenticated", file=sys.stderr)
+    atexit.register(lambda: shutil.rmtree(home, ignore_errors=True))
+    print(f"clean CODEX_HOME at {home} (auth only, no AGENTS.md, no config.toml)")
+    return str(home)
 
 
 def render(messages: list[dict]) -> str:
@@ -135,17 +165,21 @@ class Handler(BaseHTTPRequestHandler):
             # it arrived empty and codex answered "What would you like to work
             # on?" to every request, which parses as a refusal rather than an
             # error and would have been recorded as one.
-            argv = [CLI, "exec", "--skip-git-repo-check", "-m", model,
+            argv = [CLI, "exec", "--skip-git-repo-check", "--ephemeral", "-m", model,
                     "--output-last-message", outfile, "-"]
             stdin_text = prompt
         else:
             argv = [CLI, "-m", model, "-p", prompt]
             stdin_text = None
 
+        env = dict(os.environ)
+        if BACKEND == "codex" and CLEAN_HOME:
+            env["CODEX_HOME"] = CLEAN_HOME
+
         with LOCK:
             try:
                 proc = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8",
-                                      errors="replace", timeout=TIMEOUT,
+                                      errors="replace", timeout=TIMEOUT, env=env,
                                       input=stdin_text,
                                       stdin=None if stdin_text is not None
                                       else subprocess.DEVNULL)
@@ -197,12 +231,18 @@ def main() -> int:
     ap.add_argument("--cli", default="gemini")
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--backend", choices=["gemini", "codex"], default=None)
+    ap.add_argument("--dirty-home", action="store_true",
+                    help="let the codex CLI load the operator's own AGENTS.md and "
+                         "config.toml. Off by default because anything it injects "
+                         "is not in this repository and cannot be reproduced.")
     ap.add_argument("--default-model", default=None)
     a = ap.parse_args()
     globals()["BACKEND"] = a.backend or ("codex" if "codex" in a.cli else "gemini")
     globals()["DEFAULT_MODEL"] = a.default_model or ("gpt-5.1-codex" if globals()["BACKEND"] == "codex" else "gemini-2.5-flash")
     CLI = resolve_cli(a.cli)
     globals()["LOCK"] = threading.Semaphore(a.concurrency)
+    globals()["CLEAN_HOME"] = ("" if (a.dirty_home or globals()["BACKEND"] != "codex")
+                               else clean_codex_home())
     srv = ThreadingHTTPServer(("127.0.0.1", a.port), Handler)
     srv.daemon_threads = True
     print(f"shim on http://127.0.0.1:{a.port}/v1 backed by {CLI} "
