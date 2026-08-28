@@ -131,16 +131,24 @@ class Handler(BaseHTTPRequestHandler):
             import tempfile
             fd, outfile = tempfile.mkstemp(suffix=".txt", prefix="shim-")
             os.close(fd)
+            # The prompt goes over stdin, not argv. Passed positionally on Windows
+            # it arrived empty and codex answered "What would you like to work
+            # on?" to every request, which parses as a refusal rather than an
+            # error and would have been recorded as one.
             argv = [CLI, "exec", "--skip-git-repo-check", "-m", model,
-                    "--output-last-message", outfile, prompt]
+                    "--output-last-message", outfile, "-"]
+            stdin_text = prompt
         else:
             argv = [CLI, "-m", model, "-p", prompt]
+            stdin_text = None
 
         with LOCK:
             try:
                 proc = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8",
                                       errors="replace", timeout=TIMEOUT,
-                                      stdin=subprocess.DEVNULL)
+                                      input=stdin_text,
+                                      stdin=None if stdin_text is not None
+                                      else subprocess.DEVNULL)
             except subprocess.TimeoutExpired:
                 _stats["errors"] += 1
                 if outfile:
