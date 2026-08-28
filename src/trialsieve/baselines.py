@@ -77,13 +77,35 @@ Return JSON only:
 # Patient digest
 # ---------------------------------------------------------------------------
 
-def render_record(chart: Chart, max_history: int = 3) -> str:
+def render_record(chart: Chart, max_history: int = 3, max_rows: int = 60,
+                  max_chars: int | None = None) -> str:
     """A complete, criterion-agnostic rendering of the structured record.
 
     Built from the chart alone. Nothing here is chosen by looking at the
     criterion, at a compiled predicate, or at any code list, so this digest
     cannot be tuned to make one arm look good.
+
+    `max_chars` bounds the result, because a prompt has a length and a chart does
+    not. One patient in this panel renders to 254,000 characters. Twenty two of
+    the 385 exceed what the model backend will accept in one request.
+
+    This is a real property of the per-cell approach rather than a handicap
+    imposed on it, and it is measured rather than assumed: `trimmed()` reports
+    whether a given chart hit the bound, the evaluation reports the affected cell
+    count, and the comparison is repeated on the untrimmed cells alone so a reader
+    can see whether trimming drove the result.
+
+    What is dropped is dropped by age, oldest first, and what was dropped is
+    stated in the text so the model can answer INDETERMINATE on the grounds that
+    it was not shown everything. That is the correct answer when it is true.
     """
+    if max_chars is not None:
+        for hist, rows in ((3, 60), (2, 40), (2, 20), (1, 12), (1, 6)):
+            out = render_record(chart, max_history=hist, max_rows=rows)
+            if len(out) <= max_chars:
+                return out
+        return render_record(chart, max_history=1, max_rows=3)
+
     lines: list[str] = []
     age = chart.age
     lines.append(f"Demographics: age {age if age is not None else 'unknown'}, "
@@ -109,7 +131,8 @@ def render_record(chart: Chart, max_history: int = 3) -> str:
             v = r.value if r.value is not None else r.value_string
             unit = f" {r.unit}" if r.unit else ""
             vals.append(f"{v}{unit} ({r.effective})")
-        older = f", plus {len(rows) - max_history} earlier" if len(rows) > max_history else ""
+        older = (f", plus {len(rows) - max_history} earlier not shown"
+                 if len(rows) > max_history else "")
         lines.append(f"  {name} [{code}]: " + "; ".join(vals) + older)
 
     lines.append("")
@@ -118,30 +141,57 @@ def render_record(chart: Chart, max_history: int = 3) -> str:
     lines.append(f"Conditions on the problem list ({len(act)} active, {len(res)} resolved):")
     if not chart.conditions:
         lines.append("  (none recorded)")
-    for c in sorted(chart.conditions, key=lambda x: (x.onset or dt.date.min), reverse=True):
+    conds = sorted(chart.conditions, key=lambda x: (x.onset or dt.date.min), reverse=True)
+    for c in conds[:max_rows]:
         nm = (c.codings[0].display or "") if c.codings else ""
         cd = (c.codings[0].code or "") if c.codings else ""
         state = "active" if c.active else f"resolved {c.abatement}"
         lines.append(f"  {nm} [{cd}]: onset {c.onset}, {state}")
+    _omitted(lines, len(conds), max_rows, "older conditions")
 
     lines.append("")
     lines.append(f"Medication orders ({len(chart.medications)}):")
     if not chart.medications:
         lines.append("  (none recorded)")
-    for m in sorted(chart.medications, key=lambda x: (x.authored or dt.date.min), reverse=True):
+    meds = sorted(chart.medications, key=lambda x: (x.authored or dt.date.min), reverse=True)
+    for m in meds[:max_rows]:
         nm = (m.codings[0].display or "") if m.codings else ""
         cd = (m.codings[0].code or "") if m.codings else ""
         lines.append(f"  {nm} [{cd}]: ordered {m.authored}, status {m.status}")
+    _omitted(lines, len(meds), max_rows, "older medication orders")
 
     if chart.procedures:
         lines.append("")
         lines.append(f"Procedures ({len(chart.procedures)}):")
-        for p in sorted(chart.procedures, key=lambda x: (x.performed or dt.date.min),
-                        reverse=True)[:60]:
+        procs = sorted(chart.procedures, key=lambda x: (x.performed or dt.date.min),
+                       reverse=True)
+        for p in procs[:max_rows]:
             nm = (p.codings[0].display or "") if p.codings else ""
             lines.append(f"  {nm}: {p.performed}")
+        _omitted(lines, len(procs), max_rows, "older procedures")
 
     return "\n".join(lines)
+
+
+def _omitted(lines: list[str], total: int, shown: int, what: str) -> None:
+    """Say what was cut. A reader who is not shown everything should be told."""
+    if total > shown:
+        lines.append(f"  ... {total - shown} {what} are not shown here. If one of them "
+                     f"would decide this criterion, the answer is INDETERMINATE.")
+
+
+BIG = 10 ** 6
+
+
+def trimmed(chart: Chart, max_chars: int) -> bool:
+    """Did this chart have to be cut to fit? Recorded per cell, reported per arm.
+
+    Compared against a rendering with the caps effectively removed, not against
+    the default rendering. The default already caps rows, so comparing to it
+    would answer a question about the default rather than about the chart, and
+    would report that nothing was ever trimmed.
+    """
+    return len(render_record(chart, max_history=BIG, max_rows=BIG)) > max_chars
 
 
 # ---------------------------------------------------------------------------

@@ -29,8 +29,14 @@ sys.path.insert(0, str(ROOT / "evaluation"))
 from criteria_set import CRITERIA, BY_ID  # noqa: E402
 from plainview import plain  # noqa: E402
 from trialsieve.baselines import (  # noqa: E402
-    b0_always_fails, b1_demographics, b2_cell, b3_cell, render_record,
+    b0_always_fails, b1_demographics, b2_cell, b3_cell, render_record, trimmed,
 )
+
+#: The per-cell arms put the whole chart in a prompt, and a prompt has a length.
+#: Fifteen percent of these charts do not fit. They are trimmed by age with the
+#: omission stated in the text, and the flag is carried on every affected cell so
+#: the comparison can be repeated without them.
+B2_MAX_CHARS = 26000
 from trialsieve.chart import load_panel  # noqa: E402
 from trialsieve.degrade import degrade_panel, manifest_digest  # noqa: E402
 from trialsieve.evaluator import evaluate_criterion  # noqa: E402
@@ -117,7 +123,8 @@ def main() -> int:
 
     for pi, chart in enumerate(panel, 1):
         pv = plain(chart)
-        record = render_record(chart) if client else ""
+        record = render_record(chart, max_chars=B2_MAX_CHARS) if client else ""
+        was_trimmed = trimmed(chart, B2_MAX_CHARS) if client else False
         traj = Trajectory("baseline-b2", f"{chart.patient_id[:8]}-{suffix}") if client else None
         for c in CRITERIA:
             cid = c["criterion_id"]
@@ -127,6 +134,8 @@ def main() -> int:
                 gold = "UNMEASURABLE"
             row = {"patient_id": chart.patient_id, "criterion_id": cid,
                    "criterion_hash": cid, "gold": gold, "k": a.k, "seed": a.seed}
+            if client:
+                row["record_trimmed"] = was_trimmed
 
             if "TS" in arms:
                 comp = compiled.get(cid)
@@ -165,6 +174,8 @@ def main() -> int:
             fh.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
 
     meta = {"arms": arms, "seed": a.seed, "k": a.k, "degrade_seed": a.degrade_seed,
+            "b2_max_chars": B2_MAX_CHARS if client else None,
+            "cells_with_trimmed_record": sum(1 for r in rows if r.get("record_trimmed")),
             "n_patients": len(panel), "n_criteria": len(CRITERIA), "n_cells": len(rows),
             "patient_sample": a.patients or "full panel", "patient_seed": a.patient_seed,
             "unit_policy": a.unit_policy, "absent_means_override": a.absent_means_override,
