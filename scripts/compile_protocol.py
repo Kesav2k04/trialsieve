@@ -70,6 +70,10 @@ def main() -> int:
     ap.add_argument("--no-critic", action="store_true")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--only", default="", help="comma-separated criterion ids")
+    ap.add_argument("--split", default="held-out", choices=["held-out", "dev"],
+                    help="dev compiles the five unlabelled development trials "
+                         "instead of the three scored ones; see docs/DEV_SPLIT.md")
+    ap.add_argument("--dev-n", type=int, default=30)
     a = ap.parse_args()
 
     base_url, default_model = PROVIDERS[a.provider]
@@ -81,7 +85,12 @@ def main() -> int:
                     cassette_dir=run / "cassettes",
                     base_url=a.base_url or base_url)
 
-    todo = list(CRITERIA)
+    if a.split == "dev":
+        sys.path.insert(0, str(ROOT / "evaluation" / "dev"))
+        import dev_criteria
+        todo = dev_criteria.sample(a.dev_n)
+    else:
+        todo = list(CRITERIA)
     if a.only:
         want = {x.strip() for x in a.only.split(",")}
         todo = [c for c in todo if c["criterion_id"] in want]
