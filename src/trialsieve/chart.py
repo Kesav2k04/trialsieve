@@ -109,12 +109,32 @@ class Chart:
         want = set(codes)
         out = [o for o in self.observations
                if any(c.code in want for c in o.codings) and self._within(o.effective, days)]
-        out.sort(key=lambda o: (o.effective or dt.date.min))
+        # Tie-break explicitly on resource id. Relying on bundle order would make
+        # "the latest value" depend on how the flattener happened to walk the file,
+        # which is a silent nondeterminism that would propagate into gold labels.
+        out.sort(key=lambda o: (o.effective or dt.date.min, o.resource_id))
         return out
 
     def latest_observation(self, codes: Iterable[str], days: int | None = None) -> ObservationRow | None:
         rows = [o for o in self.observations_for(codes, days) if o.value is not None]
         return rows[-1] if rows else None
+
+    def same_day_conflict(self, codes: Iterable[str], days: int | None = None,
+                          rel_tol: float = 1e-6) -> bool:
+        """True when the most recent date carries two different values for one code.
+
+        Picking one of them by sort order would be a coin flip dressed as a
+        measurement, so the evaluator turns this into UNKNOWN instead.
+        """
+        rows = [o for o in self.observations_for(codes, days) if o.value is not None]
+        if len(rows) < 2:
+            return False
+        last = rows[-1].effective
+        same = [o for o in rows if o.effective == last]
+        if len(same) < 2:
+            return False
+        lo, hi = min(o.value for o in same), max(o.value for o in same)
+        return abs(hi - lo) > rel_tol * max(1.0, abs(hi))
 
     def conditions_for(self, codes: Iterable[str], days: int | None = None,
                        active_only: bool = False) -> list[ConditionRow]:

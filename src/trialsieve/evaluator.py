@@ -189,8 +189,10 @@ class Evaluator:
 
         window = f" within {days} days of {self.chart.index_date}" if days else ""
         if rows:
+            # Evidence is kept whole. Truncation belongs to the renderer, and doing
+            # it here once meant a count leaf silently capped at the display limit.
             return Result(T, f"{len(rows)} matching {domain} record(s){window}",
-                          evidence=ev[:6], op="exists")
+                          evidence=ev, op="exists")
 
         note = ("the compiler declared this domain complete for these codes, so "
                 "silence is read as absence" if absent == "false" else
@@ -245,10 +247,50 @@ class Evaluator:
             return self._derived(v)
 
         if kind == "count":
-            r = self._exists(v["query"])
-            return (float(len(r.evidence)) if r.value is T else 0.0), "count", r.evidence
+            return self._count(v["query"])
 
         return None, f"value kind {kind!r} is not numeric", []
+
+    def _count(self, q: dict) -> tuple[float | None, str, list[Evidence]]:
+        """How many matching records exist.
+
+        Two traps live here, and both were found in review of this file.
+
+        A count taken from `_exists` would inherit its evidence truncation and
+        silently cap at the display limit. So the rows are counted directly.
+
+        More seriously: when the query is open-world and nothing matches, the
+        honest answer is "the record does not say how many", not zero. Returning
+        0.0 there would commit a number on silence, which is the exact failure
+        this project exists to prevent, committed by the engine that claims to
+        prevent it.
+        """
+        domain, codes = q["domain"], q["codes"]
+        days = q.get("within_days")
+        active = bool(q.get("active_only"))
+        absent = self.default_absent_means or q["absent_means"]
+
+        if domain == "condition":
+            rows: list[Any] = self.chart.conditions_for(codes, days, active)
+            ev = [Evidence("condition", _c(r), _d(r), "present", str(r.onset or ""),
+                           r.resource_id) for r in rows]
+        elif domain == "medication":
+            rows = self.chart.medications_for(codes, days, active)
+            ev = [Evidence("medication", _c(r), _d(r), r.status or "", str(r.authored or ""),
+                           r.resource_id) for r in rows]
+        elif domain == "procedure":
+            rows = self.chart.procedures_for(codes, days)
+            ev = [Evidence("procedure", _c(r), _d(r), "performed", str(r.performed or ""),
+                           r.resource_id) for r in rows]
+        else:
+            rows = self.chart.observations_for(codes, days)
+            ev = [Evidence("observation", _c(r), _d(r), _fmt(r.value), str(r.effective or ""),
+                           r.resource_id) for r in rows]
+
+        if not rows and absent == "unknown":
+            return None, (f"no matching {domain} record, and this query is open-world, "
+                          f"so the count is undetermined rather than zero"), []
+        return float(len(rows)), f"count of matching {domain} records", ev
 
     def _obs_value(self, v: dict, want_unit: str | None
                    ) -> tuple[float | None, str, list[Evidence]]:
@@ -262,6 +304,10 @@ class Evaluator:
                 return None, (f"most recent {last.codings[0].display} is {last.effective}, "
                               f"outside the {days}-day window ending {self.chart.index_date}"), []
             return None, f"no observation with code {'/'.join(codes)} in the record", []
+
+        if agg in ("latest", "any") and self.chart.same_day_conflict(codes, days):
+            return None, (f"two different values for {'/'.join(codes)} on the same most recent "
+                          f"date; choosing one would be arbitrary"), []
 
         row = _pick(rows, agg)
         loinc = next((c.code for c in row.codings if c.code in codes), codes[0])

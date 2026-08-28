@@ -210,6 +210,41 @@ def derived_inputs(name: str) -> list[str]:
     }.get(name, [])
 
 
+def is_demographic_only(e: dict) -> bool:
+    """True when the predicate reads nothing but age, sex and constants.
+
+    Age and sex bounds are present on essentially every Synthea patient, so a
+    system that rules people out on those alone would post a large panel
+    reduction while telling a coordinator nothing they did not already know.
+    The headline is therefore reported as the reduction *beyond* what these
+    predicates achieve on their own, and this is the test that separates them.
+    """
+    if referenced_codes(e):
+        return False
+    kinds: set[str] = set()
+
+    def walk_value(v: dict) -> None:
+        kinds.add(v.get("val", "?"))
+
+    def walk(x: dict) -> None:
+        op = x.get("op")
+        if op in {"and", "or", "at_least"}:
+            for a in x["args"]:
+                walk(a)
+        elif op == "not":
+            walk(x["arg"])
+        elif op == "compare":
+            walk_value(x["left"])
+            walk_value(x["right"])
+        elif op == "between":
+            walk_value(x["value"])
+        elif op == "exists":
+            kinds.add("exists")
+
+    walk(e)
+    return kinds.issubset({"age", "sex", "literal"})
+
+
 def open_world_leaves(e: dict) -> int:
     """How many leaves treat silence as unknown. Used to summarise a criterion."""
     n = 0

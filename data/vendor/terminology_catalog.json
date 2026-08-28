@@ -1,3539 +1,4521 @@
 {
  "Condition": [
   {
-   "system": "http://snomed.info/sct",
    "code": "160903007",
    "display": "Full-time employment (finding)",
    "n_resources": 6379,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "73595000",
    "display": "Stress (finding)",
    "n_resources": 2246,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "160904001",
    "display": "Part-time employment (finding)",
    "n_resources": 976,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "444814009",
    "display": "Viral sinusitis (disorder)",
    "n_resources": 585,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "423315002",
    "display": "Limited social contact (finding)",
    "n_resources": 535,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "422650009",
    "display": "Social isolation (finding)",
    "n_resources": 515,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "741062008",
    "display": "Not in labor force (finding)",
    "n_resources": 421,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "706893006",
    "display": "Victim of intimate partner abuse (finding)",
    "n_resources": 379,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "195662009",
    "display": "Acute viral pharyngitis (disorder)",
    "n_resources": 347,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "10509002",
    "display": "Acute bronchitis (disorder)",
    "n_resources": 266,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "424393004",
    "display": "Reports of violence in the environment (finding)",
    "n_resources": 260,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "72892002",
    "display": "Normal pregnancy",
    "n_resources": 258,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "224299000",
    "display": "Received higher education (finding)",
    "n_resources": 257,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "162864005",
    "display": "Body mass index 30+ - obesity (finding)",
    "n_resources": 209,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "160968000",
    "display": "Risk activity involvement (finding)",
    "n_resources": 179,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "15777000",
    "display": "Prediabetes",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "271737000",
    "display": "Anemia (disorder)",
    "n_resources": 145,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "59621000",
    "display": "Hypertension",
    "n_resources": 141,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "5251000175109",
    "display": "Received certificate of high school equivalency (finding)",
    "n_resources": 116,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65363002",
    "display": "Otitis media",
    "n_resources": 107,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "19169002",
    "display": "Miscarriage in first trimester",
    "n_resources": 96,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "266948004",
    "display": "Has a criminal record (finding)",
    "n_resources": 95,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "278860009",
    "display": "Chronic low back pain (finding)",
    "n_resources": 91,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "40055000",
    "display": "Chronic sinusitis (disorder)",
    "n_resources": 88,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "10939881000119104",
    "display": "Unhealthy alcohol drinking behavior (finding)",
    "n_resources": 82,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "43878008",
    "display": "Streptococcal sore throat (disorder)",
    "n_resources": 78,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "105531004",
    "display": "Housing unsatisfactory (finding)",
    "n_resources": 74,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "80583007",
    "display": "Severe anxiety (panic) (finding",
    "n_resources": 59,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "44465007",
    "display": "Sprain of ankle",
    "n_resources": 55,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "1121000119107",
    "display": "Chronic neck pain (finding)",
    "n_resources": 54,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "224295006",
    "display": "Only received primary school education (finding)",
    "n_resources": 54,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "713458007",
    "display": "Lack of access to transportation (finding)",
    "n_resources": 52,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "266934004",
    "display": "Transport problems (finding)",
    "n_resources": 51,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "55822004",
    "display": "Hyperlipidemia",
    "n_resources": 50,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "840544004",
    "display": "Suspected COVID-19",
    "n_resources": 45,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "840539006",
    "display": "COVID-19",
    "n_resources": 43,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "75498004",
    "display": "Acute bacterial sinusitis (disorder)",
    "n_resources": 38,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "73438004",
    "display": "Unemployed (finding)",
    "n_resources": 37,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "386661006",
    "display": "Fever (finding)",
    "n_resources": 37,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "361055000",
    "display": "Misuses drugs (finding)",
    "n_resources": 36,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "49727002",
    "display": "Cough (finding)",
    "n_resources": 34,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "44054006",
    "display": "Diabetes",
    "n_resources": 32,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "302870006",
    "display": "Hypertriglyceridemia (disorder)",
    "n_resources": 31,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "64859006",
    "display": "Osteoporosis (disorder)",
    "n_resources": 30,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "68496003",
    "display": "Polyp of colon",
    "n_resources": 30,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "62106007",
    "display": "Concussion with no loss of consciousness",
    "n_resources": 29,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "237602007",
    "display": "Metabolic syndrome X (disorder)",
    "n_resources": 29,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "36971009",
    "display": "Sinusitis (disorder)",
    "n_resources": 29,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "74400008",
    "display": "Appendicitis",
    "n_resources": 29,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "428251008",
    "display": "History of appendectomy",
    "n_resources": 29,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "446654005",
    "display": "Refugee (person)",
    "n_resources": 28,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "124171000119105",
    "display": "Chronic intractable migraine without aura",
    "n_resources": 26,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "283385000",
    "display": "Laceration of thigh",
    "n_resources": 26,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "128613002",
    "display": "Seizure disorder",
    "n_resources": 26,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "703151001",
    "display": "History of single seizure (situation)",
    "n_resources": 26,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "53741008",
    "display": "Coronary Heart Disease",
    "n_resources": 25,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "230690007",
    "display": "Stroke",
    "n_resources": 25,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "263102004",
    "display": "Fracture subluxation of wrist",
    "n_resources": 22,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "82423001",
    "display": "Chronic pain",
    "n_resources": 22,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "239873007",
    "display": "Osteoarthritis of knee",
    "n_resources": 22,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "301011002",
    "display": "Escherichia coli urinary tract infection",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65966004",
    "display": "Fracture of forearm",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "39848009",
    "display": "Whiplash injury to neck",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "156073000",
    "display": "Fetus with unknown complication",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "196416002",
    "display": "Impacted molars",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "55680006",
    "display": "Drug overdose",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "70704007",
    "display": "Sprain of wrist",
    "n_resources": 20,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "36955009",
    "display": "Loss of taste (finding)",
    "n_resources": 19,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "80394007",
    "display": "Hyperglycemia (disorder)",
    "n_resources": 19,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "410429000",
    "display": "Cardiac Arrest",
    "n_resources": 19,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "429007001",
    "display": "History of cardiac arrest (situation)",
    "n_resources": 19,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "284549007",
    "display": "Laceration of hand",
    "n_resources": 19,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "49436004",
    "display": "Atrial Fibrillation",
    "n_resources": 18,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "26929004",
    "display": "Alzheimer's disease (disorder)",
    "n_resources": 17,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "233678006",
    "display": "Childhood asthma",
    "n_resources": 17,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "224355006",
    "display": "Served in armed forces (finding)",
    "n_resources": 17,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "370247008",
    "display": "Facial laceration",
    "n_resources": 16,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "248595008",
    "display": "Sputum finding (finding)",
    "n_resources": 16,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "16114001",
    "display": "Fracture of ankle",
    "n_resources": 16,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "24079001",
    "display": "Atopic dermatitis",
    "n_resources": 16,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "91302008",
    "display": "Sepsis (disorder)",
    "n_resources": 15,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "284551006",
    "display": "Laceration of foot",
    "n_resources": 15,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "84229001",
    "display": "Fatigue (finding)",
    "n_resources": 15,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "283371005",
    "display": "Laceration of forearm",
    "n_resources": 14,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "79586000",
    "display": "Tubal pregnancy",
    "n_resources": 13,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "233604007",
    "display": "Pneumonia (disorder)",
    "n_resources": 13,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "38822007",
    "display": "Cystitis",
    "n_resources": 13,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "84757009",
    "display": "Epilepsy",
    "n_resources": 13,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "403190006",
    "display": "First degree burn",
    "n_resources": 12,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "232353008",
    "display": "Perennial allergic rhinitis with seasonal variation",
    "n_resources": 12,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "25064002",
    "display": "Headache (finding)",
    "n_resources": 12,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "58150001",
    "display": "Fracture of clavicle",
    "n_resources": 12,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "198992004",
    "display": "Antepartum eclampsia",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "127013003",
    "display": "Diabetic renal disease (disorder)",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "307731004",
    "display": "Injury of tendon of the rotator cuff of shoulder",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "32911000",
    "display": "Homeless (finding)",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "201834006",
    "display": "Localized, primary osteoarthritis of the hand",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "389087006",
    "display": "Hypoxemia (disorder)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "271825005",
    "display": "Respiratory distress (finding)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "62564004",
    "display": "Concussion with loss of consciousness",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "192127007",
    "display": "Child attention deficit disorder",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "446096008",
    "display": "Perennial allergic rhinitis",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "431855005",
    "display": "Chronic kidney disease stage 1 (disorder)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "88805009",
    "display": "Chronic congestive heart failure (disorder)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "367498001",
    "display": "Seasonal allergic rhinitis",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "203082005",
    "display": "Fibromyalgia (disorder)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "443165006",
    "display": "Pathological fracture due to osteoporosis (disorder)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "713197008",
    "display": "Recurrent rectal polyp",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "359817006",
    "display": "Closed fracture of hip",
    "n_resources": 9,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "368581000119106",
    "display": "Neuropathy due to type 2 diabetes mellitus (disorder)",
    "n_resources": 9,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "403191005",
    "display": "Second degree burn",
    "n_resources": 9,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "422034002",
    "display": "Diabetic retinopathy associated with type II diabetes mellitus (disorder)",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "126906006",
    "display": "Neoplasm of prostate",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "398254007",
    "display": "Preeclampsia",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "267036007",
    "display": "Dyspnea (finding)",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "56018004",
    "display": "Wheezing (finding)",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "22298006",
    "display": "Myocardial Infarction",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "399211009",
    "display": "History of myocardial infarction (situation)",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "92691004",
    "display": "Carcinoma in situ of prostate (disorder)",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "47693006",
    "display": "Rupture of appendix",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "33737001",
    "display": "Fracture of rib",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "239872002",
    "display": "Osteoarthritis of hip",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "5602001",
    "display": "Opioid abuse (disorder)",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "197927001",
    "display": "Recurrent urinary tract infection",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "110030002",
    "display": "Concussion injury of brain",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "241929008",
    "display": "Acute allergic reaction",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "254837009",
    "display": "Malignant neoplasm of breast (disorder)",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "43724002",
    "display": "Chill (finding)",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "1551000119108",
    "display": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "162573006",
    "display": "Suspected lung cancer (situation)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "254637007",
    "display": "Non-small cell lung cancer (disorder)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "424132000",
    "display": "Non-small cell carcinoma of lung, TNM stage 1 (disorder)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "35999006",
    "display": "Blighted ovum",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "40275004",
    "display": "Contact dermatitis",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "30832001",
    "display": "Rupture of patellar tendon",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "267102003",
    "display": "Sore throat symptom (finding)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "408512008",
    "display": "Body mass index 40+ - severely obese (finding)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "87433001",
    "display": "Pulmonary emphysema (disorder)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "233604007",
    "display": "Pneumonia",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "427419006",
    "display": "Transformed migraine (disorder)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "449868002",
    "display": "Smokes tobacco daily",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "706870000",
    "display": "Acute pulmonary embolism (disorder)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "770349000",
    "display": "Sepsis caused by virus (disorder)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "68962001",
    "display": "Muscle pain (finding)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "57676002",
    "display": "Joint pain (finding)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "363406005",
    "display": "Malignant tumor of colon",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "90560007",
    "display": "Gout",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "6072007",
    "display": "Bleeding from anus",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "236077008",
    "display": "Protracted diarrhea",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "128188000",
    "display": "Cerebral palsy (disorder)",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "221360009",
    "display": "Spasticity (finding)",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "110359009",
    "display": "Intellectual disability (disorder)",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "69896004",
    "display": "Rheumatoid arthritis",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "275272006",
    "display": "Brain damage - traumatic",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "66857006",
    "display": "Hemoptysis (finding)",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "132281000119108",
    "display": "Acute deep venous thrombosis (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "267060006",
    "display": "Diarrhea symptom (finding)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "195967001",
    "display": "Asthma",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "22253000",
    "display": "Pain (finding)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "84757009",
    "display": "Epilepsy (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "235595009",
    "display": "Gastroesophageal reflux disease (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "262574004",
    "display": "Bullet wound",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "76571007",
    "display": "Septic shock (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "97331000119101",
    "display": "Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "95417003",
    "display": "Primary fibromyalgia syndrome",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65275009",
    "display": "Acute Cholecystitis",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "235919008",
    "display": "Cholelithiasis",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "109838007",
    "display": "Overlapping malignant neoplasm of colon",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "7200002",
    "display": "Alcoholism",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65710008",
    "display": "Acute respiratory failure (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "94260004",
    "display": "Secondary malignant neoplasm of colon",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "403192003",
    "display": "Third degree burn",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "67782005",
    "display": "Acute respiratory distress syndrome (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "185086009",
    "display": "Chronic obstructive bronchitis (disorder)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "68235000",
    "display": "Nasal congestion (finding)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "239720000",
    "display": "Tear of meniscus of knee",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "45816000",
    "display": "Pyelonephritis",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "83664006",
    "display": "Idiopathic atrophic hypothyroidism",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "225444004",
    "display": "At risk for suicide (finding)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "230265002",
    "display": "Familial Alzheimer's disease of early onset (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "398152000",
    "display": "Poor muscle tone (finding)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "157265008",
    "display": "Dislocation of hip joint (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "1501000119109",
    "display": "Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "422587007",
    "display": "Nausea (finding)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "249497008",
    "display": "Vomiting symptom (finding)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "27942005",
    "display": "Shock (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "76916001",
    "display": "Spina bifida occulta (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "40095003",
    "display": "Injury of kidney (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "698754002",
    "display": "Chronic paralysis due to lesion of spinal cord",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "444470001",
    "display": "Injury of anterior cruciate ligament",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "431856006",
    "display": "Chronic kidney disease stage 2 (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "90781000119102",
    "display": "Microalbuminuria due to type 2 diabetes mellitus (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "314994000",
    "display": "Metastasis from malignant tumor of prostate (disorder)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
+   "units": {}
+  }
+ ],
+ "Medication": [
+  {
+   "code": "314076",
+   "display": "lisinopril 10 MG Oral Tablet",
+   "n_resources": 3777,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "310798",
+   "display": "Hydrochlorothiazide 25 MG Oral Tablet",
+   "n_resources": 3281,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "308136",
+   "display": "amLODIPine 2.5 MG Oral Tablet",
+   "n_resources": 2816,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "106892",
+   "display": "insulin human, isophane 70 UNT/ML / Regular Insulin, Human 30 UNT/ML Injectable Suspension [Humulin]",
+   "n_resources": 1343,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "895994",
+   "display": "120 ACTUAT Fluticasone propionate 0.044 MG/ACTUAT Metered Dose Inhaler",
+   "n_resources": 1199,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "2123111",
+   "display": "NDA020503 200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler",
+   "n_resources": 1197,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "205923",
+   "display": "1 ML Epoetin Alfa 4000 UNT/ML Injection [Epogen]",
+   "n_resources": 1079,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "860975",
+   "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
+   "n_resources": 1030,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "314231",
+   "display": "Simvastatin 10 MG Oral Tablet",
+   "n_resources": 904,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "855332",
+   "display": "Warfarin Sodium 5 MG Oral Tablet",
+   "n_resources": 713,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "197604",
+   "display": "Digoxin 0.125 MG Oral Tablet",
+   "n_resources": 713,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "897718",
+   "display": "Verapamil Hydrochloride 40 MG",
+   "n_resources": 702,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "705129",
+   "display": "Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray",
+   "n_resources": 352,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "313782",
+   "display": "Acetaminophen 325 MG Oral Tablet",
+   "n_resources": 285,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "206905",
+   "display": "Ibuprofen 400 MG Oral Tablet [Ibu]",
+   "n_resources": 285,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "312961",
+   "display": "Simvastatin 20 MG Oral Tablet",
+   "n_resources": 268,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "197361",
+   "display": "Amlodipine 5 MG Oral Tablet",
+   "n_resources": 251,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "309362",
+   "display": "Clopidogrel 75 MG Oral Tablet",
+   "n_resources": 245,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "209387",
+   "display": "Acetaminophen 325 MG Oral Tablet [Tylenol]",
+   "n_resources": 217,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "856987",
+   "display": "Acetaminophen 300 MG / Hydrocodone Bitartrate 5 MG Oral Tablet",
+   "n_resources": 201,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "896209",
+   "display": "60 ACTUAT Fluticasone propionate 0.25 MG/ACTUAT / salmeterol 0.05 MG/ACTUAT Dry Powder Inhaler",
+   "n_resources": 187,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1049625",
+   "display": "Acetaminophen 325 MG / Oxycodone Hydrochloride 10 MG Oral Tablet [Percocet]",
+   "n_resources": 162,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "849574",
+   "display": "Naproxen sodium 220 MG Oral Tablet",
+   "n_resources": 126,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "562251",
+   "display": "Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet",
+   "n_resources": 125,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "245134",
+   "display": "72 HR Fentanyl 0.025 MG/HR Transdermal System",
+   "n_resources": 121,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1049504",
+   "display": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 10 MG Extended Release Oral Tablet [Oxycontin]",
+   "n_resources": 100,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1860491",
+   "display": "12 HR Hydrocodone Bitartrate 10 MG Extended Release Oral Capsule",
+   "n_resources": 99,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "835603",
+   "display": "tramadol hydrochloride 50 MG Oral Tablet",
+   "n_resources": 93,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "310965",
+   "display": "Ibuprofen 200 MG Oral Tablet",
+   "n_resources": 79,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "313820",
+   "display": "Acetaminophen 160 MG Chewable Tablet",
+   "n_resources": 68,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "198405",
+   "display": "Ibuprofen 100 MG Oral Tablet",
+   "n_resources": 67,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "757594",
+   "display": "Jolivette 28 Day Pack",
+   "n_resources": 66,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1736854",
+   "display": "Cisplatin 50 MG Injection",
+   "n_resources": 66,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "583214",
+   "display": "PACLitaxel 100 MG Injection",
+   "n_resources": 66,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1043400",
+   "display": "Acetaminophen 21.7 MG/ML / Dextromethorphan Hydrobromide 1 MG/ML / doxylamine succinate 0.417 MG/ML Oral Solution",
+   "n_resources": 64,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "389221",
+   "display": "Etonogestrel 68 MG Drug Implant",
+   "n_resources": 61,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "308192",
+   "display": "Amoxicillin 500 MG Oral Tablet",
+   "n_resources": 60,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1870230",
+   "display": "NDA020800 0.3 ML Epinephrine 1 MG/ML Auto-Injector",
+   "n_resources": 59,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "749762",
+   "display": "Seasonique 91 Day Pack",
+   "n_resources": 48,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "834061",
+   "display": "Penicillin V Potassium 250 MG Oral Tablet",
+   "n_resources": 46,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "748962",
+   "display": "Camila 28 Day Pack",
+   "n_resources": 45,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1000126",
+   "display": "1 ML medroxyprogesterone acetate 150 MG/ML Injection",
+   "n_resources": 43,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "831533",
+   "display": "Errin 28 Day Pack",
+   "n_resources": 43,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "748879",
+   "display": "Levora 0.15/30 28 Day Pack",
+   "n_resources": 43,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1860154",
+   "display": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 15 MG Extended Release Oral Tablet",
+   "n_resources": 42,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "748856",
+   "display": "Yaz 28 Day Pack",
+   "n_resources": 40,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1049221",
+   "display": "Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet",
+   "n_resources": 39,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "978950",
+   "display": "Natazia 28 Day Pack",
+   "n_resources": 37,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "751905",
+   "display": "Trinessa 28 Day Pack",
+   "n_resources": 36,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "311989",
+   "display": "Nitrofurantoin 5 MG/ML Oral Suspension",
+   "n_resources": 35,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1094107",
+   "display": "Phenazopyridine hydrochloride 100 MG Oral Tablet",
+   "n_resources": 35,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "807283",
+   "display": "Mirena 52 MG Intrauterine System",
+   "n_resources": 34,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "313988",
+   "display": "Furosemide 40 MG Oral Tablet",
+   "n_resources": 34,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "856987",
+   "display": "Acetaminophen 300 MG / HYDROcodone Bitartrate 5 MG Oral Tablet",
+   "n_resources": 34,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "993770",
+   "display": "Acetaminophen 300 MG / Codeine Phosphate 15 MG Oral Tablet",
+   "n_resources": 32,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "351266",
+   "display": "buprenorphine 2 MG / naloxone 0.5 MG Sublingual Tablet",
+   "n_resources": 30,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "834102",
+   "display": "Penicillin V Potassium 500 MG Oral Tablet",
+   "n_resources": 29,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "2001499",
+   "display": "Vitamin B 12 5 MG/ML Injectable Solution",
+   "n_resources": 25,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "861467",
+   "display": "Meperidine Hydrochloride 50 MG Oral Tablet",
+   "n_resources": 24,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1367439",
+   "display": "NuvaRing 0.12/0.015 MG per 24HR 21 Day Vaginal Ring",
+   "n_resources": 24,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "583214",
+   "display": "Paclitaxel 100 MG Injection",
+   "n_resources": 24,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1534809",
+   "display": "168 HR Ethinyl Estradiol 0.00146 MG/HR / norelgestromin 0.00625 MG/HR Transdermal System",
+   "n_resources": 23,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "904419",
+   "display": "Alendronic acid 10 MG Oral Tablet",
+   "n_resources": 22,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1049630",
+   "display": "diphenhydrAMINE Hydrochloride 25 MG Oral Tablet",
+   "n_resources": 21,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1000126",
+   "display": "1 ML medroxyPROGESTERone acetate 150 MG/ML Injection",
+   "n_resources": 21,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "106258",
+   "display": "Hydrocortisone 10 MG/ML Topical Cream",
+   "n_resources": 20,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1804799",
+   "display": "Alteplase 100 MG Injection",
+   "n_resources": 18,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "310325",
+   "display": "ferrous sulfate 325 MG Oral Tablet",
+   "n_resources": 18,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1856546",
+   "display": "Kyleena 19.5 MG Intrauterine System",
+   "n_resources": 17,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "665078",
+   "display": "Loratadine 5 MG Chewable Tablet",
+   "n_resources": 17,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "309097",
+   "display": "Cefuroxime 250 MG Oral Tablet",
+   "n_resources": 16,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "477045",
+   "display": "Chlorpheniramine Maleate 2 MG/ML Oral Solution",
+   "n_resources": 16,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "308182",
+   "display": "Amoxicillin 250 MG Oral Capsule",
+   "n_resources": 16,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1734919",
+   "display": "Cyclophosphamide 1000 MG Injection",
+   "n_resources": 16,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1049221",
+   "display": "Acetaminophen 325 MG / oxyCODONE Hydrochloride 5 MG Oral Tablet",
+   "n_resources": 13,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1014676",
+   "display": "cetirizine hydrochloride 5 MG Oral Tablet",
+   "n_resources": 12,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "997488",
+   "display": "Fexofenadine hydrochloride 30 MG Oral Tablet",
+   "n_resources": 12,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "204892",
+   "display": "clonazePAM 0.25 MG Oral Tablet",
+   "n_resources": 12,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1605257",
+   "display": "Liletta 52 MG Intrauterine System",
+   "n_resources": 11,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "197591",
+   "display": "Diazepam 5 MG Oral Tablet",
+   "n_resources": 11,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "857005",
+   "display": "Acetaminophen 325 MG / HYDROcodone Bitartrate 7.5 MG Oral Tablet",
+   "n_resources": 11,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "310436",
+   "display": "Galantamine 4 MG Oral Tablet",
+   "n_resources": 10,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1660014",
+   "display": "1 ML Epinephrine 1 MG/ML Injection",
+   "n_resources": 8,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1190795",
+   "display": "Atropine Sulfate 1 MG/ML Injectable Solution",
+   "n_resources": 8,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "200033",
+   "display": "carvedilol 25 MG Oral Tablet",
+   "n_resources": 8,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "198014",
+   "display": "Naproxen 500 MG Oral Tablet",
+   "n_resources": 8,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "597195",
+   "display": "Carboplatin 10 MG/ML Injectable Solution",
+   "n_resources": 8,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1732186",
+   "display": "100 ML Epirubicin Hydrochloride 2 MG/ML Injection",
+   "n_resources": 8,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1860480",
+   "display": "1 ML DOCEtaxel 20 MG/ML Injection",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "752899",
+   "display": "0.25 ML Leuprolide Acetate 30 MG/ML Prefilled Syringe",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "979492",
+   "display": "losartan potassium 50 MG Oral Tablet",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "834357",
+   "display": "3 ML Amiodarone hydrocholoride 50 MG/ML Prefilled Syringe",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "996740",
+   "display": "Memantine hydrochloride 2 MG/ML Oral Solution",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1803932",
+   "display": "Leucovorin 100 MG Injection",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1736776",
+   "display": "10 ML oxaliplatin 5 MG/ML Injection",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "749785",
+   "display": "Ortho Tri-Cyclen 28 Day Pack",
+   "n_resources": 7,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "833036",
+   "display": "Captopril 25 MG Oral Tablet",
+   "n_resources": 6,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "197378",
+   "display": "Astemizole 10 MG Oral Tablet",
+   "n_resources": 6,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "243670",
+   "display": "Aspirin 81 MG Oral Tablet",
+   "n_resources": 6,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1649987",
+   "display": "doxycycline hyclate 100 MG",
+   "n_resources": 6,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "312617",
+   "display": "predniSONE 5 MG Oral Tablet",
+   "n_resources": 6,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "749882",
+   "display": "Norinyl 1+50 28 Day Pack",
+   "n_resources": 5,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "308971",
+   "display": "Carbamazepine[Tegretol]",
+   "n_resources": 5,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "197319",
+   "display": "Allopurinol 100 MG Oral Tablet",
+   "n_resources": 5,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "259255",
+   "display": "Atorvastatin 80 MG Oral Tablet",
+   "n_resources": 4,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "608139",
+   "display": "atomoxetine 100 MG Oral Capsule",
+   "n_resources": 4,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "198031",
+   "display": "24hr nicotine transdermal patch",
+   "n_resources": 4,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "997501",
+   "display": "Fexofenadine hydrochloride 60 MG Oral Tablet",
+   "n_resources": 3,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "311995",
+   "display": "NITROFURANTOIN, MACROCRYSTALS 50 MG Oral Capsule",
+   "n_resources": 3,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "596926",
+   "display": "duloxetine 20 MG Delayed Release Oral Capsule",
+   "n_resources": 3,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "997223",
+   "display": "Donepezil hydrochloride 10 MG Oral Tablet",
+   "n_resources": 3,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1359133",
+   "display": "Estrostep Fe 28 Day Pack",
+   "n_resources": 3,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1100184",
+   "display": "Donepezil hydrochloride 23 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1091392",
+   "display": "Methylphenidate Hydrochloride 20 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "311372",
+   "display": "Loratadine 10 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1014678",
+   "display": "cetirizine hydrochloride 10 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "312938",
+   "display": "Sertraline 100 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "212446",
+   "display": "Azithromycin 250mg",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1659263",
+   "display": "1 ML heparin sodium, porcine 5000 UNT/ML Injection",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "313002",
+   "display": "Sodium Chloride 9 MG/ML Injectable Solution",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1740467",
+   "display": "2 ML Ondansetron 2 MG/ML Injection",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1732136",
+   "display": "1 ML Morphine Sulfate 5 MG/ML Injection",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1659149",
+   "display": "Piperacillin 4000 MG / tazobactam 500 MG Injection",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "284215",
+   "display": "Clindamycin 300mg",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "199224",
+   "display": "anastrozole 1 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1601380",
+   "display": "palbociclib 100 MG Oral Capsule",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "197541",
+   "display": "Colchicine 0.6 MG Oral Tablet",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1366343",
+   "display": "Levonorgestrel 0.00354 MG/HR Drug Implant",
+   "n_resources": 2,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "235389",
+   "display": "Mestranol / Norethynodrel [Enovid]",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "105585",
+   "display": "Methotrexate 2.5 MG Oral Tablet",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "966222",
+   "display": "Levothyroxine Sodium 0.075 MG Oral Tablet",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "313185",
+   "display": "Tacrine 10 MG Oral Capsule",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "312615",
+   "display": "predniSONE 20 MG Oral Tablet",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "833135",
+   "display": "Milnacipran hydrochloride 100 MG Oral Tablet",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "856980",
+   "display": "Acetaminophen/Hydrocodone",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "1946840",
+   "display": "Verzenio 100 MG Oral Tablet",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "727762",
+   "display": "5 ML fulvestrant 50 MG/ML Prefilled Syringe",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "483438",
+   "display": "pregabalin 100 MG Oral Capsule",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "314077",
+   "display": "lisinopril 20 MG Oral Tablet",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+   "units": {}
+  },
+  {
+   "code": "309045",
+   "display": "Cefaclor 250 MG Oral Capsule",
+   "n_resources": 1,
+   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
    "units": {}
   }
  ],
  "Observation": [
   {
-   "system": "http://loinc.org",
    "code": "72514-3",
    "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
    "n_resources": 7146,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 7146
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8462-4",
    "display": "Diastolic Blood Pressure",
    "n_resources": 6103,
+   "system": "http://loinc.org",
    "units": {
     "mm[Hg]": 6103
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8480-6",
    "display": "Systolic Blood Pressure",
    "n_resources": 6103,
+   "system": "http://loinc.org",
    "units": {
     "mm[Hg]": 6103
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "85354-9",
    "display": "Blood Pressure",
    "n_resources": 6071,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "29463-7",
    "display": "Body Weight",
    "n_resources": 5956,
+   "system": "http://loinc.org",
    "units": {
     "kg": 5956
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8867-4",
    "display": "Heart rate",
    "n_resources": 5870,
+   "system": "http://loinc.org",
    "units": {
     "/min": 5870
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "9279-1",
    "display": "Respiratory rate",
    "n_resources": 5870,
+   "system": "http://loinc.org",
    "units": {
     "/min": 5870
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8302-2",
    "display": "Body Height",
    "n_resources": 5732,
+   "system": "http://loinc.org",
    "units": {
     "cm": 5732
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "72166-2",
    "display": "Tobacco smoking status NHIS",
    "n_resources": 5700,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "39156-5",
    "display": "Body Mass Index",
    "n_resources": 5187,
+   "system": "http://loinc.org",
    "units": {
     "kg/m2": 5187
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "93025-5",
    "display": "Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE]",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "76501-6",
    "display": "In the past year, have you been afraid of your partner or ex-partner?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93026-3",
    "display": "Do you feel physically and emotionally safe where you currently live?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93027-1",
    "display": "Are you a refugee?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93028-9",
    "display": "In the past year, have you spent more than 2 nights in a row in a jail, prison, detention center, or juvenile correctional facility?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93038-8",
    "display": "Stress is when someone feels tense, nervous, anxious or can't sleep at night because their mind is troubled. How stressed are you?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93029-7",
    "display": "How often do you see or talk to people that you care about and feel close to (For example: talking to friends on the phone, visiting friends or family, going to church or club meetings)?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93030-5",
    "display": "Has lack of transportation kept you from medical appointments, meetings, work, or from getting things needed for daily living?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93031-3",
    "display": "In the past year, have you or any family members you live with been unable to get any of the following when it was really needed?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "63586-2",
    "display": "During the past year, what was the total combined income for you and the family members you live with? This information will help us determine if you are eligible for any benefits.",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {
     "/a": 3835
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "76437-3",
    "display": "What is your main insurance?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "67875-5",
    "display": "What is your current work situation?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "82589-3",
    "display": "What is the highest level of school that you have finished?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "56799-0",
    "display": "What address do you live at?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93033-9",
    "display": "Are you worried about losing your housing?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "71802-3",
    "display": "What is your housing situation today?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "63512-8",
    "display": "How many family members, including yourself, do you currently live with?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {
     "{#}": 3835
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "54899-0",
    "display": "What language are you most comfortable speaking?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93034-7",
    "display": "Have you been discharged from the armed forces of the United States?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "93035-4",
    "display": "At any point in the past 2 years, has season or migrant farm work been your or your family's main source of income?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "32624-9",
    "display": "Which race(s) are you?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "56051-6",
    "display": "Are you Hispanic or Latino?",
    "n_resources": 3835,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "55758-7",
    "display": "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]",
    "n_resources": 2985,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 2985
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2339-0",
    "display": "Glucose",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6299-2",
    "display": "Urea Nitrogen",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "38483-4",
    "display": "Creatinine",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "49765-1",
    "display": "Calcium",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2947-0",
    "display": "Sodium",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6298-4",
    "display": "Potassium",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2069-3",
    "display": "Chloride",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "20565-8",
    "display": "Carbon Dioxide",
    "n_resources": 2521,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 2521
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "70274-6",
    "display": "Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]",
    "n_resources": 2194,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 2194
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2093-3",
    "display": "Total Cholesterol",
    "n_resources": 2044,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2044
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2571-8",
    "display": "Triglycerides",
    "n_resources": 2044,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2044
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "18262-6",
    "display": "Low Density Lipoprotein Cholesterol",
    "n_resources": 2044,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2044
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2085-9",
    "display": "High Density Lipoprotein Cholesterol",
    "n_resources": 2044,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2044
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "4548-4",
    "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
    "n_resources": 1874,
+   "system": "http://loinc.org",
    "units": {
     "%": 1874
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "59576-9",
    "display": "Body mass index (BMI) [Percentile] Per age and gender",
    "n_resources": 1489,
+   "system": "http://loinc.org",
    "units": {
     "%": 1489
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "718-7",
    "display": "Hemoglobin [Mass/volume] in Blood",
    "n_resources": 1396,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 1398
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "787-2",
    "display": "MCV [Entitic volume] by Automated count",
    "n_resources": 1391,
+   "system": "http://loinc.org",
    "units": {
     "fL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "785-6",
    "display": "MCH [Entitic mass] by Automated count",
    "n_resources": 1391,
+   "system": "http://loinc.org",
    "units": {
     "pg": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "786-4",
    "display": "MCHC [Mass/volume] by Automated count",
    "n_resources": 1391,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "777-3",
    "display": "Platelets [#/volume] in Blood by Automated count",
    "n_resources": 1391,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6690-2",
    "display": "Leukocytes [#/volume] in Blood by Automated count",
    "n_resources": 1342,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "789-8",
    "display": "Erythrocytes [#/volume] in Blood by Automated count",
    "n_resources": 1342,
+   "system": "http://loinc.org",
    "units": {
     "10*6/uL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "4544-3",
    "display": "Hematocrit [Volume Fraction] of Blood by Automated count",
    "n_resources": 1342,
+   "system": "http://loinc.org",
    "units": {
     "%": 1342
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "32207-3",
    "display": "Platelet distribution width [Entitic volume] in Blood by Automated count",
    "n_resources": 1212,
+   "system": "http://loinc.org",
    "units": {
     "fL": 1212
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "32623-1",
    "display": "Platelet mean volume [Entitic volume] in Blood by Automated count",
    "n_resources": 1212,
+   "system": "http://loinc.org",
    "units": {
     "fL": 1212
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "82667-7",
    "display": "Total score [DAST-10]",
    "n_resources": 1208,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 1208
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "75626-2",
    "display": "Total score [AUDIT-C]",
    "n_resources": 1202,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 1202
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "21000-5",
    "display": "Erythrocyte distribution width [Entitic volume] by Automated count",
    "n_resources": 1163,
+   "system": "http://loinc.org",
    "units": {
     "fL": 1212
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "76504-0",
    "display": "Total score [HARK]",
    "n_resources": 1156,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 1156
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "74006-8",
    "display": "Weight difference [Mass difference] --pre dialysis - post dialysis",
    "n_resources": 1079,
+   "system": "http://loinc.org",
    "units": {
     "kg": 1079
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "33914-3",
    "display": "Glomerular filtration rate/1.73 sq M.predicted",
    "n_resources": 888,
+   "system": "http://loinc.org",
    "units": {
-    "mL/min/{1.73_m2}": 695,
-    "mL/min": 888
+    "mL/min": 888,
+    "mL/min/{1.73_m2}": 695
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2885-2",
    "display": "Protein [Mass/volume] in Serum or Plasma",
    "n_resources": 880,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 882
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1751-7",
    "display": "Albumin [Mass/volume] in Serum or Plasma",
    "n_resources": 880,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 882
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1975-2",
    "display": "Bilirubin.total [Mass/volume] in Serum or Plasma",
    "n_resources": 880,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 880
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6768-6",
    "display": "Alkaline phosphatase [Enzymatic activity/volume] in Serum or Plasma",
    "n_resources": 880,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 880,
     "[iU]/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1742-6",
    "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
    "n_resources": 880,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 880,
     "[iU]/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1920-8",
    "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
    "n_resources": 880,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 880,
     "[iU]/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "77606-2",
    "display": "Weight-for-length Per age and sex",
    "n_resources": 778,
+   "system": "http://loinc.org",
    "units": {
     "%": 778
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "9843-4",
    "display": "Head Occipital-frontal circumference",
    "n_resources": 778,
+   "system": "http://loinc.org",
    "units": {
     "cm": 778
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "59460-6",
    "display": "Fall risk total [Morse Fall Scale]",
    "n_resources": 719,
+   "system": "http://loinc.org",
    "units": {
     "{#}": 719
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "59461-4",
    "display": "Fall risk level [Morse Fall Scale]",
    "n_resources": 719,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "10834-0",
    "display": "Globulin [Mass/volume] in Serum by calculation",
    "n_resources": 701,
+   "system": "http://loinc.org",
    "units": {
     "g/L": 701,
     "g/dL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "14959-1",
    "display": "Microalbumin Creatinine Ratio",
    "n_resources": 695,
+   "system": "http://loinc.org",
    "units": {
     "mg/g": 695
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "33914-3",
    "display": "Estimated Glomerular Filtration Rate",
    "n_resources": 695,
+   "system": "http://loinc.org",
    "units": {
-    "mL/min/{1.73_m2}": 695,
-    "mL/min": 888
+    "mL/min": 888,
+    "mL/min/{1.73_m2}": 695
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8310-5",
    "display": "Body temperature",
    "n_resources": 612,
+   "system": "http://loinc.org",
    "units": {
     "Cel": 612
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8331-1",
    "display": "Oral temperature",
    "n_resources": 612,
+   "system": "http://loinc.org",
    "units": {
     "Cel": 612
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "38208-5",
    "display": "Pain severity - Reported",
    "n_resources": 526,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 526
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "89204-2",
    "display": "Patient Health Questionnaire-9: Modified for Teens total score [Reported.PHQ.Teen]",
    "n_resources": 406,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 406
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "5767-9",
    "display": "Appearance of Urine",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5767-9",
    "display": "Odor of Urine",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "32167-9",
    "display": "Clarity of Urine",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5778-6",
    "display": "Color of Urine",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5792-7",
    "display": "Glucose [Mass/volume] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 254
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "25428-4",
    "display": "Glucose [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "20505-4",
    "display": "Bilirubin.total [Mass/volume] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 254
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "5770-3",
    "display": "Bilirubin.total [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5797-6",
    "display": "Ketones [Mass/volume] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 254
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2514-8",
    "display": "Ketones [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5811-5",
    "display": "Specific gravity of Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {
     "{nominal}": 254
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "5803-2",
    "display": "pH of Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {
     "pH": 254
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "5804-0",
    "display": "Protein [Mass/volume] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 254
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "20454-5",
    "display": "Protein [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5802-4",
    "display": "Nitrite [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5794-3",
    "display": "Hemoglobin [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "5799-2",
    "display": "Leukocyte esterase [Presence] in Urine by Test strip",
    "n_resources": 254,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "2708-6",
    "display": "Oxygen saturation in Arterial blood",
    "n_resources": 247,
+   "system": "http://loinc.org",
    "units": {
     "%": 247
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "59408-5",
    "display": "Oxygen saturation in Arterial blood by Pulse oximetry",
    "n_resources": 247,
+   "system": "http://loinc.org",
    "units": {
     "%": 247
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "91148-7",
    "display": "Pain intensity, Enjoyment of life, General activity (PEG) 3 item pain scale",
    "n_resources": 244,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "91146-1",
    "display": "What number best describes how, during the past week, pain has interfered with your general activity?",
    "n_resources": 244,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 244
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "91145-3",
    "display": "What number best describes how, during the past week, pain has interfered with your enjoyment of life?",
    "n_resources": 244,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 244
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "75893-8",
    "display": "What number best describes your pain on average in the past week?",
    "n_resources": 244,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 244
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "44261-6",
    "display": "Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]",
    "n_resources": 191,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 191
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "788-0",
    "display": "Erythrocyte distribution width [Ratio] by Automated count",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "%": 179
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2345-7",
    "display": "Glucose [Mass/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "3094-0",
    "display": "Urea nitrogen [Mass/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2160-0",
    "display": "Creatinine [Mass/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "17861-6",
    "display": "Calcium [Mass/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2951-2",
    "display": "Sodium [Moles/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2823-3",
    "display": "Potassium [Moles/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2075-0",
    "display": "Chloride [Moles/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2028-9",
    "display": "Carbon dioxide, total [Moles/volume] in Serum or Plasma",
    "n_resources": 179,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "65750-2",
    "display": "Drugs of abuse 5 panel - Urine by Screen method",
    "n_resources": 153,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "2276-4",
    "display": "Ferritin [Mass/volume] in Serum or Plasma",
    "n_resources": 126,
+   "system": "http://loinc.org",
    "units": {
     "ug/L": 126
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "89579-7",
    "display": "Troponin I.cardiac [Mass/volume] in Serum or Plasma by High sensitivity method",
    "n_resources": 126,
+   "system": "http://loinc.org",
    "units": {
     "pg/mL": 126
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "770-8",
    "display": "Neutrophils/100 leukocytes in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "%": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "736-9",
    "display": "Lymphocytes/100 leukocytes in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "%": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "5905-5",
    "display": "Monocytes/100 leukocytes in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "%": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "713-8",
    "display": "Eosinophils/100 leukocytes in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "%": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "706-2",
    "display": "Basophils/100 leukocytes in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "%": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "751-8",
    "display": "Neutrophils [#/volume] in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "731-0",
    "display": "Lymphocytes [#/volume] in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "742-7",
    "display": "Monocytes [#/volume] in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "711-2",
    "display": "Eosinophils [#/volume] in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "704-7",
    "display": "Basophils [#/volume] in Blood by Automated count",
    "n_resources": 125,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 125
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "19926-5",
    "display": "FEV1/FVC",
    "n_resources": 107,
+   "system": "http://loinc.org",
    "units": {
     "%": 107
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "48065-7",
    "display": "Fibrin D-dimer FEU [Mass/volume] in Platelet poor plasma",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "ug/mL": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "14804-9",
    "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma by Lactate to pyruvate reaction",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2532-0",
    "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2157-6",
    "display": "Creatine kinase [Enzymatic activity/volume] in Serum or Plasma",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1988-5",
    "display": "C reactive protein [Mass/volume] in Serum or Plasma",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "mg/L": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "5902-2",
    "display": "Prothrombin time (PT)",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "s": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6301-6",
    "display": "INR in Platelet poor plasma by Coagulation assay",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "{INR}": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "33959-8",
    "display": "Procalcitonin [Mass/volume] in Serum or Plasma",
    "n_resources": 72,
+   "system": "http://loinc.org",
    "units": {
     "ng/mL": 72
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "94531-1",
    "display": "SARS-CoV-2 RNA Pnl Resp NAA+probe",
    "n_resources": 63,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "75325-1",
    "display": "Symptom",
    "n_resources": 60,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "20570-8",
    "display": "Hematocrit [Volume Fraction] of Blood",
    "n_resources": 54,
+   "system": "http://loinc.org",
    "units": {
     "%": 56
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "33762-6",
    "display": "NT-proBNP",
    "n_resources": 54,
+   "system": "http://loinc.org",
    "units": {
     "pg/mL": 54
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "19123-9",
    "display": "Magnesium [Mass/volume] in Serum or Plasma",
    "n_resources": 54,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 54
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2498-4",
    "display": "Iron [Mass/volume] in Serum or Plasma",
    "n_resources": 54,
+   "system": "http://loinc.org",
    "units": {
     "ug/dL": 54
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2500-7",
    "display": "Iron binding capacity [Mass/volume] in Serum or Plasma",
    "n_resources": 54,
+   "system": "http://loinc.org",
    "units": {
     "ug/dL": 54
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2502-3",
    "display": "Iron saturation [Mass Fraction] in Serum or Plasma",
    "n_resources": 54,
+   "system": "http://loinc.org",
    "units": {
     "%": 54
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "69453-9",
    "display": "Cause of Death [US Standard Certificate of Death]",
    "n_resources": 52,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "6690-2",
    "display": "WBC Auto (Bld) [#/Vol]",
    "n_resources": 49,
+   "system": "http://loinc.org",
    "units": {
     "10*3/uL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "789-8",
    "display": "RBC Auto (Bld) [#/Vol]",
    "n_resources": 49,
+   "system": "http://loinc.org",
    "units": {
     "10*6/uL": 1391
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "21000-5",
    "display": "RDW - Erythrocyte distribution width Auto (RBC) [Entitic vol]",
    "n_resources": 49,
+   "system": "http://loinc.org",
    "units": {
     "fL": 1212
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6206-7",
    "display": "Peanut IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6273-7",
    "display": "Walnut IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6082-2",
    "display": "Codfish IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6246-3",
    "display": "Shrimp IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6276-0",
    "display": "Wheat IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6106-9",
    "display": "Egg white IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6248-9",
    "display": "Soybean IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "7258-7",
    "display": "Cow milk IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6189-5",
    "display": "White oak IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6085-5",
    "display": "Common Ragweed IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6833-8",
    "display": "Cat dander IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6095-4",
    "display": "American house dust mite IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6075-6",
    "display": "Cladosporium herbarum IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6844-5",
    "display": "Honey bee IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6158-0",
    "display": "Latex IgE Ab in Serum",
    "n_resources": 47,
+   "system": "http://loinc.org",
    "units": {
     "kU/L": 47
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "76690-7",
    "display": "Sexual orientation",
    "n_resources": 45,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "55277-8",
    "display": "HIV status",
    "n_resources": 45,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "28245-9",
    "display": "Abuse Status [OMAHA]",
    "n_resources": 45,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "71802-3",
    "display": "Housing status",
    "n_resources": 45,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "63513-6",
    "display": "Are you covered by health insurance or some other kind of health care plan [PhenX]",
    "n_resources": 45,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "46240-8",
    "display": "History of Hospitalizations+Outpatient visits",
    "n_resources": 45,
+   "system": "http://loinc.org",
    "units": {
     "{count}": 45
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "72106-8",
    "display": "Total score [MMSE]",
    "n_resources": 41,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 41
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "38265-5",
    "display": "DXA [T-score] Bone density",
    "n_resources": 39,
+   "system": "http://loinc.org",
    "units": {
     "{T-score}": 39
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "10230-1",
    "display": "Left ventricular Ejection fraction",
    "n_resources": 37,
+   "system": "http://loinc.org",
    "units": {
     "%": 37
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "32465-7",
    "display": "Physical findings of Prostate",
    "n_resources": 34,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "2857-1",
    "display": "Prostate specific Ag [Mass/volume] in Serum or Plasma",
    "n_resources": 34,
+   "system": "http://loinc.org",
    "units": {
     "ng/mL": 34
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2744-1",
    "display": "pH of Arterial blood",
    "n_resources": 33,
+   "system": "http://loinc.org",
    "units": {
     "[pH]": 33
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2019-8",
    "display": "Carbon dioxide [Partial pressure] in Arterial blood",
    "n_resources": 33,
+   "system": "http://loinc.org",
    "units": {
     "mm[Hg]": 33
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2703-7",
    "display": "Oxygen [Partial pressure] in Arterial blood",
    "n_resources": 33,
+   "system": "http://loinc.org",
    "units": {
     "mm[Hg]": 33
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1960-4",
    "display": "Bicarbonate [Moles/volume] in Arterial blood",
    "n_resources": 33,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 33
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "19994-3",
    "display": "Oxygen/Inspired gas setting [Volume Fraction] Ventilator",
    "n_resources": 33,
+   "system": "http://loinc.org",
    "units": {
     "%": 33
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "55284-4",
    "display": "Blood Pressure",
    "n_resources": 32,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92142-9",
    "display": "Influenza virus A RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92141-1",
    "display": "Influenza virus B RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92131-2",
    "display": "Respiratory syncytial virus RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92140-3",
    "display": "Parainfluenza virus 1 RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92139-5",
    "display": "Parainfluenza virus 2 RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92138-7",
    "display": "Parainfluenza virus 3 RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92130-4",
    "display": "Rhinovirus RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "92134-6",
    "display": "Human metapneumovirus RNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "94040-3",
    "display": "Adenovirus A+B+C+D+E DNA [Presence] in Respiratory specimen by NAA with probe detection",
    "n_resources": 28,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "33756-8",
    "display": "Polyp size greatest dimension by CAP cancer protocols",
    "n_resources": 25,
+   "system": "http://loinc.org",
    "units": {
     "mm": 25
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "57905-2",
    "display": "Hemoglobin.gastrointestinal [Presence] in Stool by Immunologic method",
    "n_resources": 25,
+   "system": "http://loinc.org",
    "units": {
     "ng/mL": 25
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "88040-1",
    "display": "Response to cancer treatment",
    "n_resources": 18,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "80382-5",
    "display": "Influenza virus A Ag [Presence] in Nasopharynx by Rapid immunoassay",
    "n_resources": 17,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "80383-3",
    "display": "Influenza virus B Ag [Presence] in Nasopharynx by Rapid immunoassay",
    "n_resources": 17,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "59032-3",
    "display": "Lactate [Mass/volume] in Blood",
    "n_resources": 11,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 11
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "88020-3",
    "display": "Functional capacity NYHA",
    "n_resources": 10,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "88021-1",
    "display": "Objective assessment of cardiovascular disease NYHA",
    "n_resources": 10,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "21908-9",
    "display": "Stage group.clinical Cancer",
    "n_resources": 10,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "88262-1",
    "display": "Gram positive blood culture panel by Probe in Positive blood culture",
    "n_resources": 6,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "44963-7",
    "display": "Capillary refill [Time] of Nail bed",
    "n_resources": 6,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "2713-6",
    "display": "Oxygen Saturation",
    "n_resources": 6,
+   "system": "http://loinc.org",
    "units": {
     "%": 6
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "8478-0",
    "display": "Mean blood pressure",
    "n_resources": 6,
+   "system": "http://loinc.org",
    "units": {
     "mm[Hg]": 6
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-0",
    "display": "DSM-5 Clinical Diagnostic Criteria for Opioid Use Disorder",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-11",
    "display": "Withdrawal,* as manifested by either of the following: a) Characteristic opioid withdrawal syndrome b) Same (or a closely related) substance is taken to relieve or avoid withdrawal symptoms",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-10",
    "display": "Tolerance,as defined by either of the following: a) Need for markedly increased amounts of opioids to achieve intoxication or desired effect b) Markedly diminished effect with continued use of the same amount of opioid",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-9",
    "display": "Continued use despite knowledge of having a persistent or recurrent physical or psychological problem that is likely to have been caused or exacerbated by opioids.",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-8",
    "display": "Recurrent opioid use in situations in which it is physically hazardous",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-7",
    "display": "Important social, occupational, or recreational activities are given up or reduced because of opioid use",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-6",
    "display": "Continued opioid use despite having persistent or recurrent social or interpersonal problems caused or exacerbated by the effects of opioids",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-5",
    "display": "Recurrent opioid use resulting in a failure to fulfill major role obligations at work, school, or home",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-4",
    "display": "Craving or a strong desire to use opioids",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-3",
    "display": "A great deal of time is spent in activities necessary to obtain the opioid, use the opioid, or recover from its effects",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-2",
    "display": "There is a persistent desire or unsuccessful efforts to cut down or control opioid use",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "99999-1",
    "display": "Opioids are often taken in larger amounts or over a longer period than was intended",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "{score}": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "44667-4",
    "display": "Site of distant metastasis in Breast tumor",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "21907-1",
    "display": "Distant metastases.clinical [Class] Cancer",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "33728-7",
    "display": "Size.maximum dimension in Tumor",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {
     "cm": 5
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "21905-5",
    "display": "Primary tumor.clinical [Class] Cancer",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "21906-3",
    "display": "Regional lymph nodes.clinical [Class] Cancer",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "85319-2",
    "display": "HER2 [Presence] in Breast cancer specimen by Immune stain",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "85318-4",
    "display": "HER2 [Presence] in Breast cancer specimen by FISH",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "85337-4",
    "display": "Estrogen receptor Ag [Presence] in Breast cancer specimen by Immune stain",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "85339-0",
    "display": "Progesterone receptor Ag [Presence] in Breast cancer specimen by Immune stain",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "59557-9",
    "display": "Treatment status Cancer",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "46288-7",
    "display": "US Guidance for biopsy of Prostate",
    "n_resources": 5,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "66519-0",
    "display": "Percentage area affected by eczema Head and Neck",
    "n_resources": 4,
+   "system": "http://loinc.org",
    "units": {
     "%": 4
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "66529-9",
    "display": "Percentage area affected by eczema Trunk",
    "n_resources": 4,
+   "system": "http://loinc.org",
    "units": {
     "%": 4
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "66524-0",
    "display": "Percentage area affected by eczema Upper extremitiy - bilateral",
    "n_resources": 4,
+   "system": "http://loinc.org",
    "units": {
     "%": 4
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "66534-9",
    "display": "Percentage area affected by eczema Lower extremitiy - bilateral",
    "n_resources": 4,
+   "system": "http://loinc.org",
    "units": {
     "%": 4
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "85352-3",
    "display": "Lymph nodes with isolated tumor cells [#] in Cancer specimen by Light microscopy",
    "n_resources": 3,
+   "system": "http://loinc.org",
    "units": {
     "{#}": 3
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "10480-2",
    "display": "Estrogen+Progesterone receptor Ag [Presence] in Tissue by Immune stain",
    "n_resources": 3,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "26464-8",
    "display": "White Blood Cell (Elevated)",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "K/uL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "26453-1",
    "display": "Red Blood Cell",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "10*6/uL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "718-7",
    "display": "Hemoglobin",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 1398
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "20570-8",
    "display": "Hematocrit",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "%": 56
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "30428-7",
    "display": "MCV",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "fL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "30385-9",
    "display": "RBC Distribution Width",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "%": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "26515-7",
    "display": "Platelet Count",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "K/uL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "42719-5",
    "display": "Total Bilirubin (Elevated)",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1742-6",
    "display": "ALT (Elevated)",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 880,
     "[iU]/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1920-8",
    "display": "AST (Elevated)",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 880,
     "[iU]/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2345-7",
    "display": "Glucose",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "3094-0",
    "display": "Urea Nitrogen",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2160-0",
    "display": "Creatinine",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "17861-6",
    "display": "Calcium",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mg/dL": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2951-2",
    "display": "Sodium",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2823-3",
    "display": "Potassium",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2075-0",
    "display": "Chloride",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2028-9",
    "display": "Carbon Dioxide",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 181
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "33037-3",
    "display": "Anion Gap",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "mmol/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "2885-2",
    "display": "Protein",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 882
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "1751-7",
    "display": "Albumin",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "g/dL": 882
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "10834-0",
    "display": "Globulin",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "g/L": 701,
     "g/dL": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "6768-6",
    "display": "Alkaline Phosphatase",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {
     "U/L": 880,
     "[iU]/L": 2
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "80271-0",
    "display": "Physical findings of Abdomen by Palpation",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "417181009",
    "display": "Estrogen+Progesterone receptor Ag [Presence] in Tissue by Immune stain",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "21924-6",
    "display": "Tumor marker Cancer",
    "n_resources": 2,
+   "system": "http://loinc.org",
    "units": {}
   },
   {
-   "system": "http://loinc.org",
    "code": "85343-2",
    "display": "Lymph nodes with macrometastases [#] in Cancer specimen by Light microscopy",
    "n_resources": 1,
+   "system": "http://loinc.org",
    "units": {
     "{#}": 1
    }
   },
   {
-   "system": "http://loinc.org",
    "code": "85344-0",
    "display": "Lymph nodes with micrometastases [#] in Cancer specimen by Light microscopy",
    "n_resources": 1,
+   "system": "http://loinc.org",
    "units": {
     "{#}": 1
    }
@@ -3541,2154 +4523,1172 @@
  ],
  "Procedure": [
   {
-   "system": "http://snomed.info/sct",
    "code": "710824005",
    "display": "Assessment of health and social care needs (procedure)",
    "n_resources": 3840,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "171207006",
    "display": "Depression screening (procedure)",
    "n_resources": 3391,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "454711000124102",
    "display": "Depression screening using Patient Health Questionnaire Two-Item score (procedure)",
    "n_resources": 2985,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "428211000124100",
    "display": "Assessment of substance use (procedure)",
    "n_resources": 2761,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "430193006",
    "display": "Medication Reconciliation (procedure)",
    "n_resources": 2645,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "710841007",
    "display": "Assessment of anxiety (procedure)",
    "n_resources": 2194,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "274804006",
    "display": "Evaluation of uterine fundal height",
    "n_resources": 1316,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "225158009",
    "display": "Auscultation of the fetal heart",
    "n_resources": 1316,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "713106006",
    "display": "Screening for drug abuse (procedure)",
    "n_resources": 1208,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "763302001",
    "display": "Assessment using Alcohol Use Disorders Identification Test - Consumption (procedure)",
    "n_resources": 1202,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "180256009",
    "display": "Subcutaneous immunotherapy",
    "n_resources": 1160,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "866148006",
    "display": "Screening for domestic abuse (procedure)",
    "n_resources": 1156,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "265764009",
    "display": "Renal dialysis (procedure)",
    "n_resources": 1079,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "76601001",
    "display": "Intramuscular injection",
    "n_resources": 724,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "762993000",
    "display": "Assessment using Morse Fall Scale (procedure)",
    "n_resources": 719,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "180325003",
    "display": "Electrical cardioversion",
    "n_resources": 616,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "715252007",
    "display": "Depression screening using Patient Health Questionnaire Nine Item score (procedure)",
    "n_resources": 597,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "229064008",
    "display": "Movement therapy (regime/therapy)",
    "n_resources": 430,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "868187001",
    "display": "Assessment using Car, Relax, Alone, Forget, Friends, Trouble Screening Test (procedure)",
    "n_resources": 351,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "104091002",
    "display": "Hemoglobin / Hematocrit / Platelet count",
    "n_resources": 298,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "386516004",
    "display": "Anticipatory guidance (procedure)",
    "n_resources": 277,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "703423002",
    "display": "Combined chemotherapy and radiation therapy (procedure)",
    "n_resources": 235,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "252160004",
    "display": "Standard pregnancy test",
    "n_resources": 228,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "169230002",
    "display": "Ultrasound scan for fetal viability",
    "n_resources": 228,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "73761001",
    "display": "Colonoscopy",
    "n_resources": 221,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "171207006",
    "display": "Depression screening",
    "n_resources": 220,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "117015009",
    "display": "Throat culture (procedure)",
    "n_resources": 181,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "371908008",
    "display": "Oxygen administration by mask (procedure)",
    "n_resources": 159,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "44608003",
    "display": "Blood typing, RH typing",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "47758006",
    "display": "Hepatitis B Surface Antigen Measurement",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "31676001",
    "display": "Human immunodeficiency virus antigen test",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "310861008",
    "display": "Chlamydia antigen test",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "165829005",
    "display": "Gonorrhea infection test",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "269828009",
    "display": "Syphilis infection test",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "117010004",
    "display": "Urine culture",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "90226004",
    "display": "Cytopathology procedure, preparation of smear, genital source",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "395123002",
    "display": "Urine screening test for diabetes",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "104375008",
    "display": "Hepatitis C antibody test",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "169690007",
    "display": "Rubella screening",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "104326007",
    "display": "Measurement of Varicella-zoster virus antibody",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "28163009",
    "display": "Skin test for tuberculosis",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "167271000",
    "display": "Urine protein test",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "5880005",
    "display": "Physical examination of mother",
    "n_resources": 155,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "431182000",
    "display": "Placing subject in prone position (procedure)",
    "n_resources": 154,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "443529005",
    "display": "Screening for chromosomal aneuploidy in prenatal amniotic fluid",
    "n_resources": 153,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "228557008",
    "display": "Cognitive and behavioral therapy",
    "n_resources": 152,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "271442007",
    "display": "Fetal anatomy study",
    "n_resources": 146,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "275833003",
    "display": "Alpha-fetoprotein test",
    "n_resources": 146,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "399014008",
    "display": "Vaccination for diphtheria, pertussis, and tetanus",
    "n_resources": 143,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "268556000",
    "display": "Urine screening for glucose",
    "n_resources": 143,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "5880005",
    "display": "Physical examination following birth",
    "n_resources": 143,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "18286008",
    "display": "Catheter ablation of tissue of heart",
    "n_resources": 140,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "118001005",
    "display": "Streptococcus pneumoniae group B antigen test",
    "n_resources": 135,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "398171003",
    "display": "Hearing examination (procedure)",
    "n_resources": 134,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "16335031000119103",
    "display": "High resolution computed tomography of chest without contrast (procedure)",
    "n_resources": 134,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "23426006",
    "display": "Measurement of respiratory function (procedure)",
    "n_resources": 133,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "66348005",
    "display": "Childbirth",
    "n_resources": 119,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "127783003",
    "display": "Spirometry (procedure)",
    "n_resources": 107,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "169553002",
    "display": "Insertion of subcutaneous contraceptive",
    "n_resources": 96,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "228557008",
    "display": "Cognitive and behavioral therapy (regime/therapy)",
    "n_resources": 96,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "288086009",
    "display": "Suture open wound",
    "n_resources": 90,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "15081005",
    "display": "Pulmonary rehabilitation (regime/therapy)",
    "n_resources": 81,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65200003",
    "display": "Insertion of intrauterine contraceptive device",
    "n_resources": 75,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "370995009",
    "display": "Health risks education (procedure)",
    "n_resources": 74,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "40701008",
    "display": "Echocardiography (procedure)",
    "n_resources": 70,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "301807007",
    "display": "Removal of subcutaneous contraceptive",
    "n_resources": 69,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "33195004",
    "display": "Teleradiotherapy procedure (procedure)",
    "n_resources": 68,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "274474001",
    "display": "Bone immobilization",
    "n_resources": 66,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "367336001",
    "display": "Chemotherapy (procedure)",
    "n_resources": 56,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "399208008",
    "display": "Plain chest X-ray (procedure)",
    "n_resources": 52,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "14768001",
    "display": "Peripheral blood smear interpretation",
    "n_resources": 49,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "415300000",
    "display": "Review of systems (procedure)",
    "n_resources": 49,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "162676008",
    "display": "Brief general examination (procedure)",
    "n_resources": 49,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "395142003",
    "display": "Allergy screening test",
    "n_resources": 47,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "269911007",
    "display": "Sputum examination (procedure)",
    "n_resources": 47,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "261352009",
    "display": "Face mask (physical object)",
    "n_resources": 45,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "311791003",
    "display": "Information gathering (procedure)",
    "n_resources": 45,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "10383002",
    "display": "Counseling for termination of pregnancy",
    "n_resources": 44,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "714812005",
    "display": "Induced termination of pregnancy",
    "n_resources": 44,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "386394001",
    "display": "Pregnancy termination care",
    "n_resources": 43,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "5880005",
    "display": "Physical exam following abortion",
    "n_resources": 43,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "51116004",
    "display": "RhD passive immunization",
    "n_resources": 43,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "312681000",
    "display": "Bone density scan (procedure)",
    "n_resources": 41,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "68254000",
    "display": "Removal of intrauterine device",
    "n_resources": 37,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "18946005",
    "display": "Epidural anesthesia",
    "n_resources": 35,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "5880005",
    "display": "Physical examination",
    "n_resources": 34,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "410006001",
    "display": "Digital examination of rectum",
    "n_resources": 34,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65546002",
    "display": "Extraction of wisdom tooth",
    "n_resources": 34,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "274031008",
    "display": "Rectal polypectomy",
    "n_resources": 33,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "85548006",
    "display": "Episiotomy",
    "n_resources": 32,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "29303009",
    "display": "Electrocardiographic procedure",
    "n_resources": 32,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "290045001",
    "display": "Kitchen practice",
    "n_resources": 32,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "229095001",
    "display": "Exercise class",
    "n_resources": 32,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "46706006",
    "display": "Replacement of contraceptive intrauterine device",
    "n_resources": 28,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "71651007",
    "display": "Mammography (procedure)",
    "n_resources": 26,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "104435004",
    "display": "Screening for occult blood in feces (procedure)",
    "n_resources": 25,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "60027007",
    "display": "X-ray or wrist",
    "n_resources": 22,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "305428000",
    "display": "Admission to orthopedic department",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "1225002",
    "display": "Upper arm X-ray",
    "n_resources": 21,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "31208007",
    "display": "Medical induction of labor",
    "n_resources": 18,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "11466000",
    "display": "Cesarean section",
    "n_resources": 18,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "433112001",
    "display": "Percutaneous mechanical thrombectomy of portal vein using fluoroscopic guidance",
    "n_resources": 18,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "423475008",
    "display": "Heart failure education (procedure)",
    "n_resources": 18,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "19490002",
    "display": "Ankle X-ray",
    "n_resources": 16,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "169673001",
    "display": "Antenatal RhD antibody screening",
    "n_resources": 16,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "54550000",
    "display": "Seizure Count Cerebral Cortex Electroencephalogram (EEG)",
    "n_resources": 14,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "237001001",
    "display": "Augmentation of labor",
    "n_resources": 12,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "168594001",
    "display": "Clavicle X-ray",
    "n_resources": 12,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "430701006",
    "display": "Resuscitation using intravenous fluid (procedure)",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "35025007",
    "display": "Manual pelvic examination (procedure)",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "90226004",
    "display": "Cytopathology procedure, preparation of smear, genital source (procedure)",
    "n_resources": 11,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "236974004",
    "display": "Instrumental delivery",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "762998009",
    "display": "Assessment using New York Heart Association Classification (procedure)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "384700001",
    "display": "Injection of tetanus antitoxin",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "26763009",
    "display": "Controlled ventilation procedure and therapy, initiation and management (procedure)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "302497006",
    "display": "Hemodialysis (procedure)",
    "n_resources": 10,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "268425006",
    "display": "Pelvis X-ray",
    "n_resources": 9,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "287664005",
    "display": "Bilateral tubal ligation",
    "n_resources": 9,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "447365002",
    "display": "Insertion of biventricular implantable cardioverter defibrillator",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "449214001",
    "display": "Transfer to stepdown unit (procedure)",
    "n_resources": 8,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "415070008",
    "display": "Percutaneous coronary intervention",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "232717009",
    "display": "Coronary artery bypass grafting",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65588006",
    "display": "Premature birth of newborn",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "408919008",
    "display": "Psychosocial care (regime/therapy)",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "74016001",
    "display": "Knee X-ray",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "399208008",
    "display": "Chest X-ray",
    "n_resources": 7,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "699253003",
    "display": "Surgical manipulation of joint of knee",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "313191000",
    "display": "Injection of adrenaline",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "43075005",
    "display": "Partial resection of colon",
    "n_resources": 6,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "418891003",
    "display": "Computed tomography of chest and abdomen",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "698354004",
    "display": "Magnetic resonance imaging for measurement of brain volume (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "180207008",
    "display": "Intravenous blood transfusion of packed cells (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "22523008",
    "display": "Vasectomy",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "1571000087109",
    "display": "Ultrasonography of bilateral breasts (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "122548005",
    "display": "Biopsy of breast (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "434363004",
    "display": "Human epidermal growth factor receptor 2 gene detection by fluorescence in situ hybridization (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "433114000",
    "display": "Human epidermal growth factor receptor 2 gene detection by immunohistochemistry (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "65575008",
    "display": "Biopsy of prostate",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "305351004",
    "display": "Admit to ICU (procedure)",
    "n_resources": 5,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "171231001",
    "display": "Asthma screening",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "76746007",
    "display": "Cardiovascular stress testing (procedure)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "80146002",
    "display": "Appendectomy",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "24623002",
    "display": "Screening mammography (procedure)",
    "n_resources": 4,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "183856001",
    "display": "Referral to hypertension clinic",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "69031006",
    "display": "Excision of breast tissue (procedure)",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "432231006",
    "display": "Fine needle aspiration biopsy of lung (procedure)",
    "n_resources": 3,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "173160006",
    "display": "Diagnostic fiberoptic bronchoscopy (procedure)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "177157003",
    "display": "Spontaneous breech delivery",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "426701000119108",
    "display": "Ultrasonography of abdomen, right upper quadrant and epigastrium",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "52765003",
    "display": "Intubation",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "45595009",
    "display": "Laparoscopic Removal of Gall Bladder",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "392021009",
    "display": "Lumpectomy of breast (procedure)",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "90470006",
    "display": "Prostatectomy",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "183450002",
    "display": "Admission to burn unit",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "305340004",
    "display": "Admission to long stay hospital",
    "n_resources": 2,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "112790001",
    "display": "Nasal sinus endoscopy (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "38102005",
    "display": "Open Removal of Gall Bladder",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "396487001",
    "display": "Sentinel lymph node biopsy (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "443497002",
    "display": "Excision of sentinel lymph node (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "88039007",
    "display": "Transplant of lung (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "241055006",
    "display": "Mammogram - symptomatic (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "234262008",
    "display": "Excision of axillary lymph node (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "387607004",
    "display": "Construction of diverting colostomy",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "112798008",
    "display": "Insertion of endotracheal tube (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "40617009",
    "display": "Artificial respiration (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "243174005",
    "display": "Weaning from mechanically assisted ventilation (procedure)",
    "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   },
   {
-   "system": "http://snomed.info/sct",
    "code": "236931002",
    "display": "Methotrexate injection into tubal pregnancy",
    "n_resources": 1,
-   "units": {}
-  }
- ],
- "Medication": [
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "314076",
-   "display": "lisinopril 10 MG Oral Tablet",
-   "n_resources": 3777,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "310798",
-   "display": "Hydrochlorothiazide 25 MG Oral Tablet",
-   "n_resources": 3281,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "308136",
-   "display": "amLODIPine 2.5 MG Oral Tablet",
-   "n_resources": 2816,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "106892",
-   "display": "insulin human, isophane 70 UNT/ML / Regular Insulin, Human 30 UNT/ML Injectable Suspension [Humulin]",
-   "n_resources": 1343,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "895994",
-   "display": "120 ACTUAT Fluticasone propionate 0.044 MG/ACTUAT Metered Dose Inhaler",
-   "n_resources": 1199,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "2123111",
-   "display": "NDA020503 200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler",
-   "n_resources": 1197,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "205923",
-   "display": "1 ML Epoetin Alfa 4000 UNT/ML Injection [Epogen]",
-   "n_resources": 1079,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "860975",
-   "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
-   "n_resources": 1030,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "314231",
-   "display": "Simvastatin 10 MG Oral Tablet",
-   "n_resources": 904,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "855332",
-   "display": "Warfarin Sodium 5 MG Oral Tablet",
-   "n_resources": 713,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "197604",
-   "display": "Digoxin 0.125 MG Oral Tablet",
-   "n_resources": 713,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "897718",
-   "display": "Verapamil Hydrochloride 40 MG",
-   "n_resources": 702,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "705129",
-   "display": "Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray",
-   "n_resources": 352,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "313782",
-   "display": "Acetaminophen 325 MG Oral Tablet",
-   "n_resources": 285,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "206905",
-   "display": "Ibuprofen 400 MG Oral Tablet [Ibu]",
-   "n_resources": 285,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "312961",
-   "display": "Simvastatin 20 MG Oral Tablet",
-   "n_resources": 268,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "197361",
-   "display": "Amlodipine 5 MG Oral Tablet",
-   "n_resources": 251,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "309362",
-   "display": "Clopidogrel 75 MG Oral Tablet",
-   "n_resources": 245,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "209387",
-   "display": "Acetaminophen 325 MG Oral Tablet [Tylenol]",
-   "n_resources": 217,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "856987",
-   "display": "Acetaminophen 300 MG / Hydrocodone Bitartrate 5 MG Oral Tablet",
-   "n_resources": 201,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "896209",
-   "display": "60 ACTUAT Fluticasone propionate 0.25 MG/ACTUAT / salmeterol 0.05 MG/ACTUAT Dry Powder Inhaler",
-   "n_resources": 187,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1049625",
-   "display": "Acetaminophen 325 MG / Oxycodone Hydrochloride 10 MG Oral Tablet [Percocet]",
-   "n_resources": 162,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "849574",
-   "display": "Naproxen sodium 220 MG Oral Tablet",
-   "n_resources": 126,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "562251",
-   "display": "Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet",
-   "n_resources": 125,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "245134",
-   "display": "72 HR Fentanyl 0.025 MG/HR Transdermal System",
-   "n_resources": 121,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1049504",
-   "display": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 10 MG Extended Release Oral Tablet [Oxycontin]",
-   "n_resources": 100,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1860491",
-   "display": "12 HR Hydrocodone Bitartrate 10 MG Extended Release Oral Capsule",
-   "n_resources": 99,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "835603",
-   "display": "tramadol hydrochloride 50 MG Oral Tablet",
-   "n_resources": 93,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "310965",
-   "display": "Ibuprofen 200 MG Oral Tablet",
-   "n_resources": 79,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "313820",
-   "display": "Acetaminophen 160 MG Chewable Tablet",
-   "n_resources": 68,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "198405",
-   "display": "Ibuprofen 100 MG Oral Tablet",
-   "n_resources": 67,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "757594",
-   "display": "Jolivette 28 Day Pack",
-   "n_resources": 66,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1736854",
-   "display": "Cisplatin 50 MG Injection",
-   "n_resources": 66,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "583214",
-   "display": "PACLitaxel 100 MG Injection",
-   "n_resources": 66,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1043400",
-   "display": "Acetaminophen 21.7 MG/ML / Dextromethorphan Hydrobromide 1 MG/ML / doxylamine succinate 0.417 MG/ML Oral Solution",
-   "n_resources": 64,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "389221",
-   "display": "Etonogestrel 68 MG Drug Implant",
-   "n_resources": 61,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "308192",
-   "display": "Amoxicillin 500 MG Oral Tablet",
-   "n_resources": 60,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1870230",
-   "display": "NDA020800 0.3 ML Epinephrine 1 MG/ML Auto-Injector",
-   "n_resources": 59,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "749762",
-   "display": "Seasonique 91 Day Pack",
-   "n_resources": 48,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "834061",
-   "display": "Penicillin V Potassium 250 MG Oral Tablet",
-   "n_resources": 46,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "748962",
-   "display": "Camila 28 Day Pack",
-   "n_resources": 45,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1000126",
-   "display": "1 ML medroxyprogesterone acetate 150 MG/ML Injection",
-   "n_resources": 43,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "831533",
-   "display": "Errin 28 Day Pack",
-   "n_resources": 43,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "748879",
-   "display": "Levora 0.15/30 28 Day Pack",
-   "n_resources": 43,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1860154",
-   "display": "Abuse-Deterrent 12 HR Oxycodone Hydrochloride 15 MG Extended Release Oral Tablet",
-   "n_resources": 42,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "748856",
-   "display": "Yaz 28 Day Pack",
-   "n_resources": 40,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1049221",
-   "display": "Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet",
-   "n_resources": 39,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "978950",
-   "display": "Natazia 28 Day Pack",
-   "n_resources": 37,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "751905",
-   "display": "Trinessa 28 Day Pack",
-   "n_resources": 36,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "311989",
-   "display": "Nitrofurantoin 5 MG/ML Oral Suspension",
-   "n_resources": 35,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1094107",
-   "display": "Phenazopyridine hydrochloride 100 MG Oral Tablet",
-   "n_resources": 35,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "807283",
-   "display": "Mirena 52 MG Intrauterine System",
-   "n_resources": 34,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "313988",
-   "display": "Furosemide 40 MG Oral Tablet",
-   "n_resources": 34,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "856987",
-   "display": "Acetaminophen 300 MG / HYDROcodone Bitartrate 5 MG Oral Tablet",
-   "n_resources": 34,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "993770",
-   "display": "Acetaminophen 300 MG / Codeine Phosphate 15 MG Oral Tablet",
-   "n_resources": 32,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "351266",
-   "display": "buprenorphine 2 MG / naloxone 0.5 MG Sublingual Tablet",
-   "n_resources": 30,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "834102",
-   "display": "Penicillin V Potassium 500 MG Oral Tablet",
-   "n_resources": 29,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "2001499",
-   "display": "Vitamin B 12 5 MG/ML Injectable Solution",
-   "n_resources": 25,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "861467",
-   "display": "Meperidine Hydrochloride 50 MG Oral Tablet",
-   "n_resources": 24,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1367439",
-   "display": "NuvaRing 0.12/0.015 MG per 24HR 21 Day Vaginal Ring",
-   "n_resources": 24,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "583214",
-   "display": "Paclitaxel 100 MG Injection",
-   "n_resources": 24,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1534809",
-   "display": "168 HR Ethinyl Estradiol 0.00146 MG/HR / norelgestromin 0.00625 MG/HR Transdermal System",
-   "n_resources": 23,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "904419",
-   "display": "Alendronic acid 10 MG Oral Tablet",
-   "n_resources": 22,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1049630",
-   "display": "diphenhydrAMINE Hydrochloride 25 MG Oral Tablet",
-   "n_resources": 21,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1000126",
-   "display": "1 ML medroxyPROGESTERone acetate 150 MG/ML Injection",
-   "n_resources": 21,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "106258",
-   "display": "Hydrocortisone 10 MG/ML Topical Cream",
-   "n_resources": 20,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1804799",
-   "display": "Alteplase 100 MG Injection",
-   "n_resources": 18,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "310325",
-   "display": "ferrous sulfate 325 MG Oral Tablet",
-   "n_resources": 18,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1856546",
-   "display": "Kyleena 19.5 MG Intrauterine System",
-   "n_resources": 17,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "665078",
-   "display": "Loratadine 5 MG Chewable Tablet",
-   "n_resources": 17,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "309097",
-   "display": "Cefuroxime 250 MG Oral Tablet",
-   "n_resources": 16,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "477045",
-   "display": "Chlorpheniramine Maleate 2 MG/ML Oral Solution",
-   "n_resources": 16,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "308182",
-   "display": "Amoxicillin 250 MG Oral Capsule",
-   "n_resources": 16,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1734919",
-   "display": "Cyclophosphamide 1000 MG Injection",
-   "n_resources": 16,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1049221",
-   "display": "Acetaminophen 325 MG / oxyCODONE Hydrochloride 5 MG Oral Tablet",
-   "n_resources": 13,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1014676",
-   "display": "cetirizine hydrochloride 5 MG Oral Tablet",
-   "n_resources": 12,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "997488",
-   "display": "Fexofenadine hydrochloride 30 MG Oral Tablet",
-   "n_resources": 12,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "204892",
-   "display": "clonazePAM 0.25 MG Oral Tablet",
-   "n_resources": 12,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1605257",
-   "display": "Liletta 52 MG Intrauterine System",
-   "n_resources": 11,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "197591",
-   "display": "Diazepam 5 MG Oral Tablet",
-   "n_resources": 11,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "857005",
-   "display": "Acetaminophen 325 MG / HYDROcodone Bitartrate 7.5 MG Oral Tablet",
-   "n_resources": 11,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "310436",
-   "display": "Galantamine 4 MG Oral Tablet",
-   "n_resources": 10,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1660014",
-   "display": "1 ML Epinephrine 1 MG/ML Injection",
-   "n_resources": 8,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1190795",
-   "display": "Atropine Sulfate 1 MG/ML Injectable Solution",
-   "n_resources": 8,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "200033",
-   "display": "carvedilol 25 MG Oral Tablet",
-   "n_resources": 8,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "198014",
-   "display": "Naproxen 500 MG Oral Tablet",
-   "n_resources": 8,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "597195",
-   "display": "Carboplatin 10 MG/ML Injectable Solution",
-   "n_resources": 8,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1732186",
-   "display": "100 ML Epirubicin Hydrochloride 2 MG/ML Injection",
-   "n_resources": 8,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1860480",
-   "display": "1 ML DOCEtaxel 20 MG/ML Injection",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "752899",
-   "display": "0.25 ML Leuprolide Acetate 30 MG/ML Prefilled Syringe",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "979492",
-   "display": "losartan potassium 50 MG Oral Tablet",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "834357",
-   "display": "3 ML Amiodarone hydrocholoride 50 MG/ML Prefilled Syringe",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "996740",
-   "display": "Memantine hydrochloride 2 MG/ML Oral Solution",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1803932",
-   "display": "Leucovorin 100 MG Injection",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1736776",
-   "display": "10 ML oxaliplatin 5 MG/ML Injection",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "749785",
-   "display": "Ortho Tri-Cyclen 28 Day Pack",
-   "n_resources": 7,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "833036",
-   "display": "Captopril 25 MG Oral Tablet",
-   "n_resources": 6,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "197378",
-   "display": "Astemizole 10 MG Oral Tablet",
-   "n_resources": 6,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "243670",
-   "display": "Aspirin 81 MG Oral Tablet",
-   "n_resources": 6,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1649987",
-   "display": "doxycycline hyclate 100 MG",
-   "n_resources": 6,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "312617",
-   "display": "predniSONE 5 MG Oral Tablet",
-   "n_resources": 6,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "749882",
-   "display": "Norinyl 1+50 28 Day Pack",
-   "n_resources": 5,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "308971",
-   "display": "Carbamazepine[Tegretol]",
-   "n_resources": 5,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "197319",
-   "display": "Allopurinol 100 MG Oral Tablet",
-   "n_resources": 5,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "259255",
-   "display": "Atorvastatin 80 MG Oral Tablet",
-   "n_resources": 4,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "608139",
-   "display": "atomoxetine 100 MG Oral Capsule",
-   "n_resources": 4,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "198031",
-   "display": "24hr nicotine transdermal patch",
-   "n_resources": 4,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "997501",
-   "display": "Fexofenadine hydrochloride 60 MG Oral Tablet",
-   "n_resources": 3,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "311995",
-   "display": "NITROFURANTOIN, MACROCRYSTALS 50 MG Oral Capsule",
-   "n_resources": 3,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "596926",
-   "display": "duloxetine 20 MG Delayed Release Oral Capsule",
-   "n_resources": 3,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "997223",
-   "display": "Donepezil hydrochloride 10 MG Oral Tablet",
-   "n_resources": 3,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1359133",
-   "display": "Estrostep Fe 28 Day Pack",
-   "n_resources": 3,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1100184",
-   "display": "Donepezil hydrochloride 23 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1091392",
-   "display": "Methylphenidate Hydrochloride 20 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "311372",
-   "display": "Loratadine 10 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1014678",
-   "display": "cetirizine hydrochloride 10 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "312938",
-   "display": "Sertraline 100 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "212446",
-   "display": "Azithromycin 250mg",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1659263",
-   "display": "1 ML heparin sodium, porcine 5000 UNT/ML Injection",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "313002",
-   "display": "Sodium Chloride 9 MG/ML Injectable Solution",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1740467",
-   "display": "2 ML Ondansetron 2 MG/ML Injection",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1732136",
-   "display": "1 ML Morphine Sulfate 5 MG/ML Injection",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1659149",
-   "display": "Piperacillin 4000 MG / tazobactam 500 MG Injection",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "284215",
-   "display": "Clindamycin 300mg",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "199224",
-   "display": "anastrozole 1 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1601380",
-   "display": "palbociclib 100 MG Oral Capsule",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "197541",
-   "display": "Colchicine 0.6 MG Oral Tablet",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1366343",
-   "display": "Levonorgestrel 0.00354 MG/HR Drug Implant",
-   "n_resources": 2,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "235389",
-   "display": "Mestranol / Norethynodrel [Enovid]",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "105585",
-   "display": "Methotrexate 2.5 MG Oral Tablet",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "966222",
-   "display": "Levothyroxine Sodium 0.075 MG Oral Tablet",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "313185",
-   "display": "Tacrine 10 MG Oral Capsule",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "312615",
-   "display": "predniSONE 20 MG Oral Tablet",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "833135",
-   "display": "Milnacipran hydrochloride 100 MG Oral Tablet",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "856980",
-   "display": "Acetaminophen/Hydrocodone",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "1946840",
-   "display": "Verzenio 100 MG Oral Tablet",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "727762",
-   "display": "5 ML fulvestrant 50 MG/ML Prefilled Syringe",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "483438",
-   "display": "pregabalin 100 MG Oral Capsule",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "314077",
-   "display": "lisinopril 20 MG Oral Tablet",
-   "n_resources": 1,
-   "units": {}
-  },
-  {
-   "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-   "code": "309045",
-   "display": "Cefaclor 250 MG Oral Capsule",
-   "n_resources": 1,
+   "system": "http://snomed.info/sct",
    "units": {}
   }
  ]
