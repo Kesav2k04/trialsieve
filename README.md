@@ -34,6 +34,13 @@ concerns is quietly dropped from consideration by a fact that was never there.
 That failure is silent by construction: nobody audits the people who were screened
 out, because nobody looks at them again.
 
+This example is generated, not written. `python scripts/counterexample.py` runs
+both arms on that patient and writes the transcript to
+[docs/COUNTEREXAMPLE.md](docs/COUNTEREXAMPLE.md), using the same baseline code
+path the evaluation scores. If the baseline abstains, the script says so and this
+section is wrong. In this panel, 359 of 385 patients have no UACR result at all,
+so the case is the normal one rather than a chosen one.
+
 ---
 
 ## What this is
@@ -110,6 +117,29 @@ Two rules the code enforces rather than requests:
   codes) or `unknown` (silence proves nothing). The reviewer sees the choice, and a
   single flag flips every query at once so the ablation can measure what it is
   worth.
+
+### A code can contain a concept without establishing it
+
+A site codes at whatever grain it was built for, and it is rarely the grain a
+protocol asks for. The one anaemia code in this corpus is unqualified, so a
+criterion about iron deficiency anaemia meets a code that contains the answer
+without giving it.
+
+Both obvious handlings are wrong. Treat the coarse code as a match and you
+manufacture MEETS verdicts the record cannot support. Call the concept unmappable
+and you discard the half of the information that is real, which is the half that
+removes people from the list.
+
+So a query carries `broader_codes` beside `codes`, and they are read
+asymmetrically:
+
+| the record holds | verdict |
+|---|---|
+| a code from `codes` | TRUE |
+| a code from `broader_codes` | UNKNOWN, naming the code and saying the site does not draw the distinction |
+| neither | whatever `absent_means` says, unchanged |
+
+Presence cannot settle it. Absence still can.
 
 ### UNMAPPABLE is load-bearing
 

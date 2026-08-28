@@ -60,12 +60,20 @@ Three steps, and the middle one is not a model.
 3. **Select** (model). Choose from the candidates. Never invent a code. Returning
    nothing is a documented, expected answer.
 
-**The third outcome.** MAPPED, PARTIAL, and **UNMAPPABLE**. Unmappable is the one
+**The outcomes.** MAPPED, PARTIAL, BROADER_ONLY, and **UNMAPPABLE**. Unmappable is the one
 that earns its place. This corpus contains no SGLT2 inhibitor, GLP-1 agonist,
 DPP-4 inhibitor, thiazolidinedione or sulfonylurea code at all. A grounder that
 returns an empty code list and lets the criterion compile hands a closed-world
 query an empty result, which clears every patient on that exclusion. So an
 unmappable concept stops the criterion and routes it to a person.
+
+**A fourth outcome, BROADER_ONLY.** A candidate can contain the concept without
+establishing it: an unqualified anaemia code where the criterion asks about iron
+deficiency anaemia. Those go into `broader_codes` rather than `codes`, the
+criterion still compiles, and the engine returns UNKNOWN for the patients who
+carry the coarse code while absence continues to mean what it meant. This is
+deliberately not UNMAPPABLE, because refusing the criterion for everyone would
+discard every ruleout the coarse code supports.
 
 **Hallucinated codes are dropped.** Anything the model returns that was not on the
 shortlist it was given is discarded before it reaches the IR.
