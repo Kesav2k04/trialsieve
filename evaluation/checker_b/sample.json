@@ -1,0 +1,908 @@
+{
+ "seed": 4242,
+ "n": 180,
+ "panel": "data/vendor/panel.jsonl.gz",
+ "note": "Drawn once and committed. Redrawing after seeing agreement would let the sample be chosen for its answer.",
+ "cells": [
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "3d5f91c2-0539-37c9-0691-d2bbe28c78e3",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "d868e198-8ebe-2338-5691-4c1de3421c65",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "3f8f669e-a86e-7ed2-9cd3-af981a89dfa1",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "patient_id": "61a2fcc0-d679-764c-7d86-b885b2c4907f",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-07",
+   "patient_id": "22e14c09-32f4-0b73-36e3-b38c967afd1b",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "d3daf8c9-7cb8-995f-b698-f1d59b19a6b0",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "d31bde96-deb4-7a7b-7a10-8a06cd0c3472",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "5c15f3b9-fbd5-80e5-755d-5a697e4b0499",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "2987fe83-93bf-9d7d-1b8d-481913f54c5c",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "90053970-cbf7-9102-32f1-61c1b05827a8",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "72f91cc7-fb63-84e8-32ff-86456bfa446e",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "3ce79121-6f1a-8d00-726d-bc0af611d017",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "51b59c09-c5a3-9c00-9ff0-e18c05efe769",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "407ef75b-0a9c-ec23-60e5-c90ba86e27af",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "246fb368-8991-dc93-f6a5-eca807e7dbde",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "51c7ff6a-33e3-3e1b-d3ad-0035c8227dfa",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "1a4f3136-4eae-dc5d-f68d-046b7a2e11ea",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "82493462-2eea-803b-7183-4e8b1b4ee8d9",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "659bd07d-dffb-9aa2-6a0d-7c52e41e46eb",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "74b7fc31-8223-c477-0ec9-5b2ceea7c28f",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "e23c7a6e-6ef2-3932-1361-b73b4c8a3961",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "fdc21ebe-f012-0831-ccfc-28d243f4b5ac",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "f0aa92fa-13d6-6e8c-cc01-9986ce990b5e",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "a06bce31-d0dc-f345-df41-777fb453afaf",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "90053970-cbf7-9102-32f1-61c1b05827a8",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-01",
+   "patient_id": "e4c2980e-ffa5-4570-988e-3eb8e108aad3",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-01",
+   "patient_id": "2af5741b-913e-7915-e51c-890dd5c261fa",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-01",
+   "patient_id": "7d1a0d44-6f3e-2cd5-3347-0d97e5b57612",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "b91dc3fd-3ed0-eb50-9376-e9bd9ab26940",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "4727c1ea-a23f-270d-f38f-e03857029aee",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "79823958-40ce-9882-a2da-9ff37be49b19",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "165a4435-31ff-0493-eb3f-3a86106f3a59",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "1cfa5a70-7f3c-4227-5cf1-e182fcff4cd4",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "d321aaa9-5b61-14ae-832b-46b4b50fd88e",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "915aacda-a5d6-b157-5f8a-572c9ed4eb0f",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "bf0ad07a-462c-e0c9-bc3c-c40645afc6f9",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "7cfbccad-2a81-400a-4858-1d2f4b680960",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "94c64aed-cca1-dc80-c180-5ba446c00df4",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-04",
+   "patient_id": "39e6bf34-9ff7-f200-8cd8-7b44ef09b4ed",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "fa311677-035c-7329-3dec-2a01c9afd965",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "34f26c54-34b6-ad2b-db7c-5ff818b0456c",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "42017485-34da-0251-9969-577a72265086",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-01",
+   "patient_id": "23d16ee3-8cd4-eeb8-e77e-1e5fbf4c4159",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "c98f8278-af04-a31b-ebee-65d34ae0466f",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "e4c2980e-ffa5-4570-988e-3eb8e108aad3",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-01",
+   "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "be01726c-4937-554f-6d8f-58f8ec72ebab",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "patient_id": "d7bb0340-9894-8bd0-056a-29efc5444fa0",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "a06bce31-d0dc-f345-df41-777fb453afaf",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "a25e9984-9c96-bcd4-07f9-9f763e077366",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "7378ba81-94b8-baa9-93d0-bf7d25af0048",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "c628b9c2-31de-fd80-f913-2e9ad36393a9",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "f665d685-1e8b-dc83-a1e4-7ca3f26d5a8c",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "c6861ca8-bf6b-8912-57d6-68df88cbe481",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-07",
+   "patient_id": "5ec53533-38d5-fd93-159b-7389ffd95940",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-02",
+   "patient_id": "d02b2ca5-7e63-1c3d-505f-3a7218bac46d",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "fc8dfe9b-047b-4457-610f-75aff8e51692",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "09faca51-f561-cdc3-e524-a1d682f19258",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "2c098b38-279d-88b3-d553-e87b56eb1b04",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-04",
+   "patient_id": "50aac3ff-d836-adfd-620d-662fa08fdf55",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "0ee91088-5b0d-8cdb-ef22-357b12a26b25",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "c0219ca9-576f-f7c2-9c44-de030e94969b",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "9e84e569-7adc-ff42-ccdb-9fe9c23842a6",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "81b2098d-e476-7d41-46b1-1c86fa027785",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "c0b0f482-c7b7-c9dd-9f8d-66f8dc6b4f4d",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "a06bce31-d0dc-f345-df41-777fb453afaf",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "d66b5418-06cb-fc8a-8c13-85685b6ac939",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "patient_id": "0d281c81-6c94-4578-c69f-217929d12245",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "07a1f80c-f4e2-8e91-5913-270fc6afa25d",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "patient_id": "246fb368-8991-dc93-f6a5-eca807e7dbde",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "patient_id": "cb8c092a-99aa-6c9c-1ec1-660f0b00549d",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "f4e9db02-4f07-2d07-f7f3-fc01c45454d1",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-02",
+   "patient_id": "459f6a66-b392-60b2-5164-cf29d3be444e",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "9c3df38a-d3b7-2198-3898-51f9153d023d",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "d432ac90-2b10-097f-9a30-093555da284f",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "23d16ee3-8cd4-eeb8-e77e-1e5fbf4c4159",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-05",
+   "patient_id": "97a20cf9-630d-939c-2f50-f13c434aee2f",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "509f9a77-2a22-f98b-c539-9a44057efb51",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "28db1c55-fe99-d5c8-8fc4-bffda09ab3be",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "303c8bd7-a047-5e7c-6dd3-1d6e7f04d439",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-07",
+   "patient_id": "28db1c55-fe99-d5c8-8fc4-bffda09ab3be",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "33c2ca32-ae38-66c5-474f-83273568906e",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "2a98d763-bdbc-f524-31b7-23712dc08894",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "67c6597f-c239-a595-beac-b2941e7b54ff",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "4688bc6a-6bd0-4a88-a590-9a11677082c9",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-04",
+   "patient_id": "aa2f41c3-412f-6635-26df-de6f46013766",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "05877654-69c4-d607-400e-e162ea103642",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "297c1550-317d-aac0-b529-042721fed414",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "90053970-cbf7-9102-32f1-61c1b05827a8",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "5b0609a7-49e8-65b4-dc32-9edc8301c646",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-01",
+   "patient_id": "23cec4fc-145d-f75d-dc70-2a52c97bd9c3",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "83c5cc27-48a8-5580-966b-783719fe8f1b",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "303c8bd7-a047-5e7c-6dd3-1d6e7f04d439",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "72b71d33-b242-8f86-7ce0-198b3dfd3bf1",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "0f444cf3-eb58-6f42-c740-a6ab70cec7ee",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "fbc55f1a-9438-99af-595e-8a4196b6684b",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "303c8bd7-a047-5e7c-6dd3-1d6e7f04d439",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "8c39d1ea-a482-d741-288d-0c780719797f",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-03",
+   "patient_id": "792a51c0-a2a4-ee26-c23c-7cb24f8a0e35",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-01",
+   "patient_id": "c6861ca8-bf6b-8912-57d6-68df88cbe481",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "307b6419-5147-4716-10b1-bb458ac191c3",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "d7c46304-29f5-5ddb-f5df-7d816cf4f318",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "be82309d-1a8f-df82-4cd6-5f03e1060e8e",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "1376b3c5-6250-0dcb-0a6d-d9c595a1e167",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "d29560ea-5e1b-99a1-1beb-e8dd19b67468",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "8151b558-93f4-5a4c-4697-a3137595e999",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "patient_id": "aa2f41c3-412f-6635-26df-de6f46013766",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "918e387f-cb9a-ec9f-ab54-65467a4df548",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "177971b9-2284-1459-06de-165414d9de11",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "203e71e8-7254-6d5c-64a4-37258364dd41",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "1ab85caa-724e-d796-8d77-bcaf4a295826",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "6f4a8d14-cba0-49d8-10c1-6669dff22f2f",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "5b2f8ddd-408a-884c-00e9-047b13e6cc45",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "3f8f669e-a86e-7ed2-9cd3-af981a89dfa1",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "454bbec4-42bc-bd2c-fe3a-f8f4fc4346e9",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-03",
+   "patient_id": "8bf6aa92-645f-3c82-ddcd-5851496a6aa8",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-01",
+   "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "8bf6aa92-645f-3c82-ddcd-5851496a6aa8",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "patient_id": "80591a09-43a2-3933-605e-d14dd364f2c5",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "b8c195d4-0396-fb84-3aa2-57dd23ff5a23",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "d8e3a701-d108-74ff-2ce3-156537276a14",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "3beee40e-512b-420f-38a3-28e56cddbc9b",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "patient_id": "3dfce025-b696-711a-8c2d-6903736e2882",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "7683e3a1-996d-1f2a-8bca-a463ad969cc1",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-05",
+   "patient_id": "915aacda-a5d6-b157-5f8a-572c9ed4eb0f",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "d362f4e5-244f-cf80-f2d5-25bcd2c97785",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "patient_id": "0b48bf9b-5582-1253-ab01-b34da54bad15",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "5ec53533-38d5-fd93-159b-7389ffd95940",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "63d20fbe-d046-cc9f-59b7-c51c073583c1",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "f992b5b4-16f1-1587-cca6-a15bda17a557",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "df9b9e5b-c894-1879-c153-3e9df381f15b",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-05",
+   "patient_id": "7fea6a12-aae3-a4d5-4abf-d6b622deaeb1",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "patient_id": "cf49b901-a4fe-9b9d-fd42-45b1fdcdd55e",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "1d1af1df-c916-9534-dcb4-b9aaf02e48d5",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "patient_id": "b74d0752-3c8d-4374-78d0-618105abb04c",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "443e574b-0480-6ad5-8add-e22f5e87a9bb",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "8de0c26b-923d-7d3a-3315-9a800f7e46ec",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-07",
+   "patient_id": "39b9fc41-87ce-92a5-5096-539739bb657c",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-03",
+   "patient_id": "83a86980-de17-1b13-d31a-78f2376649af",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "d57e867e-4896-9e07-f502-5f4f881bd80e",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "90053970-cbf7-9102-32f1-61c1b05827a8",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "6b3a5686-0f63-5ce4-cc03-0bba2052f7b1",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "165a4435-31ff-0493-eb3f-3a86106f3a59",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "2f031d4a-b070-ce15-6372-30c8fecf1164",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "1a4f3136-4eae-dc5d-f68d-046b7a2e11ea",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "patient_id": "873049ed-d86d-74b2-84c4-cbc49b4384d0",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "e1a2f3c6-27a7-f162-492e-62a5fffc38e0",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "ff9f14e4-d241-71fe-a501-2199e39aa79a",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "396babc6-6b4f-e29b-40f7-ea119ee57ac4",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "af7711e2-9168-bf9a-63de-9fe3e5bad22d",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "563187cb-7236-8b85-e6bc-79f35538910d",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "patient_id": "90a958eb-68a4-aa61-85e0-e9f20b083d94",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "86b4e80a-13f8-e14b-cf3f-9000cc0e96b5",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "patient_id": "60e27639-436c-6c04-1ff6-9790df8552f8",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "patient_id": "5e4a0309-e8c1-c58c-bb7f-208dbe06cb13",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "patient_id": "d66b5418-06cb-fc8a-8c13-85685b6ac939",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "patient_id": "8c39d1ea-a482-d741-288d-0c780719797f",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "165a4435-31ff-0493-eb3f-3a86106f3a59",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "d19face0-6272-fbfb-7882-7745c0a86eb5",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "patient_id": "b8c195d4-0396-fb84-3aa2-57dd23ff5a23",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "patient_id": "f6542a20-3b0a-addd-d3a2-6a621f67970f",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "c63b5472-3136-5428-0e24-662ff2b5cee5",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "patient_id": "9188198b-4f9b-8648-3609-37465be0a144",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-03",
+   "patient_id": "8151b558-93f4-5a4c-4697-a3137595e999",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "patient_id": "e841df97-29d6-fe22-3ebc-a837d092b339",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "patient_id": "57b53310-98a9-f011-69c0-02068c37d83b",
+   "gold_a": "FAILS"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "patient_id": "f6542a20-3b0a-addd-d3a2-6a621f67970f",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "patient_id": "3dfce025-b696-711a-8c2d-6903736e2882",
+   "gold_a": "MEETS"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-07",
+   "patient_id": "2987fe83-93bf-9d7d-1b8d-481913f54c5c",
+   "gold_a": "INDETERMINATE"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-04",
+   "patient_id": "fcca54e8-5abe-cd71-30a0-464f15368bea",
+   "gold_a": "INDETERMINATE"
+  }
+ ]
+}

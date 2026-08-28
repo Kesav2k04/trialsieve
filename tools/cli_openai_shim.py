@@ -20,6 +20,7 @@ import atexit
 import json
 import os
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -97,6 +98,42 @@ def render(messages: list[dict]) -> str:
     return "\n\n".join(parts)
 
 
+_RETRY_HINT = re.compile(r"retry in ([0-9.]+)s", re.I)
+_RATE_LIMITED = re.compile(r"429|rate.?limit|quota|RESOURCE_EXHAUSTED|please retry", re.I)
+
+
+def _run_with_backoff(argv: list[str], stdin_text: str | None, env: dict,
+                      attempts: int = 5) -> subprocess.CompletedProcess:
+    """Retry a rate-limited CLI rather than recording its error as an answer.
+
+    A free-tier backend refuses roughly as often as it answers. Without this the
+    refusal reaches the agent as an unparseable reply, the agent retries with the
+    validator's error attached, and after three of those the harness records a
+    considered-looking refusal for a criterion the model never saw. The failure
+    has to stay visible as a failure.
+    """
+    delay = 5.0
+    last = None
+    for i in range(attempts):
+        last = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", timeout=TIMEOUT, env=env,
+                              input=stdin_text,
+                              stdin=None if stdin_text is not None else subprocess.DEVNULL)
+        if last.returncode == 0:
+            return last
+        blob = (last.stderr or "") + (last.stdout or "")
+        if not _RATE_LIMITED.search(blob) or i == attempts - 1:
+            return last
+        m = _RETRY_HINT.search(blob)
+        wait = min(90.0, float(m.group(1)) + 1.0 if m else delay)
+        _stats["backoffs"] = _stats.get("backoffs", 0) + 1
+        print(f"rate limited, sleeping {wait:.0f}s (attempt {i + 1}/{attempts})",
+              file=sys.stderr, flush=True)
+        time.sleep(wait)
+        delay = min(90.0, delay * 2)
+    return last
+
+
 def strip_noise(s: str) -> str:
     """Drop the CLI banner that precedes the answer."""
     lines = s.splitlines()
@@ -169,8 +206,13 @@ class Handler(BaseHTTPRequestHandler):
                     "--output-last-message", outfile, "-"]
             stdin_text = prompt
         else:
-            argv = [CLI, "-m", model, "-p", prompt]
-            stdin_text = None
+            # --skip-trust because a headless run has no interactive prompt to
+            # answer the workspace-trust question with, and the bulk of the text
+            # goes over stdin because a 26,000 character argv is near the Windows
+            # command line limit and would be truncated without an error.
+            argv = [CLI, "--skip-trust", "-m", model, "-p",
+                    "Follow the instructions given on standard input."]
+            stdin_text = prompt
 
         env = dict(os.environ)
         if BACKEND == "codex" and CLEAN_HOME:
@@ -178,11 +220,7 @@ class Handler(BaseHTTPRequestHandler):
 
         with LOCK:
             try:
-                proc = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8",
-                                      errors="replace", timeout=TIMEOUT, env=env,
-                                      input=stdin_text,
-                                      stdin=None if stdin_text is not None
-                                      else subprocess.DEVNULL)
+                proc = _run_with_backoff(argv, stdin_text, env)
             except subprocess.TimeoutExpired:
                 _stats["errors"] += 1
                 if outfile:
