@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -166,6 +167,87 @@ def main() -> int:
                   "execution engine is deterministic and would report a floor of exactly "
                   "zero, so the floor is measured where the randomness actually is, in "
                   "compilation.")
+
+    # degradation curve, read across the k groups rather than within one
+    curve = []
+    for tag, block in sorted(results["groups"].items()):
+        if "_k" not in tag:
+            continue
+        try:
+            k = int(tag.split("_k")[-1].split("_")[0])
+        except ValueError:
+            continue
+        ts = block.get("cell_scores", {}).get("TS")
+        ps = block.get("panel_scores", {}).get("TS")
+        if not ts or not ps:
+            continue
+        curve.append({"k_percent": k, "coverage": ts["coverage"], "ser": ts["ser"],
+                      "false_fails": ts["n_false_fails"], "reduction": ps["reduction"],
+                      "false_exclusions": ps["false_exclusions"]})
+    if len(curve) >= 2:
+        curve.sort(key=lambda r: r["k_percent"])
+        results["degradation_curve"] = curve
+        md.append("\n## Degradation curve\n")
+        md.append("Synthea records are complete by construction, so the failure mode this "
+                  "design exists for barely occurs at k=0, and any silent error rate "
+                  "measured there is a lower bound. Each row damages k percent of the "
+                  "resources the *gold* predicates read, never the ones the system "
+                  "compiled, so the harness cannot favour the arm under test.\n")
+        md.append("| k | coverage | SER | false-FAILS | panel reduction | false exclusions |")
+        md.append("|---|---|---|---|---|---|")
+        for r in curve:
+            md.append(f"| {r['k_percent']}% | {r['coverage']:.1%} | {r['ser']:.1%} | "
+                      f"{r['false_fails']} | {r['reduction']:.1%} | "
+                      f"**{r['false_exclusions']}** |")
+        md.append("\nReal missingness is not random. It tracks fragmented care and sicker "
+                  "patients, which is the one property this harness cannot reproduce, so "
+                  "the curve is a floor on the effect rather than an estimate of it.")
+
+    # label noise floor, if the second checker has run
+    ag_path = ROOT / "evaluation" / "checker_b" / "agreement.json"
+    if ag_path.exists():
+        ag = json.loads(ag_path.read_text(encoding="utf-8"))
+        results["label_noise_floor"] = ag
+        a_pct = ag["agreement"]["percent_agreement"]
+        md.append("\n## Label noise floor\n")
+        md.append(f"Checker A and Checker B labelled the same {ag['n']} cells "
+                  f"independently. B saw the criterion prose and a flattened patient "
+                  f"table, on a different model family, with no sight of the predicate "
+                  f"IR, of A, or of any system output.\n")
+        md.append("| | |")
+        md.append("|---|---|")
+        md.append(f"| cells labelled twice | {ag['n']} |")
+        md.append(f"| raw percent agreement | {a_pct:.1%} |")
+        md.append(f"| Cohen's kappa | {ag['agreement']['cohens_kappa']:.3f} |")
+        md.append(f"| Gwet's AC1 | {ag['agreement']['gwets_ac1']:.3f} |")
+        md.append(f"| Checker A marginals | `{json.dumps(ag['a_marginals'])}` |")
+        md.append(f"| Checker B marginals | `{json.dumps(ag['b_marginals'])}` |")
+        md.append(f"\nPre-adjudication disagreement is {1 - a_pct:.1%}. Any difference "
+                  f"between arms smaller than that is reported as uninterpretable rather "
+                  f"than as a finding. Kappa is printed beside AC1 because kappa collapses "
+                  f"under the skewed marginals expected here and would understate "
+                  f"agreement that is real.")
+
+    # provenance: which commit last touched each prompt file
+    prompts = {}
+    for f in sorted((ROOT / "src" / "trialsieve" / "agents").glob("*.py")):
+        if f.name in ("__init__.py", "common.py"):
+            continue
+        try:
+            prompts[f.name] = subprocess.run(
+                ["git", "log", "-1", "--format=%H %cI", "--", str(f)],
+                cwd=ROOT, capture_output=True, text=True).stdout.strip()
+        except OSError:
+            prompts[f.name] = ""
+    results["prompt_files_last_commit"] = prompts
+    md.append("\n## Provenance\n")
+    md.append("The commit that last touched each prompt-carrying file. If any of these is "
+              "later than the commit that produced these numbers, the run is invalid and "
+              "is rerun. See `docs/DEV_SPLIT.md`.\n")
+    md.append("| file | last touched by |")
+    md.append("|---|---|")
+    for k, v in prompts.items():
+        md.append(f"| `{k}` | `{v[:16]}` {v[41:]} |")
 
     out = Path(a.out or (run / "report"))
     out.mkdir(parents=True, exist_ok=True)
