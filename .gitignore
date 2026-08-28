@@ -26,3 +26,16 @@ runs/tierA/*
 # cassettes in seconds, and shipping several hundred thousand rows would bury
 # the things worth reading.
 runs/tierA/cells/
+
+# Directories created by tooling that resolved a broken path variable while
+# running inside this tree. A CLI launched with a partially expanded
+# %SystemDrive% or a redirected package cache writes here rather than failing,
+# and `git add -A` will happily commit 167 MB of somebody else's Python.
+/Python/
+/%SystemDrive%/
+/dev-cachenpm-cache/
+/trace-runs/
+/.code-review-graph/
+/AppData/
+local_dev.db
+profile-claim.lock

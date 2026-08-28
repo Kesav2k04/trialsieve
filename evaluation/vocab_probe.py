@@ -84,8 +84,9 @@ PROBES = [
 ]
 
 PROVIDERS = {
-    "shim": ("http://127.0.0.1:8100/v1", "gpt-5.6-terra"),
-    "gemini": ("http://127.0.0.1:8101/v1", "gemini-2.5-flash"),
+    "shim": ("http://127.0.0.1:8100/v1", "gemini-3.7-flash-medium"),
+    "oss": ("http://127.0.0.1:8100/v1", "gpt-oss-120b-medium"),
+
     "ollama": ("http://127.0.0.1:11434/v1", "granite3.1-dense:8b"),
 }
 

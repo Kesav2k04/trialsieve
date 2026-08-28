@@ -31,6 +31,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 LOCK = threading.Semaphore(4)
 CLEAN_HOME = ""
+MAX_ARGV_PROMPT = 28000
 CLI = "gemini"
 BACKEND = "gemini"
 DEFAULT_MODEL = "gemini-2.5-flash"
@@ -205,6 +206,18 @@ class Handler(BaseHTTPRequestHandler):
             argv = [CLI, "exec", "--skip-git-repo-check", "--ephemeral", "-m", model,
                     "--output-last-message", outfile, "-"]
             stdin_text = prompt
+        elif BACKEND == "agy":
+            # The Antigravity CLI takes the prompt as an argument and prints the
+            # answer on stdout. Windows caps a command line at 32,767 characters,
+            # and a silently truncated prompt is the worst possible failure here:
+            # the model answers a question it was only shown part of, and nothing
+            # downstream can tell. So the length is checked and refused.
+            if len(prompt) > MAX_ARGV_PROMPT:
+                return self._json(413, {"error": {"message":
+                    f"prompt is {len(prompt)} characters and the argv limit for this "
+                    f"backend is {MAX_ARGV_PROMPT}. Refusing rather than truncating."}})
+            argv = [CLI, "--model", model, "-p", prompt]
+            stdin_text = None
         else:
             # --skip-trust because a headless run has no interactive prompt to
             # answer the workspace-trust question with, and the bulk of the text
@@ -268,15 +281,18 @@ def main() -> int:
     ap.add_argument("--port", type=int, default=8080)
     ap.add_argument("--cli", default="gemini")
     ap.add_argument("--concurrency", type=int, default=4)
-    ap.add_argument("--backend", choices=["gemini", "codex"], default=None)
+    ap.add_argument("--backend", choices=["gemini", "codex", "agy"], default=None)
     ap.add_argument("--dirty-home", action="store_true",
                     help="let the codex CLI load the operator's own AGENTS.md and "
                          "config.toml. Off by default because anything it injects "
                          "is not in this repository and cannot be reproduced.")
     ap.add_argument("--default-model", default=None)
     a = ap.parse_args()
-    globals()["BACKEND"] = a.backend or ("codex" if "codex" in a.cli else "gemini")
-    globals()["DEFAULT_MODEL"] = a.default_model or ("gpt-5.1-codex" if globals()["BACKEND"] == "codex" else "gemini-2.5-flash")
+    globals()["BACKEND"] = a.backend or ("codex" if "codex" in a.cli
+                                        else "agy" if "agy" in a.cli else "gemini")
+    globals()["DEFAULT_MODEL"] = a.default_model or {
+        "codex": "gpt-5.6-terra", "agy": "gemini-3.7-flash-medium",
+    }.get(globals()["BACKEND"], "gemini-2.5-flash")
     CLI = resolve_cli(a.cli)
     globals()["LOCK"] = threading.Semaphore(a.concurrency)
     globals()["CLEAN_HOME"] = ("" if (a.dirty_home or globals()["BACKEND"] != "codex")

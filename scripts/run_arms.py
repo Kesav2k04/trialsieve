@@ -39,7 +39,8 @@ from trialsieve.trace import Trajectory  # noqa: E402
 
 PROVIDERS = {
     "ollama": ("http://127.0.0.1:11434/v1", "granite3.1-dense:8b"),
-    "shim": ("http://127.0.0.1:8100/v1", "gpt-5.6-terra"),
+    "shim": ("http://127.0.0.1:8100/v1", "gemini-3.7-flash-medium"),
+    "oss": ("http://127.0.0.1:8100/v1", "gpt-oss-120b-medium"),
     "openai": ("https://api.openai.com/v1", "gpt-4o-mini"),
 }
 
