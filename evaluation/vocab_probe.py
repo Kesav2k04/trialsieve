@@ -85,11 +85,24 @@ PROBES = [
       why="display matches"),
 
     # -- the site codes it, at a coarser grain than the criterion needs ------
-    P("Type 2 diabetes mellitus", "condition", "broader", broader=["44054006"],
-      why="every diabetes diagnosis here is one unspecified code; presence cannot "
-          "establish the type and absence still rules the patient out"),
-    P("Type 1 diabetes mellitus", "condition", "broader", broader=["44054006"],
-      why="the same single code, and the same argument, for the other type"),
+    P("Iron deficiency anaemia", "condition", "broader", broader=["271737000"],
+      why="the only anaemia code here is unqualified, so it contains iron deficiency "
+          "anaemia without establishing it; absence still rules the patient out"),
+    P("Chronic kidney disease stage 3 or worse", "condition", "broader",
+      broader=["431855005", "431856006"],
+      why="this corpus codes stages 1 and 2 only. Neither establishes stage 3, and "
+          "a patient coded stage 1 is not thereby stage 3 either, so the honest "
+          "answer names them as related-but-not-sufficient rather than as a match"),
+
+    # -- the display is one word and the code is exact, which is the trap ----
+    P("Type 2 diabetes mellitus", "condition", "gap", codes=["44054006"],
+      why="SNOMED 44054006 is Diabetes mellitus type 2. This corpus displays it as "
+          "the single word 'Diabetes', which reads as an unspecified parent concept "
+          "and is not one. Judging the display rejects the one code that is right"),
+    P("Type 1 diabetes mellitus", "condition", "absent",
+      why="44054006 is type 2 specifically, so it is a sibling of type 1 rather than "
+          "a parent. Returning it here, in either list, is the over-acceptance this "
+          "probe exists to catch"),
 
     # -- genuinely absent at any grain ---------------------------------------
     P("Acute pancreatitis", "condition", "absent",
