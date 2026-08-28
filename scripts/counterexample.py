@@ -1,0 +1,162 @@
+"""The opening claim of the README, run rather than asserted.
+
+    python scripts/counterexample.py --run runs/tierA --provider shim
+
+One criterion, one patient, both arms, side by side, with the transcript written
+out. The claim being tested is narrow and falsifiable: given a criterion with a
+threshold and a patient whose record contains no measurement of that quantity, the
+per-cell baseline commits to a verdict and TrialSieve does not.
+
+If the baseline abstains here, this script prints that instead, and the README has
+to change. That is the point of running it.
+
+The baseline arm used is `baselines.b2_cell`, the same code path scored in the
+evaluation. Writing a weaker strawman for the demonstration and a stronger one for
+the table would make the demonstration worthless.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "evaluation" / "gold"))
+
+import plainview  # noqa: E402
+from criteria_set import CRITERIA  # noqa: E402
+from trialsieve import explain  # noqa: E402
+from trialsieve.baselines import b2_cell, render_record  # noqa: E402
+from trialsieve.chart import load_panel  # noqa: E402
+from trialsieve.evaluator import evaluate_criterion  # noqa: E402
+from trialsieve.llm import Client  # noqa: E402
+from trialsieve.trace import Trajectory  # noqa: E402
+
+PROVIDERS = {
+    "shim": ("http://127.0.0.1:8100/v1", "gpt-5.6-terra"),
+    "gemini": ("http://127.0.0.1:8101/v1", "gemini-2.5-flash"),
+    "ollama": ("http://127.0.0.1:11434/v1", "granite3.1-dense:8b"),
+}
+
+DEFAULT_CRITERION = "NCT06983054-INC-09"     # UACR < 30 mg/mmol
+DEFAULT_CODE = "14959-1"                     # the measurement that has to be missing
+
+
+def pick_patient(panel, code: str):
+    """A patient with a substantial record that happens not to contain this test.
+
+    Substantial matters. A patient with an almost empty chart makes the point
+    trivially and unfairly: any reader would abstain on that. The interesting case
+    is a thick record with one specific hole in it.
+    """
+    best = None
+    for ch in panel:
+        p = plainview.plain(ch)
+        if any(l["code"] == code for l in p["labs"]):
+            continue
+        size = len(p["labs"]) + len(p["problems"]) + len(p["orders"])
+        if best is None or size > best[0]:
+            best = (size, ch, p)
+    return best
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--run", default="runs/tierA")
+    ap.add_argument("--criterion", default=DEFAULT_CRITERION)
+    ap.add_argument("--code", default=DEFAULT_CODE)
+    ap.add_argument("--provider", default="shim", choices=sorted(PROVIDERS))
+    ap.add_argument("--model", default=None)
+    ap.add_argument("--mode", default="record", choices=["record", "replay", "live"])
+    ap.add_argument("--out", default="docs/COUNTEREXAMPLE.md")
+    a = ap.parse_args()
+
+    run = Path(a.run)
+    panel = load_panel("data/vendor/panel.jsonl.gz")
+    crit = next(c for c in CRITERIA if c["criterion_id"] == a.criterion)
+
+    n_missing = sum(1 for ch in panel
+                    if not any(o.codings and o.codings[0].code == a.code
+                               for o in ch.observations))
+    size, chart, p = pick_patient(panel, a.code)
+
+    # -- arm 1: the system ---------------------------------------------------
+    compiled = None
+    for f in sorted((run / "compiled").glob("criteria_seed*.json")):
+        blob = json.loads(f.read_text(encoding="utf-8"))
+        hit = [c for c in blob["criteria"] if c["criterion_id"] == a.criterion]
+        if hit:
+            compiled = hit[0]
+            break
+    if compiled is None:
+        print(f"no compiled predicate for {a.criterion} under {run}. Compile first.",
+              file=sys.stderr)
+        return 2
+    if not compiled.get("compilable"):
+        print(f"{a.criterion} did not compile: {compiled.get('reason_not_compilable')}",
+              file=sys.stderr)
+        return 2
+    ts = evaluate_criterion(compiled, chart)
+
+    # -- arm 2: the baseline, same code path the evaluation scores ----------
+    base_url, default_model = PROVIDERS[a.provider]
+    client = Client(provider="openai", model=a.model or default_model, mode=a.mode,
+                    cassette_dir=run / "cassettes", base_url=base_url)
+    traj = Trajectory("counterexample", f"{a.criterion}--{chart.patient_id[:8]}")
+    traj.input(criterion_id=a.criterion, patient_id=chart.patient_id,
+               source_text=crit["source_text"], missing_code=a.code)
+    b2 = b2_cell(client, crit, chart, render_record(chart), traj)
+    traj.final(**{k: v for k, v in b2.items() if k != "raw"})
+    traj.write(run / "trajectories")
+
+    gold = crit["gold"](p) if crit["checkable"] else "n/a"
+
+    L = ["# One criterion, one patient, two arms", "",
+         "Generated by `python scripts/counterexample.py`. Everything below is output, "
+         "not illustration.", "",
+         f"**Criterion** `{a.criterion}` ({crit['kind']}): {crit['source_text']}", "",
+         f"**Patient** `{chart.patient_id}`, age {plainview.age_years(p)}, {chart.sex}. "
+         f"{len(p['labs'])} laboratory results, {len(p['problems'])} problems, "
+         f"{len(p['orders'])} medication orders on file.", "",
+         f"**The hole in the record.** LOINC `{a.code}` appears nowhere in this "
+         f"patient's chart. It appears nowhere in {n_missing} of the {len(panel)} "
+         f"charts in this panel ({n_missing / len(panel):.0%}), so this is the normal "
+         f"case rather than an unlucky one.", "",
+         "---", "", "## What the per-cell baseline says", "",
+         f"Model `{client.model}`, temperature 0, given the criterion text and the "
+         f"same flattened record the engine reads, with an explicit instruction and a "
+         f"worked example for answering INDETERMINATE.", "",
+         "```", f"verdict  : {b2['verdict']}",
+         f"reasoning: {b2.get('reasoning', '')[:400]}", "```", "",
+         "## What TrialSieve says", "", "```", f"verdict  : {ts['verdict']}",
+         f"reason   : {ts.get('reason', '')}"]
+    for e in (ts.get("evidence") or [])[:4]:
+        L.append(f"evidence : {e}")
+    L += ["```", "", "The predicate it executed, rendered for review:", "", "```",
+          explain.expr(compiled["expr"], 1), "```", "",
+          "## Gold", "", f"Checker A: **{gold}**", "",
+          "---", "",
+          f"| arm | verdict | agrees with gold |",
+          f"|---|---|---|",
+          f"| per-cell baseline (B2) | {b2['verdict']} | "
+          f"{'yes' if b2['verdict'] == gold else 'no'} |",
+          f"| TrialSieve | {ts['verdict']} | "
+          f"{'yes' if ts['verdict'] == gold else 'no'} |", ""]
+
+    if b2["verdict"] == gold:
+        L.append("The baseline got this one right. The README's opening example does not "
+                 "hold on this pair and has to be rewritten or withdrawn.")
+    L.append("")
+
+    out = Path(a.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(L), encoding="utf-8", newline="\n")
+    print("\n".join(L))
+    print(f"\nwrote {out}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
