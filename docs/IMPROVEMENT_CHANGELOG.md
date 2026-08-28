@@ -209,3 +209,108 @@ way, and it will look like a result:
 patient in the panel, resting on evidence that could not exist. The gold set caught
 it here because gold was written by hand and its distribution was audited. Nothing
 in the system would have caught it.
+
+---
+
+## 7. The lexical search could not read British spelling
+
+**Found by** a vocabulary probe, on a control entry rather than on the entry it
+was built to test. Asked to ground "Anaemia", a concept this corpus definitely
+codes, the grounder returned nothing at all and the criterion became UNMAPPABLE.
+
+**What was wrong.** The candidate search is lexical on purpose: an embedding
+search returns a plausible neighbour for a concept the vocabulary does not
+contain, and a near miss on a drug class is indistinguishable from a hit until it
+clears a patient. The cost of being lexical is that spelling is now a correctness
+property, and nobody had paid it.
+
+A protocol writes anaemia, haemoglobin, oedema, tumour. A US-built record system
+writes Anemia, Hemoglobin, edema, tumor. The two never met.
+
+This is the most expensive way to be wrong in this system, because it costs
+coverage and leaves no trace: an empty shortlist and a genuinely absent concept
+produce exactly the same output, and the second one is a feature.
+
+**What changed.** An orthographic fold applied to the query and the vocabulary
+entry alike, before matching. The symmetry is what makes it safe to be crude
+about: folding "aerobic" to "erobic" is harmless when both sides fold the same
+way, and the worst case is one spare candidate for the select step to reject.
+Recall belongs to this step; precision belongs to the next one.
+
+**Evidence.** `tests/test_terminology.py`, seven tests. Two of them exist to stop
+the fold from becoming a different bug: a concept the vocabulary genuinely lacks
+must still return nothing, and a word collision must still be shortlisted rather
+than quietly dropped, because dropping it would hide from the select step exactly
+the distinction it exists to make.
+
+---
+
+## 8. The primary model backend ran out of quota mid-project
+
+**Found by** a 502 from the local shim, mid-run, with the CLI's own error attached:
+a usage limit with a reset date a month away.
+
+**Not a defect, but it is an engineering event and the changelog is where those go.**
+Two runs died with it, and the interesting part is what the shim did rather than
+what the vendor did.
+
+**What was already right.** The shim returns a non-2xx status for a non-zero exit
+rather than passing the error text through as a completion. So the failure arrived
+at the agent as an exception, not as an unparseable model reply. Had it arrived as
+a reply, the repair loop would have retried three times, the criterion would have
+been recorded as a considered refusal, and the run would have finished with a
+plausible number in it. That is failure mode 3 in this document, and the guard
+against it held.
+
+**What changed.** A second backend, the Antigravity CLI, behind the same
+OpenAI-compatible shim. Nothing above the shim knew the difference: the same
+`--provider shim` flag, the same cassette format, the same replay path.
+
+Two smaller fixes came with it. Rate-limited calls now back off and retry, parsing
+the vendor's own suggested delay, instead of surfacing as a failure. And a prompt
+longer than the Windows command-line limit is **refused with a 413** rather than
+truncated, because a silently truncated prompt means the model answers a question
+it was shown only part of, and nothing downstream can tell.
+
+**What it cost.** Every cassette recorded before the switch was discarded, and the
+before-and-after comparisons in this document were re-recorded on the new backend
+so that the two halves of each comparison share a model.
+
+---
+
+## 9. A code can contain a concept without establishing it
+
+**Found by** the same vocabulary probe, and it turned into a feature rather than a
+fix.
+
+**The situation.** A site can code a concept only at a coarser grain than the
+criterion needs. The one anaemia code in this corpus is unqualified, so a
+criterion asking about iron deficiency anaemia meets a code that contains the
+answer without giving it. The two obvious handlings are both wrong:
+
+- Treat the coarse code as a match. This manufactures MEETS verdicts for a
+  criterion the record cannot settle.
+- Call the concept UNMAPPABLE. This throws away the half of the information that
+  is real, and it is the useful half: a patient with no anaemia code of any kind
+  does not have iron deficiency anaemia either.
+
+**What changed.** A query can now carry `broader_codes` beside `codes`, and the
+engine treats them asymmetrically:
+
+| what the record holds | verdict |
+|---|---|
+| a code from `codes` | TRUE |
+| a code from `broader_codes` | **UNKNOWN**, naming the code and saying the site does not code the distinction |
+| neither | whatever `absent_means` says, unchanged |
+
+That asymmetry is the point. Presence cannot settle the criterion. Absence still
+can, and absence is what removes people from the worklist.
+
+The grounder gained a matching status, `BROADER_ONLY`, which is deliberately not
+UNMAPPABLE: the criterion goes forward and the engine abstains per patient rather
+than the whole criterion being refused for everyone.
+
+**Evidence.** `tests/test_broader.py`, nine tests, including the two that keep it
+honest: a query with no `broader_codes` behaves exactly as before, and a code
+cannot appear in both lists, because deciding whether a code means the concept or
+merely contains it is the entire content of the feature.
