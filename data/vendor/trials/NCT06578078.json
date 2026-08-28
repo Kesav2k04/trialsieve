@@ -1,0 +1,41 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Heart Failure",
+    "Chronic Kidney Diseases"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "PHASE3"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Inclusion Criteria:\n\n* Capable of giving signed informed consent which includes compliance with the requirements and restrictions listed in the informed consent form (ICF) and in this protocol.\n* Provision of informed consent form prior to any study specific procedures, sampling and analysis.\n* Individuals must be ≥ 70 years of age at the time of signing the informed consent form.\n* Individuals must have a confirmed diagnosis of Heart Failure (HF) according to clinical practice guidelines NYHA functional class I-III (with HFrEF or HFpEF).\n* Individuals must have previously been admitted to hospital due to HF decompensation requiring intravenous diuretics.\n* Individuals must have been stabilised for at least 24-48h of their HF decompensation before randomisation.\n* Individuals must have a confirmed diagnosis of Chronic Kidney Disease defined as a renal impairment of eGFR less than 60ml/min/1.73 m2.\n* Individuals receiving background standard of care for HF and treated according to international guidelines. Specific treatment should include RAASi and/or MRA treatment and at least should have been stable for ≥ 4 weeks at maximum tolerated doses.\n* Patients on RAASi blocker treatment with less than or equal to 75% of the maximum recommended dose.\n* Hyperkalemic patients (sK+ 5.1-5.9 mmol/L at screening / study enrolment) or Normokalemic patients at risk of developing HK defining as having a history of hyperkalaemia (sK+ \\>5.0 mEq/L) within the prior 24 months and sK+ ≥4.5 mEq/L ≤ 5.1 mEq/L at inclusion\n\nExclusion Criteria:\n\n* Limited life expectancy (less than 1 year) according to clinician's criteria, such as but not limited to malignancy, with life expectancy of less than 2 years based on investigator's clinical judgement.\n* sK \\>6 mEq/litre or \\<4.5mEq/litre or history of hypokalemic episodes (S-K\\<3.5 mEq/L) during the last year.\n* Patients on haemodialysis or haemofiltration\n* NYHA functional class IV\n* Patients undergoing treatment with potassium binders.\n* Active tumour undergoing chemotherapy or metastasis or malignancy requiring treatment.\n* Symptomatic or uncontrolled atrial fibrillation despite treatment, or asymptomatic sustained ventricular tachycardia. Subjects with atrial fibrillation controlled by medication are permitted.\n* QTc(f) \\> 550 msec.\n* History of QT prolongation associated with other medications that required discontinuation of that medication.\n* Congenital long QT syndrome.\n* Prior history of hypersensitivity to a RAAS blocker drug, including but not limited to development of angioedema, icterus, hepatitis, or neutropenia or thrombocytopenia requiring treatment modification. Addison's disease or other causes of hypoaldosteronism.\n* Patients with a known hypersensitivity to SZC or any of the excipients of the product.\n* Individuals treated with potassium binding resins such as sodium polystyrene sulfonate (SPS, e.g. Kayexalate®) or calcium polystyrene sulfonate (CPS; e.g. Resonium®) or the cation exchange polymer, patiromer sorbitex calcium (Veltassa®) within 7 days prior to the first dose of study drug.\n* Treated with potassium supplements within 7 days prior to randomization. 15. Positive hepatitis C antibody hepatitis B virus surface antigen or hepatitis B virus core antibody, at screening.\n* Known to have tested positive for human immunodeficiency virus.\n* Known history of drug or alcohol abuse within 3 year of screening.\n* Involvement in the planning and/or conduct of the study (applies to both Investigator staff and/or staff at the study site).\n* Judgment by the investigator that the subject should not participate in the study if the subject is unlikely to comply with study procedures, restrictions and requirements.\n* Previous enrolment in the present study.\n* Participation in another clinical study with an investigational product during the last 3 months.",
+   "healthyVolunteers": false,
+   "minimumAge": "70 Years",
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "A Clinical Trial to Define the Best Strategy for the Management of Heart Failure in Elderly Patients",
+   "nctId": "NCT06578078",
+   "officialTitle": "A Randomized Clinical Trial to Define the Best Strategy for the Management of Heart Failure and Chronic Kidney Disease Among Elderly Patients With or at High Risk of hyperKalemia in Span by Optimizing the Use of RAASi With SZC"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "Fundación para la Investigación del Hospital Clínico de Valencia"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2026-03-04"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2024-08-29"
+   }
+  }
+ }
+}

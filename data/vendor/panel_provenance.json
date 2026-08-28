@@ -1,0 +1,13 @@
+{
+ "source_url": "https://synthetichealth.github.io/synthea-sample-data/downloads/synthea_sample_data_fhir_r4_nov2021.zip",
+ "archive_sha256": "6d3c5433bcae4791bc5c30469d1445b430fb4894d5c13bda15fee0584bbd7778",
+ "archive_bytes": 94887125,
+ "licence": "Apache-2.0 (Synthea synthetic data, no real patients)",
+ "bundles_in_archive": 555,
+ "excluded_deceased": 55,
+ "excluded_under_18": 115,
+ "panel_size": 385,
+ "selection_rule": "alive at index date and age >= 18; no other selection",
+ "panel_sha256": "84ca1c301eedb636d058750b222fd019a9b9832ab0e98af163422d7453983273",
+ "panel_bytes_uncompressed": 48004356
+}

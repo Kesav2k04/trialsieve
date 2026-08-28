@@ -1,0 +1,46 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Microalbuminuria",
+    "Microalbuminuria /Creatinine Ratios ACR",
+    "Cardiovascular Disease Risk Factor",
+    "Cardiovascular Disease Prevention",
+    "Digital Medicine",
+    "Hypertension",
+    "Hyperglycaemia (Diabetic)",
+    "Hyperlipidemia"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "NA"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Inclusion Criteria:\n\nI.T-888-DIGICARE：\n\nEligible participants must meet the definition of hypertension and at least one of the following chronic (non-hypertensive) conditions:\n\n1. Hypertension\n\n   * With or without treatment, and meeting one of the following:\n   * Office blood pressure: two consecutive measurements \\>130/80 mmHg\n   * Home blood pressure: weekly average (morning/evening) \\>130/80 mmHg, or more than half of the weekly measurements exceeding this threshold\n2. Hyperlipidemia\n\n   * With or without treatment, and\n   * LDL-C \\>100 mg/dL (or \\>70 mg/dL in patients with diabetes or established ASCVD)\n3. Diabetes Mellitus\n\n   * With or without treatment, and\n   * HbA1c \\>6.5%\n4. Chronic Kidney Disease (CKD)\n\n   * Estimated glomerular filtration rate (eGFR) \\<60 mL/min/1.73 m², and\n   * Urine albumin-to-creatinine ratio (UACR) \\>30 mg/g\n5. Atherosclerotic Cardiovascular Disease (ASCVD):\n\n   * Including coronary artery disease, cerebrovascular disease, peripheral arterial disease, or aortic pathology\n\nII. DREAM-G:\n\n1. Hypertension\n\n   * With or without treatment, and meeting one of the following:\n   * Office blood pressure: two consecutive measurements \\>130/80 mmHg\n   * Home blood pressure: weekly average (morning/evening) \\>130/80 mmHg, or more than half of weekly measurements exceeding this threshold\n2. Hyperlipidemia\n\n   * With or without treatment, and\n   * LDL-C \\>100 mg/dL (or \\>70 mg/dL in patients with diabetes or established ASCVD)\n3. Diabetes Mellitus\n\n   * With or without treatment, and\n   * HbA1c \\>6.5%\n4. Chronic Kidney Disease (CKD)\n\n   * Estimated glomerular filtration rate (eGFR) \\<60 mL/min/1.73 m², and\n   * Measurable urinary microalbumin-to-creatinine ratio\n5. Atherosclerotic Cardiovascular Disease (ASCVD):\n\n   • Including coronary artery disease, cerebrovascular disease, peripheral arterial disease, or aortic pathology\n\n   Participants must meet at least one of the above chronic disease conditions and:\n6. Untreated Hypertension:\n\n   * Morning home blood pressure (HBP) \\>130/80 mmHg: weekly average (≥4 days) \\>130/80 mmHg,\n   * Or more than half of morning HBP measurements (≥4 days per week) \\>130/80 mmHg\n7. Treated Hypertension:\n\n   * Morning home blood pressure \\>130/80 mmHg: weekly average (≥4 days) \\>130/80 mmHg,\n   * Or more than half of morning HBP measurements (≥4 days per week) \\>130/80 mmHg\n   * Average home blood pressure ≤130/80 mmHg (used to determine treatment strategy)\n\nExclusion Criteria:\n\nI. T-888-DIGICARE\n\n1. Symptomatic heart failure (New York Heart Association functional class II-IV)\n2. End-stage renal disease requiring long-term dialysis\n3. Pregnant women or those planning pregnancy\n\nII. DREAM-G:\n\n1. Life expectancy \\<1 year\n2. End-stage renal disease (ESRD) requiring regular renal replacement therapy, including dialysis, kidney transplantation, or palliative care\n3. Severe liver cirrhosis\n4. Malignancy under active treatment",
+   "healthyVolunteers": false,
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "New Taipei City 888 Digital Medical AI Platform for Prevention and Care of the Three Highs and Cardio-Renal-Vascular Diseases",
+   "nctId": "NCT07588256",
+   "officialTitle": "New Taipei City 888 Digital Medical AI Platform for the Prevention and Treatment of the Three Highs (Hypertension, Hyperglycemia, Hyperlipidemia) and Cardio-Renal-Vascular Diseases: Validation and Implementation Through Large-Scale Cluster Randomized Clinical Trials: T-888-DIGICARE-DREAM"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "New Taipei City Medical Association"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2026-05-14"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2026-05-14"
+   }
+  }
+ }
+}

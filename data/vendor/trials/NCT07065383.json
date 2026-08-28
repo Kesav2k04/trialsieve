@@ -1,0 +1,41 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Diabetes Mellitus Type 2"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "NA"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Inclusion Criteria:\n\n* Patients with a confirmed diagnosis of type 2 diabetes established in the previous 10 years between the ages of 20 and 75\n* HbA1c ≥ 53 mmol/mol (7%) typically on diet and/or metformin/sulphonylureas (and/or sodium-glucose cotransporter-2 inhibitors, Dipeptidyl peptidase 4 inhibitors, thiazolidinediones, but not on insulin)\n* Patients who do not meet the WHO recommendations on physical activity (≤150 minutes per week) of moderate-vigorous physical activity (MVPA)\n* Patients who have a BMI of ≥27 but with a body weight of less than 140kgs due to limitations of the scanner table weight limit\n* Current or recent (within 3 months) eGFR \\>30 mL/min/1.73m2)\n* Able to understand written and spoken English\n\nExclusion Criteria:\n\n* Any previously unknown cardiac condition other than mild valvular disease\n* Any history of known coronary artery disease (including myocardial infarction and myocardial infarction with normal coronary arteries)\n* Any relevant or untreated endocrine condition (i.e. Cushings)\n* Impaired renal function (defined as estimated glomerular filtration rate of less than 30 mL/min/1.73m2)\n* Blood pressure of more than 180/100 mmHg\n* Patients on any other medication known to influence glucose or fatty acids metabolism (niacin, omega-3 fatty acids, other glucagon-like peptide-1 receptor agonists)\n* Patients with any dietary habits that may interfere with the investigation (for example high fat vegan diets, as we know form prior research that they have very different intramyocellular fat storage compared to those on no dietary preferences)\n* Patients with any history of any medical or surgical condition that in the judgement of the investigators may interfere with the exercise regime (i.e. peripheral vascular disease, arthritis), fatty acids metabolism (i.e. lipid storage diseases) or may compromise the safety of the participant (i.e. neurological syndromes for whom an intense exercise program could result in musculo-skeletal injury or accidents due to loss of balance).\n* Patients with a sensitivity to Semaglutide (known hypersensitivity, diabetic retinopathy, pregnancy, history of pancreatitis or history of any cancer)\n* Significant asthma or pulmonary disease\n* Participants unable to cycle on the ergometer\n* Unable to perform exercise testing (e.g. prosthetic limbs)\n* Pregnancy, breastfeeding or considering pregnancy.\n* Patients who have recently had gastrointestinal contrast or radionuclides\n* Inability to lie flat or remain motionless for scanning procedures\n* Patients whose girth size cannot allow them to fit in the magnetic resonance scanner (there is no set location to measure as this is different for everyone, but we have a plastic hoop that can be fitted around the largest circumference to check the fit)\n* Subjects who are not able to engage into a physical training regime or feel that they do not have the interest or sustained motivation to follow one.\n* Participants currently enrolled in other interventional clinical research\n* Participants not able to understand written or verbal English",
+   "healthyVolunteers": false,
+   "maximumAge": "75 Years",
+   "minimumAge": "20 Years",
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "Rebalancing the Fat Content of the Heart and Muscles",
+   "nctId": "NCT07065383",
+   "officialTitle": "Intramyocellular Lipid Compartments After Glucagon-like Peptide 1 Receptor Agonist Therapy in Type 2 Diabetes - Rebalancing the Fat Content of the Heart and Muscles"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "University of Aberdeen"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2026-04-30"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2025-07-15"
+   }
+  }
+ }
+}

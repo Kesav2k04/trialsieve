@@ -1,0 +1,41 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Type 2 Diabetes",
+    "Fatty Liver"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "PHASE4"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Inclusion Criteria:\n\n1. Adults aged 20 years or older.\n2. Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%, who are currently treated with either:\n\n   * Combination therapy of metformin and a sulfonylurea, or\n   * Combination therapy of metformin and a DPP-4 inhibitor, or\n   * Metformin monotherapy, or\n   * Triple therapy (including metformin) provided that sulfonylurea will be discontinued upon study enrollment.\n3. Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) ≥ 268 dB/m (consistent with S2 or greater \\[≥10% hepatocyte steatosis\\] according to the 2024 EASL-EASD-EASO guidelines).\n4. Presence of at least one of the following metabolic abnormalities:\n\n   * Waist circumference ≥90 cm for men or ≥85 cm for women.\n   * Blood pressure ≥130 mmHg systolic or ≥85 mmHg diastolic, or use of antihypertensive medication.\n   * Serum triglycerides ≥150 mg/dL or current use of lipid-lowering agents.\n   * HDL-cholesterol ≤45 mg/dL for men or ≤50 mg/dL for women.\n   * HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) ≥2.5.\n   * Serum C-reactive protein (CRP) ≥2 mg/L.\n5. No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.\n\nExclusion Criteria:\n\n1. Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.\n2. Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).\n3. Presence of secondary causes of hepatic steatosis unrelated to metabolic dysfunction, such as hepatitis B, hepatitis C, or alcoholic fatty liver disease.\n4. Use of medications known to induce hepatic steatosis, including valproic acid, estrogen, tamoxifen, amiodarone, or chloroquine.\n5. Severe organ failure, defined as:\n\n   * Liver failure: AST or ALT \\> 5 times the upper normal limit (UNL), serum albumin \\< 3.2 g/dL, platelet count \\< 60,000/µL, or Child-Pugh-Turcotte stage B or C.\n   * Renal failure: Serum creatinine ≥ 2.0 mg/dL, estimated glomerular filtration rate (eGFR) \\< 30 mL/min/1.73 m² (CKD-EPI formula), or patients with end-stage renal disease or on dialysis.\n6. Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer.\n7. History of or active bladder cancer.\n8. History of heart failure or current diagnosis of heart failure.\n9. Presence of terminal illnesses.\n10. History of gallstone disease, chronic pancreatitis, or acute pancreatitis.\n11. Underweight patients (body mass index \\[BMI\\] \\< 18.5 kg/m²).\n12. Pregnant women or women planning to become pregnant.\n13. Known hypersensitivity to the active ingredients or excipients of the study medications.\n14. History of diabetic ketoacidosis.",
+   "healthyVolunteers": false,
+   "minimumAge": "20 Years",
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "Pioglitazone and Empagliflozin for Fatty Liver Disease in Type 2 Diabetes",
+   "nctId": "NCT06989723",
+   "officialTitle": "Evaluation of Pioglitazone and Empagliflozin Combination Therapy in Type 2 Diabetes Patients With Metabolic Dysfunction-Associated Fatty Liver Disease"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "Seoul National University Bundang Hospital"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2025-05-25"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2025-05-25"
+   }
+  }
+ }
+}

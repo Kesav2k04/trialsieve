@@ -1,0 +1,40 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Chronic Kidney Disease"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "PHASE2"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Inclusion Criteria:\n\n* Female of non-childbearing potential, or male.\n\n  * For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male.\n* Age 18 years or above at the time of signing the informed consent.\n* Diagnosed with type 2 diabetes mellitus greater than or equal to (≥) 180 days before screening, or not diagnosed with type 2 diabetes mellitus.\n\n  * HbA1c of 6.5 percentage (%)-10.5 percentage (%) \\[48 - 91 millimoles per mole (mmol/mol)\\] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (\\<)6.5 percentage (%) \\[\\<48 mmol/mol\\] if not diagnosed with type 2 diabetes mellitus.\n* BMI greater than or equal to (≥) 27.0 kilogram per square metre (kg/m\\^2) at screening.\n* Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (≥) 15 and less than (\\<) 90 mL/min/1.73 m\\^2.\n* Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (≥)100 and less than (\\<) 5000 milligram per gram (mg/g).\n* Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.\n\nExclusion Criteria:\n\n* Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency.\n* Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.\n* Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.\n* Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening.\n* Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.\n* Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.\n* Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination.\n* Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening.",
+   "healthyVolunteers": false,
+   "minimumAge": "18 Years",
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "A Research Study Comparing How Well Different Doses of the Medicine NNC0519-0130 Can Reduce Kidney Damage in People Living With Chronic Kidney Disease",
+   "nctId": "NCT06717698",
+   "officialTitle": "Efficacy, Safety and Pharmacokinetics of NNC0519-0130 Once Weekly s.c. Versussemaglutide 1.0 mg and Placebo in People With Chronic Kidney Disease, With or Without Type 2 Diabetes, and With Overweight or Obesity: a Proof-of-concept and Dose-finding Study"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "Novo Nordisk A/S"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2026-03-11"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2024-12-05"
+   }
+  }
+ }
+}

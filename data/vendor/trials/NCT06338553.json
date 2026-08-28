@@ -1,0 +1,41 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Type 1 Diabetes"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "EARLY_PHASE1"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Aims 1-3: Stage 2 T1DM with TZIELD® and GLP-1Ra\n\nInclusion Criteria:\n\n* Age: 12-50 years\n* BMI: 18-31 kg/m2 (adults) or 5-95th %ile (pediatric)\n* Stage 2 T1DM (i.e., ≥ 2 islet auto-antibodies and:\n* fasting glucose ≥ 100 mg/dL and \\< 126 mg/dL OR\n* 2-hr OGTT /MMTT ≥ 140 mg/dL and \\< 200 mg/dL OR\n* During an OGTT having a glucose of \\> 199 mg/dL at 30, 60, or 90 minutes)\n\nExclusion Criteria:\n\n* Comorbidities:\n* SBP \\> 140 mmHg and DBP \\> 100 mmHg\n* eGFR by MDRD equation of \\< 60 mL/min/1.73m2\n* AST or ALT \\> 2.5 times ULN\n* Family history of medullary thyroid carcinoma\n* Diagnosis of pancreatitis or gastroparesis within the past 3 years\n* Medications: Any diabetes medication, any antioxidant vitamin supplement (\\<2 weeks before a study), any systemic glucocorticoid, antipsychotic, atenolol, metoprolol, propranolol, niacin, any thiazide diuretic, any OCP with \\> 35 mcg ethinyl estradiol, growth hormone, any immunosuppressant, antihypertensive, any antihyperlipidemic\n* Other: pregnancy, peri- or post-menopausal women, active smoker\n\nAim 4: Early Stage 3 T1DM with GLP-1Ra Monotherapy Inclusion Criteria\n\n* Age: 12-50 years\n* BMI: 18-31 kg/m2 (adults) or 5-95th %ile (pediatric)\n* Early stage 3 T1DM with either\n* HbA1c 6.5% to 8.0% at diagnosis OR\n* HbA1c 5.7% to 6.4% with oral glucose test meeting ADA criteria for stage 3 T1DM within the past three months prior to or during screening visit\n* Time of stage 3 diagnosis: within eight weeks of first study visit\n\nExclusion Criteria\n\n* DKA history: history of diabetic ketoacidosis requiring hospital admission\n* Comorbidities:\n* Family history of medullary thyroid carcinoma\n* Diagnosis of pancreatitis or gastroparesis within the past 3 years\n* Medications: Any diabetes medication, any antioxidant vitamin supplement (\\<2 weeks before a study), any systemic glucocorticoid, antipsychotic, atenolol, metoprolol, propranolol, niacin, any thiazide diuretic, any OCP with \\> 35 mcg ethinyl estradiol, growth hormone, any immunosuppressant, antihypertensive, any antihyperlipidemic\n* Other: pregnancy, peri- or post-menopausal women, active smoker",
+   "healthyVolunteers": false,
+   "maximumAge": "50 Years",
+   "minimumAge": "12 Years",
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "GLP-1Ra Impact on Metabolic Outcomes in Stage 2 T1DM While Receiving Teplizumab",
+   "nctId": "NCT06338553",
+   "officialTitle": "Optimizing Stage 2 T1DM Management: Assessing the Impact of GLP-1Ra on Metabolic Outcomes in Patients Receiving Teplizumab"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "Vanderbilt University Medical Center"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2025-12-18"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2024-03-29"
+   }
+  }
+ }
+}

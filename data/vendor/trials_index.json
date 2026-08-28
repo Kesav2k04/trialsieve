@@ -1,0 +1,136 @@
+{
+ "source": "ClinicalTrials.gov API v2 (US Government, public domain)",
+ "note": "The eligibility field is the sponsor's registry summary, not the protocol a site screens against. Criteria counts here are counts of that summary.",
+ "trials": [
+  {
+   "nct_id": "NCT06983054",
+   "selected_because": "T2DM, ertugliflozin and dietary sodium: eGFR and UACR thresholds",
+   "title": "DiEtary Sodium Intake Effects on Ertugliflozin-induced Changes in GFR, reNal Oxygenation and Systemic Hemodynamics: the DESIGN Study, a Randomized, Placebo-controlled, Cross-over Study With Ertugliflozin in People With Type 2 Diabetes",
+   "conditions": [
+    "Type 2 Diabetes"
+   ],
+   "min_age": "18 Years",
+   "max_age": "85 Years",
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 3301,
+   "record_sha256": "1ef936e0bc20da080e5d5579c03248f6a38c3a98dd988edd7548248caccfbdd0"
+  },
+  {
+   "nct_id": "NCT06989723",
+   "selected_because": "T2DM with hepatic steatosis: drug classes and organ-failure bounds",
+   "title": "Pioglitazone and Empagliflozin for Fatty Liver Disease in Type 2 Diabetes",
+   "conditions": [
+    "Type 2 Diabetes",
+    "Fatty Liver"
+   ],
+   "min_age": "20 Years",
+   "max_age": null,
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 2881,
+   "record_sha256": "8d8d428805d90d71766843999355dbdd84eea169ce6bbfddadef5529f4d0ef2d"
+  },
+  {
+   "nct_id": "NCT06717698",
+   "selected_because": "T2DM dose-ranging: HbA1c and BMI bands",
+   "title": "A Research Study Comparing How Well Different Doses of the Medicine NNC0519-0130 Can Reduce Kidney Damage in People Living With Chronic Kidney Disease",
+   "conditions": [
+    "Chronic Kidney Disease"
+   ],
+   "min_age": "18 Years",
+   "max_age": null,
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 2984,
+   "record_sha256": "3dbf03b599b28cafe2eac90dbb12e05a11598a498db44de09e8007c78ca0e534"
+  },
+  {
+   "nct_id": "NCT06338553",
+   "selected_because": "GLP-1Ra in stage 2 T1DM: metabolic thresholds",
+   "title": "GLP-1Ra Impact on Metabolic Outcomes in Stage 2 T1DM While Receiving Teplizumab",
+   "conditions": [
+    "Type 1 Diabetes"
+   ],
+   "min_age": "12 Years",
+   "max_age": "50 Years",
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 2108,
+   "record_sha256": "a180c073bb8d73fc9cd297efa50ea84b7a34cb0e3d3e2ee87cc23b621caa6b00"
+  },
+  {
+   "nct_id": "NCT07065383",
+   "selected_because": "T2DM, cardiac and muscle fat: imaging and metabolic criteria",
+   "title": "Rebalancing the Fat Content of the Heart and Muscles",
+   "conditions": [
+    "Diabetes Mellitus Type 2"
+   ],
+   "min_age": "20 Years",
+   "max_age": "75 Years",
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 3080,
+   "record_sha256": "2e73f4190404b7df3b3934b49e0bb100ac24bf16dd872837579550d4a5a52fd9"
+  },
+  {
+   "nct_id": "NCT07588256",
+   "selected_because": "Hypertension prevention platform: lab-heavy criteria",
+   "title": "New Taipei City 888 Digital Medical AI Platform for Prevention and Care of the Three Highs and Cardio-Renal-Vascular Diseases",
+   "conditions": [
+    "Microalbuminuria",
+    "Microalbuminuria /Creatinine Ratios ACR",
+    "Cardiovascular Disease Risk Factor",
+    "Cardiovascular Disease Prevention",
+    "Digital Medicine",
+    "Hypertension",
+    "Hyperglycaemia (Diabetic)",
+    "Hyperlipidemia"
+   ],
+   "min_age": null,
+   "max_age": null,
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 2922,
+   "record_sha256": "c8d3e58b5176e009694a6a50df76aa129f8a23155e2bd4d157206c2a82ee9b8b"
+  },
+  {
+   "nct_id": "NCT06578078",
+   "selected_because": "CKD management strategy: renal staging",
+   "title": "A Clinical Trial to Define the Best Strategy for the Management of Heart Failure in Elderly Patients",
+   "conditions": [
+    "Heart Failure",
+    "Chronic Kidney Diseases"
+   ],
+   "min_age": "70 Years",
+   "max_age": null,
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 3855,
+   "record_sha256": "88fc27a5368dab159d909780edb1bdc170e42925d5a6373c0fba766decd14a7e"
+  },
+  {
+   "nct_id": "NCT06998862",
+   "selected_because": "Colchicine in CKD: temporal exclusions",
+   "title": "Colchicine in Chronic Kidney Disease Patients",
+   "conditions": [
+    "Chronic Kidney Disease",
+    "Cardiovascular Events"
+   ],
+   "min_age": "18 Years",
+   "max_age": "99 Years",
+   "sex": "ALL",
+   "healthy_volunteers": false,
+   "last_update_posted": {},
+   "criteria_chars": 3542,
+   "record_sha256": "c52c23f2500e2cac6eff900192e5b0e97aada3643a910bd64d458a7b679b63d7"
+  }
+ ]
+}

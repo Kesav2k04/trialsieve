@@ -1,0 +1,42 @@
+{
+ "protocolSection": {
+  "conditionsModule": {
+   "conditions": [
+    "Chronic Kidney Disease",
+    "Cardiovascular Events"
+   ]
+  },
+  "designModule": {
+   "phases": [
+    "PHASE3"
+   ],
+   "studyType": "INTERVENTIONAL"
+  },
+  "eligibilityModule": {
+   "eligibilityCriteria": "Inclusion Criteria:\n\nAge between 18 and 99 years. Moderate chronic kidney disease, defined as an estimated glomerular filtration rate (eGFR) by the CKD-EPI formula between 30 and 59 mL/min/1.73 m².\n\nHistory of a previous cardiovascular event:\n\nAcute coronary syndrome. Admission for angina pectoris. Transient ischemic attack or non-cardioembolic ischemic stroke. Coronary revascularization. Peripheral vasculopathy, defined as: embolism or acute peripheral arterial ischemia, or the need for amputation or surgical revascularization.\n\nFinding of coronary artery disease on imaging test.\n\nExclusion Criteria:\n\n* History of allergy or intolerance to colchicine or any of its excipients (dihydrate calcium hydrogen phosphate, microcrystalline cellulose, anhydrous colloidal silica, magnesium stearate).\n* Current treatment with colchicine, or within the month prior to inclusion.\n* Hospital admission for any cause within the 3 months prior to study inclusion.\n* Active malignant neoplasm (except non-melanoma skin cancer or carcinoma in situ). Patients with a history of malignant neoplasm who have remained disease-free for the past 3 years may be included.\n* Uncontrolled or symptomatic chronic inflammatory disease (rheumatoid arthritis, systemic lupus erythematosus, Crohn's disease, ulcerative colitis, etc.).\n* Active infection with hepatitis B virus, hepatitis C virus, or human immunodeficiency virus.\n* Liver cirrhosis of any cause, grade B or C according to Child-Pugh.\n* Immunosuppressive treatment within the 12 weeks prior to study inclusion.\n* Chronic treatment with non-steroidal anti-inflammatory drugs (NSAIDs).\n* Poorly controlled hypertension (\\>160/90 mmHg) at the time of inclusion.\n* Pregnancy and breastfeeding at the time of inclusion. Contraceptive methods are required for women of reproductive age. Women with no capacity for pregnancy are considered to be those with:\n\nHistory of hysterectomy, bilateral salpingectomy, bilateral oophorectomy, or bilateral tubal ligation.\n\nDocumented infertility. Postmenopausal women, defined as amenorrhea for more than 12 months without other medical cause. In case of doubt, confirmation with elevated follicle-stimulating hormone (FSH) levels is recommended.\n\nWomen of reproductive capacity must use a method of contraception with proven effectiveness until 8 weeks after the end of the study. Acceptable methods include:\n\nIntrauterine device (IUD) placement at least 6 weeks before study inclusion. Hormonal contraception with progestogens only, associated with ovulation inhibition: oral, injectable, or implantable, at least 6 weeks before study inclusion.\n\nProgestin-releasing intrauterine system (IUS) at least 6 weeks before study inclusion.\n\nCombined hormonal contraception (containing estrogen and progestogens) associated with ovulation inhibition: oral, intravaginal, transdermal, at least 6 weeks before study inclusion.\n\nOther contraceptive methods (sexual abstinence, barrier methods, spermicides, etc.) are not considered acceptable for participation in this study\n\n* Gastric ulcer\n* thrombocytopenia \\<50,000 cells/μL during the month prior to inclusion\n* Neutropenia defined as \\<1500 cells/mcL during the month prior to inclusion.\n* Anemia defined as hemoglobin \\<10.5 g/dL during the month prior to inclusion.\n* History of aplastic anemia diagnosed through bone marrow biopsy.\n* Treatment with CYP3A4 inhibitors and/or P-glycoprotein inhibitors (antivirals, azole antifungals, aminoglycosides, cyclosporine) in the month prior to their inclusion in the study.",
+   "healthyVolunteers": false,
+   "maximumAge": "99 Years",
+   "minimumAge": "18 Years",
+   "sex": "ALL"
+  },
+  "identificationModule": {
+   "briefTitle": "Colchicine in Chronic Kidney Disease Patients",
+   "nctId": "NCT06998862",
+   "officialTitle": "Efficacy of Colchicine in Secondary Prevention of Vascular Events and Renal Progression in Patients With Moderate Chronic Kidney Disease"
+  },
+  "sponsorCollaboratorsModule": {
+   "leadSponsor": {
+    "name": "Hospital General Universitario Gregorio Marañon"
+   }
+  },
+  "statusModule": {
+   "lastUpdatePostDateStruct": {
+    "date": "2025-05-31"
+   },
+   "overallStatus": "RECRUITING",
+   "studyFirstPostDateStruct": {
+    "date": "2025-05-31"
+   }
+  }
+ }
+}
