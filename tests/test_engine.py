@@ -156,6 +156,50 @@ def test_refused_conversion_becomes_unknown_not_a_verdict():
     assert "mmol/mol" in r.reason
 
 
+def test_a_threshold_on_the_left_is_converted_like_one_on_the_right():
+    """The defect this test exists for: only the right operand was given a unit.
+
+    A criterion written as "30 mg/mmol <= UACR", where the query names the unit
+    the record uses and the threshold names the unit the trial uses, compared 30
+    against 150 and answered true. The same fact in one unit is 16.97 mg/mmol, so
+    the answer is false. Nothing in the reason line said a conversion had been
+    skipped, which is what made it dangerous.
+    """
+    c = chart(observations=[obs(UACR, 150.0, "mg/g")])
+    left_threshold = {"op": "compare", "cmp": "<=",
+                      "left": {"val": "literal", "number": 30, "unit": "mg/mmol"},
+                      "right": {"val": "observation", "codes": [UACR], "unit": "mg/g",
+                                "within_days": None}}
+    r = ev(c, left_threshold)
+    assert r.value is F
+    assert "mg/mmol" in r.reason
+
+
+def test_a_comparison_means_the_same_thing_written_either_way_round():
+    """Flipping the operands flips the operator and nothing else."""
+    c = chart(observations=[obs(UACR, 150.0, "mg/g")])
+    threshold_left = ev(c, {"op": "compare", "cmp": "<=",
+                            "left": {"val": "literal", "number": 30, "unit": "mg/mmol"},
+                            "right": {"val": "observation", "codes": [UACR],
+                                      "unit": "mg/g", "within_days": None}})
+    threshold_right = ev(c, {"op": "compare", "cmp": ">=",
+                             "left": {"val": "observation", "codes": [UACR],
+                                      "unit": "mg/g", "within_days": None},
+                             "right": {"val": "literal", "number": 30, "unit": "mg/mmol"}})
+    assert threshold_left.value is threshold_right.value is F
+
+
+def test_an_unconvertible_threshold_on_the_left_refuses():
+    """Refusing on the left has to cost coverage, not produce a silent number."""
+    c = chart(observations=[obs(HBA1C, 7.5, "%")])
+    r = ev(c, {"op": "compare", "cmp": "<",
+               "left": {"val": "literal", "number": 7.0, "unit": "kg/m2"},
+               "right": {"val": "observation", "codes": [HBA1C], "unit": "%",
+                         "within_days": None}})
+    assert r.value is U
+    assert "kg/m2" in r.reason
+
+
 # --------------------------------------------------------------------------
 # 4. Absence
 # --------------------------------------------------------------------------

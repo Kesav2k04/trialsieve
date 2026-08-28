@@ -141,8 +141,14 @@ class Evaluator:
 
     # -- leaves -------------------------------------------------------------
     def _compare(self, e: dict) -> Result:
-        left = self._value(e["left"])
-        right = self._value(e["right"], want_unit=self._unit_of(e["left"]))
+        # Both operands are brought to one target unit before anything is compared.
+        # Passing the target to only one side left the other in whatever unit it
+        # happened to carry, so a threshold written in mg/mmol could be compared
+        # against a value stored in mg/g: the same 8.84x error units.py exists to
+        # catch, in the direction that wrongly excludes a patient.
+        target = self._unit_of(e["left"]) or self._unit_of(e["right"])
+        left = self._value(e["left"], want_unit=target)
+        right = self._value(e["right"], want_unit=target)
         ev = left[2] + right[2]
         if left[0] is None:
             return Result(U, left[1], evidence=ev, op="compare")
@@ -151,8 +157,12 @@ class Evaluator:
         a, b, cmp = left[0], right[0], e["cmp"]
         ok = {">": a > b, ">=": a >= b, "<": a < b, "<=": a <= b,
               "==": a == b, "!=": a != b}[cmp]
+        # The unit belongs in the sentence. A converted operand is a number that
+        # appears nowhere in the record, so a reviewer reading "30 <= 16.97" with
+        # no unit cannot check it against the 150 mg/g cited beside it.
+        unit = _unit_label(target)
         return Result(T if ok else F,
-                      f"{_fmt(a)} {cmp} {_fmt(b)} is {ok}", evidence=ev, op="compare")
+                      f"{_fmt(a)} {cmp} {_fmt(b)}{unit} is {ok}", evidence=ev, op="compare")
 
     def _between(self, e: dict) -> Result:
         val, why, ev = self._value(e["value"])
@@ -161,7 +171,9 @@ class Evaluator:
         lo, hi = e["low"], e["high"]
         inc = e.get("inclusive", [True, True])
         ok = (val >= lo if inc[0] else val > lo) and (val <= hi if inc[1] else val < hi)
-        return Result(T if ok else F, f"{_fmt(val)} in [{lo}, {hi}] is {ok}",
+        unit = _unit_label(self._unit_of(e["value"]))
+        return Result(T if ok else F,
+                      f"{_fmt(val)} in [{lo}, {hi}]{unit} is {ok}",
                       evidence=ev, op="between")
 
     def _exists(self, q: dict) -> Result:
@@ -215,6 +227,10 @@ class Evaluator:
                     "systolic_bp": "mmHg", "diastolic_bp": "mmHg"}.get(v["name"])
         if v.get("val") == "age":
             return "a"
+        if v.get("val") == "literal":
+            # A literal threshold carries a unit too. Without this branch a
+            # comparison with the threshold on the left had no target unit at all.
+            return v.get("unit")
         return None
 
     def _value(self, v: dict, want_unit: str | None = None
@@ -225,10 +241,12 @@ class Evaluator:
             if "number" in v:
                 num, unit = float(v["number"]), canonical_or_none(v.get("unit"))
                 if want_unit and unit and canonical_or_none(want_unit) != unit:
-                    c = convert(num, unit, want_unit, None, self.unit_policy)
+                    c = convert(num, unit, want_unit, v.get("loinc"), self.unit_policy)
                     if not c.ok:
                         return None, f"threshold unit cannot be reconciled: {c.note}", []
-                    return c.value, "threshold converted", []
+                    return c.value, f"threshold converted from {unit} to {want_unit}", []
+                if want_unit and not unit:
+                    return num, f"literal read as {want_unit} (no unit was declared on it)", []
                 return num, "literal", []
             return None, "non-numeric literal cannot be compared", []
 
@@ -366,6 +384,17 @@ def _pick(rows: list[ObservationRow], agg: str) -> ObservationRow:
     if agg == "max":
         return max(rows, key=lambda r: r.value)
     return rows[-1]
+
+
+def _unit_label(unit: str | None) -> str:
+    """The unit as it belongs in a sentence a coordinator reads, or nothing.
+
+    UCUM writes years as `a`, which is correct and unreadable. Everything else
+    is already in the form a clinician expects.
+    """
+    if not unit:
+        return ""
+    return " years" if unit == "a" else f" {unit}"
 
 
 def _fmt(x: Any) -> str:
