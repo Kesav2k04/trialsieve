@@ -37,7 +37,14 @@ from trialsieve.agents.grounder import ground  # noqa: E402
 from trialsieve.llm import Client  # noqa: E402
 from trialsieve.trace import Trajectory  # noqa: E402
 
-# name the protocol would use, domain, expected codes, why it is here
+# name the protocol would use, domain, acceptable codes, class, why it is here
+#
+# `acceptable` is a set, not an answer. A concept can have more than one defensible
+# code in a vocabulary, and a probe that demanded one exact code would score a
+# correct-but-different choice as a failure and then get "fixed" by a prompt change
+# that made the grounder less careful. So a gap or control probe is right when it
+# returns a non-empty subset of the acceptable codes, and an absent probe is right
+# when it returns nothing.
 PROBES = [
     # -- the display is not the concept's name -------------------------------
     ("Type 2 diabetes mellitus", "condition", ["44054006"], "gap",
@@ -54,8 +61,8 @@ PROBES = [
      "displayed as 'Glomerular filtration rate/1.73 sq M.predicted'"),
     ("Urine albumin to creatinine ratio", "observation", ["14959-1"], "gap",
      "displayed as 'Microalbumin Creatinine Ratio'"),
-    ("Haemodialysis", "procedure", ["265764009"], "gap",
-     "displayed as 'Renal dialysis (procedure)'"),
+    ("Haemodialysis", "procedure", ["265764009", "302497006"], "gap",
+     "both are dialysis procedure codes in this vocabulary; either is acceptable"),
     ("Metformin", "medication", ["860975"], "gap",
      "the display is a full product string with strength and release profile"),
 
@@ -120,14 +127,21 @@ def main() -> int:
         traj.write(run / "trajectories")
 
         want = sorted(expect)
-        correct = codes is not None and codes == want
-        over = codes is not None and bool(set(codes) - set(want))
-        under = codes is not None and bool(set(want) - set(codes))
+        if codes is None:
+            correct = over = under = False
+        elif cls == "absent":
+            correct = codes == []
+            over = bool(codes)
+            under = False
+        else:
+            over = bool(set(codes) - set(want))
+            under = not codes
+            correct = bool(codes) and not over
         rows.append({"concept": name, "domain": domain, "class": cls, "why": why,
                      "expected": want, "got": codes, "correct": correct,
                      "over_accepted": over, "under_accepted": under})
-        mark = "ok  " if correct else ("OVER" if over and not under else
-                                       ("MISS" if under else "ERR "))
+        mark = ("ok  " if correct else "ERR " if codes is None
+                else "OVER" if over else "MISS")
         print(f"  [{i:2d}/{len(PROBES)}] {mark} {cls:8s} {name[:38]:40s} "
               f"want {want} got {codes}", flush=True)
 
