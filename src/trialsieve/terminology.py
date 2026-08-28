@@ -28,8 +28,35 @@ _STOP = {"of", "in", "the", "and", "or", "by", "with", "for", "a", "an", "to",
          "plasma", "count", "automated", "entitic", "volume", "mass"}
 
 
+#: British and American medical orthography, folded to one form.
+#:
+#: A protocol writes "anaemia", "haemoglobin", "oedema", "tumour". A US-built
+#: record system writes "Anemia", "Hemoglobin", "edema", "tumor". The search step
+#: is lexical on purpose, so without this the two never meet and the concept comes
+#: back UNMAPPABLE with an empty candidate list, which is the failure that looks
+#: most like careful behaviour and is not.
+#:
+#: These rules are applied to the query and to the vocabulary entry alike. That
+#: symmetry is what makes them safe to be crude about: folding "aerobic" to
+#: "erobic" is harmless when both sides fold the same way, and the worst case is
+#: an extra candidate for the select step to reject. Recall is this step's job.
+#: Precision is the next step's.
+_FOLD = [("aemia", "emia"), ("haem", "hem"), ("oedem", "edem"), ("oesoph", "esoph"),
+         ("paed", "ped"), ("aetio", "etio"), ("gynaec", "gynec"), ("orrhoea", "orrhea"),
+         ("caemi", "cemi"), ("anaes", "anes"), ("ischaem", "ischem"), ("tumour", "tumor"),
+         ("our", "or"), ("ise", "ize"), ("isa", "iza"), ("yse", "yze"),
+         ("centre", "center"), ("litre", "liter"), ("ae", "e"), ("oe", "e")]
+
+
+def _fold(t: str) -> str:
+    for a, b in _FOLD:
+        t = t.replace(a, b)
+    return t
+
+
 def _tok(s: str) -> list[str]:
-    return [t for t in re.split(r"[^a-z0-9]+", (s or "").lower()) if t and t not in _STOP]
+    return [_fold(t) for t in re.split(r"[^a-z0-9]+", (s or "").lower())
+            if t and t not in _STOP]
 
 
 @dataclass
