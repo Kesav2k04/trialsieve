@@ -262,7 +262,12 @@ def rows() -> list[dict]:
             continue
         arms = ", ".join(blob.get("arms", []))
         paid = any(a in ("B2", "B3") for a in blob.get("arms", []))
-        out.append({"step": f"arms {arms} over {blob.get('n_patients')} patients",
+        # The group tag, because six of these rows were otherwise identical text
+        # and a reader could not tell which seed or which damage level each one
+        # was. It is in the filename the meta was read from.
+        tag = f.stem.split("_", 2)[-1] if "_" in f.stem else ""
+        out.append({"step": f"arms {arms} over {blob.get('n_patients')} patients"
+                            + (f", group {tag}" if tag else ""),
                     "calls": (blob.get("usage") or {}).get("calls", 0),
                     "hits": (blob.get("usage") or {}).get("cassette_hits", 0),
                     "pt": (blob.get("usage") or {}).get("prompt_tokens", 0),
@@ -324,7 +329,10 @@ def main() -> int:
               f"recording step, so running {it} raises the recorded totals and changes "
               f"nothing about reproduction, which replays and calls no model.", ""]
     L += [
-          f"The right-hand column is an estimate at {RATE_LABEL}. It is not what this",
+          f"The right-hand column is an estimate at {RATE_LABEL}. Each row is "
+          f"rounded to the cent, so adding the column comes to a cent or two more "
+          f"than the total, which is computed once from the raw token counts "
+          f"rather than by summing rounded rows. It is not what this",
           "run cost. This ran on a locally authenticated vendor CLI on a subscription, so",
           "the marginal cost of a call was zero, and reporting zero would be true and",
           "useless to anyone deciding whether to run it themselves.", "",

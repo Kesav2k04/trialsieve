@@ -7,7 +7,9 @@ than being absorbed by the next stage.
 The rule the whole design follows: **an agent that cannot do its job must fail
 loudly at its own stage, never approximately at the next one.** Approximate
 failure is how a system stays fluent while going wrong, and fluent wrongness is
-the thing this project exists to make impossible.
+the thing this project exists to make visible and countable. It still happens
+here, 111 times in 15,400 cells, and the number is published rather than
+designed away.
 
 ---
 
@@ -148,8 +150,13 @@ not another loop.
 What it looks for, in the prompt's own order: window errors (is "within 6 months"
 183 days, and does an event just inside the boundary behave), boundary errors
 (`>` against `>=`), direction errors (an exclusion predicate must be TRUE for the
-patient who should be excluded), and absence errors (is `absent_means` set to
-`false` for something that routinely lives at another hospital).
+patient who should be excluded), and absence errors (is `absent_means` set to `false` for something that
+routinely lives at another hospital). That fourth one is the class it is weakest
+at, and the weakness is measured rather than suspected: `docs/CRITIC_PROBE.md`
+plants defects of each class and the critic catches 15 of 15 across the other
+three and **3 of 4** on absence. It also passed the real one, the criterion
+behind changelog entries 25 and 30. A reviewer that is worst at the defect this
+design cares most about is the reason the human sign-off gate is not decoration.
 
 ---
 

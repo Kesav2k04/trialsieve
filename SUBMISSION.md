@@ -33,8 +33,8 @@ and makes every headline number worse, because the recovered criterion turned ou
 to be worse than the abstention it replaced. Entry 30 is the repair that was
 actually needed: a query with no exact code for its concept may not read the
 record's silence as absence. Patients wrongly ruled out fall from 182 to **18**,
-and the per-cell silent error rate from 3.05% to **0.72%**. Cells answered fall
-from 24.1% to 19.2% in the same move, and `docs/SCORECARD.md` prints both.
+and the per-cell silent error rate from 3.05% to **0.72%**. Cells answered fall from 24.1% to 19.2% in the same move, and entry 30 prints
+both columns of that trade in one table.
 
 ### The one challenging case, and what it revealed
 

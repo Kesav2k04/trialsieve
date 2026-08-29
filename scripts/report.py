@@ -491,7 +491,16 @@ def main() -> int:
             base = {r["false_exclusion_budget"]: r for r in curve}
             worse = [r for r in cv
                      if r["false_exclusions"] > base[r["false_exclusion_budget"]]["false_exclusions"]]
-            results.setdefault("crossfit", {})["optimism_rows"] = len(worse)
+            # Keyed by group. This was one shared top-level slot written inside
+            # the per-group loop, so whichever group came last owned it: the
+            # published `crossfit` block described the open-world sensitivity
+            # arm while every document citing it meant the scored run. The
+            # scored run keeps the flat keys as well, because they are what the
+            # older documents point at.
+            cf = results.setdefault("crossfit", {}).setdefault("by_group", {})
+            cf.setdefault(tag, {})["optimism_rows"] = len(worse)
+            if tag == "k0_seed7":
+                results["crossfit"]["optimism_rows"] = len(worse)
 
             # Two identical curves is also what a cross-fit that silently did
             # nothing would print, so the separation that produces the equality is
@@ -504,9 +513,12 @@ def main() -> int:
                         badc[c.criterion_hash] += 1
             clean = sorted(h for h in fires if not badc[h])
             dirty = sorted((badc[h] for h in fires if badc[h]), reverse=True)
-            results["crossfit"].update({"excluding_criteria": len(fires),
-                                        "clean_criteria": len(clean),
-                                        "dirty_false_exclusion_counts": dirty})
+            counts = {"excluding_criteria": len(fires),
+                      "clean_criteria": len(clean),
+                      "dirty_false_exclusion_counts": dirty}
+            results["crossfit"]["by_group"].setdefault(tag, {}).update(counts)
+            if tag == "k0_seed7":
+                results["crossfit"].update(counts)
             md.append("")
             if not worse:
                 md.append(f"The two curves agree on every row. That is a property of "

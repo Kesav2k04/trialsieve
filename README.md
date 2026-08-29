@@ -4,9 +4,10 @@
 
 Clinical trial prescreening, built so that ruling a patient out on a fact that is
 missing from their record is a decision somebody has to make on purpose, in
-writing, where a reviewer can see it. On this run one criterion made that
-decision and it cost 358 wrong exclusions. That is measured below rather than
-claimed away.
+writing, where a reviewer can see it. One criterion in this repository's first published run made that decision and it
+cost 358 wrong exclusions out of 424. The repair, and what it cost in coverage,
+are measured below rather than claimed away: the run now makes 66 wrong
+exclusions in total.
 
 ---
 
@@ -23,8 +24,9 @@ Ask a capable model directly, one cell at a time, giving it the criterion and th
 patient's chart. Over all 400 cells of that arm it **commits to a verdict on 272
 of them**, 68%, including cells where the record is silent. Nothing in the chart
 contradicts the threshold, so the threshold appears satisfied. The reasoning is
-fluent and the answer is confident, and on those same 400 cells it is wrong on
-43.8% of what it commits to against TrialSieve's 1.0%.
+fluent and the answer is confident, and on those same 400 cells it is wrong on 43.8% of every cell against
+TrialSieve's 1.0%. Counted only over the cells each one answers, that is 175 of
+272 for the baseline and 4 of 87 here.
 
 TrialSieve answers:
 
@@ -33,8 +35,10 @@ INDETERMINATE
   no observation with code 14959-1 in the record
 ```
 
-The difference is not accuracy on a hard case. It is that one of these systems can
-represent "the record does not say" and the other cannot. A coordinator reading the
+The difference is not accuracy on a hard case. It is that one of these systems
+abstains as a rule and the other abstains as an exception: the baseline is told
+to answer INDETERMINATE and shown how, and still commits on two thirds of its
+cells. A coordinator reading the
 first output has no way to tell it apart from a real result, and the patient it
 concerns is quietly dropped from consideration by a fact that was never there.
 
@@ -160,10 +164,9 @@ Two rules the code enforces rather than requests:
   returns FAILS, and the evidence it cites is an absence marker rather than a
   dated resource.
 - **So absence can rule someone out, and that is the sharp edge of this design.**
-  An earlier version of this file said absence never rules anyone out. The code
-  says otherwise (`src/trialsieve/evaluator.py:233`) and so did the run: one
-  criterion compiled with `absent_means: "false"` produced 358 of the 424 wrong
-  exclusions in the whole evaluation. The control that was supposed to catch it
+  An earlier version of this file said absence never rules anyone out. The code says otherwise (`src/trialsieve/evaluator.py:233`) and so did the first
+published run: one criterion compiled with `absent_means: "false"` produced 358
+of the 424 wrong exclusions in the whole evaluation. The control that was supposed to catch it
   is the human reading the predicate in English before any worklist exists, and
   on that run it was not caught.
 - **One case is no longer the model's to decide.** A query with an empty `codes`
@@ -172,9 +175,9 @@ Two rules the code enforces rather than requests:
   forces `absent_means` to `unknown` there and records the change on the
   trajectory as a `normalisation`. Silent errors fell from 469 to **111** and
   patients wrongly ruled out from 182 to **18**, at a cost of 5 points of
-  coverage. Entry 30 of the changelog has the full table, and
-  [docs/SCORECARD.md](docs/SCORECARD.md) puts the gain and the cost in the same
-  two columns.
+  coverage. Entry 30 of the changelog puts the gain and the cost in the same table, before
+and after, and [docs/SCORECARD.md](docs/SCORECARD.md) puts the coverage cost
+next to the baseline's.
 - **Every other closed-world decision is still the model's, and the sensitivity
   arm is how you check it.** `--absent-means-override unknown` discards all of
   them at once. It used to remove 358 silent errors, taking 469 down to 111. It
@@ -213,8 +216,7 @@ slot, because it was written to catch invented codes and does that correctly. It
 could not see a real code put in the wrong slot. Two criteria out of the eight
 with broader-only grounding promoted SNOMED 44054006 into `codes`, and both also
 carried `absent_means: false`, so presence settled them as MEETS and absence as
-FAILS, and neither could return INDETERMINATE. One of the two is the criterion
-behind the 358 wrong exclusions above.
+FAILS, and neither could return INDETERMINATE. One of the two was the criterion behind the 358 wrong exclusions above.
 
 The validator is now slot-aware and the schema accepts the shape the design asks
 for, which it had been rejecting. `python scripts/grounding_audit.py --run
@@ -312,10 +314,15 @@ still be right, and the evaluation would be measuring memorisation.
 
 Three checks, and the third is the one worth arguing with. A threshold is changed
 to a value the real protocol never contained, the criterion is recompiled, and the
-predicate has to carry the new number. **8 criteria perturbed, 6 compiled, 6 of 6
-carry the perturbed value and none carries the original.** The two that refused
-did so for concepts absent from the structured record at all, menstrual history
-and dietary sodium intake, which is the same refusal they give unperturbed.
+predicate has to carry the new number. **15 criteria carried a perturbable
+number. Six recompiled, and 6 of 6 carry the perturbed value with none carrying
+the original.** Two refused, for concepts absent from the structured record at
+all, menstrual history and dietary sodium intake, which is the same refusal they
+give unperturbed. The remaining seven could not be run: their counterfactual
+compile was never recorded, and replay refuses to make a live call rather than
+quietly paying for one, so `results/contamination.json` marks them `error` with
+the missing cassette key. Seven of fifteen unrun is the honest size of this
+check, and it is a smaller check than the number 6 of 6 suggests on its own.
 
 The first two checks are cheaper and run without a model: no prompt template has a
 slot for a trial identifier or title, and no recorded request contains one. That
@@ -362,9 +369,13 @@ protocol cannot be settled from a structured record at all. Köpcke et al., acro
 15 trials, 351 criteria and 5 tertiary centres, put it at 55% expressible times
 64% present, so about 35% answerable. A system that answers a third of the
 questions and abstains on the rest is only useful because the third it answers
-removes people from the list. That figure is also a registered prediction here:
-`docs/EVAL_PROTOCOL.md` says coverage should land at 30 to 40% and that a number
-far above it would suggest the criteria were cherry-picked.
+removes people from the list. That figure is also a registered prediction here: `docs/EVAL_PROTOCOL.md` says
+coverage should land at 30 to 40% and that a number far above it would suggest
+the criteria were cherry-picked. **This run missed that band on the low side.**
+19 of 65 segmented criteria compile, which is 29.2%, and the repair in changelog
+entry 30 is most of why: it trades answered cells for abstentions on purpose.
+The prediction was registered before the run and the run did not meet it, which
+is recorded here rather than in a footnote.
 
 **The compiler does not degrade by refusing. It degrades by accepting.** An
 earlier version of this file predicted the opposite, that a weak model would lose

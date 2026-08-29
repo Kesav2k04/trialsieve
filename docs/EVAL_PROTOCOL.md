@@ -15,8 +15,8 @@ report.
 **Registering a protocol is worth nothing if the protocol is quietly edited to match
 what happened.** So the body below is left as it was written, and every place the
 build departed from it is recorded here instead, with the reason. A reader comparing
-this document to the repository will find these eight differences and no others; if
-they find a ninth, this list is the thing that is wrong.
+this document to the repository will find these nine differences and no others; if
+they find a tenth, this list is the thing that is wrong.
 
 **A1, 2026-08-29. Blindness is no longer a git fact, and the claim it replaces was
 weaker.** Section 6 says Checker B's labels are committed before any commit
@@ -119,12 +119,15 @@ panel is 5.2% FAILS, so the published floor was 10.6% where the panel's own rate
 95% interval resampled within stratum, and computed per group because the groups do
 not share a mix.
 
-That correction is not neutral and is recorded here rather than folded in. A floor
-4.6 times too high covers more differences, and the differences it covered were the
-two where TrialSieve does not win: `TS - B1` on silent error rate, +0.0318, is
-TrialSieve committing to more wrong answers than the baseline that mostly abstains,
-and it was reported uninterpretable until the floor was fixed. It now stands as a
-measured loss. Entry 23 of `docs/IMPROVEMENT_CHANGELOG.md` carries the working.
+That correction is not neutral and is recorded here rather than folded in. A floor 4.6 times too high covers more differences, and the ones it covered were
+the two where TrialSieve does not win. `TS - B1` on silent error rate is +0.0072
+on the scored run: TrialSieve commits to more wrong answers than the baseline
+that mostly abstains. Even against the corrected floor that difference is
+smaller than the labels can support, so it is still published as **below,
+uninterpretable** rather than as a win for either arm, and the same row on seeds
+8 and 9 reads the same way. What the correction changed is the size of the class
+of differences the floor was hiding, not the verdict on this one. Entry 23 of
+`docs/IMPROVEMENT_CHANGELOG.md` carries the working.
 
 
 **A8, 2026-08-29. Two engine defects were repaired after the held-out set had been
@@ -165,19 +168,20 @@ claim is this:
   stay in `docs/IMPROVEMENT_CHANGELOG.md` entries 29 and 30 rather than being
   overwritten, including the intermediate state where the first fix made every
   headline worse.
-- The cost is published with the gain. Cells answered fell from 24.12% to 19.15%
-  and unnecessary abstention rose from 210 to 618 in the same change.
-  `docs/SCORECARD.md` prints both columns.
+- The cost is published with the gain. Cells answered fell from 24.12% to 19.15% and unnecessary abstention rose from
+210 to 618 in the same change. Entry 30 of `docs/IMPROVEMENT_CHANGELOG.md`
+prints both columns in one table, and `docs/SCORECARD.md` prints the coverage
+cost against the baseline.
 - The repair is falsifiable independently of the score.
   `tests/test_open_world_broader.py` executes an empty chart through the
   evaluator and requires INDETERMINATE. That test would fail on a wrong rule and
   pass on a right one whether or not any patient was ever screened.
-- No cassette was re-recorded to make a number move. Seed 7 recompiled from 193
-  recorded calls with zero live ones, and seeds 8 and 9 replayed at 100% cassette
-  hits. The eleven live calls that were made are critic reviews of predicates
-  that changed, recorded so that the critic reviews what actually ships, and
-  `python scripts/verify.py trajectories` matches all 1,072 calls to a
-  byte-identical cassette.
+- No cassette was re-recorded to make a number move. All three seeds recompile
+from recorded calls with none live: 202 of 202 on seed 7, 201 of 201 on seed 8,
+210 of 210 on seed 9, which `docs/COST.md` prints from the run rather than from
+this sentence. `python scripts/verify.py trajectories` matches all 1,077
+recorded model calls to a cassette whose stored request is byte-identical to the
+prompt in the trajectory.
 
 **What this costs the pre-registration, stated plainly.** Section 11's decision
 rule and Section 12's falsification conditions were written to be judged against
@@ -186,6 +190,31 @@ post-repair numbers is that they describe a system whose worst measured failure
 mode was found and repaired, measured on the data that revealed it. The
 pre-repair numbers are the ones with a clean provenance, and they are the row
 labelled "published before entry 29" in the changelog's tables.
+
+**A9, 2026-08-30. The matched-coverage abstention sweep was registered and never
+run, and a falsification condition depends on it.** Section 3 registers, under
+"Also reported", *SER at matched coverage of 50%, 70% and 90%* via an abstention
+sweep. Section 12 then makes one of the four falsifiers turn on it: *TS shows no
+advantage over B2 at matched coverage under degradation.* Neither exists.
+`results/RESULTS.md` has no matched-coverage table, `results/results.json` has no
+such key, and no changelog entry removes it. It was found by an audit reading the
+protocol against the outputs rather than by anything in the harness, which is
+itself the point: nothing checks that a registered output was produced.
+
+What that costs, stated rather than softened. One of the four registered
+falsifiers cannot be evaluated on this submission. The comparison against B2 that
+**is** published is at each arm's own operating point, not at matched coverage,
+and B2 answers 68% of cells against TrialSieve's 21.75% on the paired sample, so
+a reader should not read the silent-error gap as a like-for-like comparison at
+equal coverage. `docs/SCORECARD.md` states that difference in the row it belongs
+to.
+
+Why it is not being run now. The sweep needs an abstention ordering per arm, which
+means a confidence signal per cell, which B2 does not emit and which this engine
+deliberately does not have: a predicate either settles a cell or it does not.
+Inventing one after seeing the results, to fill in a registered row, is the exact
+move this protocol exists to prevent. So the row stays unfilled and is declared
+here instead.
 
 ## 1. What is being claimed
 
@@ -365,7 +394,6 @@ Stated now so that being wrong is visible.
    investigated before it is reported.
 5. TS panel reduction will be lower than B2's apparent reduction, and B2's will void on
    false exclusions.
-
 ## 11. Decision rule, fixed in advance
 
 If B2 or B3 matches TS on (coverage, SER) within the noise floor, the headline claim
