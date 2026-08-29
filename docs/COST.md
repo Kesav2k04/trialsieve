@@ -23,8 +23,8 @@ call, and its wall clock is seconds.
 | counterfactual thresholds, contamination check 3 | 24          | 24            | 19,373        | 3,569             | 0 s            | $0.01              |
 | critic probe, planted defects                    | 25          | 12            | 19,497        | 3,710             | 5 min 18 s     | $0.02              |
 | arms B2 over 10 patients                         | 400         | 400           | 1,656,168     | 31,769            | 0 s            | $0.58              |
-| arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
+| arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
@@ -46,7 +46,7 @@ the report says which rather than averaging the distinction away.
 
 Both arms answer the same 40 questions about the same patient. They differ in what the model is asked to do, and that difference is a cost curve rather than a constant.
 
-Compiling the 40 criteria cost **$0.13** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **3 s**.
+Compiling the 40 criteria cost **$0.13** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **2 s**.
 
 The per-cell baseline pays per question per patient. Measured over its 400 recorded cells, that is **$0.0014** a cell, or **$0.06** to put one patient through 40 criteria.
 

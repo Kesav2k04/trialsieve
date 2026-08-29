@@ -74,8 +74,8 @@ either finds their own categories rather than a mapping to the other one.
 | category | PDF | listing | where the evidence is |
 |---|---|---|---|
 | Agent Solution & Engineering | 30 | 30 | [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md), `src/trialsieve/`, and the trajectories. Six agents, one of which makes zero model calls on purpose. |
-| Reproducibility (& Verification) | 15 | 25 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under two minutes; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
-| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 32 entries each tied to the command that shows it. |
+| Reproducibility (& Verification) | 15 | 25 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under three minutes on a clean clone; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
+| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 34 entries each tied to the command that shows it. |
 | End to End Quality (& Presentation) | 20 | 20 | `docs/sample_worklist.md` is the artifact a coordinator opens, produced by a script that exits 3 rather than write it from unsigned predicates. |
 | Problem & User Value | 15 | not scored separately | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Hot Take / Insights | 5 | not scored separately | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
