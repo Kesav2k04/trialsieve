@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "876ed4a10747185af1320f2644e1c10c2a66e5a450ae4c0c4992683c81ad0348",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You review formal predicates written from clinical trial eligibility criteria.\n\nYour job is to find a patient for whom the predicate and the criterion text\ndisagree. You are not asked whether the predicate looks reasonable. You are asked\nto break it, and a specific patient who breaks it is the only thing that counts.",
+    "role": "system"
+   },
+   {
+    "content": "Review this compiled criterion.\n\nCRITERION (inclusion):\n  Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%\n\nCOMPILED PREDICATE:\n{\n \"op\": \"and\",\n \"args\": [\n  {\n   \"op\": \"exists\",\n   \"query\": {\n    \"domain\": \"condition\",\n    \"codes\": [\n     \"1501000119109\",\n     \"1551000119108\",\n     \"368581000119106\",\n     \"422034002\",\n     \"90781000119102\",\n     \"97331000119101\"\n    ],\n    \"broader_codes\": [\n     \"44054006\"\n    ],\n    \"within_days\": null,\n    \"active_only\": true,\n    \"absent_means\": \"unknown\"\n   }\n  },\n  {\n   \"op\": \"between\",\n   \"value\": {\n    \"val\": \"observation\",\n    \"codes\": [\n     \"4548-4\"\n    ],\n    \"unit\": \"%\",\n    \"agg\": \"latest\",\n    \"within_days\": null\n   },\n   \"low\": 7.0,\n   \"high\": 10.0,\n   \"inclusive\": [\n    true,\n    true\n   ]\n  }\n ]\n}\n\nCODES AVAILABLE (you may only use these):\n1501000119109, 1551000119108, 368581000119106, 422034002, 4548-4, 90781000119102, 97331000119101\n\nLook specifically for:\n  1. Window errors. Is `within_days` right, and does an event just inside or just\n     outside the window behave correctly? \"within 6 months\" is 183 days.\n  2. Boundary errors. Should the comparison be > or >=? Does the criterion say\n     \"between 6.5 and 10\" (inclusive) or \"above 6.5\"?\n  3. Direction errors. For an EXCLUSION, the predicate must be TRUE for a patient\n     who should be EXCLUDED. A predicate that is true for eligible patients is\n     inverted.\n  4. Absence errors. Is any `absent_means` set to \"false\" for something that\n     could easily have happened at another hospital, or that is acute or recent?\n     Ruling a patient out because their record is silent is the worst failure\n     available here.\n  5. Missing or added conditions. Does the predicate check everything the\n     criterion states, and nothing it does not?\n\nIf you find a problem, construct a patient that demonstrates it and say what\ntruth value the CRITERION TEXT should take for that patient.\n\nTruth values: TRUE means the patient satisfies the criterion text, FALSE means\nthey do not, UNKNOWN means the record shown cannot settle it.\n\nPatient facts use days before the screening date. `days_ago: 30` is a month ago.\nInclude only facts you want the record to contain; anything you omit is absent\nfrom the record.\n\nReturn JSON only:\n\n{\"verdict\": \"OK\" | \"REVISE\",\n  \"findings\": [{\"issue\": \"one sentence\", \"kind\": \"window|boundary|direction|absence|scope\",\n                 \"severity\": \"high|medium|low\"}],\n  \"counterexample\": {\n     \"patient\": {\"age\": 62, \"sex\": \"female\",\n                  \"observations\": [{\"code\":\"4548-4\",\"value\":7.2,\"unit\":\"%\",\"days_ago\":30}],\n                  \"conditions\": [{\"code\":\"22298006\",\"days_ago\":200}],\n                  \"medications\": [{\"code\":\"860975\",\"days_ago\":20,\"status\":\"active\"}],\n                  \"procedures\": []},\n     \"expected_truth\": \"TRUE|FALSE|UNKNOWN\",\n     \"why\": \"one sentence explaining what the criterion text says for this patient\"}}\n\nWhen the predicate is faithful, return verdict \"OK\", an empty findings list, and\ncounterexample null. Do not invent a problem to look useful.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 20,
+  "latency_s": 49.94,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 856,
+  "text": "```json\n{\n  \"verdict\": \"OK\",\n  \"findings\": [],\n  \"counterexample\": null\n}\n```"
+ }
+}
