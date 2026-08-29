@@ -22,6 +22,17 @@ runs/tierA/*
 !runs/tierA/signoffs.jsonl
 !runs/tierA/manifest.json
 
+# Checker B, the blind second labeller, ships too. The blindness claim is not
+# "the labels were committed early", it is "here is every prompt B was sent, go
+# and read them", and a reader who clones without the cassettes cannot check it.
+# `scripts/verify.py blind` reported PASS having scanned nothing for anyone but
+# me until these were tracked, which is the same silent-empty failure the check
+# itself now refuses to commit.
+!runs/checker_b/
+runs/checker_b/*
+!runs/checker_b/cassettes/
+!runs/checker_b/trajectories/
+
 # Cells are one row per patient-criterion pair. Replay regenerates them from the
 # cassettes in seconds, and shipping several hundred thousand rows would bury
 # the things worth reading.

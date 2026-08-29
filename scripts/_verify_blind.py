@@ -130,9 +130,18 @@ def verify_blind(b_run: Path, sys_run: Path) -> dict:
 def cmd_blind(run: Path) -> int:
     b_run = ROOT / "runs" / "checker_b"
     if not (b_run / "cassettes").is_dir():
-        print(f"no Checker B cassettes under {b_run}. Nothing to verify, and nothing "
-              f"claimed: the label noise floor is only reported when B has run.")
-        return 0
+        # This used to return 0 with a friendly note. `runs/checker_b/` was
+        # gitignored, so on every machine except the one that recorded it the
+        # check printed a success it had not earned, over a directory that was
+        # not there. The cassettes are tracked now, and their absence is a
+        # failure rather than a shrug: a reader who clones and sees PASS has to
+        # be seeing a scan that happened.
+        print(f"NOT VERIFIED: no Checker B cassettes under {b_run}. The blindness "
+              f"claim is not an argument about commit order, it is these prompts, "
+              f"so with the prompts missing there is nothing to read and nothing "
+              f"to conclude. This is reported as a failure rather than a pass.",
+              file=sys.stderr)
+        return 1
     r = verify_blind(b_run, run)
     print(json.dumps({k: v for k, v in r.items() if k != "hits"}, indent=1))
     if r["hits"]:
