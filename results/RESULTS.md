@@ -630,16 +630,32 @@ The compiler prompt states that a wrong `false` rules a patient out on the stren
 
 ## Criterion coverage, both denominators
 
-The system expresses **24** criteria as predicates. That is a numerator, and it has two defensible denominators, so both are published.
+Two numbers, and until this run the wrong one was published. **24** criteria in the gold set are marked `checkable`, which is a human deciding a structured record *could* settle them. The compiler produced predicates for **18**. The first is a ceiling on what any system here could reach; only the second is this system.
 
-| denominator | what it counts                                                      | coverage |
-|-------------|---------------------------------------------------------------------|----------|
-| 40          | the hand-authored gold set                                          | 60%      |
-| **65**      | **every criterion the segmenter produced from the three protocols** | **37%**  |
+| numerator                       | of the 40-criterion gold set | of the 65 the segmenter produced |
+|---------------------------------|------------------------------|----------------------------------|
+| 24 the gold set calls checkable | 60%                          | 37%                              |
+| **18 the compiler produced**    | **45%**                      | **27.7%**                        |
 
-`docs/EVAL_PROTOCOL.md` registered, before any scored run, that coverage would land at 30% to 40% **of segmented criteria**, following Kopcke et al., and that a number far above that would suggest the criteria had been cherry-picked. The registered denominator is therefore 65, not 40. Against it the result is 37%, which is inside the registered band.
+`docs/EVAL_PROTOCOL.md` registered, before any scored run, that coverage would land at 30% to 40% **of segmented criteria**, following Kopcke et al., and that a number far above that would suggest the criteria had been cherry-picked. The registered denominator is 65, not 40.
 
-Against 40 it is 60%, twenty points above the prediction, and that is the number this report used to lead with. The 25 criteria the gold set drops are listed in full in `docs/SEGMENTATION.md` and they are not a random sample: informed consent, psychiatric history, substance use, site affiliation, pregnancy intent, allergy to study agents. A structured record cannot settle any of them, so removing them raises coverage without the system having answered anything more. Beating a registered prediction by picking the denominator afterwards is not beating it.
+**Against the registered band this run is at 27.7%, which is below it.** The 37% this report used to print was the checkable count against the same denominator, so it was the answer key's number wearing the system's name, and it happened to land inside the band the system missed. Entry 28 of the improvement changelog has how that went unnoticed.
+
+The 7 criteria the gold set calls checkable and the compiler did not produce:
+
+| criterion            | why not                                         |
+|----------------------|-------------------------------------------------|
+| `NCT06717698-EXC-01` | cannot be represented in this site's vocabulary |
+| `NCT06717698-EXC-07` | cannot be represented in this site's vocabulary |
+| `NCT06983054-EXC-03` | cannot be represented in this site's vocabulary |
+| `NCT06989723-EXC-01` | compiler failed: AgentError                     |
+| `NCT06989723-EXC-03` | cannot be represented in this site's vocabulary |
+| `NCT06989723-EXC-04` | cannot be represented in this site's vocabulary |
+| `NCT06989723-INC-03` | cannot be represented in this site's vocabulary |
+
+Six of those are the vocabulary refusing, which is the design working: a concept with no code in this site's terminology stops the criterion instead of clearing every patient on it. The seventh is the one lost to the IR validator, above. So the gap between the ceiling and the result is mostly the price of the refusal policy, and that price belongs in the coverage number rather than in a footnote under a higher one.
+
+Against 40 the compiled figure is 45%. The 25 criteria the gold set drops are listed in full in `docs/SEGMENTATION.md` and they are not a random 25: informed consent, psychiatric history, substance use, site affiliation, pregnancy intent, allergy to study agents. A structured record cannot settle any of them, so removing them raises coverage without the system having answered anything more. Beating a registered prediction by picking the denominator afterwards is not beating it, and neither is picking the numerator.
 
 | trial         | segmenter | hand-authored |
 |---------------|-----------|---------------|

@@ -7448,6 +7448,39 @@
   "n_checkable": 24,
   "coverage_of_segmented": 0.3692,
   "coverage_of_gold": 0.6,
+  "n_compiled": 18,
+  "compiled_of_segmented": 0.2769,
+  "compiled_of_gold": 0.45,
+  "checkable_but_not_compiled": [
+   {
+    "criterion_id": "NCT06717698-EXC-01",
+    "reason": "cannot be represented in this site's vocabulary. Transient ischaemic attack: the vocabulary returned candidates but none of them represents the concept"
+   },
+   {
+    "criterion_id": "NCT06717698-EXC-07",
+    "reason": "cannot be represented in this site's vocabulary. Basal cell carcinoma of skin: the vocabulary returned candidates but none of them represents the concept; Squamous cell carcinoma of skin: the vocabulary returned candidates but none of them represents the concept; Carcinoma in situ of cervix: the vocabulary returned candidates but none of them represents the concept"
+   },
+   {
+    "criterion_id": "NCT06983054-EXC-03",
+    "reason": "cannot be represented in this site's vocabulary. SGLT2 inhibitor: no entry in this site's medication vocabulary matches any of empagliflozin, dapagliflozin, canagliflozin, ertugliflozin, bexagliflozin, sotagliflozin and others; thiazolidinedione: no entry in this site's medication vocabulary matches any of pioglitazone, rosiglitazone, troglitazone, lobeglitazone, ciglitazone, rivoglitazone and others; GLP-1 receptor agonist: no entry in this site's medication vocabulary matches any of semaglutide, liraglutide, dulaglutide, exenatide, tirzepatide, lixisenatide and others"
+   },
+   {
+    "criterion_id": "NCT06989723-EXC-01",
+    "reason": "compiler failed: AgentError"
+   },
+   {
+    "criterion_id": "NCT06989723-EXC-03",
+    "reason": "cannot be represented in this site's vocabulary. end-stage renal disease: the vocabulary returned candidates but none of them represents the concept"
+   },
+   {
+    "criterion_id": "NCT06989723-EXC-04",
+    "reason": "cannot be represented in this site's vocabulary. Hepatocellular carcinoma: the vocabulary returned candidates but none of them represents the concept"
+   },
+   {
+    "criterion_id": "NCT06989723-INC-03",
+    "reason": "cannot be represented in this site's vocabulary. Sulfonylurea: no entry in this site's medication vocabulary matches any of glipizide, glimepiride, glyburide, glibenclamide, gliclazide, tolbutamide and others; DPP-4 inhibitor: no entry in this site's medication vocabulary matches any of sitagliptin, linagliptin, saxagliptin, alogliptin, vildagliptin, teneligliptin and others"
+   }
+  ],
   "registered_band": [
    0.3,
    0.4

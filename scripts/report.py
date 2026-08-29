@@ -110,11 +110,33 @@ def coverage_denominators() -> dict | None:
     from criteria_set import CRITERIA
     n_gold = len(CRITERIA)
     n_checkable = sum(1 for c in CRITERIA if c.get("checkable"))
+    # What the compiler actually produced, which is not the same number and was
+    # being reported as if it were. `checkable` is a gold annotation: a human
+    # deciding whether a structured record could settle the criterion at all. It
+    # is a ceiling on coverage, not a measurement of this system, and quoting it
+    # as "the system expresses N criteria as predicates" credits the run with
+    # every criterion the answer key thought was answerable.
+    comp_p = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
+    compiled_ids, gap = set(), []
+    if comp_p.exists():
+        blob = json.loads(comp_p.read_text(encoding="utf-8"))["criteria"]
+        compiled_ids = {c["criterion_id"] for c in blob if c.get("compilable")}
+        reasons = {c["criterion_id"]: c.get("reason_not_compilable") for c in blob}
+        gap = sorted(({"criterion_id": c["criterion_id"],
+                       "reason": reasons.get(c["criterion_id"])}
+                      for c in CRITERIA
+                      if c.get("checkable") and c["criterion_id"] not in compiled_ids),
+                     key=lambda r: r["criterion_id"])
+    n_compiled = len(compiled_ids)
     if not (n_auto and n_gold):
         return None
     return {"n_segmented": n_auto, "n_gold": n_gold, "n_checkable": n_checkable,
             "coverage_of_segmented": round(n_checkable / n_auto, 4),
             "coverage_of_gold": round(n_checkable / n_gold, 4),
+            "n_compiled": n_compiled,
+            "compiled_of_segmented": round(n_compiled / n_auto, 4) if n_auto else None,
+            "compiled_of_gold": round(n_compiled / n_gold, 4) if n_gold else None,
+            "checkable_but_not_compiled": gap,
             "registered_band": [0.30, 0.40],
             "per_trial": [{"nct_id": t.get("nct_id"), "segmented": t.get("n_auto"),
                            "gold": t.get("n_gold")} for t in trials]}
@@ -976,38 +998,69 @@ def main() -> int:
                   "with `python evaluation/segmentation.py`.")
     else:
         lo, hi = cd["registered_band"]
-        md.append(f"The system expresses **{cd['n_checkable']}** criteria as "
-                  f"predicates. That is a numerator, and it has two defensible "
-                  f"denominators, so both are published.")
+        md.append(f"Two numbers, and until this run the wrong one was published. "
+                  f"**{cd['n_checkable']}** criteria in the gold set are marked "
+                  f"`checkable`, which is a human deciding a structured record "
+                  f"*could* settle them. The compiler produced predicates for "
+                  f"**{cd['n_compiled']}**. The first is a ceiling on what any "
+                  f"system here could reach; only the second is this system.")
         md.append("")
-        md.append("| denominator | what it counts | coverage |")
+        md.append("| numerator | of the 40-criterion gold set | of the 65 the segmenter produced |")
         md.append("|---|---|---|")
-        md.append(f"| {cd['n_gold']} | the hand-authored gold set | "
-                  f"{cd['coverage_of_gold']:.0%} |")
-        md.append(f"| **{cd['n_segmented']}** | **every criterion the segmenter "
-                  f"produced from the three protocols** | "
-                  f"**{cd['coverage_of_segmented']:.0%}** |")
+        md.append(f"| {cd['n_checkable']} the gold set calls checkable | "
+                  f"{cd['coverage_of_gold']:.0%} | {cd['coverage_of_segmented']:.0%} |")
+        md.append(f"| **{cd['n_compiled']} the compiler produced** | "
+                  f"**{cd['compiled_of_gold']:.0%}** | "
+                  f"**{cd['compiled_of_segmented']:.1%}** |")
         md.append("")
-        inband = lo <= cd["coverage_of_segmented"] <= hi
+        inband = lo <= (cd["compiled_of_segmented"] or 0) <= hi
         md.append(f"`docs/EVAL_PROTOCOL.md` registered, before any scored run, that "
                   f"coverage would land at {lo:.0%} to {hi:.0%} **of segmented "
                   f"criteria**, following Kopcke et al., and that a number far above "
                   f"that would suggest the criteria had been cherry-picked. The "
-                  f"registered denominator is therefore {cd['n_segmented']}, not "
-                  f"{cd['n_gold']}. Against it the result is "
-                  f"{cd['coverage_of_segmented']:.0%}, which is "
-                  f"{'inside' if inband else 'outside'} the registered band.")
+                  f"registered denominator is {cd['n_segmented']}, not "
+                  f"{cd['n_gold']}.")
         md.append("")
-        md.append(f"Against {cd['n_gold']} it is {cd['coverage_of_gold']:.0%}, twenty "
-                  f"points above the prediction, and that is the number this report "
-                  f"used to lead with. The {cd['n_segmented'] - cd['n_gold']} criteria "
-                  f"the gold set drops are listed in full in `docs/SEGMENTATION.md` "
-                  f"and they are not a random sample: informed consent, psychiatric "
-                  f"history, substance use, site affiliation, pregnancy intent, "
-                  f"allergy to study agents. A structured record cannot settle any of "
-                  f"them, so removing them raises coverage without the system having "
-                  f"answered anything more. Beating a registered prediction by picking "
-                  f"the denominator afterwards is not beating it.")
+        md.append(f"**Against the registered band this run is at "
+                  f"{cd['compiled_of_segmented']:.1%}, which is "
+                  f"{'inside' if inband else 'below'} it.** The "
+                  f"{cd['coverage_of_segmented']:.0%} this report used to print was "
+                  f"the checkable count against the same denominator, so it was the "
+                  f"answer key's number wearing the system's name, and it happened to "
+                  f"land inside the band the system missed. Entry 28 of the "
+                  f"improvement changelog has how that went unnoticed.")
+        md.append("")
+        if cd.get("checkable_but_not_compiled"):
+            gap = cd["checkable_but_not_compiled"]
+            md.append(f"The {len(gap)} criteria the gold set calls checkable and the "
+                      f"compiler did not produce:")
+            md.append("")
+            md.append("| criterion | why not |")
+            md.append("|---|---|")
+            for g in gap:
+                why = str(g["reason"] or "(not present in the compiled set)")
+                why = why.split(".")[0].strip() if "." in why else why.strip()
+                md.append(f"| `{g['criterion_id']}` | {why} |")
+            md.append("")
+            md.append("Six of those are the vocabulary refusing, which is the design "
+                      "working: a concept with no code in this site's terminology "
+                      "stops the criterion instead of clearing every patient on it. "
+                      "The seventh is the one lost to the IR validator, above. So "
+                      "the gap between the ceiling and the result is mostly the "
+                      "price of the refusal policy, and that price belongs in the "
+                      "coverage number rather than in a footnote under a higher one.")
+            md.append("")
+        md.append(f"Against {cd['n_gold']} the compiled figure is "
+                  f"{cd['compiled_of_gold']:.0%}. The "
+                  f"{cd['n_segmented'] - cd['n_gold']} criteria the gold set drops "
+                  f"are listed in full in `docs/SEGMENTATION.md` and they are not a "
+                  f"random {cd['n_segmented'] - cd['n_gold']}: informed consent, "
+                  f"psychiatric history, substance use, site affiliation, pregnancy "
+                  f"intent, allergy to study agents. A structured record cannot "
+                  f"settle any of them, so removing them raises coverage without the "
+                  f"system having answered anything more. Beating a registered "
+                  f"prediction by picking the denominator afterwards is not beating "
+                  f"it, and neither is picking the numerator.")
         md.append("")
         md.append("| trial | segmenter | hand-authored |")
         md.append("|---|---|---|")

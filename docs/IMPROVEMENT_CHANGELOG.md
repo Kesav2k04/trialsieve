@@ -1394,3 +1394,56 @@ written from the cases that existed when it was written, all of which had an
 exact code, and the constraint it grew, "at least one exact code", quietly
 deleted the case the rest of the design was built around. Nothing failed loudly.
 One criterion went missing and the error message named the model.
+
+---
+
+## 28. The coverage headline was the answer key's number, not the system's
+
+**Found by** signing off the video narration. `scripts/make_video.py claims`
+prints every spoken quantity and refuses to build until each has been read
+against the run output. One of them was "twenty-four of the sixty-five criteria
+compile to predicates", and checking it against
+`runs/tierA/compiled/criteria_seed7.json` gave eighteen.
+
+**What was wrong.** `coverage_denominators()` in `scripts/report.py` built its
+numerator like this:
+
+```python
+n_checkable = sum(1 for c in CRITERIA if c.get("checkable"))
+```
+
+`checkable` is a field in `evaluation/gold/criteria_set.py`. It is a human
+deciding, before any run, whether a structured record *could* settle a criterion
+at all. It is the answer key. The report then printed **"The system expresses 24
+criteria as predicates"**, which credits the run with every criterion the gold
+annotation thought was answerable, including the ones the compiler refused and
+the one it lost.
+
+The compiler produced 18. Seven criteria the gold set calls checkable did not
+compile: six because this site's vocabulary has no code for the concept, which is
+the refusal policy working as designed, and one lost to the IR validator (entry
+27). One criterion compiled that the gold set does not call checkable.
+
+**What it cost.** Coverage against the registered denominator of 65 was published
+as **37%**. The system's own figure is **27.7%**.
+
+`docs/EVAL_PROTOCOL.md` registers, before any scored run, that coverage would land
+at 30% to 40% of segmented criteria. 37% is inside that band. 27.7% is below it.
+So the pre-registration did its job, the run missed the band it predicted, and the
+report said it had hit it, because the numerator being compared against the
+registered band was never a measurement of the thing the band was about.
+
+Both numbers are now published side by side, with the seven-criterion gap itemised
+by reason, and the narration reads the compiled count out of `results.json`
+instead of speaking a remembered one.
+
+**Why it survived this long.** Nothing was inconsistent. 24 is a real count of a
+real field, 65 is the right denominator, 37% is the correct quotient, and every
+test passed because every test checked the arithmetic. The defect is entirely in
+the label: a sentence saying "the system expresses" over a number describing what
+a person thought was expressible. A gate can verify a computation end to end and
+still never ask what the inputs mean.
+
+That is also why it was found by a narration gate rather than by the test suite.
+Speaking a number out loud forces you to say what it is a number *of*, and this
+one had no true sentence.
