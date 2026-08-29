@@ -228,7 +228,8 @@ def operating_curve(cells: Iterable[Cell], budgets=(0, 1, 2, 5, 10)) -> list[dic
         ps = score_panel(f"budget<={b}", _muted(cells, keep))
         out.append({"false_exclusion_budget": b, "reduction": round(ps.reduction, 4),
                     "n_ineligible": ps.n_ineligible, "false_exclusions": ps.false_exclusions,
-                    "criteria_used": len(keep), "in_sample": True})
+                    "criteria_used": len(keep), "criteria": sorted(keep),
+                    "in_sample": True})
     return out
 
 

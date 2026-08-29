@@ -725,6 +725,16 @@
      "n_ineligible": 502,
      "false_exclusions": 0,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -733,6 +743,16 @@
      "n_ineligible": 502,
      "false_exclusions": 0,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -741,6 +761,16 @@
      "n_ineligible": 502,
      "false_exclusions": 0,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -749,6 +779,17 @@
      "n_ineligible": 504,
      "false_exclusions": 1,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -757,6 +798,17 @@
      "n_ineligible": 504,
      "false_exclusions": 1,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     }
    ],
@@ -1636,6 +1688,16 @@
      "n_ineligible": 502,
      "false_exclusions": 0,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -1644,6 +1706,16 @@
      "n_ineligible": 502,
      "false_exclusions": 0,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -1652,6 +1724,16 @@
      "n_ineligible": 502,
      "false_exclusions": 0,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -1660,6 +1742,17 @@
      "n_ineligible": 505,
      "false_exclusions": 1,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -1668,6 +1761,17 @@
      "n_ineligible": 505,
      "false_exclusions": 1,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     }
    ],
@@ -2523,6 +2627,13 @@
      "n_ineligible": 186,
      "false_exclusions": 0,
      "criteria_used": 5,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01"
+     ],
      "in_sample": true
     },
     {
@@ -2531,6 +2642,14 @@
      "n_ineligible": 315,
      "false_exclusions": 1,
      "criteria_used": 6,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -2539,6 +2658,15 @@
      "n_ineligible": 428,
      "false_exclusions": 1,
      "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -2547,6 +2675,16 @@
      "n_ineligible": 482,
      "false_exclusions": 3,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     },
     {
@@ -2555,6 +2693,17 @@
      "n_ineligible": 483,
      "false_exclusions": 4,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     }
    ],
@@ -3410,6 +3559,12 @@
      "n_ineligible": 163,
      "false_exclusions": 0,
      "criteria_used": 4,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01"
+     ],
      "in_sample": true
     },
     {
@@ -3418,6 +3573,13 @@
      "n_ineligible": 285,
      "false_exclusions": 1,
      "criteria_used": 5,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -3426,6 +3588,14 @@
      "n_ineligible": 392,
      "false_exclusions": 2,
      "criteria_used": 6,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -3434,6 +3604,15 @@
      "n_ineligible": 413,
      "false_exclusions": 2,
      "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -3442,6 +3621,17 @@
      "n_ineligible": 472,
      "false_exclusions": 3,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
      "in_sample": true
     }
    ],
@@ -4297,6 +4487,17 @@
      "n_ineligible": 369,
      "false_exclusions": 0,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4305,6 +4506,17 @@
      "n_ineligible": 369,
      "false_exclusions": 0,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4313,6 +4525,17 @@
      "n_ineligible": 369,
      "false_exclusions": 0,
      "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4321,6 +4544,18 @@
      "n_ineligible": 370,
      "false_exclusions": 1,
      "criteria_used": 10,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4329,6 +4564,18 @@
      "n_ineligible": 370,
      "false_exclusions": 1,
      "criteria_used": 10,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     }
    ],
@@ -4637,6 +4884,15 @@
      "n_ineligible": 444,
      "false_exclusions": 0,
      "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4645,6 +4901,15 @@
      "n_ineligible": 444,
      "false_exclusions": 0,
      "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4653,6 +4918,15 @@
      "n_ineligible": 444,
      "false_exclusions": 0,
      "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4661,6 +4935,16 @@
      "n_ineligible": 446,
      "false_exclusions": 1,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     },
     {
@@ -4669,6 +4953,16 @@
      "n_ineligible": 446,
      "false_exclusions": 1,
      "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
      "in_sample": true
     }
    ],

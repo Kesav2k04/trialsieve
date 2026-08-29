@@ -39,6 +39,9 @@ def main() -> int:
     ap.add_argument("--out", default="")
     ap.add_argument("--unit-policy", default="code_authoritative")
     ap.add_argument("--max-listed", type=int, default=20)
+    ap.add_argument("--operating-point", type=int, default=None,
+                    help="render only the criteria the published operating curve"
+                         " keeps at this false-exclusion budget")
     ap.add_argument("--allow-unsigned", action="store_true",
                     help="produce the document without human sign-off. Marks every "
                          "page as not for use and is refused for anything but a "
@@ -52,6 +55,34 @@ def main() -> int:
         return 2
     blob = json.loads(src.read_text(encoding="utf-8"))
     compiled = blob["criteria"]
+
+    # Firing every compiled predicate is a measurement configuration, not a
+    # product one. It includes the criterion whose closed-world `absent_means`
+    # rules out 358 patients on a silent record, and the sample worklist that
+    # shipped with this repository ruled out 385 of 385 and left a coordinator
+    # nothing to work. A deployment picks an operating point. This one is the
+    # zero-false-exclusion row of the published curve, and the document says
+    # which criteria it kept and that the subset was chosen in sample.
+    if a.operating_point is not None:
+        rp = ROOT / "results" / "results.json"
+        if not rp.exists():
+            print(f"no {rp}. Run scripts/report.py first.", file=sys.stderr)
+            return 2
+        res = json.loads(rp.read_text(encoding="utf-8"))
+        grp = res.get("groups", {}).get(f"k0_seed{a.seed}", {})
+        rows = grp.get("operating_curve_TS") or []
+        row = next((r for r in rows
+                    if r["false_exclusion_budget"] == a.operating_point), None)
+        if row is None or not row.get("criteria"):
+            print(f"no operating-curve row at budget {a.operating_point} with a "
+                  f"named criterion set in {rp}", file=sys.stderr)
+            return 2
+        keep = set(row["criteria"])
+        compiled = [c for c in compiled if c.get("criterion_id") in keep]
+        if not compiled:
+            print(f"the operating point at budget {a.operating_point} keeps no "
+                  f"criterion from seed {a.seed}", file=sys.stderr)
+            return 2
     if a.trial:
         compiled = [c for c in compiled if c.get("nct_id") == a.trial]
         if not compiled:
@@ -82,6 +113,30 @@ def main() -> int:
     wl = worklist.build(compiled, panel, trial, unit_policy=a.unit_policy)
     md = worklist.render_markdown(wl, generated=dt.date.today().isoformat(),
                                   reviewer=reviewer, max_listed=a.max_listed)
+
+    if a.operating_point is not None:
+        mine = wl.get("criteria_used") or sorted(c["criterion_id"] for c in compiled)
+        note = [
+            "",
+            f"## Operating point: {a.operating_point} tolerated false exclusions",
+            "",
+            f"This worklist runs {len(mine)} of the trial's compiled criteria, not all of "
+            f"them: " + ", ".join(f"`{m}`" for m in mine) + ". They are the set the "
+            f"published operating curve keeps at a budget of {a.operating_point} false "
+            f"exclusions.",
+            "",
+            "Two things a reader should hold against this. The subset was chosen by "
+            "counting each criterion's false exclusions on the same patients it is then "
+            "applied to, so it reports that a clean subset existed rather than that it "
+            "could have been picked in advance; `operating_curve_cv` in "
+            "`results/RESULTS.md` is the cross-fitted answer to that. And running every "
+            "compiled criterion instead removes almost the whole panel, because one of "
+            "them treats a silent record as a negative. That configuration is measured "
+            "in the report and is not what a deployment would run.",
+            "",
+        ]
+        marker = "## What removed people"
+        md = md.replace(marker, chr(10).join(note).lstrip(chr(10)) + chr(10) + marker, 1)
 
     out = Path(a.out) if a.out else run / f"worklist_{nct}.md"
     out.parent.mkdir(parents=True, exist_ok=True)

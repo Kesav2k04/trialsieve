@@ -97,3 +97,43 @@ def test_no_bulk_approval_exists():
         assert flag not in declared, (
             f"{flag} is a declared option on signoff.py. A gate that can be "
             f"cleared without reading reports approval nobody gave.")
+
+
+def _pred(cid, nct):
+    """A predicate that fails everyone, so a leak into another trial is visible."""
+    return {"criterion_id": cid, "nct_id": nct, "compilable": True,
+            "kind": "inclusion", "source_text": cid,
+            "expr": {"op": "exists",
+                     "query": {"domain": "condition", "codes": ["_no_such_code_"],
+                               "absent_means": "false"}},
+            "predicate_sha256": cid}
+
+
+def test_a_worklist_applies_only_its_own_trials_criteria():
+    """A document headed with one trial ruled patients out on another trial's
+    criteria, because the predicate list was used exactly as handed in while the
+    heading came from a separate argument. A patient removed from a trial they
+    were never screened against is a false exclusion."""
+    sys.path.insert(0, str(ROOT / "src"))
+    from trialsieve import worklist
+    from trialsieve.chart import load_panel
+
+    panel = load_panel(str(ROOT / "data" / "vendor" / "panel.jsonl.gz"))[:5]
+    compiled = [_pred("NCT00000001-INC-01", "NCT00000001"),
+                _pred("NCT00000002-INC-01", "NCT00000002")]
+    wl = worklist.build(compiled, panel, {"nct_id": "NCT00000001", "title": ""})
+    assert wl["criteria_used"] == ["NCT00000001-INC-01"]
+    for s in wl["screens"]:
+        for c in s["criteria"]:
+            assert c["criterion_id"].startswith("NCT00000001")
+
+
+def test_a_worklist_refuses_when_no_criterion_belongs_to_the_trial():
+    sys.path.insert(0, str(ROOT / "src"))
+    from trialsieve import worklist
+    from trialsieve.chart import load_panel
+
+    panel = load_panel(str(ROOT / "data" / "vendor" / "panel.jsonl.gz"))[:3]
+    compiled = [_pred("NCT00000002-INC-01", "NCT00000002")]
+    with pytest.raises(ValueError, match="no compiled criterion belongs"):
+        worklist.build(compiled, panel, {"nct_id": "NCT00000001", "title": ""})

@@ -12,10 +12,10 @@ signed. That is enforced by exit code, and the refusal is tested.
 ## 1. Unsigned
 
 ```
-$ python scripts/worklist.py --run runs/tierA  ; echo $?
+$ python scripts/worklist.py --run runs/tierA --operating-point 0  ; echo $?
 REFUSED.
 
-18 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-01, NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06983054-INC-07, NCT06983054-INC-09 ...
+8 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
 3
 ```
 
@@ -24,17 +24,17 @@ Exit code **3**. No document was written. The message names the command that cle
 ## 2. Unsigned, overridden on purpose
 
 ```
-$ python scripts/worklist.py --run runs/tierA --allow-unsigned  ; echo $?
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsigned  ; echo $?
 {
  "nct_id": "NCT06983054",
  "panel": 385,
- "ruled_out": 385,
- "needs_review": 0,
- "eligible": 0,
- "reduction": 1.0
+ "ruled_out": 187,
+ "needs_review": 190,
+ "eligible": 8,
+ "reduction": 0.4857
 }
 wrote D:\trialsieve\docs\sample_worklist.md
-WARNING, running unsigned: 18 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-01, NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06983054-INC-07, NCT06983054-INC-09 ...
+WARNING, running unsigned: 8 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
 0
 ```
 

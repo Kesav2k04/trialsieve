@@ -22,7 +22,26 @@ from .evaluator import screen
 
 def build(compiled: list[dict], panel: list[Chart], trial: dict,
           unit_policy: str = "code_authoritative") -> dict:
-    """Screen a panel and assemble the worklist data."""
+    """Screen a panel against ONE trial's criteria and assemble the worklist.
+
+    The predicate list was used exactly as handed in, while the document was
+    titled with one trial's id, so a worklist headed NCT06983054 ruled patients
+    out on criteria belonging to the other two trials in the run. That is not a
+    labelling slip. A patient removed from a trial they were never screened
+    against is a false exclusion, which is the one error this system exists to
+    prevent, and it is what made the shipped sample rule out 385 of 385.
+    """
+    nct = trial.get("nct_id", "")
+    if nct:
+        own = [c for c in compiled if str(c.get("criterion_id", "")).startswith(nct)]
+        if not own:
+            raise ValueError(
+                f"no compiled criterion belongs to {nct}. Rendering every trial's "
+                f"predicates under one trial's heading is what this guard exists to "
+                f"stop, so this refuses rather than screening against the wrong list.")
+        compiled = own
+
+    used_ids = sorted(str(c.get("criterion_id", "")) for c in compiled)
     screens = []
     for ch in panel:
         s = screen(compiled, ch, unit_policy=unit_policy)
@@ -36,6 +55,8 @@ def build(compiled: list[dict], panel: list[Chart], trial: dict,
     review.sort(key=lambda s: (s["n_indeterminate"], -s["n_meets"], s["patient_id"]))
     ruled_out.sort(key=lambda s: s["patient_id"])
 
+    # What was actually applied, after the per-trial filter above, so a caller
+    # cannot describe the document with the list it handed in.
     reasons = Counter()
     for s in ruled_out:
         for c in s["criteria"]:
@@ -48,7 +69,7 @@ def build(compiled: list[dict], panel: list[Chart], trial: dict,
             if c["verdict"] == "INDETERMINATE":
                 open_questions[c["criterion_id"]] += 1
 
-    return {"trial": trial, "screens": screens, "ruled_out": ruled_out,
+    return {"trial": trial, "criteria_used": used_ids, "screens": screens, "ruled_out": ruled_out,
             "review": review, "eligible": eligible,
             "ruleout_reasons": reasons, "open_questions": open_questions,
             "compiled": {c["criterion_id"]: c for c in compiled}}

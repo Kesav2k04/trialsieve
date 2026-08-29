@@ -53,7 +53,10 @@ def main() -> int:
     scratch.mkdir(parents=True, exist_ok=True)
     tmp = scratch / "_gate_demo.md"
 
-    base = ["scripts/worklist.py", "--run", a.run]
+    # The sample ships at the published operating point. Rendered with every
+    # compiled criterion it ruled out 385 of 385 and handed a coordinator an
+    # empty list, which is a measurement configuration rather than a product.
+    base = ["scripts/worklist.py", "--run", a.run, "--operating-point", "0"]
     if a.trial:
         base += ["--trial", a.trial]
 
