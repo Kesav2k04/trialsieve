@@ -27,10 +27,13 @@ INTERESTING = ("validation_error", "retry", "critic_finding", "revision",
 
 def stats(events: list[dict]) -> dict:
     kinds: dict[str, int] = {}
+    tools: dict[str, int] = {}
     tokens = 0
     latency = 0.0
     for e in events:
         kinds[e["event"]] = kinds.get(e["event"], 0) + 1
+        if e["event"] == "tool_call":
+            tools[e.get("tool", "?")] = tools.get(e.get("tool", "?"), 0) + 1
         if e["event"] == "llm_response":
             tokens += int(e.get("completion_tokens") or 0)
             latency += float(e.get("latency_s") or 0.0)
@@ -39,6 +42,7 @@ def stats(events: list[dict]) -> dict:
         "events": len(events),
         "llm_calls": kinds.get("llm_request", 0),
         "tool_calls": kinds.get("tool_call", 0),
+        "tools": tools,
         "validation_errors": kinds.get("validation_error", 0),
         "retries": kinds.get("retry", 0),
         "transport_retries": kinds.get("transport_retry", 0),
@@ -191,6 +195,33 @@ def main() -> int:
     L.append(f"| human checkpoints | {tot['human_checkpoints']} |")
     L.append(f"| completion tokens | {tot['completion_tokens']} |")
     L.append("")
+    by_tool: dict[str, int] = {}
+    for r in rows:
+        for k, v in r["tools"].items():
+            by_tool[k] = by_tool.get(k, 0) + v
+    if by_tool:
+        L.append("## The tools, and what calling one looks like in the log")
+        L.append("")
+        L.append("| tool | calls | what it does, and why it is a tool rather than a prompt |")
+        L.append("|---|---|---|")
+        WHAT = {
+            "terminology.search_any":
+                "lexical search over the codes this site's own records use. "
+                "Deliberately not an embedding search: a near miss on a drug class "
+                "is indistinguishable from a hit right up until it clears a patient.",
+            "execute_counterexample":
+                "the critic names a patient the predicate should get wrong; the "
+                "harness builds that chart and **runs the predicate against it**. "
+                "The finding is then confirmed or dismissed by execution, which is "
+                "what stops a critic from being an opinion.",
+            "ground_cache.hit":
+                "a concept already grounded for an earlier criterion, returned "
+                "without a model call. Content-addressed on concept and domain.",
+        }
+        for k, v in sorted(by_tool.items(), key=lambda kv: -kv[1]):
+            L.append(f"| `{k}` | {v} | {WHAT.get(k, '')} |")
+        L.append("")
+
     L.append("## Which agent is where, and the two that have no trajectory")
     L.append("")
     L.append("Six agents. Four of them make model calls and appear below. Two do not, "
