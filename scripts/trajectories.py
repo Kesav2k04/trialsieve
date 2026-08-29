@@ -56,6 +56,40 @@ def stats(events: list[dict]) -> dict:
     }
 
 
+def _interest(st: dict) -> int:
+    """How much a reader learns from this trajectory, worst first.
+
+    The first version counted only things that went wrong inside a step: retries,
+    validator rejections, critic findings, revisions. On this run those are rare,
+    so it sorted a nearly flat list and the claim that the index puts the
+    interesting trajectories first was close to empty.
+
+    What it missed is that in this system the informative trajectory is usually
+    the one that **refused**. A criterion the grounder could not map, or that the
+    compiler declined to express, is the whole architectural argument arriving in
+    one file, and it scored zero because nothing errored. An error scores highest
+    because it is a defect; a refusal scores just under it because it is the
+    designed behaviour a reader most needs to see working.
+
+    `transport_retry` is weighted at 1 rather than 3. A connection that dropped
+    and was retried says something about the endpoint and almost nothing about the
+    agent, and weighting it like a validator rejection would let a bad afternoon on
+    the network push the real content off the top of the index.
+    """
+    out = str(st.get("outcome", ""))
+    outcome_weight = 0
+    if out.startswith("error") or out == "no final event":
+        outcome_weight = 8
+    elif out.startswith("refused") or out == "unmappable":
+        outcome_weight = 6
+    elif out == "INDETERMINATE":
+        outcome_weight = 2
+    return (st["retries"] * 3 + st["validation_errors"] * 2
+            + st["critic_findings"] * 4 + st["revisions"] * 5
+            + st["human_checkpoints"] * 2 + st["transport_retries"] * 1
+            + outcome_weight)
+
+
 def _outcome(final: dict) -> str:
     if not final:
         return "no final event"
@@ -150,9 +184,7 @@ def main() -> int:
         st["agent"] = rel.parts[0] if len(rel.parts) > 1 else "?"
         st["subject"] = p.stem
         st["md"] = str(rel.with_suffix(".md")).replace("\\", "/")
-        st["interest"] = (st["retries"] * 3 + st["validation_errors"] * 2
-                          + st["critic_findings"] * 4 + st["revisions"] * 5
-                          + st["human_checkpoints"] * 2)
+        st["interest"] = _interest(st)
         rows.append(st)
 
     if not rows:

@@ -171,6 +171,21 @@ def main() -> int:
                 row["B3_votes"] = r.get("votes")
             rows.append(row)
         if traj:
+            # One trajectory covers every criterion for this patient, so the
+            # terminal event has to be written here rather than by the per-cell
+            # helper. Without it the log ends on whatever the last cell returned
+            # and the index reports "no final event", which reads as a truncated
+            # log rather than as a finished arm. A trajectory that does not record
+            # its own conclusion is an incomplete trajectory, and the brief asks
+            # for these specifically.
+            mine = [r for r in rows if r["patient_id"] == chart.patient_id]
+            counts: dict[str, int] = {}
+            for r in mine:
+                for arm in ("B2", "B3"):
+                    if arm in r:
+                        counts[f"{arm}:{r[arm]}"] = counts.get(f"{arm}:{r[arm]}", 0) + 1
+            traj.final(patient_id=chart.patient_id, criteria=len(mine),
+                       record_trimmed=was_trimmed, verdicts=counts)
             traj.write(run / "trajectories")
         # Report often enough that a long paid run does not look hung. Every
         # patient when the sample is small, which is exactly when each one is
