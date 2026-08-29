@@ -65,13 +65,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "criterion_id": "NCT06983054-INC-01",
+ "criterion_id": "NCT06983054-INC-09",
  "kind": "inclusion",
- "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria"
+ "source_text": "UACR < 30 mg/mmol"
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `def662f3b54da3bb`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `28d8a9d9902be7a7`
 
 ```
 [system]
@@ -85,42 +85,30 @@ to break it, and a specific patient who breaks it is the only thing that counts.
 Review this compiled criterion.
 
 CRITERION (inclusion):
-  Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria
+  UACR < 30 mg/mmol
 
 COMPILED PREDICATE:
 {
- "op": "and",
- "args": [
-  {
-   "op": "compare",
-   "cmp": ">",
-   "left": {
-    "val": "age"
-   },
-   "right": {
-    "val": "literal",
-    "number": 18,
-    "unit": "years"
-   }
-  },
-  {
-   "op": "exists",
-   "query": {
-    "domain": "condition",
-    "codes": [
-     "44054006"
-    ],
-    "broader_codes": [],
-    "within_days": null,
-    "active_only": false,
-    "absent_means": "false"
-   }
-  }
- ]
+ "op": "compare",
+ "cmp": "<",
+ "left": {
+  "val": "observation",
+  "codes": [
+   "14959-1"
+  ],
+  "unit": "mg/mmol",
+  "agg": "latest",
+  "within_days": null
+ },
+ "right": {
+  "val": "literal",
+  "number": 30,
+  "unit": "mg/mmol"
+ }
 }
 
 CODES AVAILABLE (you may only use these):
-(age and sex only)
+14959-1
 
 Look specifically for:
   1. Window errors. Is `within_days` right, and does an event just inside or just
@@ -165,110 +153,25 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 180 tok, 59.879s)
+### 4. llm_response (cassette, 20 tok, 18.136s)
 
 ```
 ```json
 {
-  "verdict": "REVISE",
-  "findings": [
-    {
-      "issue": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
-      "kind": "boundary",
-      "severity": "high"
-    }
-  ],
-  "counterexample": {
-    "patient": {
-      "age": 18,
-      "sex": "female",
-      "observations": [],
-      "conditions": [
-        {
-          "code": "44054006",
-          "days_ago": 100
-        }
-      ],
-      "medications": [],
-      "procedures": []
-    },
-    "expected_truth": "TRUE",
-    "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
-  }
+  "verdict": "OK",
+  "findings": [],
+  "counterexample": null
 }
 ```
 ```
 
-### 5. tool_call `execute_counterexample`
+### 5. final
 
 ```json
 {
- "expected_truth": "TRUE",
- "patient": {
-  "age": 18,
-  "conditions": [
-   {
-    "code": "44054006",
-    "days_ago": 100
-   }
-  ],
-  "medications": [],
-  "observations": [],
-  "procedures": [],
-  "sex": "female"
- }
-}
-```
-
-### 6. tool_result `execute_counterexample`
-
-```json
-{
- "actual": "FALSE",
- "confirmed": true,
- "engine_reason": "conjunction fails: 18 > 18 years is False",
- "expected": "TRUE"
-}
-```
-
-### 7. critic_finding
-
-```json
-{
- "counterexample": {
-  "expected_truth": "TRUE",
-  "patient": {
-   "age": 18,
-   "conditions": [
-    {
-     "code": "44054006",
-     "days_ago": 100
-    }
-   ],
-   "medications": [],
-   "observations": [],
-   "procedures": [],
-   "sex": "female"
-  },
-  "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
- },
- "finding": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
- "verdict": "CONFIRMED"
-}
-```
-
-### 8. final
-
-```json
-{
- "executed": {
-  "actual": "FALSE",
-  "confirmed": true,
-  "engine_reason": "conjunction fails: 18 > 18 years is False",
-  "expected": "TRUE"
- },
- "n_findings": 1,
- "verdict": "REVISE"
+ "executed": null,
+ "n_findings": 0,
+ "verdict": "OK"
 }
 ```
 

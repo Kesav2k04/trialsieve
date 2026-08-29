@@ -168,7 +168,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (openai, 156 tok, 50.54410696029663s)
+### 4. llm_response (cassette, 156 tok, 50.544s)
 
 ```
 ```json

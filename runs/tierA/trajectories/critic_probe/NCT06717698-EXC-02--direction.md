@@ -65,13 +65,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "criterion_id": "NCT06983054-INC-01",
- "kind": "inclusion",
- "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria"
+ "criterion_id": "NCT06717698-EXC-02",
+ "kind": "exclusion",
+ "source_text": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening."
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `def662f3b54da3bb`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `ab7b93b36079e0d7`
 
 ```
 [system]
@@ -84,43 +84,30 @@ to break it, and a specific patient who breaks it is the only thing that counts.
 [user]
 Review this compiled criterion.
 
-CRITERION (inclusion):
-  Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria
+CRITERION (exclusion):
+  Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.
 
 COMPILED PREDICATE:
 {
- "op": "and",
- "args": [
-  {
-   "op": "compare",
-   "cmp": ">",
-   "left": {
-    "val": "age"
-   },
-   "right": {
-    "val": "literal",
-    "number": 18,
-    "unit": "years"
-   }
-  },
-  {
-   "op": "exists",
-   "query": {
-    "domain": "condition",
-    "codes": [
-     "44054006"
-    ],
-    "broader_codes": [],
-    "within_days": null,
-    "active_only": false,
-    "absent_means": "false"
-   }
+ "op": "not",
+ "arg": {
+  "op": "exists",
+  "query": {
+   "domain": "procedure",
+   "codes": [
+    "302497006"
+   ],
+   "broader_codes": [
+    "265764009"
+   ],
+   "within_days": 90,
+   "absent_means": "unknown"
   }
- ]
+ }
 }
 
 CODES AVAILABLE (you may only use these):
-(age and sex only)
+302497006
 
 Look specifically for:
   1. Window errors. Is `within_days` right, and does an event just inside or just
@@ -165,7 +152,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 180 tok, 59.879s)
+### 4. llm_response (cassette, 182 tok, 19.061s)
 
 ```
 ```json
@@ -173,27 +160,27 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
-      "kind": "boundary",
+      "issue": "The exclusion predicate is inverted by a top-level 'not' operator, causing it to evaluate to FALSE instead of TRUE for patients who meet the exclusion condition.",
+      "kind": "direction",
       "severity": "high"
     }
   ],
   "counterexample": {
     "patient": {
-      "age": 18,
+      "age": 62,
       "sex": "female",
       "observations": [],
-      "conditions": [
-        {
-          "code": "44054006",
-          "days_ago": 100
-        }
-      ],
+      "conditions": [],
       "medications": [],
-      "procedures": []
+      "procedures": [
+        {
+          "code": "302497006",
+          "days_ago": 30
+        }
+      ]
     },
     "expected_truth": "TRUE",
-    "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+    "why": "The patient underwent haemodialysis 30 days before screening, which satisfies the exclusion criterion text."
   }
 }
 ```
@@ -205,16 +192,16 @@ counterexample null. Do not invent a problem to look useful.
 {
  "expected_truth": "TRUE",
  "patient": {
-  "age": 18,
-  "conditions": [
-   {
-    "code": "44054006",
-    "days_ago": 100
-   }
-  ],
+  "age": 62,
+  "conditions": [],
   "medications": [],
   "observations": [],
-  "procedures": [],
+  "procedures": [
+   {
+    "code": "302497006",
+    "days_ago": 30
+   }
+  ],
   "sex": "female"
  }
 }
@@ -226,7 +213,7 @@ counterexample null. Do not invent a problem to look useful.
 {
  "actual": "FALSE",
  "confirmed": true,
- "engine_reason": "conjunction fails: 18 > 18 years is False",
+ "engine_reason": "negation of a TRUE sub-result",
  "expected": "TRUE"
 }
 ```
@@ -238,21 +225,21 @@ counterexample null. Do not invent a problem to look useful.
  "counterexample": {
   "expected_truth": "TRUE",
   "patient": {
-   "age": 18,
-   "conditions": [
-    {
-     "code": "44054006",
-     "days_ago": 100
-    }
-   ],
+   "age": 62,
+   "conditions": [],
    "medications": [],
    "observations": [],
-   "procedures": [],
+   "procedures": [
+    {
+     "code": "302497006",
+     "days_ago": 30
+    }
+   ],
    "sex": "female"
   },
-  "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+  "why": "The patient underwent haemodialysis 30 days before screening, which satisfies the exclusion criterion text."
  },
- "finding": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
+ "finding": "The exclusion predicate is inverted by a top-level 'not' operator, causing it to evaluate to FALSE instead of TRUE for patients who meet the exclusion condition.",
  "verdict": "CONFIRMED"
 }
 ```
@@ -264,7 +251,7 @@ counterexample null. Do not invent a problem to look useful.
  "executed": {
   "actual": "FALSE",
   "confirmed": true,
-  "engine_reason": "conjunction fails: 18 > 18 years is False",
+  "engine_reason": "negation of a TRUE sub-result",
   "expected": "TRUE"
  },
  "n_findings": 1,

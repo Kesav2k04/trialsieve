@@ -13,7 +13,7 @@ call, and its wall clock is seconds.
 
 | step                                             | model calls | from cassette | prompt tokens | completion tokens | wall clock     | at published rates |
 |--------------------------------------------------|-------------|---------------|---------------|-------------------|----------------|--------------------|
-| compile the held-out protocols, 40 criteria      | 211         | 211           | 155,324       | 35,939            | 2 s            | $0.14              |
+| compile the held-out protocols, 40 criteria      | 211         | 211           | 155,324       | 35,939            | 1 s            | $0.14              |
 | segmenter, 3 trials                              | 3           | 0             | 3,362         | 3,929             | 4 min 15 s     | $0.01              |
 | recompile under seed 8, for the noise floor      | 200         | 136           | 146,310       | 34,729            | 33 min 54 s    | $0.13              |
 | recompile under seed 9, for the noise floor      | 206         | 32            | 142,250       | 35,422            | 62 min 47 s    | $0.13              |

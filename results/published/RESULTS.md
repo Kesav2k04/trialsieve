@@ -60,19 +60,19 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9050    | [-0.9650, -0.8275] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7325    | [-0.8575, -0.5950] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9050    | [-0.9650, -0.8275] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0325    | [+0.0000, +0.0900] | yes          | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1925    | [+0.0875, +0.3150] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0325    | [+0.0000, +0.0900] | yes          | 40 criteria | **below, uninterpretable** |
-| TS - B2    | ser         | -0.4050    | [-0.5550, -0.2550] | no           | 40 criteria | above                      |
-| TS - B2    | coverage    | -0.4125    | [-0.5625, -0.2600] | no           | 40 criteria | above                      |
-| TS - B2    | false_fails | -0.0425    | [-0.1375, +0.0350] | yes          | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------|
+| TS - B0    | ser         | -0.9050    | [-0.9650, -0.8275] | no           | 40 criteria | above          |
+| TS - B0    | coverage    | -0.7325    | [-0.8575, -0.5950] | no           | 40 criteria | above          |
+| TS - B0    | false_fails | -0.9050    | [-0.9650, -0.8275] | no           | 40 criteria | above          |
+| TS - B1    | ser         | +0.0325    | [+0.0000, +0.0900] | yes          | 40 criteria | above          |
+| TS - B1    | coverage    | +0.1925    | [+0.0875, +0.3150] | no           | 40 criteria | above          |
+| TS - B1    | false_fails | +0.0325    | [+0.0000, +0.0900] | yes          | 40 criteria | above          |
+| TS - B2    | ser         | -0.4050    | [-0.5550, -0.2550] | no           | 40 criteria | above          |
+| TS - B2    | coverage    | -0.4125    | [-0.5625, -0.2600] | no           | 40 criteria | above          |
+| TS - B2    | false_fails | -0.0425    | [-0.1375, +0.0350] | yes          | 40 criteria | above          |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.7%** (95% CI 1.5% to 4.2%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 400 cells are 6.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## k0_seed7  (the scored run)
 
@@ -129,16 +129,16 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9172    | [-0.9655, -0.8556] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7588    | [-0.8734, -0.6334] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9201    | [-0.9667, -0.8599] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0305    | [+0.0021, +0.0811] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1662    | [+0.0724, +0.2742] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0275    | [+0.0002, +0.0771] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------|
+| TS - B0    | ser         | -0.9172    | [-0.9655, -0.8556] | no           | 40 criteria | above          |
+| TS - B0    | coverage    | -0.7588    | [-0.8734, -0.6334] | no           | 40 criteria | above          |
+| TS - B0    | false_fails | -0.9201    | [-0.9667, -0.8599] | no           | 40 criteria | above          |
+| TS - B1    | ser         | +0.0305    | [+0.0021, +0.0811] | no           | 40 criteria | above          |
+| TS - B1    | coverage    | +0.1662    | [+0.0724, +0.2742] | no           | 40 criteria | above          |
+| TS - B1    | false_fails | +0.0275    | [+0.0002, +0.0771] | no           | 40 criteria | above          |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## k0_seed8  
 
@@ -200,11 +200,11 @@ The two curves agree on every row. That is a property of this panel rather than 
 | TS - B0    | ser         | -0.9159    | [-0.9661, -0.8520] | no           | 40 criteria | above                      |
 | TS - B0    | coverage    | -0.7581    | [-0.8733, -0.6323] | no           | 40 criteria | above                      |
 | TS - B0    | false_fails | -0.9421    | [-0.9730, -0.9053] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0318    | [+0.0021, +0.0845] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | ser         | +0.0318    | [+0.0021, +0.0845] | no           | 40 criteria | above                      |
 | TS - B1    | coverage    | +0.1669    | [+0.0733, +0.2740] | no           | 40 criteria | above                      |
 | TS - B1    | false_fails | +0.0056    | [+0.0003, +0.0127] | no           | 40 criteria | **below, uninterpretable** |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## k0_seed9  
 
@@ -266,11 +266,11 @@ The two curves agree on every row. That is a property of this panel rather than 
 | TS - B0    | ser         | -0.9159    | [-0.9661, -0.8520] | no           | 40 criteria | above                      |
 | TS - B0    | coverage    | -0.7591    | [-0.8736, -0.6340] | no           | 40 criteria | above                      |
 | TS - B0    | false_fails | -0.9421    | [-0.9730, -0.9053] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0318    | [+0.0021, +0.0845] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | ser         | +0.0318    | [+0.0021, +0.0845] | no           | 40 criteria | above                      |
 | TS - B1    | coverage    | +0.1659    | [+0.0729, +0.2721] | no           | 40 criteria | above                      |
 | TS - B1    | false_fails | +0.0056    | [+0.0003, +0.0127] | no           | 40 criteria | **below, uninterpretable** |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## k10_seed7  
 
@@ -327,16 +327,16 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9187    | [-0.9667, -0.8575] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7621    | [-0.8757, -0.6377] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9221    | [-0.9681, -0.8621] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0308    | [+0.0023, +0.0814] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1629    | [+0.0709, +0.2689] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0275    | [+0.0006, +0.0766] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------|
+| TS - B0    | ser         | -0.9187    | [-0.9667, -0.8575] | no           | 40 criteria | above          |
+| TS - B0    | coverage    | -0.7621    | [-0.8757, -0.6377] | no           | 40 criteria | above          |
+| TS - B0    | false_fails | -0.9221    | [-0.9681, -0.8621] | no           | 40 criteria | above          |
+| TS - B1    | ser         | +0.0308    | [+0.0023, +0.0814] | no           | 40 criteria | above          |
+| TS - B1    | coverage    | +0.1629    | [+0.0709, +0.2689] | no           | 40 criteria | above          |
+| TS - B1    | false_fails | +0.0275    | [+0.0006, +0.0766] | no           | 40 criteria | above          |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.1% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## k20_seed7  
 
@@ -393,16 +393,16 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9194    | [-0.9670, -0.8583] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7657    | [-0.8779, -0.6426] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9223    | [-0.9683, -0.8623] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0303    | [+0.0022, +0.0812] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1593    | [+0.0687, +0.2637] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0274    | [+0.0006, +0.0767] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------|
+| TS - B0    | ser         | -0.9194    | [-0.9670, -0.8583] | no           | 40 criteria | above          |
+| TS - B0    | coverage    | -0.7657    | [-0.8779, -0.6426] | no           | 40 criteria | above          |
+| TS - B0    | false_fails | -0.9223    | [-0.9683, -0.8623] | no           | 40 criteria | above          |
+| TS - B1    | ser         | +0.0303    | [+0.0022, +0.0812] | no           | 40 criteria | above          |
+| TS - B1    | coverage    | +0.1593    | [+0.0687, +0.2637] | no           | 40 criteria | above          |
+| TS - B1    | false_fails | +0.0274    | [+0.0006, +0.0767] | no           | 40 criteria | above          |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.0% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## k40_seed7  
 
@@ -459,16 +459,16 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9204    | [-0.9676, -0.8595] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7754    | [-0.8831, -0.6556] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9244    | [-0.9697, -0.8648] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0327    | [+0.0023, +0.0849] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1495    | [+0.0642, +0.2495] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0287    | [+0.0014, +0.0788] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------|
+| TS - B0    | ser         | -0.9204    | [-0.9676, -0.8595] | no           | 40 criteria | above          |
+| TS - B0    | coverage    | -0.7754    | [-0.8831, -0.6556] | no           | 40 criteria | above          |
+| TS - B0    | false_fails | -0.9244    | [-0.9697, -0.8648] | no           | 40 criteria | above          |
+| TS - B1    | ser         | +0.0327    | [+0.0023, +0.0849] | no           | 40 criteria | above          |
+| TS - B1    | coverage    | +0.1495    | [+0.0642, +0.2495] | no           | 40 criteria | above          |
+| TS - B1    | false_fails | +0.0287    | [+0.0014, +0.0788] | no           | 40 criteria | above          |
 
-The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.1%** (95% CI 1.1% to 3.3%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 4.7% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
 ## ow  (sensitivity: every absence forced to unknown)
 
@@ -554,12 +554,24 @@ Checker A and Checker B labelled the same 180 cells independently. B saw the cri
 | raw percent agreement                                        | 76.7%                                             |
 | Cohen's kappa                                                | 0.650                                             |
 | Gwet's AC1                                                   | 0.651                                             |
-| **contradictions** (MEETS against FAILS)                     | **19 = 10.6%**                                    |
-| confidence splits (a definite verdict against INDETERMINATE) | 23 = 12.8%                                        |
+| **contradictions** (MEETS against FAILS)                     | **19 = 10.6% of the sample**                      |
+| confidence splits (a definite verdict against INDETERMINATE) | 23 = 12.8% of the sample                          |
 | Checker A marginals                                          | `{"FAILS": 60, "MEETS": 60, "INDETERMINATE": 60}` |
 | Checker B marginals                                          | `{"FAILS": 46, "MEETS": 63, "INDETERMINATE": 71}` |
 
-The two labellers disagree on 23.3% of cells, and that total is split rather than quoted whole because the two halves bound different things. 19 cells are contradictions, where one labeller says a patient meets a criterion and the other says they fail it; those are the cells where at least one label is simply wrong, and 10.6% is the figure a difference between arms has to clear to mean anything. The other 23 are one labeller committing where the other abstained. That is a disagreement about how much a record has to say before it counts as saying it, which is the same judgement this whole system is built to make explicit, so counting it as label error would be scoring the question rather than the answer.
+The two labellers disagree on 23.3% of cells, and that total is split rather than quoted whole because the two halves bound different things. 19 cells are contradictions, where one labeller says a patient meets a criterion and the other says they fail it; those are the cells where at least one label is simply wrong. The other 23 are one labeller committing where the other abstained. That is a disagreement about how much a record has to say before it counts as saying it, which is the same judgement this whole system is built to make explicit, so counting it as label error would be scoring the question rather than the answer.
+
+### What that rate is a rate of
+
+The sample was drawn with equal shares of each Checker A label, deliberately: a uniform draw would have been almost all INDETERMINATE and a labeller who abstained on everything would have scored well. The cost is that 10.6% is the contradiction rate in a population that is one third FAILS, and the scored panel is 5.2% FAILS.
+
+| Checker A label | contradicted     | share of the sample | share of the scored panel |
+|-----------------|------------------|---------------------|---------------------------|
+| FAILS           | 16 of 60 = 26.7% | 33.3%               | 5.2%                      |
+| INDETERMINATE   | 0 of 60 = 0.0%   | 33.3%               | 76.9%                     |
+| MEETS           | 3 of 60 = 5.0%   | 33.3%               | 17.9%                     |
+
+Reweighting those rates to the panel's own mix gives **2.3%** (95% CI 1.2% to 3.6%, resampled within stratum), and that is the figure the comparison tables above are marked against. Using 10.6% instead was not conservative: it is the rate for a population made of the hardest cells, it is 4.6 times the panel's own, and every comparison it covered was reported uninterpretable. Two of those were comparisons TrialSieve loses.
 
 Checker B abstains more than A does (71 against 60 of 180), which is the direction that matters: B was not simply noisier, it drew a stricter line. Kappa is printed beside AC1 because kappa collapses under skewed marginals and would understate agreement that is real.
 

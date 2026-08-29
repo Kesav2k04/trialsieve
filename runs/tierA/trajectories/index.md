@@ -1,19 +1,19 @@
 # Agent trajectories
 
-213 trajectories from `runs\tierA`. Each markdown file below is a rendering of the JSONL beside it, and the JSONL is the source of truth. Every model call in every one of them is matched to a recorded cassette by `python scripts/verify.py trajectories`, so the prompt shown here is byte-identical to the prompt that was sent.
+229 trajectories from `runs\tierA`. Each markdown file below is a rendering of the JSONL beside it, and the JSONL is the source of truth. Every model call in every one of them is matched to a recorded cassette by `python scripts/verify.py trajectories`, so the prompt shown here is byte-identical to the prompt that was sent.
 
 | | |
 |---|---|
-| model calls | 1060 |
-| tool calls | 244 |
+| model calls | 1076 |
+| tool calls | 254 |
 | schema rejections fed back to the model | 21 |
 | retries after a schema rejection | 23 |
-| requests resent after the endpoint failed | 4 |
-| critic findings | 14 |
+| requests resent after the endpoint failed | 3 |
+| critic findings | 24 |
 | predicates revised after a confirmed counterexample | 3 |
 | malformed fields the harness repaired without a retry | 60 |
 | human checkpoints | 0 |
-| completion tokens | 147122 |
+| completion tokens | 149223 |
 
 ## The tools, and what calling one looks like in the log
 
@@ -21,7 +21,7 @@
 |---|---|---|
 | `terminology.search_any` | 193 | lexical search over the codes this site's own records use. Deliberately not an embedding search: a near miss on a drug class is indistinguishable from a hit right up until it clears a patient. |
 | `ground_cache.hit` | 37 | a concept already grounded for an earlier criterion, returned without a model call. Content-addressed on concept and domain. |
-| `execute_counterexample` | 14 | the critic names a patient the predicate should get wrong; the harness builds that chart and **runs the predicate against it**. The finding is then confirmed or dismissed by execution, which is what stops a critic from being an opinion. |
+| `execute_counterexample` | 24 | the critic names a patient the predicate should get wrong; the harness builds that chart and **runs the predicate against it**. The finding is then confirmed or dismissed by execution, which is what stops a critic from being an opinion. |
 
 ## Which agent is where, and the two that have no trajectory
 
@@ -124,6 +124,13 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic | [NCT06717698-INC-07-seed7](critic/NCT06717698-INC-07-seed7.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic | [NCT06717698-INC-07-seed8](critic/NCT06717698-INC-07-seed8.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic | [NCT06717698-INC-07-seed9](critic/NCT06717698-INC-07-seed9.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06717698-EXC-02--direction](critic_probe/NCT06717698-EXC-02--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06717698-EXC-02--window](critic_probe/NCT06717698-EXC-02--window.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06717698-EXC-05--direction](critic_probe/NCT06717698-EXC-05--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06717698-EXC-05--window](critic_probe/NCT06717698-EXC-05--window.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06983054-EXC-05--absence](critic_probe/NCT06983054-EXC-05--absence.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06983054-EXC-05--direction](critic_probe/NCT06983054-EXC-05--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06983054-EXC-05--window](critic_probe/NCT06983054-EXC-05--window.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-01--boundary](critic_probe/NCT06983054-INC-01--boundary.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-01--direction](critic_probe/NCT06983054-INC-01--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-01--threshold](critic_probe/NCT06983054-INC-01--threshold.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
@@ -133,9 +140,11 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic_probe | [NCT06983054-INC-04--direction](critic_probe/NCT06983054-INC-04--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-04--threshold](critic_probe/NCT06983054-INC-04--threshold.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-07--direction](critic_probe/NCT06983054-INC-07--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06983054-INC-09--boundary](critic_probe/NCT06983054-INC-09--boundary.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06983054-INC-09--direction](critic_probe/NCT06983054-INC-09--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic_probe | [NCT06983054-INC-09--threshold](critic_probe/NCT06983054-INC-09--threshold.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | counterexample | [NCT06983054-INC-09--03e502b6](counterexample/NCT06983054-INC-09--03e502b6.md) | 1 | 0 | 0 | 0 | 0 | INDETERMINATE |
 | critic | [NCT06717698-INC-01-seed8](critic/NCT06717698-INC-01-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
-| critic_probe | [NCT06983054-INC-02--control](critic_probe/NCT06983054-INC-02--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | segmenter | [NCT06989723](segmenter/NCT06989723.md) | 1 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [0bbf4179-b2_10p](baseline-b2/0bbf4179-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [0fc183b2-b2_10p](baseline-b2/0fc183b2-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
@@ -249,10 +258,17 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic | [NCT06989723-INC-05-seed7](critic/NCT06989723-INC-05-seed7.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06989723-INC-05-seed8](critic/NCT06989723-INC-05-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06989723-INC-05-seed9](critic/NCT06989723-INC-05-seed9.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06717698-EXC-02--absence](critic_probe/NCT06717698-EXC-02--absence.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06717698-EXC-02--control](critic_probe/NCT06717698-EXC-02--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06717698-EXC-05--absence](critic_probe/NCT06717698-EXC-05--absence.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06717698-EXC-05--control](critic_probe/NCT06717698-EXC-05--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06983054-EXC-05--control](critic_probe/NCT06983054-EXC-05--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic_probe | [NCT06983054-INC-01--control](critic_probe/NCT06983054-INC-01--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06983054-INC-02--control](critic_probe/NCT06983054-INC-02--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic_probe | [NCT06983054-INC-03--control](critic_probe/NCT06983054-INC-03--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic_probe | [NCT06983054-INC-04--control](critic_probe/NCT06983054-INC-04--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic_probe | [NCT06983054-INC-07--control](critic_probe/NCT06983054-INC-07--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic_probe | [NCT06983054-INC-09--control](critic_probe/NCT06983054-INC-09--control.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | segmenter | [NCT06717698](segmenter/NCT06717698.md) | 1 | 0 | 0 | 0 | 0 | done |
 | segmenter | [NCT06983054](segmenter/NCT06983054.md) | 1 | 0 | 0 | 0 | 0 | done |
 

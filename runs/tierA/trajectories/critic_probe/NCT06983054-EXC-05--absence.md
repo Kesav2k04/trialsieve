@@ -65,13 +65,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "criterion_id": "NCT06983054-INC-01",
- "kind": "inclusion",
- "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria"
+ "criterion_id": "NCT06983054-EXC-05",
+ "kind": "exclusion",
+ "source_text": "Recent (<6 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke"
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `def662f3b54da3bb`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `b62f5d578dd9a60c`
 
 ```
 [system]
@@ -84,23 +84,26 @@ to break it, and a specific patient who breaks it is the only thing that counts.
 [user]
 Review this compiled criterion.
 
-CRITERION (inclusion):
-  Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria
+CRITERION (exclusion):
+  Recent (<6 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke
 
 COMPILED PREDICATE:
 {
- "op": "and",
+ "op": "or",
  "args": [
   {
-   "op": "compare",
-   "cmp": ">",
-   "left": {
-    "val": "age"
-   },
-   "right": {
-    "val": "literal",
-    "number": 18,
-    "unit": "years"
+   "op": "exists",
+   "query": {
+    "domain": "condition",
+    "codes": [
+     "22298006",
+     "49436004",
+     "53741008",
+     "59621000",
+     "88805009"
+    ],
+    "within_days": 183,
+    "absent_means": "false"
    }
   },
   {
@@ -108,19 +111,53 @@ COMPILED PREDICATE:
    "query": {
     "domain": "condition",
     "codes": [
-     "44054006"
+     "22298006"
     ],
-    "broader_codes": [],
-    "within_days": null,
-    "active_only": false,
-    "absent_means": "false"
+    "broader_codes": [
+     "53741008"
+    ],
+    "within_days": 183,
+    "absent_means": "unknown"
+   }
+  },
+  {
+   "op": "exists",
+   "query": {
+    "domain": "condition",
+    "codes": [
+     "88805009"
+    ],
+    "within_days": 183,
+    "absent_means": "unknown"
+   }
+  },
+  {
+   "op": "exists",
+   "query": {
+    "domain": "condition",
+    "codes": [
+     "22298006"
+    ],
+    "within_days": 183,
+    "absent_means": "unknown"
+   }
+  },
+  {
+   "op": "exists",
+   "query": {
+    "domain": "condition",
+    "codes": [
+     "230690007"
+    ],
+    "within_days": 183,
+    "absent_means": "unknown"
    }
   }
  ]
 }
 
 CODES AVAILABLE (you may only use these):
-(age and sex only)
+22298006, 230690007, 49436004, 53741008, 59621000, 88805009
 
 Look specifically for:
   1. Window errors. Is `within_days` right, and does an event just inside or just
@@ -165,7 +202,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 180 tok, 59.879s)
+### 4. llm_response (cassette, 246 tok, 29.175s)
 
 ```
 ```json
@@ -173,27 +210,32 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
-      "kind": "boundary",
+      "issue": "Clauses 2 through 5 specify absent_means as 'unknown' inside an OR expression, forcing the overall predicate to evaluate to UNKNOWN rather than FALSE when a patient has no recent cardiovascular disease.",
+      "kind": "absence",
       "severity": "high"
+    },
+    {
+      "issue": "Stroke code 230690007 is omitted from the primary combined query in clause 1.",
+      "kind": "scope",
+      "severity": "medium"
     }
   ],
   "counterexample": {
     "patient": {
-      "age": 18,
+      "age": 62,
       "sex": "female",
       "observations": [],
       "conditions": [
         {
-          "code": "44054006",
-          "days_ago": 100
+          "code": "22298006",
+          "days_ago": 200
         }
       ],
       "medications": [],
       "procedures": []
     },
-    "expected_truth": "TRUE",
-    "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+    "expected_truth": "FALSE",
+    "why": "The patient's myocardial infarction occurred 200 days ago (>6 months / >183 days), so the patient does not meet the recent cardiovascular disease exclusion criterion."
   }
 }
 ```
@@ -203,13 +245,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "expected_truth": "TRUE",
+ "expected_truth": "FALSE",
  "patient": {
-  "age": 18,
+  "age": 62,
   "conditions": [
    {
-    "code": "44054006",
-    "days_ago": 100
+    "code": "22298006",
+    "days_ago": 200
    }
   ],
   "medications": [],
@@ -224,10 +266,10 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "actual": "FALSE",
+ "actual": "UNKNOWN",
  "confirmed": true,
- "engine_reason": "conjunction fails: 18 > 18 years is False",
- "expected": "TRUE"
+ "engine_reason": "disjunction undetermined: no matching condition record within 183 days of 2021-11-01; open-world, so undetermined; no matching condition record within 183 days of 2021-11-01; open-world, so undetermined; no matching condition record within 183 days of 2021-11-01; open-world, so undetermined; no matching condition record within 183 days of 2021-11-01; open-world, so undetermined",
+ "expected": "FALSE"
 }
 ```
 
@@ -236,13 +278,13 @@ counterexample null. Do not invent a problem to look useful.
 ```json
 {
  "counterexample": {
-  "expected_truth": "TRUE",
+  "expected_truth": "FALSE",
   "patient": {
-   "age": 18,
+   "age": 62,
    "conditions": [
     {
-     "code": "44054006",
-     "days_ago": 100
+     "code": "22298006",
+     "days_ago": 200
     }
    ],
    "medications": [],
@@ -250,9 +292,9 @@ counterexample null. Do not invent a problem to look useful.
    "procedures": [],
    "sex": "female"
   },
-  "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+  "why": "The patient's myocardial infarction occurred 200 days ago (>6 months / >183 days), so the patient does not meet the recent cardiovascular disease exclusion criterion."
  },
- "finding": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
+ "finding": "Clauses 2 through 5 specify absent_means as 'unknown' inside an OR expression, forcing the overall predicate to evaluate to UNKNOWN rather than FALSE when a patient has no recent cardiovascular disease.; Stroke code 230690007 is omitted from the primary combined query in clause 1.",
  "verdict": "CONFIRMED"
 }
 ```
@@ -262,12 +304,12 @@ counterexample null. Do not invent a problem to look useful.
 ```json
 {
  "executed": {
-  "actual": "FALSE",
+  "actual": "UNKNOWN",
   "confirmed": true,
-  "engine_reason": "conjunction fails: 18 > 18 years is False",
-  "expected": "TRUE"
+  "engine_reason": "disjunction undetermined: no matching condition record within 183 days of 2021-11-01; open-world, so undetermined; no matching condition record within 183 days of 2021-11-01; open-world, so undetermined; no matching condition record within 183 days of 2021-11-01; open-world, so undetermined; no matching condition record within 183 days of 2021-11-01; open-world, so undetermined",
+  "expected": "FALSE"
  },
- "n_findings": 1,
+ "n_findings": 2,
  "verdict": "REVISE"
 }
 ```

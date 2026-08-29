@@ -65,13 +65,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "criterion_id": "NCT06983054-INC-01",
- "kind": "inclusion",
- "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria"
+ "criterion_id": "NCT06717698-EXC-05",
+ "kind": "exclusion",
+ "source_text": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening."
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `def662f3b54da3bb`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `4e58ab7d0cea1928`
 
 ```
 [system]
@@ -84,23 +84,25 @@ to break it, and a specific patient who breaks it is the only thing that counts.
 [user]
 Review this compiled criterion.
 
-CRITERION (inclusion):
-  Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria
+CRITERION (exclusion):
+  Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.
 
 COMPILED PREDICATE:
 {
  "op": "and",
  "args": [
   {
-   "op": "compare",
-   "cmp": ">",
-   "left": {
-    "val": "age"
-   },
-   "right": {
-    "val": "literal",
-    "number": 18,
-    "unit": "years"
+   "op": "exists",
+   "query": {
+    "domain": "medication",
+    "codes": [
+     "105585",
+     "1734919",
+     "312615",
+     "312617"
+    ],
+    "within_days": 732,
+    "absent_means": "unknown"
    }
   },
   {
@@ -108,19 +110,20 @@ COMPILED PREDICATE:
    "query": {
     "domain": "condition",
     "codes": [
-     "44054006"
+     "127013003",
+     "431855005",
+     "431856006",
+     "45816000"
     ],
-    "broader_codes": [],
     "within_days": null,
-    "active_only": false,
-    "absent_means": "false"
+    "absent_means": "unknown"
    }
   }
  ]
 }
 
 CODES AVAILABLE (you may only use these):
-(age and sex only)
+105585, 127013003, 1734919, 312615, 312617, 431855005, 431856006, 45816000
 
 Look specifically for:
   1. Window errors. Is `within_days` right, and does an event just inside or just
@@ -165,7 +168,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 180 tok, 59.879s)
+### 4. llm_response (cassette, 201 tok, 19.87s)
 
 ```
 ```json
@@ -173,27 +176,33 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
-      "kind": "boundary",
+      "issue": "The medication lookback window is set to 732 days (2 years) instead of 183 days (6 months).",
+      "kind": "window",
       "severity": "high"
     }
   ],
   "counterexample": {
     "patient": {
-      "age": 18,
+      "age": 55,
       "sex": "female",
       "observations": [],
       "conditions": [
         {
-          "code": "44054006",
-          "days_ago": 100
+          "code": "127013003",
+          "days_ago": 300
         }
       ],
-      "medications": [],
+      "medications": [
+        {
+          "code": "105585",
+          "days_ago": 300,
+          "status": "active"
+        }
+      ],
       "procedures": []
     },
-    "expected_truth": "TRUE",
-    "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+    "expected_truth": "FALSE",
+    "why": "The patient received immunosuppressive therapy 300 days ago, which is outside the 6-month (183-day) window specified by the exclusion criterion."
   }
 }
 ```
@@ -203,16 +212,22 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "expected_truth": "TRUE",
+ "expected_truth": "FALSE",
  "patient": {
-  "age": 18,
+  "age": 55,
   "conditions": [
    {
-    "code": "44054006",
-    "days_ago": 100
+    "code": "127013003",
+    "days_ago": 300
    }
   ],
-  "medications": [],
+  "medications": [
+   {
+    "code": "105585",
+    "days_ago": 300,
+    "status": "active"
+   }
+  ],
   "observations": [],
   "procedures": [],
   "sex": "female"
@@ -224,10 +239,10 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "actual": "FALSE",
+ "actual": "TRUE",
  "confirmed": true,
- "engine_reason": "conjunction fails: 18 > 18 years is False",
- "expected": "TRUE"
+ "engine_reason": "every conjunct holds",
+ "expected": "FALSE"
 }
 ```
 
@@ -236,23 +251,29 @@ counterexample null. Do not invent a problem to look useful.
 ```json
 {
  "counterexample": {
-  "expected_truth": "TRUE",
+  "expected_truth": "FALSE",
   "patient": {
-   "age": 18,
+   "age": 55,
    "conditions": [
     {
-     "code": "44054006",
-     "days_ago": 100
+     "code": "127013003",
+     "days_ago": 300
     }
    ],
-   "medications": [],
+   "medications": [
+    {
+     "code": "105585",
+     "days_ago": 300,
+     "status": "active"
+    }
+   ],
    "observations": [],
    "procedures": [],
    "sex": "female"
   },
-  "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+  "why": "The patient received immunosuppressive therapy 300 days ago, which is outside the 6-month (183-day) window specified by the exclusion criterion."
  },
- "finding": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
+ "finding": "The medication lookback window is set to 732 days (2 years) instead of 183 days (6 months).",
  "verdict": "CONFIRMED"
 }
 ```
@@ -262,10 +283,10 @@ counterexample null. Do not invent a problem to look useful.
 ```json
 {
  "executed": {
-  "actual": "FALSE",
+  "actual": "TRUE",
   "confirmed": true,
-  "engine_reason": "conjunction fails: 18 > 18 years is False",
-  "expected": "TRUE"
+  "engine_reason": "every conjunct holds",
+  "expected": "FALSE"
  },
  "n_findings": 1,
  "verdict": "REVISE"
