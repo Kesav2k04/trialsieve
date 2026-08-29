@@ -10,6 +10,26 @@
     "B2"
    ],
    "n_screens": 30,
+   "label_floor_poststratified": {
+    "hard": 0.02666666666666667,
+    "hard_ci": [
+     0.014583333333333334,
+     0.04166666666666667
+    ],
+    "soft": 0.114375,
+    "weights": {
+     "FAILS": 0.0625,
+     "MEETS": 0.2,
+     "INDETERMINATE": 0.7375
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -1004,7 +1024,7 @@
      "n_shared_cells": 400,
      "crosses_zero": true,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -1030,7 +1050,7 @@
      "n_shared_cells": 400,
      "crosses_zero": true,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "ser",
@@ -1069,7 +1089,7 @@
      "n_shared_cells": 400,
      "crosses_zero": true,
      "arms": "TS - B2",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     }
    ]
   },
@@ -1081,6 +1101,26 @@
     "B1"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.022885281385281384,
+    "hard_ci": [
+     0.012212121212121212,
+     0.036021645021645024
+    ],
+    "soft": 0.11277705627705628,
+    "weights": {
+     "FAILS": 0.0523,
+     "MEETS": 0.1786,
+     "INDETERMINATE": 0.7691
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -1982,7 +2022,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -2008,7 +2048,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     }
    ]
   },
@@ -2020,6 +2060,26 @@
     "B1"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.022885281385281384,
+    "hard_ci": [
+     0.012212121212121212,
+     0.036021645021645024
+    ],
+    "soft": 0.11277705627705628,
+    "weights": {
+     "FAILS": 0.0523,
+     "MEETS": 0.1786,
+     "INDETERMINATE": 0.7691
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -2945,7 +3005,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -2983,6 +3043,26 @@
     "B1"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.022885281385281384,
+    "hard_ci": [
+     0.012212121212121212,
+     0.036021645021645024
+    ],
+    "soft": 0.11277705627705628,
+    "weights": {
+     "FAILS": 0.0523,
+     "MEETS": 0.1786,
+     "INDETERMINATE": 0.7691
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -3908,7 +3988,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -3946,6 +4026,26 @@
     "B1"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.02233441558441558,
+    "hard_ci": [
+     0.011772727272727273,
+     0.03541883116883117
+    ],
+    "soft": 0.11268073593073594,
+    "weights": {
+     "FAILS": 0.0505,
+     "MEETS": 0.1776,
+     "INDETERMINATE": 0.7719
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -4840,7 +4940,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -4866,7 +4966,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     }
    ]
   },
@@ -4878,6 +4978,26 @@
     "B1"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.022186147186147188,
+    "hard_ci": [
+     0.011742424242424243,
+     0.03511904761904762
+    ],
+    "soft": 0.11252705627705628,
+    "weights": {
+     "FAILS": 0.0503,
+     "MEETS": 0.1753,
+     "INDETERMINATE": 0.7744
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -5768,7 +5888,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -5794,7 +5914,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     }
    ]
   },
@@ -5806,6 +5926,26 @@
     "B1"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.02100974025974026,
+    "hard_ci": [
+     0.010954545454545455,
+     0.03341233766233766
+    ],
+    "soft": 0.11210281385281387,
+    "weights": {
+     "FAILS": 0.0469,
+     "MEETS": 0.1698,
+     "INDETERMINATE": 0.7832
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -6712,7 +6852,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -6738,7 +6878,7 @@
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "below, uninterpretable"
+     "vs_label_floor": "above"
     }
    ]
   },
@@ -6748,6 +6888,26 @@
     "TS"
    ],
    "n_screens": 1155,
+   "label_floor_poststratified": {
+    "hard": 0.022885281385281384,
+    "hard_ci": [
+     0.012212121212121212,
+     0.036021645021645024
+    ],
+    "soft": 0.11277705627705628,
+    "weights": {
+     "FAILS": 0.0523,
+     "MEETS": 0.1786,
+     "INDETERMINATE": 0.7691
+    },
+    "per_stratum_contradiction_rate": {
+     "FAILS": 0.2667,
+     "MEETS": 0.05,
+     "INDETERMINATE": 0.0
+    },
+    "n_population_cells": 15400,
+    "draws": 4000
+   },
    "cell_scores": {
     "TS": {
      "arm": "TS",
@@ -7052,6 +7212,23 @@
  },
  "label_noise_floor": {
   "n": 180,
+  "strata": {
+   "FAILS": {
+    "contradictions": 16,
+    "splits": 7,
+    "n": 60
+   },
+   "MEETS": {
+    "contradictions": 3,
+    "splits": 10,
+    "n": 60
+   },
+   "INDETERMINATE": {
+    "contradictions": 0,
+    "splits": 6,
+    "n": 60
+   }
+  },
   "percent_agreement": 0.7667,
   "cohen_kappa": 0.65,
   "gwet_ac1": 0.6507,
@@ -7067,8 +7244,8 @@
   },
   "n_contradictions": 19,
   "n_confidence_splits": 23,
-  "hard": 0.10555555555555556,
-  "soft": 0.12777777777777777
+  "hard_in_sample": 0.10555555555555556,
+  "soft_in_sample": 0.12777777777777777
  },
  "crossfit": {
   "optimism_rows": 0,

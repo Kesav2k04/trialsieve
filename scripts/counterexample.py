@@ -23,6 +23,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+# Importable as a module, not only runnable as a script: the tests import these.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _md_tables import align as align_tables
 sys.path.insert(0, str(ROOT / "evaluation" / "gold"))
 

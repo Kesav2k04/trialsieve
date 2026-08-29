@@ -21,7 +21,7 @@ call, and its wall clock is seconds.
 | vocabulary probe, after                          | 42          | 38            | 22,981        | 8,493             | 7 min 58 s     | $0.03              |
 | vocabulary probe, weak model                     | 42          | 0             | 26,753        | 7,184             | 5 min 21 s     | $0.03              |
 | counterfactual thresholds, contamination check 3 | 24          | 24            | 19,373        | 3,569             | 0 s            | $0.01              |
-| critic probe, planted defects                    | 14          | 0             | 10,222        | 1,652             | 12 min 15 s    | $0.01              |
+| critic probe, planted defects                    | 24          | 24            | 18,776        | 3,222             | 12 min 37 s    | $0.01              |
 | arms B2 over 10 patients                         | 400         | 400           | 1,656,168     | 31,769            | 0 s            | $0.58              |
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
@@ -31,7 +31,7 @@ call, and its wall clock is seconds.
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 11 s           | under a cent       |
 | arms TS over 385 patients                        | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | second blind labeller, Checker B                 | 100         | 0             | 444,910       | 2,680             | 1 h 55 min     | $0.14              |
-| **total**                                        | **1,284**   |               | **2,641,986** | **173,642**       | **4 h 12 min** | **$1.23**          |
+| **total**                                        | **1,294**   |               | **2,650,540** | **175,212**       | **4 h 12 min** | **$1.23**          |
 
 The right-hand column is an estimate at a mid-tier hosted model at $0.30 in / $2.50 out per million tokens. It is not what this
 run cost. This ran on a locally authenticated vendor CLI on a subscription, so

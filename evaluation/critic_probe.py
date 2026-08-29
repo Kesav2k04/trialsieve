@@ -45,6 +45,10 @@ from trialsieve.agents.critic import review  # noqa: E402
 from trialsieve.llm import Client  # noqa: E402
 from trialsieve.trace import Trajectory  # noqa: E402
 
+# Importable as a module, not only runnable as a script: the tests import these.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from _md_tables import align as align_tables
+
 PROVIDERS = {
     "shim": ("http://127.0.0.1:8100/v1", "gemini-3.7-flash-medium"),
     "oss": ("http://127.0.0.1:8100/v1", "gpt-oss-120b-medium"),
@@ -138,6 +142,77 @@ MUTATIONS = [
 ]
 
 
+def cover(compiled: list[dict], limit: int) -> list[dict]:
+    """Pick predicates so every defect class that can be planted anywhere is.
+
+    The probe took the first `limit` compiled predicates in file order. Those six
+    admit boundary, threshold and direction defects and admit neither a window
+    defect nor an absence one, so two of the five classes were planted zero times
+    and the summary still read "caught 9 of 9". Nothing was wrong with the
+    arithmetic. The denominator simply never contained the cases.
+
+    The class that went untested is the one this system's worst measured failure
+    came from: `absent_means` deciding a verdict on a fact the record does not
+    contain, which is 358 of 424 wrong exclusions in `README.md`. Three predicates
+    admit that mutation and none of them were in the first six.
+
+    Greedy set cover over the classes, rarest first, then file order to fill the
+    remainder. Deterministic, and it states why each predicate is in the set.
+    """
+    applies = {}
+    for c in compiled:
+        applies[c["criterion_id"]] = {
+            name for name, fn in MUTATIONS
+            if fn(copy.deepcopy(c["expr"])) is not None}
+
+    # Rarest class first, so a predicate that is the only home of a mutation is
+    # picked before the limit is spent on one that three others also cover.
+    scarcity = Counter()
+    for names in applies.values():
+        for n in names:
+            scarcity[n] += 1
+
+    picked: list[dict] = []
+    covered: set[str] = set()
+    by_id = {c["criterion_id"]: c for c in compiled}
+    for name, _ in sorted(MUTATIONS, key=lambda m: scarcity.get(m[0], 0)):
+        if name in covered or not scarcity.get(name):
+            continue
+        if len(picked) >= limit:
+            break
+        best = max((c for c in compiled if name in applies[c["criterion_id"]]
+                    and c not in picked),
+                   key=lambda c: len(applies[c["criterion_id"]] - covered),
+                   default=None)
+        if best is None:
+            continue
+        picked.append(best)
+        covered |= applies[best["criterion_id"]]
+
+    # Whatever budget is left goes to the least-tested classes rather than to file
+    # order. Covering absence once is the difference between a class that has been
+    # tested and a class that has been tried, and absence is the one the system's
+    # worst failure came from, so a spare slot is worth more there than on a fifth
+    # predicate that admits the same three common mutations as the first four.
+    tried = Counter()
+    for c in picked:
+        for n in applies[c["criterion_id"]]:
+            tried[n] += 1
+    while len(picked) < limit:
+        chosen = {x["criterion_id"] for x in picked}
+        rest = [c for c in compiled if c["criterion_id"] not in chosen]
+        if not rest:
+            break
+        best = min(rest, key=lambda c: (
+            min((tried[n] for n in applies[c["criterion_id"]]), default=10**6),
+            -len(applies[c["criterion_id"]]),
+            compiled.index(c)))
+        picked.append(best)
+        for n in applies[best["criterion_id"]]:
+            tried[n] += 1
+    return [by_id[c["criterion_id"]] for c in picked[:limit]]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
@@ -156,8 +231,8 @@ def main() -> int:
     if not src.exists():
         print(f"no compiled predicates at {src}", file=sys.stderr)
         return 2
-    compiled = [c for c in json.loads(src.read_text(encoding="utf-8"))["criteria"]
-                if c.get("compilable")][:a.limit]
+    compiled = cover([c for c in json.loads(src.read_text(encoding="utf-8"))["criteria"]
+                      if c.get("compilable")], a.limit)
     if not compiled:
         print("nothing compiled to mutate", file=sys.stderr)
         return 2
@@ -233,9 +308,43 @@ def main() -> int:
          "## By defect class", "",
          "These are the classes the critic's own prompt says it looks for, in its order.", "",
          "| defect | planted | caught |", "|---|---|---|"]
+    # Every class gets a row, including the ones nothing was planted for. Omitting
+    # them left a table of three rows under a headline of "9 of 9", and a reader
+    # had no way to see that two of the five classes had never been tried. A ratio
+    # cannot report a class that is missing from its denominator.
+    never = [n for n, _ in MUTATIONS if not tot_class[n]]
     for name, _ in MUTATIONS:
         if tot_class[name]:
             L.append(f"| {name} | {tot_class[name]} | {by_class[name]} |")
+        else:
+            L.append(f"| {name} | **0, never planted** | n/a |")
+    # A reader should not have to do the division. "16 of 18" reads as a clean
+    # sweep, and it is one class at one in three sitting under fifteen of fifteen.
+    scored = [(n, by_class[n], tot_class[n]) for n, _ in MUTATIONS if tot_class[n]]
+    if len(scored) > 1:
+        weakest = min(scored, key=lambda x: (x[1] / x[2], -x[2]))
+        rest_c = sum(c for n, c, _ in scored if n != weakest[0])
+        rest_t = sum(x for n, _, x in scored if n != weakest[0])
+        if weakest[1] < weakest[2] and rest_c == rest_t:
+            L += ["", f"**Every class but one is caught every time.** The critic "
+                      f"catches {rest_c} of {rest_t} planted defects across "
+                      f"{len(scored) - 1} classes and "
+                      f"**{weakest[1]} of {weakest[2]}** in the `{weakest[0]}` class. "
+                      f"That is not a rounding difference and it is not the class it "
+                      f"would be convenient to be weak in: `absence` is silence in the "
+                      f"record becoming proof of absence, which is the defect that "
+                      f"produced 358 of the 424 wrong exclusions in the scored run. "
+                      f"The critic passed the real one, and planting it deliberately "
+                      f"says the miss is a property of the reviewer rather than bad "
+                      f"luck on one predicate."]
+    if never:
+        L += ["", f"**{len(never)} of {len(MUTATIONS)} classes were never planted**: "
+                  f"{', '.join(never)}. No predicate in the selection admits the "
+                  f"mutation, so the catch rate above says nothing about "
+                  f"{'them' if len(never) > 1 else 'it'}. `cover()` picks the "
+                  f"selection to exercise every class that is plantable anywhere in "
+                  f"the compiled set, so a class still listed here is one no "
+                  f"compiled predicate can carry."]
     L += ["", "## Every case", "",
           "| criterion | defect | what was changed | critic | right answer? |",
           "|---|---|---|---|---|"]
@@ -247,17 +356,22 @@ def main() -> int:
 
     out_p = Path(a.out)
     out_p.parent.mkdir(parents=True, exist_ok=True)
-    out_p.write_text("\n".join(L), encoding="utf-8", newline="\n")
+    out_p.write_text(align_tables("\n".join(L)), encoding="utf-8", newline="\n")
     js = ROOT / "results" / "critic_probe.json"
     js.parent.mkdir(parents=True, exist_ok=True)
     js.write_text(json.dumps(
         {"model": client.model, "n_defects": len(defects), "n_caught": caught,
          "n_controls": len(controls), "n_false_alarms": false_alarms,
-         "by_class": {k: [by_class[k], tot_class[k]] for k in tot_class},
+         "by_class": {k: [by_class[k], tot_class[k]] for k, _ in MUTATIONS},
+         "classes_never_planted": never,
          "usage": client.usage.as_dict(), "wall_s": round(time.time() - t0, 1),
          "rows": rows}, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"\ncaught {caught} of {len(defects)} planted defects, "
           f"{false_alarms} false alarms on {len(controls)} controls")
+    if never:
+        print(f"NOT MEASURED: {len(never)} of {len(MUTATIONS)} defect classes were "
+              f"never planted ({', '.join(never)}), so the rate above does not "
+              f"cover them")
     print(f"wrote {out_p} and {js}")
     return 0
 

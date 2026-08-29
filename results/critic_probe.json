@@ -1,32 +1,87 @@
 {
  "model": "gemini-3.7-flash-medium",
- "n_defects": 9,
- "n_caught": 9,
- "n_controls": 5,
+ "n_defects": 18,
+ "n_caught": 16,
+ "n_controls": 6,
  "n_false_alarms": 0,
  "by_class": {
   "boundary": [
-   2,
-   2
+   3,
+   3
   ],
   "threshold": [
-   2,
-   2
+   3,
+   3
+  ],
+  "window": [
+   3,
+   3
   ],
   "direction": [
-   5,
-   5
+   6,
+   6
+  ],
+  "absence": [
+   1,
+   3
   ]
  },
+ "classes_never_planted": [],
  "usage": {
-  "calls": 14,
-  "prompt_tokens": 10222,
-  "completion_tokens": 1652,
-  "wall_s": 734.32,
-  "cassette_hits": 0
+  "calls": 24,
+  "prompt_tokens": 18776,
+  "completion_tokens": 3222,
+  "wall_s": 756.86,
+  "cassette_hits": 24
  },
- "wall_s": 734.6,
+ "wall_s": 0.0,
  "rows": [
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "defect": "none (control)",
+   "detail": "the predicate as compiled",
+   "verdict": "OK",
+   "confirmed": false,
+   "correct": true
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "defect": "boundary",
+   "detail": "not applicable to this predicate",
+   "verdict": "n/a",
+   "correct": null
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "defect": "threshold",
+   "detail": "not applicable to this predicate",
+   "verdict": "n/a",
+   "correct": null
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "defect": "window",
+   "detail": "window 183 days became 732",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "defect": "direction",
+   "detail": "the whole predicate is negated",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "defect": "absence",
+   "detail": "absent_means unknown became false",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
   {
    "criterion_id": "NCT06983054-INC-01",
    "defect": "none (control)",
@@ -68,94 +123,6 @@
   },
   {
    "criterion_id": "NCT06983054-INC-01",
-   "defect": "absence",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-02",
-   "defect": "none (control)",
-   "detail": "the predicate as compiled",
-   "verdict": "OK",
-   "confirmed": false,
-   "correct": true
-  },
-  {
-   "criterion_id": "NCT06983054-INC-02",
-   "defect": "boundary",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-02",
-   "defect": "threshold",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-02",
-   "defect": "window",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-02",
-   "defect": "direction",
-   "detail": "the whole predicate is negated",
-   "verdict": "REVISE",
-   "correct": true,
-   "engine_confirmed": true
-  },
-  {
-   "criterion_id": "NCT06983054-INC-02",
-   "defect": "absence",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-03",
-   "defect": "none (control)",
-   "detail": "the predicate as compiled",
-   "verdict": "OK",
-   "confirmed": false,
-   "correct": true
-  },
-  {
-   "criterion_id": "NCT06983054-INC-03",
-   "defect": "boundary",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-03",
-   "defect": "threshold",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-03",
-   "defect": "window",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
-  },
-  {
-   "criterion_id": "NCT06983054-INC-03",
-   "defect": "direction",
-   "detail": "the whole predicate is negated",
-   "verdict": "REVISE",
-   "correct": true,
-   "engine_confirmed": true
-  },
-  {
-   "criterion_id": "NCT06983054-INC-03",
    "defect": "absence",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
@@ -208,7 +175,7 @@
    "correct": null
   },
   {
-   "criterion_id": "NCT06983054-INC-07",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "none (control)",
    "detail": "the predicate as compiled",
    "verdict": "OK",
@@ -216,28 +183,29 @@
    "correct": true
   },
   {
-   "criterion_id": "NCT06983054-INC-07",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "boundary",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
   },
   {
-   "criterion_id": "NCT06983054-INC-07",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "threshold",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
   },
   {
-   "criterion_id": "NCT06983054-INC-07",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "window",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
+   "detail": "window 90 days became 360",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
   },
   {
-   "criterion_id": "NCT06983054-INC-07",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "direction",
    "detail": "the whole predicate is negated",
    "verdict": "REVISE",
@@ -245,11 +213,104 @@
    "engine_confirmed": true
   },
   {
-   "criterion_id": "NCT06983054-INC-07",
+   "criterion_id": "NCT06717698-EXC-02",
+   "defect": "absence",
+   "detail": "absent_means unknown became false",
+   "verdict": "OK",
+   "correct": false,
+   "engine_confirmed": false
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "defect": "none (control)",
+   "detail": "the predicate as compiled",
+   "verdict": "OK",
+   "confirmed": false,
+   "correct": true
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "defect": "boundary",
+   "detail": "comparison < became <=",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "defect": "threshold",
+   "detail": "threshold 30 became 60.0",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "defect": "window",
+   "detail": "not applicable to this predicate",
+   "verdict": "n/a",
+   "correct": null
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "defect": "direction",
+   "detail": "the whole predicate is negated",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
    "defect": "absence",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "defect": "none (control)",
+   "detail": "the predicate as compiled",
+   "verdict": "OK",
+   "confirmed": false,
+   "correct": true
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "defect": "boundary",
+   "detail": "not applicable to this predicate",
+   "verdict": "n/a",
+   "correct": null
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "defect": "threshold",
+   "detail": "not applicable to this predicate",
+   "verdict": "n/a",
+   "correct": null
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "defect": "window",
+   "detail": "window 183 days became 732",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "defect": "direction",
+   "detail": "the whole predicate is negated",
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "defect": "absence",
+   "detail": "absent_means unknown became false",
+   "verdict": "OK",
+   "correct": false,
+   "engine_confirmed": false
   }
  ]
 }

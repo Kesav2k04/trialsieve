@@ -79,9 +79,9 @@ def test_contradictions_and_confidence_splits_are_separated(monkeypatch, tmp_pat
     floor = mod.load_label_floor()
     assert floor["n_contradictions"] == 8
     assert floor["n_confidence_splits"] == 12
-    assert floor["hard"] == pytest.approx(0.08)
-    assert floor["soft"] == pytest.approx(0.12)
-    assert floor["hard"] < 1 - floor["percent_agreement"], (
+    assert floor["hard_in_sample"] == pytest.approx(0.08)
+    assert floor["soft_in_sample"] == pytest.approx(0.12)
+    assert floor["hard_in_sample"] < 1 - floor["percent_agreement"], (
         "the bar for interpreting a difference must be the contradiction rate, "
         "not the whole disagreement rate")
 
@@ -99,3 +99,61 @@ def test_every_comparison_row_carries_a_floor_verdict():
         assert r.get("vs_label_floor"), (
             f"{r.get('arms')} {r.get('metric')} was published with no statement of "
             f"whether the labels can resolve a difference that size")
+
+
+def test_the_floor_a_comparison_is_marked_against_is_the_group_s_own(monkeypatch):
+    """A rate measured on a stratified sample is not a rate in the population.
+
+    `evaluation/checker_b.stratified` draws equal shares of each Checker A label
+    on purpose, and says so: a uniform draw would be almost all INDETERMINATE and
+    an always-abstaining labeller would score well. The floor was then computed as
+    contradictions over sample size, which is the contradiction rate in a
+    population that is one third FAILS. The scored panel is 5.2% FAILS and FAILS
+    is the stratum the labellers contradict each other in most, so the published
+    floor was 4.6 times the panel's own, and every difference under it was printed
+    "below, uninterpretable". Two of those were comparisons TrialSieve loses.
+
+    So this fixes the direction rather than the number: a sample enriched in the
+    hardest cells must produce a HIGHER rate than the population it is drawn from,
+    and reweighting must move the floor down.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "scripts"))
+    import report as mod
+    from collections import Counter
+
+    floor = {
+        "n": 180,
+        "strata": {"FAILS": {"n": 60, "contradictions": 16, "splits": 7},
+                   "MEETS": {"n": 60, "contradictions": 3, "splits": 10},
+                   "INDETERMINATE": {"n": 60, "contradictions": 0, "splits": 6}},
+        "hard_in_sample": 19 / 180,
+    }
+    # A panel shaped like a real one: mostly INDETERMINATE, few FAILS.
+    population = Counter({"INDETERMINATE": 11844, "MEETS": 2750, "FAILS": 806})
+    ps = mod.poststratify(floor, population, draws=400)
+
+    assert ps is not None, "the weights were formable and it returned nothing"
+    assert ps["hard"] < floor["hard_in_sample"], (
+        f"reweighting a sample enriched in the hardest stratum must lower the "
+        f"rate, and it gave {ps['hard']:.4f} against {floor['hard_in_sample']:.4f}")
+    assert ps["hard_ci"][0] <= ps["hard"] <= ps["hard_ci"][1], "the CI misses the point"
+
+    # An equal-share population must reproduce the sample rate, or the weighting
+    # is doing something other than weighting.
+    same = mod.poststratify(floor, Counter({"FAILS": 1, "MEETS": 1, "INDETERMINATE": 1}),
+                            draws=400)
+    assert same["hard"] == pytest.approx(floor["hard_in_sample"], abs=1e-9)
+
+
+def test_a_label_the_sample_never_saw_refuses_to_weight(monkeypatch):
+    """Falling back to the unweighted rate is the bug, so it must return nothing."""
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "scripts"))
+    import report as mod
+    from collections import Counter
+
+    floor = {"n": 120, "strata": {"FAILS": {"n": 60, "contradictions": 16, "splits": 0},
+                                  "MEETS": {"n": 60, "contradictions": 3, "splits": 0}}}
+    assert mod.poststratify(floor, Counter({"INDETERMINATE": 10, "FAILS": 5}),
+                            draws=50) is None

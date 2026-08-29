@@ -7,12 +7,12 @@ ways, and a component that never fires is indistinguishable from one that does
 nothing. So each predicate was broken on purpose in a named way and reviewed
 again.
 
-| | |
-|---|---|
-| defects planted | 9 |
-| caught | **9** |
-| controls, reviewed unmodified | 5 |
-| false alarms on controls | **0** |
+|                               |        |
+|-------------------------------|--------|
+| defects planted               | 18     |
+| caught                        | **16** |
+| controls, reviewed unmodified | 6      |
+| false alarms on controls      | **0**  |
 
 Both numbers or neither. A critic that answered REVISE to everything would
 catch every defect and be worthless, and the control column is the only thing
@@ -22,43 +22,53 @@ that separates the two.
 
 These are the classes the critic's own prompt says it looks for, in its order.
 
-| defect | planted | caught |
-|---|---|---|
-| boundary | 2 | 2 |
-| threshold | 2 | 2 |
-| direction | 5 | 5 |
+| defect    | planted | caught |
+|-----------|---------|--------|
+| boundary  | 3       | 3      |
+| threshold | 3       | 3      |
+| window    | 3       | 3      |
+| direction | 6       | 6      |
+| absence   | 3       | 1      |
+
+**Every class but one is caught every time.** The critic catches 15 of 15 planted defects across 4 classes and **1 of 3** in the `absence` class. That is not a rounding difference and it is not the class it would be convenient to be weak in: `absence` is silence in the record becoming proof of absence, which is the defect that produced 358 of the 424 wrong exclusions in the scored run. The critic passed the real one, and planting it deliberately says the miss is a property of the reviewer rather than bad luck on one predicate.
 
 ## Every case
 
-| criterion | defect | what was changed | critic | right answer? |
-|---|---|---|---|---|
-| `NCT06983054-INC-01` | none (control) | the predicate as compiled | OK | yes |
-| `NCT06983054-INC-01` | boundary | comparison >= became > | REVISE | yes |
-| `NCT06983054-INC-01` | threshold | threshold 18 became 36.0 | REVISE | yes |
-| `NCT06983054-INC-01` | window | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-01` | direction | the whole predicate is negated | REVISE | yes |
-| `NCT06983054-INC-01` | absence | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-02` | none (control) | the predicate as compiled | OK | yes |
-| `NCT06983054-INC-02` | boundary | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-02` | threshold | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-02` | window | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-02` | direction | the whole predicate is negated | REVISE | yes |
-| `NCT06983054-INC-02` | absence | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-03` | none (control) | the predicate as compiled | OK | yes |
-| `NCT06983054-INC-03` | boundary | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-03` | threshold | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-03` | window | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-03` | direction | the whole predicate is negated | REVISE | yes |
-| `NCT06983054-INC-03` | absence | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-04` | none (control) | the predicate as compiled | OK | yes |
-| `NCT06983054-INC-04` | boundary | comparison > became >= | REVISE | yes |
-| `NCT06983054-INC-04` | threshold | threshold 25 became 50.0 | REVISE | yes |
-| `NCT06983054-INC-04` | window | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-04` | direction | the whole predicate is negated | REVISE | yes |
-| `NCT06983054-INC-04` | absence | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-07` | none (control) | the predicate as compiled | OK | yes |
-| `NCT06983054-INC-07` | boundary | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-07` | threshold | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-07` | window | not applicable to this predicate | n/a | not applicable |
-| `NCT06983054-INC-07` | direction | the whole predicate is negated | REVISE | yes |
-| `NCT06983054-INC-07` | absence | not applicable to this predicate | n/a | not applicable |
+| criterion            | defect         | what was changed                  | critic | right answer?  |
+|----------------------|----------------|-----------------------------------|--------|----------------|
+| `NCT06983054-EXC-05` | none (control) | the predicate as compiled         | OK     | yes            |
+| `NCT06983054-EXC-05` | boundary       | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06983054-EXC-05` | threshold      | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06983054-EXC-05` | window         | window 183 days became 732        | REVISE | yes            |
+| `NCT06983054-EXC-05` | direction      | the whole predicate is negated    | REVISE | yes            |
+| `NCT06983054-EXC-05` | absence        | absent_means unknown became false | REVISE | yes            |
+| `NCT06983054-INC-01` | none (control) | the predicate as compiled         | OK     | yes            |
+| `NCT06983054-INC-01` | boundary       | comparison >= became >            | REVISE | yes            |
+| `NCT06983054-INC-01` | threshold      | threshold 18 became 36.0          | REVISE | yes            |
+| `NCT06983054-INC-01` | window         | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06983054-INC-01` | direction      | the whole predicate is negated    | REVISE | yes            |
+| `NCT06983054-INC-01` | absence        | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06983054-INC-04` | none (control) | the predicate as compiled         | OK     | yes            |
+| `NCT06983054-INC-04` | boundary       | comparison > became >=            | REVISE | yes            |
+| `NCT06983054-INC-04` | threshold      | threshold 25 became 50.0          | REVISE | yes            |
+| `NCT06983054-INC-04` | window         | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06983054-INC-04` | direction      | the whole predicate is negated    | REVISE | yes            |
+| `NCT06983054-INC-04` | absence        | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06717698-EXC-02` | none (control) | the predicate as compiled         | OK     | yes            |
+| `NCT06717698-EXC-02` | boundary       | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06717698-EXC-02` | threshold      | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06717698-EXC-02` | window         | window 90 days became 360         | REVISE | yes            |
+| `NCT06717698-EXC-02` | direction      | the whole predicate is negated    | REVISE | yes            |
+| `NCT06717698-EXC-02` | absence        | absent_means unknown became false | OK     | **no**         |
+| `NCT06983054-INC-09` | none (control) | the predicate as compiled         | OK     | yes            |
+| `NCT06983054-INC-09` | boundary       | comparison < became <=            | REVISE | yes            |
+| `NCT06983054-INC-09` | threshold      | threshold 30 became 60.0          | REVISE | yes            |
+| `NCT06983054-INC-09` | window         | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06983054-INC-09` | direction      | the whole predicate is negated    | REVISE | yes            |
+| `NCT06983054-INC-09` | absence        | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06717698-EXC-05` | none (control) | the predicate as compiled         | OK     | yes            |
+| `NCT06717698-EXC-05` | boundary       | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06717698-EXC-05` | threshold      | not applicable to this predicate  | n/a    | not applicable |
+| `NCT06717698-EXC-05` | window         | window 183 days became 732        | REVISE | yes            |
+| `NCT06717698-EXC-05` | direction      | the whole predicate is negated    | REVISE | yes            |
+| `NCT06717698-EXC-05` | absence        | absent_means unknown became false | OK     | **no**         |

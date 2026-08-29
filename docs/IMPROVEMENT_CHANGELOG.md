@@ -1067,3 +1067,109 @@ dismissed by executing it, and one predicate revised as a result.
 **Evidence.** `runs/tierA/trajectories/index.md` and its per-agent counts;
 `python scripts/trajectories.py --run runs/tierA`, which prints the JSON above
 from the JSONL rather than from a stored total.
+
+## 23. A noise floor measured on the hardest cells excused the losses
+
+**Found by** a reviewer asking what population the label noise floor was a rate
+of. It is quoted as a single percentage and used as a bar, so the question is
+whether the cells it was measured on look like the cells it is applied to.
+
+**What was wrong.** `evaluation/checker_b.stratified` draws the doubly-labelled
+sample with **equal shares of each Checker A label**, and its docstring says why:
+a uniform draw would have been almost entirely INDETERMINATE, and a second
+labeller who abstained on everything would have scored high agreement while
+knowing nothing. The same docstring warns that prevalence cannot be read off the
+result. `load_label_floor` then computed the floor as contradictions divided by
+sample size.
+
+That is the contradiction rate in a population that is one third FAILS. No panel
+is. Worse, FAILS is the stratum the two labellers contradict each other in most
+often, by a factor of five:
+
+| Checker A label | contradicted | share of the sample | share of the scored panel |
+|---|---|---|---|
+| FAILS | 16 of 60 = 26.7% | 33.3% | 5.2% |
+| MEETS | 3 of 60 = 5.0% | 33.3% | 17.9% |
+| INDETERMINATE | 0 of 60 = 0.0% | 33.3% | 76.9% |
+
+Reweighting those rates to the panel's own mix gives **2.3%** (95% CI 1.2% to
+3.6%). The published floor was **10.6%**, 4.6 times too high.
+
+**Why it mattered.** The floor is not a footnote. Every row of every paired
+comparison is marked against it, and a difference below it is printed **below,
+uninterpretable**. A floor 4.6 times too high does not fail safe: it covers more
+differences, and the differences it covered were not random. `TS - B1` on silent
+error rate is **+0.0318**, which is TrialSieve committing to more wrong answers
+than the baseline that mostly abstains. Under 10.6% that was uninterpretable.
+Under the panel's own 2.3% it is above the floor and it stands as a measured
+loss. `TS - B2` on false FAILS moved the same way.
+
+An error that hides exactly the two comparisons the system loses is the kind that
+survives review, because nobody checks the number that says there is nothing to
+see.
+
+**The fix.** `scripts/report.py` poststratifies: per-stratum contradiction rates,
+reweighted to the label mix of the group being compared, with a 95% interval
+resampled within stratum because the stratum carrying the estimate is 60 cells
+wide. It is computed per group rather than once, since the ten-patient sample and
+the full panel do not share a mix. Where a scored label never appeared in the
+sample it returns nothing at all, because falling back to the unweighted rate is
+the bug. The sample rate is still published, labelled as the sample's.
+
+**What holds it.** `tests/test_label_floor.py` asserts the direction rather than
+the number: a sample enriched in the hardest stratum must reweight **downward**,
+an equal-share population must reproduce the sample rate exactly, and an
+unweighable population must return nothing.
+
+## 24. The probe that scored 9 of 9 had never tried the defect that mattered
+
+**Found by** a reviewer asking which defect classes the critic probe had actually
+planted, rather than what fraction it caught. The summary read **caught 9 of 9
+planted defects, 0 false alarms**, and the by-class table under it had three rows.
+The mutator list has five.
+
+**What was wrong.** `evaluation/critic_probe.py` took the first six compiled
+predicates in file order. Boundary, threshold and direction defects apply to almost
+any predicate, so those three were planted and caught. A window defect needs a
+predicate with a time window and an absence defect needs one with `absent_means`
+set to `unknown`. Four predicates admit the first and three admit the second, and
+none of the seven were in the first six.
+
+So two of the five classes were planted zero times, and the reporting loop skipped
+any class with no plants, which meant nothing in the document said so. The
+arithmetic was right. The denominator simply never contained the cases, and a ratio
+cannot report a class that is missing from it.
+
+**Why it mattered.** The untested class is `absence`: silence in the record
+becoming proof of absence. That is the defect that produced **358 of the 424 wrong
+exclusions** in the scored run, and the critic probe is the evidence that the
+adversarial review works at all. "9 of 9" was standing in for the one class the
+system's worst failure came from.
+
+**The fix.** `cover()` selects predicates by greedy set cover over the mutation
+classes, rarest first, then spends whatever budget is left on the least-tested
+class rather than on file order. At the same limit of six predicates it now plants
+every class three or more times. Classes with no plants get a row reading **0,
+never planted** and a paragraph naming them, and the summary prints NOT MEASURED
+beside the catch rate, so the absence of a measurement can no longer look like a
+clean sweep.
+
+**What it found immediately.** With all five classes planted the probe stopped
+being saturated:
+
+| defect class | planted | caught |
+|---|---|---|
+| boundary | 3 | 3 |
+| threshold | 3 | 3 |
+| window | 3 | 3 |
+| direction | 6 | 6 |
+| **absence** | **3** | **1** |
+
+The critic catches **15 of 15** across four classes and **1 of 3** in the class
+that matters most. It is not weak in general. It is weak in exactly one place, and
+that place is the one where being weak is expensive. The scored run's worst failure
+is no longer an anecdote about one predicate the critic happened to miss: it is the
+measured behaviour of the reviewer, and `docs/CRITIC_PROBE.md` states it as such.
+
+A probe that cannot fail is not a probe. This one scored 100% for as long as it
+avoided the question.

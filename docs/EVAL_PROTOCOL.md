@@ -15,7 +15,7 @@ report.
 **Registering a protocol is worth nothing if the protocol is quietly edited to match
 what happened.** So the body below is left as it was written, and every place the
 build departed from it is recorded here instead, with the reason. A reader comparing
-this document to the repository will find these six differences and no others; if
+this document to the repository will find these seven differences and no others; if
 they find a seventh, this list is the thing that is wrong.
 
 **A1, 2026-08-29. Blindness is no longer a git fact, and the claim it replaces was
@@ -84,6 +84,39 @@ scored arm remains the headline, and the open-world arm is reported as the answe
 one question: how much of the error is the model asserting a closed world. No
 threshold, prompt or predicate was tuned on the held-out set, and the arm adds no
 model call, because executing a compiled predicate costs nothing.
+
+**A7, 2026-08-29. The noise floor is the contradiction half of the disagreement,
+reweighted to the mix of the cells it is applied to.** Section 6 says
+pre-adjudication disagreement is published as the label noise floor and any
+difference below it is uninterpretable. Two things were built differently, and both
+change what a reader should conclude from a row marked uninterpretable.
+
+The first is which disagreements count. A MEETS against a FAILS is a contradiction:
+one of the two labels is simply wrong. A MEETS against an INDETERMINATE is the two
+labellers drawing the confidence line in different places, which is the judgement
+this entire system exists to make explicit, so counting it as label error would score
+the question rather than the answer. Only the contradiction half is published as the
+floor. The other half is published beside it under its own name and is not used as a
+bar.
+
+The second is what population the rate is a rate of, and this one was a defect rather
+than a decision. `evaluation/checker_b.stratified` draws the doubly-labelled sample
+with equal shares of each Checker A label, deliberately, so that a labeller who
+abstained on everything could not score well. The floor was then computed as
+contradictions over sample size, which is the contradiction rate in a population that
+is one third FAILS. FAILS is the stratum the labellers contradict each other in most
+(16 of 60, against 3 of 60 for MEETS and 0 of 60 for INDETERMINATE) and the scored
+panel is 5.2% FAILS, so the published floor was 10.6% where the panel's own rate is
+2.3%. It is now poststratified to the label mix of the group being compared, with a
+95% interval resampled within stratum, and computed per group because the groups do
+not share a mix.
+
+That correction is not neutral and is recorded here rather than folded in. A floor
+4.6 times too high covers more differences, and the differences it covered were the
+two where TrialSieve does not win: `TS - B1` on silent error rate, +0.0318, is
+TrialSieve committing to more wrong answers than the baseline that mostly abstains,
+and it was reported uninterpretable until the floor was fixed. It now stands as a
+measured loss. Entry 23 of `docs/IMPROVEMENT_CHANGELOG.md` carries the working.
 
 ## 1. What is being claimed
 

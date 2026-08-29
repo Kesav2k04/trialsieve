@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import subprocess
 import sys
 from collections import Counter, defaultdict
@@ -20,6 +21,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "evaluation"))
+# Importable as a module, not only runnable as a script: the tests import these.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _md_tables import align as align_tables
 
 from score import (  # noqa: E402
@@ -136,15 +139,84 @@ def load_label_floor() -> dict | None:
             soft += int(count)
         else:
             hard += int(count)
+    # Which stratum each disagreement came from. The sample is drawn with equal
+    # shares of each Checker A label, so a rate over the whole sample is a rate in
+    # a population that is one third FAILS, and no real panel is.
+    strata: dict[str, dict] = {}
+    for key, count in pattern.items():
+        a_lab, b_lab = key.split("->") if "->" in key else (key, key)
+        kind = "splits" if "INDETERMINATE" in (a_lab, b_lab) else "contradictions"
+        strata.setdefault(a_lab, {"contradictions": 0, "splits": 0})[kind] += int(count)
+    for lab, n_s in (blob.get("a_marginals") or {}).items():
+        strata.setdefault(lab, {"contradictions": 0, "splits": 0})["n"] = int(n_s)
+
     return {"n": n,
+            "strata": strata,
             "percent_agreement": ag.get("percent_agreement"),
             "cohen_kappa": ag.get("cohen_kappa", ag.get("cohens_kappa")),
             "gwet_ac1": ag.get("gwet_ac1", ag.get("gwets_ac1")),
             "marginals_a": blob.get("a_marginals") or ag.get("marginals_a"),
             "marginals_b": blob.get("b_marginals") or ag.get("marginals_b"),
             "n_contradictions": hard, "n_confidence_splits": soft,
-            "hard": (hard / n) if n else 0.0,
-            "soft": (soft / n) if n else 0.0}
+            "hard_in_sample": (hard / n) if n else 0.0,
+            "soft_in_sample": (soft / n) if n else 0.0}
+
+
+def poststratify(floor: dict, population: Counter, draws: int = 4000,
+                 seed: int = 20260829) -> dict | None:
+    """The contradiction rate the scored cells would show, not the sample's own.
+
+    `evaluation/checker_b.stratified` draws equal shares of each Checker A label
+    and says in its own docstring that prevalence cannot be read off the result.
+    The floor was then computed as contradictions divided by sample size, which is
+    the rate in a population that is one third FAILS. The scored panel is 5.2%
+    FAILS, and FAILS is by far the stratum the labellers contradict each other in
+    (16 of 60 against 3 of 60), so dividing by the sample size published 10.6%
+    where the panel's own rate is 2.3%.
+
+    That number is not decorative. Any difference between two arms smaller than it
+    is printed "below, uninterpretable", and at 10.6% the differences it covered
+    were the ones where TrialSieve does not win. A floor drawn from a sample
+    enriched in the hardest cells is a floor that excuses the losses.
+
+    Returns None where the weights cannot be formed, because a floor that quietly
+    falls back to the unweighted rate is the bug this exists to fix.
+    """
+    strata = floor.get("strata") or {}
+    total = sum(population.values())
+    if not strata or not total:
+        return None
+    usable = {lab: s for lab, s in strata.items() if s.get("n")}
+    if not usable or not set(population) <= set(usable):
+        # A label present in the scored cells and absent from the sample has no
+        # measured rate, and assuming one would invent the number this fixes.
+        return None
+
+    weights = {lab: population.get(lab, 0) / total for lab in usable}
+    rates = {lab: s["contradictions"] / s["n"] for lab, s in usable.items()}
+    soft = {lab: s["splits"] / s["n"] for lab, s in usable.items()}
+    point = sum(weights[lab] * rates[lab] for lab in usable)
+
+    # The interval matters more than usual here: the stratum carrying most of the
+    # estimate is 60 cells wide. Resampled within stratum, which is how the sample
+    # was drawn, rather than over the sample as a whole.
+    rng = random.Random(seed)
+    boot = []
+    for _ in range(draws):
+        acc = 0.0
+        for lab, s in usable.items():
+            n_s, p_s = s["n"], rates[lab]
+            hits = sum(1 for _ in range(n_s) if rng.random() < p_s)
+            acc += weights[lab] * (hits / n_s)
+        boot.append(acc)
+    boot.sort()
+    lo = boot[int(0.025 * (draws - 1))]
+    hi = boot[int(0.975 * (draws - 1))]
+    return {"hard": point, "hard_ci": [lo, hi],
+            "soft": sum(weights[lab] * soft[lab] for lab in usable),
+            "weights": {k: round(v, 4) for k, v in weights.items()},
+            "per_stratum_contradiction_rate": {k: round(v, 4) for k, v in rates.items()},
+            "n_population_cells": total, "draws": draws}
 
 
 #: A cell group whose tag is not self-describing is a table nobody can read six
@@ -247,6 +319,14 @@ def main() -> int:
         present = [x for x in ARMS if any(x in r for r in rows)]
         n_screens = len({(r["patient_id"], r["criterion_id"].split("-")[0]) for r in rows})
         block: dict = {"n_rows": len(rows), "arms": present, "n_screens": n_screens}
+
+        # Reweighted to THIS group's label mix rather than the sample's. A group
+        # is the population its own comparisons are drawn from, and the groups do
+        # not share a mix: the full panel is 5.2% FAILS and the ten-patient
+        # sample is not, so one floor for all of them would be wrong for most.
+        gfloor = poststratify(floor, Counter(r["gold"] for r in rows)) if floor else None
+        if gfloor is not None:
+            block["label_floor_poststratified"] = gfloor
 
         md.append("")
         md.append(f"## {tag}  " + GROUP_NOTES.get(tag, ""))
@@ -396,11 +476,11 @@ def main() -> int:
                 # smaller than the two labellers' own disagreement is reported as
                 # uninterpretable. It was a promise and nothing enforced it, so the
                 # verdict is computed here and printed in the row it applies to.
-                if floor is None:
+                if gfloor is None:
                     verdict = "not measured"
-                elif abs(r["observed_difference"]) >= floor["hard"]:
+                elif abs(r["observed_difference"]) >= gfloor["hard"]:
                     verdict = "above"
-                elif abs(r["observed_difference"]) >= floor["hard"] / 2:
+                elif abs(r["observed_difference"]) >= gfloor["hard"] / 2:
                     verdict = "**borderline**"
                 else:
                     verdict = "**below, uninterpretable**"
@@ -409,15 +489,25 @@ def main() -> int:
                           f"[{r['ci_low']:+.4f}, {r['ci_high']:+.4f}] | "
                           f"{'yes' if r['crosses_zero'] else 'no'} | "
                           f"{r['n_unique_criteria']} criteria | {verdict} |")
-            if floor is not None:
+            if gfloor is not None:
                 md.append("")
-                md.append(f"The last column compares the absolute difference "
-                          f"against the contradiction rate between the two independent "
-                          f"labellers, {floor['hard']:.1%}, measured on {floor['n']} "
-                          f"doubly-labelled cells and reported in full below. A CI that "
-                          f"excludes zero says the difference is not noise from "
-                          f"resampling; it says nothing about whether the labels "
-                          f"themselves could support a difference that small.")
+                md.append(f"The last column compares the absolute difference against "
+                          f"the rate at which the two independent labellers contradict "
+                          f"each other, **{gfloor['hard']:.1%}** "
+                          f"(95% CI {gfloor['hard_ci'][0]:.1%} to "
+                          f"{gfloor['hard_ci'][1]:.1%}). That is measured on "
+                          f"{floor['n']} doubly-labelled cells and then reweighted to "
+                          f"this group's own mix of labels, because the sample was "
+                          f"drawn with equal shares of each and these "
+                          f"{len(rows):,} cells are "
+                          f"{gfloor['weights'].get('FAILS', 0):.1%} FAILS. The "
+                          f"unweighted sample rate is "
+                          f"{floor['hard_in_sample']:.1%}, and using it here would "
+                          f"hold every comparison to the disagreement rate of a "
+                          f"population made of the hardest cells. A CI that excludes "
+                          f"zero says the difference is not noise from resampling; it "
+                          f"says nothing about whether the labels themselves could "
+                          f"support a difference that small.")
 
         results["groups"][tag] = block
 
@@ -575,9 +665,11 @@ def main() -> int:
         md.append(f"| Cohen's kappa | {floor['cohen_kappa']:.3f} |")
         md.append(f"| Gwet's AC1 | {floor['gwet_ac1']:.3f} |")
         md.append(f"| **contradictions** (MEETS against FAILS) | "
-                  f"**{floor['n_contradictions']} = {floor['hard']:.1%}** |")
+                  f"**{floor['n_contradictions']} = {floor['hard_in_sample']:.1%} "
+                  f"of the sample** |")
         md.append(f"| confidence splits (a definite verdict against INDETERMINATE) | "
-                  f"{floor['n_confidence_splits']} = {floor['soft']:.1%} |")
+                  f"{floor['n_confidence_splits']} = {floor['soft_in_sample']:.1%} "
+                  f"of the sample |")
         md.append(f"| Checker A marginals | `{json.dumps(floor['marginals_a'])}` |")
         md.append(f"| Checker B marginals | `{json.dumps(floor['marginals_b'])}` |")
         md.append("")
@@ -587,13 +679,54 @@ def main() -> int:
                   f"different things. {floor['n_contradictions']} cells are "
                   f"contradictions, where one labeller says a patient meets a criterion "
                   f"and the other says they fail it; those are the cells where at least "
-                  f"one label is simply wrong, and {floor['hard']:.1%} is the figure a "
-                  f"difference between arms has to clear to mean anything. The other "
+                  f"one label is simply wrong. The other "
                   f"{floor['n_confidence_splits']} are one labeller committing where the "
                   f"other abstained. That is a disagreement about how much a record has "
                   f"to say before it counts as saying it, which is the same judgement "
                   f"this whole system is built to make explicit, so counting it as label "
                   f"error would be scoring the question rather than the answer.")
+        md.append("")
+        md.append("### What that rate is a rate of")
+        md.append("")
+        scored = results["groups"].get("k0_seed7", {})
+        ps = scored.get("label_floor_poststratified")
+        if ps is None:
+            md.append("The sample was drawn with equal shares of each Checker A label, "
+                      "so the percentage above is the contradiction rate in a population "
+                      "made of equal parts MEETS, FAILS and INDETERMINATE. No scored "
+                      "group here could be reweighted to its own mix, so no population "
+                      "rate is published rather than reusing the sample's.")
+        else:
+            rates = ps["per_stratum_contradiction_rate"]
+            w = ps["weights"]
+            md.append(f"The sample was drawn with equal shares of each Checker A label, "
+                      f"deliberately: a uniform draw would have been almost all "
+                      f"INDETERMINATE and a labeller who abstained on everything would "
+                      f"have scored well. The cost is that "
+                      f"{floor['hard_in_sample']:.1%} is the contradiction rate in a "
+                      f"population that is one third FAILS, and the scored panel is "
+                      f"{w.get('FAILS', 0):.1%} FAILS.")
+            md.append("")
+            md.append("| Checker A label | contradicted | share of the sample | "
+                      "share of the scored panel |")
+            md.append("|---|---|---|---|")
+            for lab in sorted(rates):
+                n_s = floor["strata"][lab]["n"]
+                md.append(f"| {lab} | {floor['strata'][lab]['contradictions']} of "
+                          f"{n_s} = {rates[lab]:.1%} | {n_s / floor['n']:.1%} | "
+                          f"{w.get(lab, 0):.1%} |")
+            md.append("")
+            md.append(f"Reweighting those rates to the panel's own mix gives "
+                      f"**{ps['hard']:.1%}** (95% CI {ps['hard_ci'][0]:.1%} to "
+                      f"{ps['hard_ci'][1]:.1%}, resampled within stratum), and that is "
+                      f"the figure the comparison tables above are marked against. "
+                      f"Using {floor['hard_in_sample']:.1%} instead was not "
+                      f"conservative: it is the rate for a population made of the "
+                      f"hardest cells, it is "
+                      f"{floor['hard_in_sample'] / ps['hard']:.1f} times the panel's "
+                      f"own, and every comparison it covered was reported "
+                      f"uninterpretable. Two of those were comparisons TrialSieve "
+                      f"loses.")
         md.append("")
         md.append(f"Checker B abstains more than A does "
                   f"({floor['marginals_b'].get('INDETERMINATE')} against "

@@ -20,10 +20,11 @@ In this panel, 359 of 385 patients have no UACR result at all, so a record with
 nothing to compare against is the normal case rather than an unlucky one.
 
 Ask a capable model directly, one cell at a time, giving it the criterion and the
-patient's chart. Across the cells measured so far it **commits to a verdict on 242
-of 360**, two thirds, including cells where the record is silent. Nothing in the
-chart contradicts the threshold, so the threshold appears satisfied. The reasoning
-is fluent and the answer is confident.
+patient's chart. Over all 400 cells of that arm it **commits to a verdict on 272
+of them**, 68%, including cells where the record is silent. Nothing in the chart
+contradicts the threshold, so the threshold appears satisfied. The reasoning is
+fluent and the answer is confident, and on those same 400 cells it is wrong on
+43.8% of what it commits to against TrialSieve's 3.2%.
 
 TrialSieve answers:
 

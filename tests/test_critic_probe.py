@@ -163,3 +163,68 @@ def test_window_widens_rather_than_narrows(exprs):
         assert len(differ) == 1
         old, new = differ[0]
         assert new == old * 4 and new > old
+
+
+def test_the_selection_plants_every_class_that_is_plantable_anywhere():
+    """A class that is never planted is not a class the probe has cleared.
+
+    The probe took the first six compiled predicates in file order and reported
+    "caught 9 of 9 planted defects". Window and absence defects apply to neither
+    of those six, so two of the five classes were planted zero times and the
+    by-class table simply omitted them. `absence` is the class the scored run's
+    worst failure came from, so the one number standing in for the adversarial
+    review had never tested the thing that broke.
+
+    This asserts the selection covers every class that any compiled predicate can
+    carry, so a saturated score cannot come from an empty denominator again.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "evaluation"))
+    _sys.path.insert(0, str(ROOT / "src"))
+    import critic_probe as probe
+
+    src = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
+    if not src.exists():
+        return  # a checkout without a compiled run has nothing to select from
+    compiled = [c for c in json.loads(src.read_text(encoding="utf-8"))["criteria"]
+                if c.get("compilable")]
+
+    def classes(predicates):
+        got = set()
+        for c in predicates:
+            for name, fn in probe.MUTATIONS:
+                if fn(copy.deepcopy(c["expr"])) is not None:
+                    got.add(name)
+        return got
+
+    plantable = classes(compiled)
+    selected = probe.cover(compiled, 6)
+    missing = plantable - classes(selected)
+
+    assert not missing, (
+        f"{sorted(missing)} can be planted somewhere in the compiled set and the "
+        f"selection of {len(selected)} predicates carries none of them, so the "
+        f"catch rate would be reported over a denominator that excludes them.")
+    assert len(selected) == 6, f"cover returned {len(selected)} predicates, not 6"
+    assert len({c["criterion_id"] for c in selected}) == 6, "cover repeated a predicate"
+
+
+def test_the_report_names_a_class_it_never_planted():
+    """The failure mode was silence, so the absence of a measurement must print."""
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "evaluation"))
+    _sys.path.insert(0, str(ROOT / "src"))
+    import critic_probe as probe
+
+    blob = ROOT / "results" / "critic_probe.json"
+    if not blob.exists():
+        return
+    got = json.loads(blob.read_text(encoding="utf-8"))
+    assert "classes_never_planted" in got, (
+        "the probe output no longer records which classes went unplanted, which is "
+        "the field that turns a saturated score into a checkable one")
+    by_class = got.get("by_class") or {}
+    assert set(by_class) == {n for n, _ in probe.MUTATIONS}, (
+        f"by_class covers {sorted(by_class)} and the mutators are "
+        f"{sorted(n for n, _ in probe.MUTATIONS)}. A class dropped from the table "
+        f"is a class a reader cannot see was never tried.")
