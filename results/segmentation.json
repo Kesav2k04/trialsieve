@@ -1,0 +1,1067 @@
+{
+ "model": "gemini-3.7-flash-medium",
+ "trials": [
+  {
+   "nct_id": "NCT06717698",
+   "chars": 2984,
+   "n_auto": 17,
+   "n_gold": 15,
+   "at": {
+    "0.4": {
+     "threshold": 0.4,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+       "gold": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+       "gold": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+       "gold": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+       "gold": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (\u2265) 15 and less than (<) 90 mL/min/1.73 m^2.",
+       "gold": "Kidney impairment defined by serum creatinine and cystatin C-based eGFR greater than or equal to 15 and less than 90 mL/min/1.73 m^2.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Diagnosed with type 2 diabetes mellitus greater than or equal to (\u2265) 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+       "gold": "Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Age 18 years or above at the time of signing the informed consent.",
+       "gold": "Age 18 years or above at the time of signing the informed consent.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Female of non-childbearing potential, or male.",
+       "gold": "Female of non-childbearing potential, or male.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.929,
+       "auto": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening.",
+       "gold": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or high grade prostatic intraepithelial neoplasia) within 5 years before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.833,
+       "auto": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (\u2265)100 and less than (<) 5000 milligram per gram (mg/g).",
+       "gold": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal to 100 and less than 5000 mg/g.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.72,
+       "auto": "Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+       "gold": "Treatment with maximum labelled or tolerated dose of an ACE inhibitor or an ARB, unless contraindicated or not tolerated in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.714,
+       "auto": "BMI greater than or equal to (\u2265) 27.0 kilogram per square metre (kg/m^2) at screening.",
+       "gold": "BMI greater than or equal to 27.0 kg/m^2 at screening.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.647,
+       "auto": "Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening.",
+       "gold": "Use of any GLP-1 RA (including medication with GLP-1 RA activity) within 90 days prior to screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.528,
+       "auto": "Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination.",
+       "gold": "Only applicable for participants with type 2 diabetes: uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy, verified by an eye examination performed within 90 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male.",
+      "HbA1c of 6.5 percentage (%)-10.5 percentage (%) [48 - 91 millimoles per mole (mmol/mol)] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (<)6.5 percentage (%) [<48 mmol/mol] if not diagnosed with type 2 diabetes mellitus.",
+      "Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency."
+     ],
+     "gold_unmatched": [
+      "Female who is pregnant, breast-feeding or intends to become pregnant."
+     ]
+    },
+    "0.5": {
+     "threshold": 0.5,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+       "gold": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+       "gold": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+       "gold": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+       "gold": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (\u2265) 15 and less than (<) 90 mL/min/1.73 m^2.",
+       "gold": "Kidney impairment defined by serum creatinine and cystatin C-based eGFR greater than or equal to 15 and less than 90 mL/min/1.73 m^2.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Diagnosed with type 2 diabetes mellitus greater than or equal to (\u2265) 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+       "gold": "Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Age 18 years or above at the time of signing the informed consent.",
+       "gold": "Age 18 years or above at the time of signing the informed consent.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Female of non-childbearing potential, or male.",
+       "gold": "Female of non-childbearing potential, or male.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.929,
+       "auto": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening.",
+       "gold": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or high grade prostatic intraepithelial neoplasia) within 5 years before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.833,
+       "auto": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (\u2265)100 and less than (<) 5000 milligram per gram (mg/g).",
+       "gold": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal to 100 and less than 5000 mg/g.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.72,
+       "auto": "Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+       "gold": "Treatment with maximum labelled or tolerated dose of an ACE inhibitor or an ARB, unless contraindicated or not tolerated in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.714,
+       "auto": "BMI greater than or equal to (\u2265) 27.0 kilogram per square metre (kg/m^2) at screening.",
+       "gold": "BMI greater than or equal to 27.0 kg/m^2 at screening.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.647,
+       "auto": "Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening.",
+       "gold": "Use of any GLP-1 RA (including medication with GLP-1 RA activity) within 90 days prior to screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.528,
+       "auto": "Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination.",
+       "gold": "Only applicable for participants with type 2 diabetes: uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy, verified by an eye examination performed within 90 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male.",
+      "HbA1c of 6.5 percentage (%)-10.5 percentage (%) [48 - 91 millimoles per mole (mmol/mol)] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (<)6.5 percentage (%) [<48 mmol/mol] if not diagnosed with type 2 diabetes mellitus.",
+      "Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency."
+     ],
+     "gold_unmatched": [
+      "Female who is pregnant, breast-feeding or intends to become pregnant."
+     ]
+    },
+    "0.6": {
+     "threshold": 0.6,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+       "gold": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+       "gold": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+       "gold": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+       "gold": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Kidney impairment defined by serum creatinine and cystatin C-based Egfr greater than or equal to (\u2265) 15 and less than (<) 90 mL/min/1.73 m^2.",
+       "gold": "Kidney impairment defined by serum creatinine and cystatin C-based eGFR greater than or equal to 15 and less than 90 mL/min/1.73 m^2.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Diagnosed with type 2 diabetes mellitus greater than or equal to (\u2265) 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+       "gold": "Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Age 18 years or above at the time of signing the informed consent.",
+       "gold": "Age 18 years or above at the time of signing the informed consent.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Female of non-childbearing potential, or male.",
+       "gold": "Female of non-childbearing potential, or male.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.929,
+       "auto": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or carcinoma in situ/high grade prostatic intraepithelial neoplasia (PIN)) within 5 years before screening.",
+       "gold": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or high grade prostatic intraepithelial neoplasia) within 5 years before screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.833,
+       "auto": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal (\u2265)100 and less than (<) 5000 milligram per gram (mg/g).",
+       "gold": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal to 100 and less than 5000 mg/g.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.72,
+       "auto": "Treatment with maximum labelled or tolerated dose of an angiotensin converting enzyme (ACE) inhibitor or an angiotensin II receptor blocker (ARB), unless such treatment is contraindicated or not tolerated, in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+       "gold": "Treatment with maximum labelled or tolerated dose of an ACE inhibitor or an ARB, unless contraindicated or not tolerated in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.714,
+       "auto": "BMI greater than or equal to (\u2265) 27.0 kilogram per square metre (kg/m^2) at screening.",
+       "gold": "BMI greater than or equal to 27.0 kg/m^2 at screening.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.647,
+       "auto": "Use of any glucagon-like peptide-1 (GLP-1) RA (including medication with GLP-1 RA activity, e.g., GIP/GLP-1 RA) within 90 days prior to screening.",
+       "gold": "Use of any GLP-1 RA (including medication with GLP-1 RA activity) within 90 days prior to screening.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "For US only: Female of childbearing potential using highly effective non-systemic methods of contraception with low user-dependency at least 2 months prior to screening and willingness to continue using it through-out the study, or male.",
+      "HbA1c of 6.5 percentage (%)-10.5 percentage (%) [48 - 91 millimoles per mole (mmol/mol)] (both inclusive) if diagnosed with type 2 diabetes mellitus, or HbA1c of less than (<)6.5 percentage (%) [<48 mmol/mol] if not diagnosed with type 2 diabetes mellitus.",
+      "Female who is pregnant, breast-feeding or intends to become pregnant or is of childbearing potential and not using highly effective non-systemic contraception with low user-dependency.",
+      "Only applicable for participants with type 2 diabetes (T2D): Uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy. Verified by an eye examination performed within 90 days before screening or in the period between screening and randomisation. Pharmacological pupil-dilation is a requirement unless using a digital fundus photography camera specified for non-dilated examination."
+     ],
+     "gold_unmatched": [
+      "Only applicable for participants with type 2 diabetes: uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy, verified by an eye examination performed within 90 days before screening.",
+      "Female who is pregnant, breast-feeding or intends to become pregnant."
+     ]
+    }
+   }
+  },
+  {
+   "nct_id": "NCT06983054",
+   "chars": 3301,
+   "n_auto": 29,
+   "n_gold": 15,
+   "at": {
+    "0.4": {
+     "threshold": 0.4,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+       "gold": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "UACR > 30 mg/mmol",
+       "gold": "UACR > 30 mg/mmol",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+       "gold": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+       "gold": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "UACR < 30 mg/mmol",
+       "gold": "UACR < 30 mg/mmol",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Sodium intake at baseline < 200 mmol/day",
+       "gold": "Sodium intake at baseline < 200 mmol/day",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+       "gold": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+       "gold": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+       "gold": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Overweight or obese with BMI: >25 kg/m2",
+       "gold": "Overweight or obese with BMI: >25 kg/m2",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Age 18 - 85 years of age",
+       "gold": "Age 18 - 85 years of age",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "HbA1c 6.5-10%",
+       "gold": "HbA1c 6.5-10%",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+       "gold": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.706,
+       "auto": "History of diabetic ketoacidosis (DKA) requiring medical intervention (e.g. emergency room visit and/or hospitalization) within 1 month prior to the Screening visit.",
+       "gold": "History of diabetic ketoacidosis (DKA) requiring medical intervention within 1 month prior to the Screening visit.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.538,
+       "auto": "Recent (<6 months) history of cardiovascular disease, including:\n\n  * Acute coronary syndrome\n  * Chronic heart failure (New York Heart Association grade II-IV)\n  * Stroke or transient ischemic neurologic disorder",
+       "gold": "Recent (<6 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "Participants suffering from hypertension need to be on a stable dose of RAS inhibitors. In case RAS inhibition is not tolerated, the participant should to be on a stable dose of other antihypertensive treatment.",
+      "History of unstable or rapidly progressing renal disease",
+      "Participants should be on a stable dose of antipsychotics, tricyclic antidepressants (TCAs) and monoamine oxidase inhibitors (MAOIs).",
+      "Subjects on diuretics will only be excluded when these drugs cannot be stopped for the duration of the study.",
+      "Chronic use of non-steroidal anti-inflammatory drugs (NSAIDs) will not be allowed, unless used as incidental medication (1-2 tablets) for non-chronic indications (i.e.\n\nsports injury, headache or back ache). However, no such drug can be taken within a timeframe of 2 weeks prior to renal testing",
+      "Current urinary tract infection",
+      "active nephritis",
+      "Severe hepatic insufficiency and/or significant abnormal liver function defined as aspartate aminotransferase (AST) >3x upper limit of normal (ULN) and/or alanine aminotransferase (ALT) >3x ULN",
+      "Active malignancy. History of malignancy is allowed unless the participant still has active treatment other than hormonal therapy.",
+      "History of or actual severe mental disease",
+      "Substance abuse (alcohol: defined as >4 units/day)",
+      "Allergy to any of the agents used in the study",
+      "Individuals who are investigator site personnel, directly affiliated with the study, or are immediate (spouse, parent, child, or sibling, whether biological or legally adopted) family of investigator site personnel directly affiliated with the study",
+      "Inability to understand the study protocol or give informed consent"
+     ],
+     "gold_unmatched": []
+    },
+    "0.5": {
+     "threshold": 0.5,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+       "gold": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "UACR > 30 mg/mmol",
+       "gold": "UACR > 30 mg/mmol",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+       "gold": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+       "gold": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "UACR < 30 mg/mmol",
+       "gold": "UACR < 30 mg/mmol",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Sodium intake at baseline < 200 mmol/day",
+       "gold": "Sodium intake at baseline < 200 mmol/day",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+       "gold": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+       "gold": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+       "gold": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Overweight or obese with BMI: >25 kg/m2",
+       "gold": "Overweight or obese with BMI: >25 kg/m2",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Age 18 - 85 years of age",
+       "gold": "Age 18 - 85 years of age",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "HbA1c 6.5-10%",
+       "gold": "HbA1c 6.5-10%",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+       "gold": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.706,
+       "auto": "History of diabetic ketoacidosis (DKA) requiring medical intervention (e.g. emergency room visit and/or hospitalization) within 1 month prior to the Screening visit.",
+       "gold": "History of diabetic ketoacidosis (DKA) requiring medical intervention within 1 month prior to the Screening visit.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.538,
+       "auto": "Recent (<6 months) history of cardiovascular disease, including:\n\n  * Acute coronary syndrome\n  * Chronic heart failure (New York Heart Association grade II-IV)\n  * Stroke or transient ischemic neurologic disorder",
+       "gold": "Recent (<6 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "Participants suffering from hypertension need to be on a stable dose of RAS inhibitors. In case RAS inhibition is not tolerated, the participant should to be on a stable dose of other antihypertensive treatment.",
+      "History of unstable or rapidly progressing renal disease",
+      "Participants should be on a stable dose of antipsychotics, tricyclic antidepressants (TCAs) and monoamine oxidase inhibitors (MAOIs).",
+      "Subjects on diuretics will only be excluded when these drugs cannot be stopped for the duration of the study.",
+      "Chronic use of non-steroidal anti-inflammatory drugs (NSAIDs) will not be allowed, unless used as incidental medication (1-2 tablets) for non-chronic indications (i.e.\n\nsports injury, headache or back ache). However, no such drug can be taken within a timeframe of 2 weeks prior to renal testing",
+      "Current urinary tract infection",
+      "active nephritis",
+      "Severe hepatic insufficiency and/or significant abnormal liver function defined as aspartate aminotransferase (AST) >3x upper limit of normal (ULN) and/or alanine aminotransferase (ALT) >3x ULN",
+      "Active malignancy. History of malignancy is allowed unless the participant still has active treatment other than hormonal therapy.",
+      "History of or actual severe mental disease",
+      "Substance abuse (alcohol: defined as >4 units/day)",
+      "Allergy to any of the agents used in the study",
+      "Individuals who are investigator site personnel, directly affiliated with the study, or are immediate (spouse, parent, child, or sibling, whether biological or legally adopted) family of investigator site personnel directly affiliated with the study",
+      "Inability to understand the study protocol or give informed consent"
+     ],
+     "gold_unmatched": []
+    },
+    "0.6": {
+     "threshold": 0.6,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+       "gold": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "UACR > 30 mg/mmol",
+       "gold": "UACR > 30 mg/mmol",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+       "gold": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+       "gold": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "UACR < 30 mg/mmol",
+       "gold": "UACR < 30 mg/mmol",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Sodium intake at baseline < 200 mmol/day",
+       "gold": "Sodium intake at baseline < 200 mmol/day",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+       "gold": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+       "gold": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+       "gold": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Overweight or obese with BMI: >25 kg/m2",
+       "gold": "Overweight or obese with BMI: >25 kg/m2",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Age 18 - 85 years of age",
+       "gold": "Age 18 - 85 years of age",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "HbA1c 6.5-10%",
+       "gold": "HbA1c 6.5-10%",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+       "gold": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.706,
+       "auto": "History of diabetic ketoacidosis (DKA) requiring medical intervention (e.g. emergency room visit and/or hospitalization) within 1 month prior to the Screening visit.",
+       "gold": "History of diabetic ketoacidosis (DKA) requiring medical intervention within 1 month prior to the Screening visit.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "Participants suffering from hypertension need to be on a stable dose of RAS inhibitors. In case RAS inhibition is not tolerated, the participant should to be on a stable dose of other antihypertensive treatment.",
+      "History of unstable or rapidly progressing renal disease",
+      "Participants should be on a stable dose of antipsychotics, tricyclic antidepressants (TCAs) and monoamine oxidase inhibitors (MAOIs).",
+      "Subjects on diuretics will only be excluded when these drugs cannot be stopped for the duration of the study.",
+      "Chronic use of non-steroidal anti-inflammatory drugs (NSAIDs) will not be allowed, unless used as incidental medication (1-2 tablets) for non-chronic indications (i.e.\n\nsports injury, headache or back ache). However, no such drug can be taken within a timeframe of 2 weeks prior to renal testing",
+      "Current urinary tract infection",
+      "active nephritis",
+      "Recent (<6 months) history of cardiovascular disease, including:\n\n  * Acute coronary syndrome\n  * Chronic heart failure (New York Heart Association grade II-IV)\n  * Stroke or transient ischemic neurologic disorder",
+      "Severe hepatic insufficiency and/or significant abnormal liver function defined as aspartate aminotransferase (AST) >3x upper limit of normal (ULN) and/or alanine aminotransferase (ALT) >3x ULN",
+      "Active malignancy. History of malignancy is allowed unless the participant still has active treatment other than hormonal therapy.",
+      "History of or actual severe mental disease",
+      "Substance abuse (alcohol: defined as >4 units/day)",
+      "Allergy to any of the agents used in the study",
+      "Individuals who are investigator site personnel, directly affiliated with the study, or are immediate (spouse, parent, child, or sibling, whether biological or legally adopted) family of investigator site personnel directly affiliated with the study",
+      "Inability to understand the study protocol or give informed consent"
+     ],
+     "gold_unmatched": [
+      "Recent (<6 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke"
+     ]
+    }
+   }
+  },
+  {
+   "nct_id": "NCT06989723",
+   "chars": 2881,
+   "n_auto": 19,
+   "n_gold": 10,
+   "at": {
+    "0.4": {
+     "threshold": 0.4,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer.",
+       "gold": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+       "gold": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+       "gold": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+       "gold": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+       "auto_kind": "inclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": false
+      },
+      {
+       "score": 1.0,
+       "auto": "Adults aged 20 years or older.",
+       "gold": "Adults aged 20 years or older.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.633,
+       "auto": "Presence of at least one of the following metabolic abnormalities:\n\n   * Waist circumference \u226590 cm for men or \u226585 cm for women.\n   * Blood pressure \u2265130 mmHg systolic or \u226585 mmHg diastolic, or use of antihypertensive medication.\n   * Serum triglycerides \u2265150 mg/dL or current use of lipid-lowering agents.\n   * HDL-cholesterol \u226445 mg/dL for men or \u226450 mg/dL for women.\n   * HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) \u22652.5.\n   * Serum C-reactive protein (CRP) \u22652 mg/L.",
+       "gold": "Presence of at least one of the following metabolic abnormalities: blood pressure >=130 mmHg systolic or >=85 mmHg diastolic or use of antihypertensive medication; serum triglycerides >=150 mg/dL or current use of lipid-lowering agents; HDL-cholesterol <=45 mg/dL for men or <=50 mg/dL for women",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.577,
+       "auto": "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) \u2265 268 dB/m (consistent with S2 or greater [\u226510% hepatocyte steatosis] according to the 2024 EASL-EASD-EASO guidelines).",
+       "gold": "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) >= 268 dB/m",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.481,
+       "auto": "Severe organ failure, defined as:\n\n   * Liver failure: AST or ALT \\> 5 times the upper normal limit (UNL), serum albumin \\< 3.2 g/dL, platelet count \\< 60,000/\u00b5L, or Child-Pugh-Turcotte stage B or C.\n   * Renal failure: Serum creatinine \u2265 2.0 mg/dL, estimated glomerular filtration rate (eGFR) \\< 30 mL/min/1.73 m\u00b2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis.",
+       "gold": "Renal failure: Serum creatinine >= 2.0 mg/dL, estimated glomerular filtration rate (eGFR) < 30 mL/min/1.73 m2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%, who are currently treated with either:\n\n   * Combination therapy of metformin and a sulfonylurea, or\n   * Combination therapy of metformin and a DPP-4 inhibitor, or\n   * Metformin monotherapy, or\n   * Triple therapy (including metformin) provided that sulfonylurea will be discontinued upon study enrollment.",
+      "Presence of secondary causes of hepatic steatosis unrelated to metabolic dysfunction, such as hepatitis B, hepatitis C, or alcoholic fatty liver disease.",
+      "Use of medications known to induce hepatic steatosis, including valproic acid, estrogen, tamoxifen, amiodarone, or chloroquine.",
+      "History of or active bladder cancer.",
+      "History of heart failure or current diagnosis of heart failure.",
+      "Presence of terminal illnesses.",
+      "History of gallstone disease, chronic pancreatitis, or acute pancreatitis.",
+      "Underweight patients (body mass index [BMI] < 18.5 kg/m\u00b2).",
+      "Pregnant women or women planning to become pregnant.",
+      "Known hypersensitivity to the active ingredients or excipients of the study medications.",
+      "History of diabetic ketoacidosis."
+     ],
+     "gold_unmatched": [
+      "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%",
+      "currently treated with metformin monotherapy, metformin and a sulfonylurea, metformin and a DPP-4 inhibitor, or triple therapy including metformin"
+     ]
+    },
+    "0.5": {
+     "threshold": 0.5,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer.",
+       "gold": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+       "gold": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+       "gold": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+       "gold": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+       "auto_kind": "inclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": false
+      },
+      {
+       "score": 1.0,
+       "auto": "Adults aged 20 years or older.",
+       "gold": "Adults aged 20 years or older.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.633,
+       "auto": "Presence of at least one of the following metabolic abnormalities:\n\n   * Waist circumference \u226590 cm for men or \u226585 cm for women.\n   * Blood pressure \u2265130 mmHg systolic or \u226585 mmHg diastolic, or use of antihypertensive medication.\n   * Serum triglycerides \u2265150 mg/dL or current use of lipid-lowering agents.\n   * HDL-cholesterol \u226445 mg/dL for men or \u226450 mg/dL for women.\n   * HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) \u22652.5.\n   * Serum C-reactive protein (CRP) \u22652 mg/L.",
+       "gold": "Presence of at least one of the following metabolic abnormalities: blood pressure >=130 mmHg systolic or >=85 mmHg diastolic or use of antihypertensive medication; serum triglycerides >=150 mg/dL or current use of lipid-lowering agents; HDL-cholesterol <=45 mg/dL for men or <=50 mg/dL for women",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.577,
+       "auto": "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) \u2265 268 dB/m (consistent with S2 or greater [\u226510% hepatocyte steatosis] according to the 2024 EASL-EASD-EASO guidelines).",
+       "gold": "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) >= 268 dB/m",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%, who are currently treated with either:\n\n   * Combination therapy of metformin and a sulfonylurea, or\n   * Combination therapy of metformin and a DPP-4 inhibitor, or\n   * Metformin monotherapy, or\n   * Triple therapy (including metformin) provided that sulfonylurea will be discontinued upon study enrollment.",
+      "Presence of secondary causes of hepatic steatosis unrelated to metabolic dysfunction, such as hepatitis B, hepatitis C, or alcoholic fatty liver disease.",
+      "Use of medications known to induce hepatic steatosis, including valproic acid, estrogen, tamoxifen, amiodarone, or chloroquine.",
+      "Severe organ failure, defined as:\n\n   * Liver failure: AST or ALT \\> 5 times the upper normal limit (UNL), serum albumin \\< 3.2 g/dL, platelet count \\< 60,000/\u00b5L, or Child-Pugh-Turcotte stage B or C.\n   * Renal failure: Serum creatinine \u2265 2.0 mg/dL, estimated glomerular filtration rate (eGFR) \\< 30 mL/min/1.73 m\u00b2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis.",
+      "History of or active bladder cancer.",
+      "History of heart failure or current diagnosis of heart failure.",
+      "Presence of terminal illnesses.",
+      "History of gallstone disease, chronic pancreatitis, or acute pancreatitis.",
+      "Underweight patients (body mass index [BMI] < 18.5 kg/m\u00b2).",
+      "Pregnant women or women planning to become pregnant.",
+      "Known hypersensitivity to the active ingredients or excipients of the study medications.",
+      "History of diabetic ketoacidosis."
+     ],
+     "gold_unmatched": [
+      "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%",
+      "currently treated with metformin monotherapy, metformin and a sulfonylurea, metformin and a DPP-4 inhibitor, or triple therapy including metformin",
+      "Renal failure: Serum creatinine >= 2.0 mg/dL, estimated glomerular filtration rate (eGFR) < 30 mL/min/1.73 m2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis."
+     ]
+    },
+    "0.6": {
+     "threshold": 0.6,
+     "pairs": [
+      {
+       "score": 1.0,
+       "auto": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer.",
+       "gold": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+       "gold": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+       "gold": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+       "auto_kind": "exclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 1.0,
+       "auto": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+       "gold": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+       "auto_kind": "inclusion",
+       "gold_kind": "exclusion",
+       "kind_agrees": false
+      },
+      {
+       "score": 1.0,
+       "auto": "Adults aged 20 years or older.",
+       "gold": "Adults aged 20 years or older.",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      },
+      {
+       "score": 0.633,
+       "auto": "Presence of at least one of the following metabolic abnormalities:\n\n   * Waist circumference \u226590 cm for men or \u226585 cm for women.\n   * Blood pressure \u2265130 mmHg systolic or \u226585 mmHg diastolic, or use of antihypertensive medication.\n   * Serum triglycerides \u2265150 mg/dL or current use of lipid-lowering agents.\n   * HDL-cholesterol \u226445 mg/dL for men or \u226450 mg/dL for women.\n   * HOMA-IR (Homeostatic Model Assessment of Insulin Resistance) \u22652.5.\n   * Serum C-reactive protein (CRP) \u22652 mg/L.",
+       "gold": "Presence of at least one of the following metabolic abnormalities: blood pressure >=130 mmHg systolic or >=85 mmHg diastolic or use of antihypertensive medication; serum triglycerides >=150 mg/dL or current use of lipid-lowering agents; HDL-cholesterol <=45 mg/dL for men or <=50 mg/dL for women",
+       "auto_kind": "inclusion",
+       "gold_kind": "inclusion",
+       "kind_agrees": true
+      }
+     ],
+     "auto_unmatched": [
+      "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%, who are currently treated with either:\n\n   * Combination therapy of metformin and a sulfonylurea, or\n   * Combination therapy of metformin and a DPP-4 inhibitor, or\n   * Metformin monotherapy, or\n   * Triple therapy (including metformin) provided that sulfonylurea will be discontinued upon study enrollment.",
+      "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) \u2265 268 dB/m (consistent with S2 or greater [\u226510% hepatocyte steatosis] according to the 2024 EASL-EASD-EASO guidelines).",
+      "Presence of secondary causes of hepatic steatosis unrelated to metabolic dysfunction, such as hepatitis B, hepatitis C, or alcoholic fatty liver disease.",
+      "Use of medications known to induce hepatic steatosis, including valproic acid, estrogen, tamoxifen, amiodarone, or chloroquine.",
+      "Severe organ failure, defined as:\n\n   * Liver failure: AST or ALT \\> 5 times the upper normal limit (UNL), serum albumin \\< 3.2 g/dL, platelet count \\< 60,000/\u00b5L, or Child-Pugh-Turcotte stage B or C.\n   * Renal failure: Serum creatinine \u2265 2.0 mg/dL, estimated glomerular filtration rate (eGFR) \\< 30 mL/min/1.73 m\u00b2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis.",
+      "History of or active bladder cancer.",
+      "History of heart failure or current diagnosis of heart failure.",
+      "Presence of terminal illnesses.",
+      "History of gallstone disease, chronic pancreatitis, or acute pancreatitis.",
+      "Underweight patients (body mass index [BMI] < 18.5 kg/m\u00b2).",
+      "Pregnant women or women planning to become pregnant.",
+      "Known hypersensitivity to the active ingredients or excipients of the study medications.",
+      "History of diabetic ketoacidosis."
+     ],
+     "gold_unmatched": [
+      "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%",
+      "currently treated with metformin monotherapy, metformin and a sulfonylurea, metformin and a DPP-4 inhibitor, or triple therapy including metformin",
+      "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) >= 268 dB/m",
+      "Renal failure: Serum creatinine >= 2.0 mg/dL, estimated glomerular filtration rate (eGFR) < 30 mL/min/1.73 m2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis."
+     ]
+    }
+   }
+  }
+ ],
+ "usage": {
+  "calls": 3,
+  "prompt_tokens": 3362,
+  "completion_tokens": 3929,
+  "wall_s": 254.7,
+  "cassette_hits": 0
+ },
+ "wall_s": 254.9
+}
