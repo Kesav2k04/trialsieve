@@ -167,6 +167,17 @@ def main() -> int:
                   "execution engine is deterministic and would report a floor of exactly "
                   "zero, so the floor is measured where the randomness actually is, in "
                   "compilation.")
+        # `docs/EVAL_PROTOCOL.md` registers at least three seeds. Two is a range
+        # between two points, not an estimate of spread, and the two numbers look
+        # identical in the table either way. Which one this is has to be said in
+        # the document rather than inferred from a count in a JSON field.
+        if len(sers) < 3:
+            md.append(f"\n**This is {len(sers)} seed(s), and the protocol registers at "
+                      f"least 3.** What is printed above is the range between "
+                      f"{len(sers)} points rather than an estimate of the spread, and it "
+                      f"is almost certainly narrower than the real floor. Treat it as a "
+                      f"lower bound on the noise and read every difference near it as "
+                      f"undecided.")
 
     # degradation curve, read across the k groups rather than within one
     curve = []
