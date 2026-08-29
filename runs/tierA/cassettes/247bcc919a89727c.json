@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "247bcc919a89727cebca8d715dd8d215a71a5dd5fbd1b24b51045179170dcec4",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: HbA1c\nRecord domain: observation\nMeaning required: laboratory test measuring glycated hemoglobin (HbA1c) with a numeric result between 6.5% and 10%\n\nCandidate entries from this site's vocabulary:\n            4548-4  Hemoglobin A1c/Hemoglobin.total in Blood   (in 1874 resources)\n             718-7  Hemoglobin [Mass/volume] in Blood   (in 1398 resources)\n            5794-3  Hemoglobin [Presence] in Urine by Test strip   (in 254 resources)\n           57905-2  Hemoglobin.gastrointestinal [Presence] in Stool by Immunologic method   (in 25 resources)\n            2093-3  Total Cholesterol   (in 2044 resources)\n            4544-3  Hematocrit [Volume Fraction] of Blood by Automated count   (in 1342 resources)\n            1975-2  Bilirubin.total [Mass/volume] in Serum or Plasma   (in 880 resources)\n           20570-8  Hematocrit [Volume Fraction] of Blood   (in 56 resources)\n           76504-0  Total score [HARK]   (in 1156 resources)\n            2502-3  Iron saturation [Mass Fraction] in Serum or Plasma   (in 54 resources)\n           72106-8  Total score [MMSE]   (in 41 resources)\n           42719-5  Total Bilirubin (Elevated)   (in 2 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 360,
+  "latency_s": 29.183,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 943,
+  "text": "{\n  \"codes\": [\"4548-4\"],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"718-7\",\n      \"why\": \"measures total hemoglobin mass/volume in blood rather than glycated hemoglobin (HbA1c)\"\n    },\n    {\n      \"code\": \"5794-3\",\n      \"why\": \"measures hemoglobin presence in urine rather than glycated hemoglobin in blood\"\n    },\n    {\n      \"code\": \"57905-2\",\n      \"why\": \"stool test for gastrointestinal hemoglobin (fecal occult blood), not blood HbA1c\"\n    },\n    {\n      \"code\": \"2093-3\",\n      \"why\": \"measures total cholesterol, an unrelated lipid measurement\"\n    },\n    {\n      \"code\": \"4544-3\",\n      \"why\": \"measures hematocrit volume fraction, not glycated hemoglobin\"\n    },\n    {\n      \"code\": \"1975-2\",\n      \"why\": \"measures total bilirubin in serum/plasma, an unrelated liver/heme analyte\"\n    },\n    {\n      \"code\": \"20570-8\",\n      \"why\": \"measures hematocrit volume fraction, not glycated hemoglobin\"\n    },\n    {\n      \"code\": \"76504-0\",\n      \"why\": \"HARK screening assessment score, not a laboratory measurement\"\n    },\n    {\n      \"code\": \"2502-3\",\n      \"why\": \"measures iron saturation fraction, an unrelated iron metabolism analyte\"\n    },\n    {\n      \"code\": \"72106-8\",\n      \"why\": \"Mini-Mental State Examination (MMSE) cognitive score, not a laboratory measurement\"\n    },\n    {\n      \"code\": \"42719-5\",\n      \"why\": \"evaluates bilirubin levels, not glycated hemoglobin\"\n    }\n  ],\n  \"confidence\": \"high\"\n}"
+ }
+}

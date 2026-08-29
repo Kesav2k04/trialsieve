@@ -58,6 +58,62 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
+## k0_seed8  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 24.2% | 3.2% | 489 | 86 | 403 | 220 | 0 | 40 |
+| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 537 | 46.5% | **20** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **592** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 8 |
+| 1 | 43.5% | 502 | 0 | 8 |
+| 2 | 43.5% | 502 | 0 | 8 |
+| 5 | 43.7% | 505 | 1 | 9 |
+| 10 | 43.7% | 505 | 1 | 9 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 8 |
+| 1 | 43.5% | 502 | 0 | 8 |
+| 2 | 43.5% | 502 | 0 | 8 |
+| 5 | 43.7% | 505 | 1 | 9 |
+| 10 | 43.7% | 505 | 1 | 9 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 8 make no false exclusion anywhere in 385 patients and the remaining 4 make 31, 31, 19, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9159 | [-0.9661, -0.8520] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7581 | [-0.8733, -0.6323] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9421 | [-0.9730, -0.9053] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0318 | [+0.0021, +0.0845] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1669 | [+0.0733, +0.2740] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0056 | [+0.0003, +0.0127] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
 ## ow  (sensitivity: every absence forced to unknown)
 
 **This is not a different system and it is not the headline.** It is the same compiled predicates from the same run, executed with `--absent-means-override unknown`, which ignores every `absent_means` decision the compiler made and treats a silent record as silent everywhere. The flag predates this run and exists to answer one question: how much of TrialSieve's error is the model asserting a closed world it was not entitled to? The section at the end of this document has the answer with the numbers attached.
@@ -100,6 +156,14 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 10 criteria that ever exclude a patient, 7 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 4. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
 
+
+## Noise floor
+
+TrialSieve SER across 2 compilation seeds: `{"mean": 0.03115, "sd": 0.00092, "min": 0.0305, "max": 0.0318, "range": 0.0013, "n_seeds": 2}`.
+
+An effect smaller than this spread is reported as not detected. The execution engine is deterministic and would report a floor of exactly zero, so the floor is measured where the randomness actually is, in compilation.
+
+**This is 2 seed(s), and the protocol registers at least 3.** What is printed above is the range between 2 points rather than an estimate of the spread, and it is almost certainly narrower than the real floor. Treat it as a lower bound on the noise and read every difference near it as undecided.
 
 ## Label noise floor
 

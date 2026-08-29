@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "2d9b137398808dac357a18c8b55d1d68e0a5224a08bae2a3d17d838b02f8008a",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Low-risk prostate cancer\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 146,
+  "latency_s": 27.281,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Low risk prostate cancer\",\n    \"Very low risk prostate cancer\",\n    \"Prostate cancer, Gleason score 6\",\n    \"Prostate adenocarcinoma, Grade Group 1\",\n    \"Gleason 3+3=6 prostate cancer\",\n    \"Low risk localized prostate cancer\",\n    \"Well-differentiated adenocarcinoma of the prostate\",\n    \"Malignant neoplasm of prostate, low risk\",\n    \"Stage T1c prostate cancer\",\n    \"Early stage prostate adenocarcinoma\"\n  ],\n  \"note\": \"Includes explicit risk categories, Grade Group 1 / Gleason 6 classifications, and early-stage low-risk diagnostic terms.\"\n}\n```"
+ }
+}

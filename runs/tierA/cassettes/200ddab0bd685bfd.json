@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "200ddab0bd685bfd294ee852186c3b0e704cb3e19f4068b26673bb320a8960ea",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Creatinine and cystatin C-based eGFR\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 178,
+  "latency_s": 35.536,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 214,
+  "text": "{\n  \"names\": [\n    \"eGFRcr-cys\",\n    \"eGFR creatinine and cystatin C\",\n    \"Estimated GFR (creatinine and cystatin C)\",\n    \"Glomerular filtration rate/1.73 sq M.predicted by Creatinine and Cystatin C-based formula\",\n    \"eGFR (CKD-EPI creatinine-cystatin C)\",\n    \"Estimated glomerular filtration rate based on creatinine and cystatin C\",\n    \"eGFR from creatinine and cystatin C\",\n    \"CKD-EPI creatinine-cystatin C eGFR\",\n    \"eGFRcr-cys (2021)\",\n    \"eGFRcr-cys (2012)\",\n    \"Glomerular filtration rate, estimated (creatinine-cystatin C)\",\n    \"eGFR creatinine-cystatin C combined\"\n  ],\n  \"note\": \"Combined creatinine and cystatin C-based estimated glomerular filtration rate lab tests and equation terms.\"\n}"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "311ae1d5f5a360b07061b6ef28015cfe868164b007b4b72660c54488bf6f5adf",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Lupus nephritis\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 172,
+  "latency_s": 19.468,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"Lupus nephritis\",\n    \"Systemic lupus erythematosus with nephritis\",\n    \"Systemic lupus erythematosus glomerulonephritis\",\n    \"Lupus glomerulonephritis\",\n    \"Class I minimal mesangial lupus nephritis\",\n    \"Class II mesangial proliferative lupus nephritis\",\n    \"Class III focal lupus nephritis\",\n    \"Class IV diffuse proliferative lupus nephritis\",\n    \"Class V membranous lupus nephritis\",\n    \"Class VI advanced sclerosing lupus nephritis\",\n    \"Diffuse lupus nephritis\",\n    \"Focal lupus nephritis\",\n    \"Membranous lupus nephritis\"\n  ],\n  \"note\": \"Includes general SLE renal manifestations and ISN/RPS histopathological classes I through VI.\"\n}\n```"
+ }
+}

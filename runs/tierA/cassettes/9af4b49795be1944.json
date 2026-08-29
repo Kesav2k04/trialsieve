@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9af4b49795be19441abd11d55710b00ae259932683f72334135e9816068e475a",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Malignant neoplasm\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 108,
+  "latency_s": 26.719,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 209,
+  "text": "{\n  \"names\": [\n    \"Malignant neoplasm\",\n    \"Cancer\",\n    \"Carcinoma\",\n    \"Adenocarcinoma\",\n    \"Squamous cell carcinoma\",\n    \"Melanoma\",\n    \"Sarcoma\",\n    \"Lymphoma\",\n    \"Leukemia\",\n    \"Multiple myeloma\",\n    \"Glioblastoma\",\n    \"Breast cancer\",\n    \"Colorectal cancer\",\n    \"Lung cancer\",\n    \"Prostate cancer\"\n  ],\n  \"note\": \"Includes core histopathologic types of malignancy and common organ-specific cancer diagnoses.\"\n}"
+ }
+}

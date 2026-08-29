@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "f837ae613e769f2d3a7c24d18456b02424f8652ea3b39f1ee61391c97977d1c6",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You prepare clinical trial eligibility criteria for automated checking against\nstructured medical records.\n\nYou are careful about what a medical record can and cannot settle. Most criteria\nin a real protocol cannot be settled from a record at all, and saying so is the\ncorrect answer rather than a failure.",
+    "role": "system"
+   },
+   {
+    "content": "Decide whether this criterion can be checked from a structured medical record,\nand list the clinical concepts it needs.\n\nCriterion (inclusion, category diagnosis):\n  Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus.\n\n[REVIEW FEEDBACK]\nA review of your previous predicate found a patient where it disagrees with the criterion text.\n\nPatient: {\"age\": 58, \"sex\": \"female\", \"observations\": [], \"conditions\": [{\"code\": \"422034002\", \"days_ago\": 300}, {\"code\": \"422034002\", \"days_ago\": 30}], \"medications\": [], \"procedures\": []}\nYour predicate returned: FALSE\nThe criterion text requires: TRUE\nReviewer note: The patient was diagnosed with type 2 diabetes 300 days ago (greater than or equal to 180 days before screening), satisfying the inclusion criterion regardless of having a follow-up diagnosis recorded 30 days ago.\nIssues raised: The predicate excludes patients who were diagnosed with type 2 diabetes >= 180 days ago if they also had any diabetes encounter or diagnosis code recorded in the past 180 days.; A diagnosis occurring exactly 180 days ago satisfies 'greater than or equal to 180 days' but is caught by within_days: 180, causing the predicate to evaluate to false.\n\nProduce a corrected predicate for the same criterion.\n\nA criterion is checkable ONLY if every part of it can be settled from coded\nrecord data: demographics, coded diagnoses, coded medications, coded procedures,\nor numeric laboratory and vital-sign values, with dates.\n\nThe record carries an index date: the day this prescreen is being run. Study\nevents that have not happened yet are anchored to it. \"at screening\", \"at\nrandomisation\", \"at the time of signing the informed consent form\", \"at baseline\",\n\"prior to randomisation\" all mean \"as of the index date\", and a window measured\nback from one of them is measured back from the index date. That substitution is\nwhat prescreening is, so it does not make a criterion uncheckable. Say in `reason`\nthat you used it, so the reviewer sees the assumption.\n\nWhat stays uncheckable is the participant, not the calendar: whether they will\nconsent, whether they are able to comply, what the investigator will judge.\n\nIt is NOT checkable if it needs any of:\n  - consent, willingness, capacity, ability to comply or to attend\n  - the investigator's opinion, or a judgement about suitability\n  - a measurement a record does not normally hold (waist circumference,\n    performance status, imaging read-outs, questionnaire scores, elastography)\n  - counting prior lines of therapy, or a washout expressed in half-lives\n  - a bound relative to a laboratory's own reference range, such as \"2.5x the\n    upper limit of normal\", since the limit is not a fixed number\n  - contraception, pregnancy intention, or residence and travel plans\n  - enrolment in another study\n\nReturn JSON only:\n\n{\"checkable\": true,\n  \"reason\": \"one sentence; if not checkable, name the specific blocker\",\n  \"concepts\": [{\"name\":\"SGLT2 inhibitor\",\"domain\":\"medication\",\n                 \"intent\":\"currently prescribed drug of this class\"}]}\n\n`concepts` lists every clinical thing that must be looked up by code. Leave it\nempty when the criterion uses only age or sex. Use the exact domain the record\nwould store it in.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 92,
+  "latency_s": 25.499,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 903,
+  "text": "```json\n{\n  \"checkable\": true,\n  \"reason\": \"Screening is anchored to the index date, and the presence and timing of type 2 diabetes mellitus diagnoses can be determined from coded condition records.\",\n  \"concepts\": [\n    {\n      \"name\": \"type 2 diabetes mellitus\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of type 2 diabetes mellitus\"\n    }\n  ]\n}\n```"
+ }
+}

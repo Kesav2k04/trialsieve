@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "0049cbe65a5d5e6d9c03aca7c15afe58b868f4fccd09416763e50ab25d9dd689",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Estimated glomerular filtration rate by CKD-EPI\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 183,
+  "latency_s": 38.133,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 217,
+  "text": "```json\n{\n  \"names\": [\n    \"eGFR by CKD-EPI\",\n    \"Estimated GFR (CKD-EPI)\",\n    \"CKD-EPI eGFR\",\n    \"eGFR (CKD-EPI 2021)\",\n    \"eGFR (CKD-EPI 2009)\",\n    \"Estimated glomerular filtration rate (CKD-EPI creatinine)\",\n    \"eGFR cr (CKD-EPI)\",\n    \"eGFR cys (CKD-EPI)\",\n    \"eGFR cr-cys (CKD-EPI)\",\n    \"Glomerular filtration rate/1.73 sq M.predicted by Creatinine-based formula (CKD-EPI)\",\n    \"Glomerular filtration rate/1.73 sq M.predicted by Cystatin C-based formula (CKD-EPI)\",\n    \"Glomerular filtration rate/1.73 sq M.predicted by Creatinine and Cystatin C-based formula (CKD-EPI)\"\n  ],\n  \"note\": \"Includes CKD-EPI equation variants based on creatinine, cystatin C, and combined formulas across 2009 and 2021 revisions\"\n}\n```"
+ }
+}

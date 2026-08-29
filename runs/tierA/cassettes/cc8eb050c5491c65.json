@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "cc8eb050c5491c6549ca4c7a174d68c63af70c57f4c7c3fd7e98e2fb839b87a3",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Transient ischaemic attack\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 147,
+  "latency_s": 27.787,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 211,
+  "text": "```json\n{\n  \"names\": [\n    \"Transient ischemic attack\",\n    \"Transient ischaemic attack\",\n    \"TIA\",\n    \"Amaurosis fugax\",\n    \"Vertebrobasilar artery syndrome\",\n    \"Carotid artery syndrome (hemispheric)\",\n    \"Vertebrobasilar insufficiency\",\n    \"Transient cerebral ischemia\",\n    \"Subclavian steal syndrome\",\n    \"Hemispheric transient ischemic attack\",\n    \"Lacunar transient ischemic attack\",\n    \"Transient retinal ischemia\"\n  ],\n  \"note\": \"Includes standard spellings, abbreviations, specific arterial territory syndromes, and related focal transient ischemic conditions.\"\n}\n```"
+ }
+}
