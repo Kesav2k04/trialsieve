@@ -146,7 +146,8 @@ def main() -> int:
           f"| TrialSieve | {ts['verdict']} | "
           f"{'yes' if ts['verdict'] == gold else 'no'} |", ""]
 
-    if b2["verdict"] == gold:
+    held = b2["verdict"] != gold
+    if not held:
         L.append("The baseline got this one right. The README's opening example does not "
                  "hold on this pair and has to be rewritten or withdrawn.")
     L.append("")
@@ -156,6 +157,14 @@ def main() -> int:
     out.write_text("\n".join(L), encoding="utf-8", newline="\n")
     print("\n".join(L))
     print(f"\nwrote {out}")
+    # The document said in words that a baseline agreeing with gold withdraws
+    # the README example, and then exited 0 anyway, so `run.py reproduce` stayed
+    # green on the one outcome this check exists to catch. A falsifier that
+    # cannot fail is not a check.
+    if not held:
+        print("the baseline agreed with gold on this pair, so the claim this "
+              "document makes does not hold", file=sys.stderr)
+        return 3
     return 0
 
 
