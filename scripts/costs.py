@@ -51,6 +51,100 @@ def clock(s: float) -> str:
     return f"{h} h {m:02d} min"
 
 
+def _accuracy_on_the_same_cells() -> list[str]:
+    """Whether the cheaper path is also the worse one, on the cells both arms ran.
+
+    A cost curve on its own invites the obvious objection, that the cheap arm is
+    cheap because it does less. Both arms are scored on the same 400 cells in
+    `results/RESULTS.md`, so the answer is measured rather than argued. Silent if
+    the paired group is not in the results, because the claim only holds paired.
+    """
+    res = read(ROOT / "results" / "results.json") or {}
+    g = (res.get("groups") or {}).get("b2_10p")
+    if not g:
+        return []
+    cell, panel = g.get("cell_scores", {}), g.get("panel_scores", {})
+    if not {"TS", "B2"} <= set(cell) or not {"TS", "B2"} <= set(panel):
+        return []
+    return [
+        f"Cheaper is not the same as worse here, and the two arms are scored on the "
+        f"same {g.get('n_rows', 0):,} cells. Silent error rate: "
+        f"**{cell['TS']['ser']:.1%}** compiled against "
+        f"**{cell['B2']['ser']:.1%}** per cell. Patients wrongly ruled out: "
+        f"**{panel['TS']['false_exclusions']}** against "
+        f"**{panel['B2']['false_exclusions']}**. Both arms are VOID against the "
+        f"registered primary outcome, which requires zero.", "",
+    ]
+
+
+def crossover(R: list[dict]) -> list[str]:
+    """The section a reader who has to fund this asks for, computed from the table.
+
+    Both arms answer the same question, so the interesting number is not what
+    either cost but where the two curves cross. Compiling is paid once per
+    criterion set. Asking per cell is paid again for every patient, every time
+    the panel is rescreened. That is the whole architectural argument and it is
+    already in the rows above, so it is derived here rather than asserted, and it
+    is skipped entirely if the per-cell arm was never run.
+    """
+    def find(prefix: str) -> dict | None:
+        for r in R:
+            if r["step"].startswith(prefix) and not r.get("missing"):
+                return r
+        return None
+
+    compile_row, b2 = find("compile the held-out protocols"), find("arms B2 over")
+    ts = find("arms TS, B0, B1 over")
+    if not (compile_row and b2 and ts):
+        return []
+
+    meta = read(ROOT / "runs" / "tierA" / "cells" / "meta_B2_b2_10p.json") or {}
+    cells, patients = meta.get("n_cells"), meta.get("n_patients")
+    criteria = meta.get("n_criteria")
+    panel = (read(ROOT / "runs" / "tierA" / "cells" / "meta_TS_ow.json") or {}
+             ).get("n_patients")
+    if not (cells and patients and criteria and panel):
+        return []
+
+    once = compile_row["pt"] * RATE_IN + compile_row["ct"] * RATE_OUT
+    per_cell = (b2["pt"] * RATE_IN + b2["ct"] * RATE_OUT) / cells
+    per_patient = per_cell * criteria
+    breakeven = once / per_patient
+    full = per_patient * panel
+
+    return [
+        "## Where the two curves cross", "",
+        f"Both arms answer the same {criteria} questions about the same patient. "
+        f"They differ in what the model is asked to do, and that difference is a "
+        f"cost curve rather than a constant.", "",
+        f"Compiling the {criteria} criteria cost **${once:,.2f}** and is paid once "
+        f"per criterion set. Screening a patient after that is arithmetic over the "
+        f"compiled predicate: the row above that adjudicates {panel} patients on all "
+        f"{criteria} criteria makes **zero model calls** and finishes in "
+        f"**{clock(ts['wall'])}**.", "",
+        f"The per-cell baseline pays per question per patient. Measured over its "
+        f"{cells:,} recorded cells, that is **${per_cell:.4f}** a cell, or "
+        f"**${per_patient:.2f}** to put one patient through {criteria} criteria.", "",
+        f"| patients screened | compile once, then arithmetic | ask per cell |",
+        f"|---|---|---|",
+        f"| 1 | ${once:,.2f} | ${per_patient:,.2f} |",
+        f"| {int(breakeven) + 1} | ${once:,.2f} | ${per_patient * (int(breakeven) + 1):,.2f} |",
+        f"| {panel} | ${once:,.2f} | ${full:,.2f} |",
+        f"| {panel} again next month | ${0:,.2f} | ${full:,.2f} |", "",
+        f"The two cross at **{breakeven:.1f} patients**. Past that the compiled "
+        f"path is cheaper, and the gap grows with every patient and every rescreen, "
+        f"because one side of it is flat.", "",
+        *_accuracy_on_the_same_cells(),
+        "Three things this does not say. The dollar figures are the published list "
+        f"rate in the table above, not what this run was billed. The per-cell figure "
+        f"is measured on these {criteria} criteria against records of this size, and "
+        "a longer record moves it. And it counts model spend only: the compiled "
+        "predicates go to a human reviewer before deployment, which is the control "
+        "`README.md` describes and the one that failed here, and that reviewer's "
+        "time is a real cost this table does not carry.", "",
+    ]
+
+
 def read(path: Path) -> dict | None:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -186,6 +280,7 @@ def main() -> int:
           "Token counts come from the provider where it returns them. The local shim does",
           "not, so those rows fall back to an estimate of four characters per token, and",
           "the report says which rather than averaging the distinction away.", "",
+          *crossover(R),
           "## Reproducing costs nothing", "",
           "`python run.py reproduce` makes no model call. Every recorded call replays from",
           "`runs/tierA/cassettes/`, and replay never falls through to a live call: a",

@@ -42,6 +42,27 @@ Token counts come from the provider where it returns them. The local shim does
 not, so those rows fall back to an estimate of four characters per token, and
 the report says which rather than averaging the distinction away.
 
+## Where the two curves cross
+
+Both arms answer the same 40 questions about the same patient. They differ in what the model is asked to do, and that difference is a cost curve rather than a constant.
+
+Compiling the 40 criteria cost **$0.14** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **2 s**.
+
+The per-cell baseline pays per question per patient. Measured over its 400 recorded cells, that is **$0.0014** a cell, or **$0.06** to put one patient through 40 criteria.
+
+| patients screened    | compile once, then arithmetic | ask per cell |
+|----------------------|-------------------------------|--------------|
+| 1                    | $0.14                         | $0.06        |
+| 3                    | $0.14                         | $0.17        |
+| 385                  | $0.14                         | $22.19       |
+| 385 again next month | $0.00                         | $22.19       |
+
+The two cross at **2.4 patients**. Past that the compiled path is cheaper, and the gap grows with every patient and every rescreen, because one side of it is flat.
+
+Cheaper is not the same as worse here, and the two arms are scored on the same 400 cells. Silent error rate: **3.2%** compiled against **43.8%** per cell. Patients wrongly ruled out: **4** against **10**. Both arms are VOID against the registered primary outcome, which requires zero.
+
+Three things this does not say. The dollar figures are the published list rate in the table above, not what this run was billed. The per-cell figure is measured on these 40 criteria against records of this size, and a longer record moves it. And it counts model spend only: the compiled predicates go to a human reviewer before deployment, which is the control `README.md` describes and the one that failed here, and that reviewer's time is a real cost this table does not carry.
+
 ## Reproducing costs nothing
 
 `python run.py reproduce` makes no model call. Every recorded call replays from
