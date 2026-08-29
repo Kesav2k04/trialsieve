@@ -91,7 +91,7 @@ calls no model at all.** Three things follow.
 | agent | job | model calls |
 |---|---|---|
 | `segmenter` | criteria blob to atomic, typed criteria | 1 per trial |
-| `grounder` | clinical concept to codes in this site's vocabulary, or **UNMAPPABLE** | 1 per concept, cached across criteria |
+| `grounder` | clinical concept to codes in this site's vocabulary, or **UNMAPPABLE** | 2 per concept (expand, then select), cached across criteria |
 | `compiler` | criterion prose to predicate IR, with a bounded repair loop | 2 per criterion |
 | `critic` | build a patient the predicate gets wrong, then run it | 1 per criterion, plus 1 revision |
 | `adjudicator` | execute predicates over the panel | **0** |

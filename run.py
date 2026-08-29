@@ -119,6 +119,9 @@ def t_reproduce(run: str = RUN) -> None:
     sh(PY, "scripts/worklist.py", "--run", run, "--out", "docs/sample_worklist.md")
     sh(PY, "scripts/trajectories.py", "--run", run)
 
+    banner("check every path a document points at")
+    sh(PY, "scripts/linkcheck.py")
+
     banner("cost and runtime")
     sh(PY, "scripts/costs.py")
 
@@ -127,6 +130,11 @@ def t_reproduce(run: str = RUN) -> None:
 
     t_verify(run)
     t_diff()
+
+
+def t_links() -> None:
+    """Every path the documents point at, checked. Free, no network."""
+    sh(PY, "scripts/linkcheck.py")
 
 
 def t_contamination() -> None:
@@ -234,6 +242,7 @@ def t_clean() -> None:
 TARGETS = {
     "check": t_check,
     "contamination": t_contamination,
+    "links": t_links,
     "environment": t_environment,
     "reproduce": t_reproduce,
     "verify": t_verify,
