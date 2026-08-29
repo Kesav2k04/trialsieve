@@ -223,15 +223,20 @@ Results, the improvement history, and the trajectories:
 The honest list, before anyone else writes it.
 
 **Coverage is the binding constraint, not accuracy.** Most criteria in a real
-protocol cannot be settled from a structured record at all, and the published
-estimate for expressible-and-present is around 35%. A system that answers a third
-of the questions and abstains on the rest is only useful because the third it
-answers removes people from the list.
+protocol cannot be settled from a structured record at all. Köpcke et al., across
+15 trials, 351 criteria and 5 tertiary centres, put it at 55% expressible times
+64% present, so about 35% answerable. A system that answers a third of the
+questions and abstains on the rest is only useful because the third it answers
+removes people from the list. That figure is also a registered prediction here:
+`docs/EVAL_PROTOCOL.md` says coverage should land at 30 to 40% and that a number
+far above it would suggest the criteria were cherry-picked.
 
-**The compiler degrades by refusing, not by lying.** Run against a weak model, the
-architecture loses coverage rather than gaining silent errors, which is the right
-direction to fail in but is still a failure. The same run on a capable model and on
-a local 8B is in the results.
+**The compiler degrades by refusing, not by lying, and that is a design claim
+rather than a measurement.** The architecture should lose coverage on a weak model
+rather than gain silent errors, because a model that cannot ground a concept
+produces UNMAPPABLE and stops the criterion. It is a claim about a failure mode, and
+what is measured here is the failure mode of one model family. A weak-model arm is
+the obvious next experiment and it is not in these results.
 
 **The registry text is not the protocol.** ClinicalTrials.gov's eligibility field is
 the sponsor's summary. A site screens against a document with more structure and
