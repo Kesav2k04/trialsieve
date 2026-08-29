@@ -1,2 +1,3 @@
 {"criterion_id": "NCT06717698-INC-03", "label": "FAILS", "model": "gpt-oss-120b-medium", "patient_id": "3d5f91c2-0539-37c9-0691-d2bbe28c78e3", "prompt_version": "checker-b-v1", "reason": "BMI recorded as 19.47 kg/m² on 2021-04-30"}
 {"criterion_id": "NCT06983054-INC-04", "label": "MEETS", "model": "gpt-oss-120b-medium", "patient_id": "d868e198-8ebe-2338-5691-4c1de3421c65", "prompt_version": "checker-b-v1", "reason": "BMI 28.89 kg/m² recorded on 2021‑06‑29 exceeds the >25 kg/m² threshold"}
+{"criterion_id": "NCT06983054-EXC-02", "label": "INDETERMINATE", "model": "gpt-oss-120b-medium", "patient_id": "3f8f669e-a86e-7ed2-9cd3-af981a89dfa1", "prompt_version": "checker-b-v1", "reason": "UACR not recorded in the patient data"}

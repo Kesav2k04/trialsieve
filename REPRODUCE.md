@@ -45,9 +45,17 @@ carries the source URL and the sha256 of the archive they were built from, and
 4. **The arms are run** over the panel. This step calls no model at all. The
    compiled predicates are executed deterministically against every patient, which
    is the point of the architecture and the reason screening is free.
-5. **The report is scored** into `results/results.json`.
-6. **The four verification checks run** (see below).
-7. **The report is compared** byte for byte against `results/published/results.json`,
+5. **The recall audit runs** into `docs/CONTAMINATION.md`. Three registered trials
+   with public identifiers is the setup where a good result can come from having
+   memorised the protocol rather than from having read it, so this enumerates the
+   substitutions every prompt template accepts, searches every recorded request for
+   the identifiers and for title-specific wording, and reports both.
+6. **The documents that quote numbers are regenerated**: the worked counterexample,
+   the sample worklist, and the trajectory index. They are output, not prose, so a
+   number that moved shows up here rather than going stale in a committed file.
+7. **The report is scored** into `results/results.json`.
+8. **The four verification checks run** (see below).
+9. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
 
 ## The four checks, and what each one rules out
