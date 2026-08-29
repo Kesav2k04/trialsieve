@@ -105,7 +105,7 @@ calls no model at all.** Three things follow.
    not worse.
 3. A human reviews the model's clinical judgement **once per criterion**, not once
    per patient per criterion. Sign-off scales with the protocol, which has about
-   thirty criteria, not with the queue, which has four hundred people.
+   forty criteria, not with the queue, which has 385 people.
 
 ### The agents
 
