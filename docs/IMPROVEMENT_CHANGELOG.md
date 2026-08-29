@@ -735,3 +735,18 @@ that builds every trajectory document, triggered by one field missing from one
 event, in a function whose whole job is reading JSONL off disk that an earlier
 version of the recorder may have written. It now degrades one heading instead of
 stopping the build.
+
+**And a third, which is the one worth keeping.** The new
+`append_human_checkpoint` was first written as a module-level function placed
+between two methods of `Trajectory`. In Python that ends the class body, so
+`final`, `write` and `summary` stopped being methods. The full suite, 153 tests at
+the time, stayed green. The break surfaced when a running job died on
+`AttributeError: 'Trajectory' object has no attribute 'final'`.
+
+A suite that cannot notice a core class losing three methods is not covering that
+class, and `Trajectory` is the recorder every trajectory in this submission goes
+through. `tests/test_trajectory_api.py` now records one trajectory using every
+event kind the recorder offers, writes it, reads it back, and renders it: 24
+tests covering the method surface, dense sequence numbering, LF line endings, the
+`kind` payload collision that `_add` is positional-only to prevent, and that the
+renderer emits every kind rather than silently dropping one.
