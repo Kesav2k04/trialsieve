@@ -31,7 +31,15 @@ recorded JSONL, not a reconstruction:
 | human checkpoints | `human_checkpoint` | reviewer, role, decision, rationale, and the digest signed |
 
 **Two of those rows describe a mechanism with no instances in the scored run, and
-saying so is part of the deliverable.** The critic returned OK on every predicate
+saying so is part of the deliverable.** A third event kind, `revision`, is empty
+for the same reason and follows from it: a predicate is only revised after a
+confirmed counterexample, so zero findings gives zero revisions necessarily. That
+column exists because changelog entry 5 split it away from `normalisation`,
+precisely so that a run with 6 harness repairs and 0 real revisions could not
+report 6 revisions. It is doing its job by being empty, and the two numbers are
+printed side by side in the index rather than summed.
+
+The critic returned OK on every predicate
 it reviewed, so there are no `critic_finding` events in the compile trajectories.
 A component that never fires cannot be told apart from one that does nothing, so
 `evaluation/critic_probe.py` breaks each predicate in a named way and reviews it
