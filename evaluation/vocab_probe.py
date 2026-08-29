@@ -124,14 +124,25 @@ def judge(probe: dict, codes: list[str] | None, broader: list[str] | None) -> di
     """Score one probe, and give the table a one-word label."""
     if codes is None:
         return {"correct": False, "over_accepted": False, "under_accepted": False,
-                "mark": "ERR "}
+                "demoted": [], "mark": "ERR "}
     broader = broader or []
     cls = probe["class"]
 
     if cls == "absent":
         ok = not codes and not broader
         return {"correct": ok, "over_accepted": bool(codes or broader),
-                "under_accepted": False, "mark": "ok  " if ok else "OVER"}
+                "under_accepted": False, "demoted": [],
+                "mark": "ok  " if ok else "OVER"}
+
+    #: An exact code parked in `broader_codes` instead of `codes`. Reported, not
+    #: scored. The engine returns UNKNOWN for a patient carrying a broader code
+    #: and TRUE for one carrying an exact code, so a demotion costs real verdicts.
+    #: It is not counted as an error because the accept lists here hold several
+    #: defensible codes per concept, and a model that calls one of them exact and
+    #: another coarser may be drawing a distinction the probe was too blunt to
+    #: encode. Scoring it either way would assert something this probe cannot
+    #: establish, so it is surfaced as a number and left to the reader.
+    demoted = sorted(set(broader) & set(probe["codes"]))
 
     if cls == "broader":
         # The right answer puts nothing in `codes` and the coarse code in
@@ -140,17 +151,19 @@ def judge(probe: dict, codes: list[str] | None, broader: list[str] | None) -> di
         # criterion the record cannot settle.
         if codes:
             return {"correct": False, "over_accepted": True, "under_accepted": False,
-                    "mark": "EXACT"}
+                    "demoted": [], "mark": "EXACT"}
         ok = bool(broader) and not set(broader) - set(probe["broader"])
         return {"correct": ok,
                 "over_accepted": bool(set(broader) - set(probe["broader"])),
-                "under_accepted": not broader,
+                "under_accepted": not broader, "demoted": [],
                 "mark": "ok  " if ok else ("MISS" if not broader else "OVER")}
 
     over = bool(set(codes) - set(probe["codes"]))
     ok = bool(codes) and not over
     return {"correct": ok, "over_accepted": over, "under_accepted": not codes,
-            "mark": "ok  " if ok else ("OVER" if over else "MISS")}
+            "demoted": demoted,
+            "mark": ("ok  " if not demoted else "ok- ") if ok
+                    else ("OVER" if over else "MISS")}
 
 
 def score(rows: list[dict]) -> dict:
@@ -161,6 +174,7 @@ def score(rows: list[dict]) -> dict:
         c["correct"] += 1 if r["correct"] else 0
         c["over"] += 1 if r["over_accepted"] else 0
         c["under"] += 1 if r["under_accepted"] else 0
+        c["demoted"] += 1 if r.get("demoted") else 0
     return {k: dict(v) for k, v in sorted(by_class.items())}
 
 
@@ -196,7 +210,8 @@ def main() -> int:
         v = judge(probe, codes, broader)
         rows.append({**probe, "got_codes": codes, "got_broader": broader,
                      "status": status,
-                     **{k: v[k] for k in ("correct", "over_accepted", "under_accepted")}})
+                     **{k: v[k] for k in ("correct", "over_accepted", "under_accepted",
+                                         "demoted")}})
         print(f"  [{i:2d}/{len(PROBES)}] {v['mark']} {probe['class']:8s} "
               f"{probe['concept'][:36]:38s} codes {codes} broader {broader}", flush=True)
 

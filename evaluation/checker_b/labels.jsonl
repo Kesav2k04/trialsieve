@@ -1,0 +1,1 @@
+{"criterion_id": "NCT06717698-INC-03", "label": "FAILS", "model": "gpt-oss-120b-medium", "patient_id": "3d5f91c2-0539-37c9-0691-d2bbe28c78e3", "prompt_version": "checker-b-v1", "reason": "BMI recorded as 19.47 kg/m² on 2021-04-30"}

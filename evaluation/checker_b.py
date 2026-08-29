@@ -1,6 +1,6 @@
 """Checker B: a second, blind labeller.
 
-    python evaluation/checker_b.py --sample 180 --provider gemini --mode record
+    python evaluation/checker_b.py --sample 180 --provider oss --mode record
     python evaluation/checker_b.py --report
 
 Gold labels authored by one route are gold labels with one route's blind spots in
@@ -310,7 +310,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", type=int, default=180)
     ap.add_argument("--seed", type=int, default=4242)
-    ap.add_argument("--provider", default="gemini", choices=sorted(PROVIDERS))
+    ap.add_argument("--provider", default="oss", choices=sorted(PROVIDERS))
     ap.add_argument("--model", default=None)
     ap.add_argument("--mode", default="record", choices=["record", "replay", "live"])
     ap.add_argument("--run", default="runs/checker_b")
