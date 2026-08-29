@@ -1,7 +1,7 @@
 """Run every arm over the panel and write one row per patient-criterion cell.
 
     python scripts/run_arms.py --run runs/tierB --arms TS,B0,B1 --k 0
-    python scripts/run_arms.py --run runs/tierB --arms B2 --patients 15 --k 0
+    python scripts/run_arms.py --run runs/tierA --arms B2 --patients 10 --tag b2_10p
 
 TrialSieve and the deterministic controls run over the whole panel because they
 cost nothing per patient. B2 and B3 run over a seeded uniform sample, because

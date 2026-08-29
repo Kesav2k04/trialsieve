@@ -341,9 +341,17 @@ before-and-after number in this document could have moved for that reason.
 **What changed.** Two things, and the second is the one that matters.
 
 The request layer now survives a transient failure: 429, 500, 502, 503, 504 and
-529 are retried up to four attempts with backoff. A 4xx that is not 429 is not
-retried, because the request was rejected for being wrong and sending it again
-sends the same wrong request.
+529 are retried up to **six** attempts, backing off 2, 6, 15, 30 then 60 seconds.
+A 4xx that is not 429 is not retried, because the request was rejected for being
+wrong and sending it again sends the same wrong request.
+
+This entry said four until it was audited. The budget was widened to six in
+commit `7e0faaa`, after a `TransportError` still got through during the Checker B
+run, and the entry was not updated with it. The code even carries a comment at
+`src/trialsieve/llm.py` saying "Six attempts, not four" and explaining why, so
+the change was documented in the place a reader is least likely to look and
+contradicted in the place they are most likely to. `TRANSPORT_ATTEMPTS` and
+`TRANSPORT_BACKOFF` are the authority.
 
 And the retries are recorded as a **separate event kind**. A trajectory already
 had `retry`, meaning the model returned something the validator rejected and was

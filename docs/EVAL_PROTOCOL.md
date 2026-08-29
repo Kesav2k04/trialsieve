@@ -10,6 +10,62 @@ report.
 
 ---
 
+## Amendments
+
+**Registering a protocol is worth nothing if the protocol is quietly edited to match
+what happened.** So the body below is left as it was written, and every place the
+build departed from it is recorded here instead, with the reason. A reader comparing
+this document to the repository will find these five differences and no others; if
+they find a sixth, this list is the thing that is wrong.
+
+**A1, 2026-08-29. Blindness is no longer a git fact, and the claim it replaces was
+weaker.** Section 6 says Checker B's labels are committed before any commit
+containing system output, so the ordering is checkable with `git log`. That was true
+when it was written and stopped being true: B and the scored compile ended up running
+concurrently on one machine, so commit order now records which process finished first
+and nothing else. The replacement is stronger rather than weaker. Blindness is not
+about when a file was written, it is about what was in the prompt, and every one of
+B's calls is recorded in full. `python scripts/verify.py blind` searches every
+recorded B request for the predicate IR vocabulary, the predicate digests, and
+distinctive source lines from the gold answer file, and refuses to report a pass if
+any of those search sets comes back empty. Read that check, not section 6.
+
+**A2, 2026-08-29. Three trials are segmented and scored, not eight.** Section 2 says
+8 trials and "all criteria are segmented". Five of the eight were moved to a
+development split, recorded in `docs/DEV_SPLIT.md` and committed before the first
+prompt edit, so that prompts could be iterated against something without touching the
+held-out set. Those five have no gold labels and never will. The held-out set is
+three trials and 40 criteria. The change makes the evaluation smaller and the
+held-out claim stronger, and it is the reason the coverage figure rests on 40
+criteria rather than a larger number.
+
+**A3, 2026-08-29. There is no hand-authored adversarial patient set, so there is no
+adversarial stratum.** Sections 2 and 5 register one, and the bootstrap is described
+as stratified by corpus across Synthea, adversarial and degraded. It was not built.
+The bootstrap resamples unique criteria and patients over the Synthea panel only, and
+`evaluation/score.py` does what is reported rather than what was registered. This is
+a capability that was registered and not delivered, which is a smaller claim than the
+protocol makes, and saying so is cheaper than the alternative.
+
+**A4, 2026-08-29. Checker B labels are not human-adjudicated.** Section 6 says every
+B label is human-adjudicated with a rationale logged per case. No human adjudicated
+anything. `evaluation/checker_b.py` states the design plainly in its own docstring:
+where A and B disagree, the disagreement is published as the label noise floor rather
+than resolved. Adjudication would need a clinician, this project has none, and an
+adjudication performed by the author would be one more model-shaped opinion wearing a
+label it had not earned. The disagreement rate is reported as what it is.
+
+**A5, 2026-08-29. B1 was added after registration and is labelled exploratory.** The
+arm table below lists B0, B2, B3 and TS. A fourth baseline, B1 (demographics only),
+was added because B0 turned out to be too weak to be informative: it fails everyone,
+so beating it says almost nothing. B1 answers only the criteria that age and sex can
+settle and abstains on the rest, which is the cheapest defensible system somebody
+could actually build. It is not part of the registered primary comparison and
+`results/RESULTS.md` reports it beside the registered arms rather than in place of
+them. B3 was not run.
+
+---
+
 ## 1. What is being claimed
 
 A clinical research coordinator has a panel of candidate patients and a protocol. The

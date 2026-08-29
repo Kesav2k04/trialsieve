@@ -26,8 +26,22 @@ no `make` and the reproduction should not depend on one.
 
 The patient panel and the trial records are committed, so there is no 95 MB
 download and no Java runtime in the path. `data/vendor/panel_provenance.json`
-carries the source URL and the sha256 of the archive they were built from, and
-`python run.py panel` rebuilds them from that archive if you want to check.
+carries the source URL and the sha256 of the archive they were built from.
+
+Which of those files has a generator, precisely, because "it can be rebuilt" is
+the kind of sentence that goes stale without anyone noticing:
+
+| file | rebuilt by |
+|---|---|
+| `panel.jsonl.gz`, `panel_provenance.json` | `python run.py panel`, from the pinned archive |
+| `panel_code_counts.json` | `python scripts/build_panel_counts.py`, from the panel. `--check` recomputes and exits non-zero if the committed file disagrees. |
+| `terminology_catalog.json` | **nothing in this repository.** It was derived from the same pinned archive, before the panel was cut, and the source patient bundles are not vendored. Its contents are checkable against the panel (every code the panel carries appears in it) but it cannot be regenerated here. |
+| `trials/`, `trials_index.json` | `python scripts/fetch_trials.py`, from ClinicalTrials.gov API v2 |
+
+That third row is a real gap and it is listed rather than glossed. A committed
+artifact with no generator is the one that goes stale silently: `panel_code_counts.json`
+did exactly that, listing 674 codes for a panel carrying 677, and the missing entry
+was read as a count of zero by the document a reviewer signs.
 
 ## What `reproduce` does, in order
 
