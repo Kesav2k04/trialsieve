@@ -69,6 +69,52 @@ def _outcome(final: dict) -> str:
     return "done"
 
 
+def excerpt(path: Path, context: int = 1) -> str:
+    """The events that make a trajectory worth reading, and their neighbours.
+
+    Not a tail. The end of a compiler trajectory is the predicate it settled on,
+    which is the least interesting part: it is the same thing the compiled file
+    already contains. What is worth seeing is the middle, where the validator
+    rejected an answer and the exact error text went back to the model.
+
+    So this selects the interesting events, keeps one event either side of each
+    for context, and says in the header how many of the total it kept. A reader
+    who suspects the selection is flattering can render the whole file, and the
+    line that tells them how is printed with it.
+    """
+    events = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines()
+              if x.strip()]
+    keep: set[int] = set()
+    for i, e in enumerate(events):
+        if e["event"] in INTERESTING:
+            for j in range(max(0, i - context), min(len(events), i + context + 1)):
+                keep.add(j)
+    if not keep:
+        keep = set(range(min(len(events), 12)))
+
+    L = [f"# {path.stem}", "",
+         f"{len(keep)} of {len(events)} events. The ones where something went wrong, "
+         f"plus one either side.",
+         f"Whole log: `python -c \"from trialsieve.trace import render_markdown as r; "
+         f"print(r(r'{path.as_posix()}'))\"`", ""]
+    last = -2
+    for i in sorted(keep):
+        if i > last + 1:
+            L.append(f"...  {i - last - 1} event(s) omitted  ...")
+        last = i
+        e = events[i]
+        L.append(f"### {i + 1}. {e['event']}")
+        for k, v in e.items():
+            if k in ("event", "t"):
+                continue
+            text = v if isinstance(v, str) else json.dumps(v, ensure_ascii=False)
+            if len(text) > 700:
+                text = text[:700] + f"  ... [{len(text) - 700} more characters]"
+            L.append(f"{k}: {text}")
+        L.append("")
+    return chr(10).join(L)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
@@ -114,7 +160,7 @@ def main() -> int:
     if a.show_worst:
         worst = rows[0]
         src_file = src / Path(worst["md"]).with_suffix(".jsonl")
-        print(render_markdown(src_file))
+        print(excerpt(src_file))
         return 0
     tot = {k: sum(r[k] for r in rows) for k in
            ("events", "llm_calls", "tool_calls", "validation_errors", "retries",
