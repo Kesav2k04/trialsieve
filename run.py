@@ -111,11 +111,24 @@ def t_reproduce(run: str = RUN) -> None:
     banner("run the arms")
     sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "TS,B0,B1")
 
+    banner("audit for recall")
+    sh(PY, "scripts/contamination.py", "--run", run)
+
+    banner("regenerate the documents that quote numbers")
+    sh(PY, "scripts/counterexample.py", "--run", run, "--mode", "replay")
+    sh(PY, "scripts/worklist.py", "--run", run, "--out", "docs/sample_worklist.md")
+    sh(PY, "scripts/trajectories.py", "--run", run)
+
     banner("score and report")
     sh(PY, "scripts/report.py", "--run", run, "--out", "results")
 
     t_verify(run)
     t_diff()
+
+
+def t_contamination() -> None:
+    """The recall audit on its own. Free, deterministic, no model call."""
+    sh(PY, "scripts/contamination.py", "--run", RUN)
 
 
 def _canonical(p: Path) -> str:
@@ -217,6 +230,7 @@ def t_clean() -> None:
 
 TARGETS = {
     "check": t_check,
+    "contamination": t_contamination,
     "environment": t_environment,
     "reproduce": t_reproduce,
     "verify": t_verify,

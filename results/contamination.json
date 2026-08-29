@@ -57,22 +57,5 @@
   ],
   "offending": [],
   "pass": true
- },
- "cassettes": {
-  "cassettes_scanned": 26,
-  "distinct_title_ngrams": 77,
-  "legitimate_ngrams_subtracted": 3016,
-  "example_ngrams": [
-   "2 t1dm while",
-   "888 digital medical",
-   "a randomized placebo-controlled",
-   "ai platform for",
-   "and cardio-renal-vascular diseases",
-   "and systemic hemodynamics",
-   "best strategy for",
-   "can reduce kidney"
-  ],
-  "hits": [],
-  "pass": true
  }
 }

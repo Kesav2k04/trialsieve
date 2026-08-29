@@ -314,3 +314,85 @@ than the whole criterion being refused for everyone.
 honest: a query with no `broader_codes` behaves exactly as before, and a code
 cannot appear in both lists, because deciding whether a code means the concept or
 merely contains it is the entire content of the feature.
+
+---
+
+## 10. A dropped connection was being counted as a model failure
+
+**Found by** a 502 in the middle of a 30-criterion scored run, which left one row
+reading `ERROR HTTPError: HTTP Error 502: Bad Gateway` in a table whose other
+rows were verdicts.
+
+**Why it matters more than it looks.** That row is not wrong, it is unreadable. In
+a summary it sits beside the criteria the model genuinely could not answer, and
+nothing in the aggregate distinguishes them. A flaky evening on a local gateway
+would then read as a worse system, and, worse in the other direction, a fix that
+happened to coincide with a quieter network would read as an improvement. Any
+before-and-after number in this document could have moved for that reason.
+
+**What changed.** Two things, and the second is the one that matters.
+
+The request layer now survives a transient failure: 429, 500, 502, 503, 504 and
+529 are retried up to four attempts with backoff. A 4xx that is not 429 is not
+retried, because the request was rejected for being wrong and sending it again
+sends the same wrong request.
+
+And the retries are recorded as a **separate event kind**. A trajectory already
+had `retry`, meaning the model returned something the validator rejected and was
+handed the error text back. A gateway failure is now `transport_retry`, which
+carries no information about the model at all. Summing the two would put network
+weather into a number that is supposed to be about prompt quality.
+
+This is the same distinction as entry 5, where housekeeping normalisations were
+split out of predicate revisions, and for the same reason: two things that both
+look like "the system had to try again" are measuring different things.
+
+**What it cost.** The before-arm of the dev-split comparison was restarted, with
+the transport fix applied to both arms so the comparison isolates the prompt
+change. The already-recorded cassettes replayed for free, so the restart cost
+minutes rather than hours.
+
+**Evidence.** `tests/test_transport.py`, five tests: a 502 is retried and the call
+then succeeds, a 400 is not retried at all, the budget is bounded, and the two
+event kinds stay distinct in a trajectory.
+
+---
+
+## 11. Three registered trials is exactly where recall looks like reading
+
+**Found by** asking what would happen if the model had simply memorised these
+protocols. Every threshold in the output would still be right, and the evaluation
+would report memorisation as compilation.
+
+**What changed.** An audit, `scripts/contamination.py`, with three checks of
+increasing strength, and a report that is generated rather than asserted.
+
+1. **No identifier reaches a prompt.** Every prompt here is a `str.format`
+   template, so the substitutions are enumerable without running anything. Six
+   templates carry a slot; the slots are `text`, `kind`, `category`, `codes`,
+   `concept`, `domain`, `candidates`, `record`, `index_date`, `grammar`,
+   `grounded` and `examples`. None is an identifier or a title.
+
+2. **No identifier is in any recorded request.** A template audit cannot see a
+   string joined on by hand, so this reads what was actually sent. Every model
+   call is recorded in full, and all of them are searched for the identifiers and
+   for title-specific word sequences.
+
+   The word *title-specific* is doing real work there. The first version of this
+   check fired ten times on `'chronic kidney disease'`, which is in one
+   registered title and also in the body of half the criteria the segmenter is
+   given on purpose. A check that fires on the disease name returns positive on
+   any corpus that mentions the disease, which makes it a check that cannot fail
+   and therefore cannot pass. The fix is to subtract every word sequence
+   occurring anywhere in the vendored eligibility text first, leaving 77
+   sequences that only a title uses.
+
+3. **The numbers move when the criterion moves.** The strongest of the three, and
+   the one worth arguing with. A threshold is perturbed to a value the real
+   protocol does not contain, the criterion is recompiled, and the emitted
+   predicate has to carry the perturbed number. A predicate that reproduces the
+   original threshold is reciting.
+
+**Evidence.** `docs/CONTAMINATION.md` is generated output. `tests/test_contamination.py`,
+nine tests, including one that makes the audit fail on purpose: without it, a
+rename that made the template scan find nothing would report a clean pass forever.

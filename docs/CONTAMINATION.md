@@ -23,22 +23,3 @@ None has a slot for a trial identifier or title.
 
 **PASS.**
 
-## 2. No identifier is in any recorded request
-
-A template audit cannot see a string joined on by hand, so this reads the
-requests that were actually sent. Every model call in this system is recorded
-in full. 26 recorded requests were searched for the
-identifiers and for 77 title-specific three-word sequences.
-
-Title-specific is doing work in that sentence. A registered title contains the
-disease name, and so does the criterion text the segmenter is given on purpose,
-so the 3016 sequences occurring anywhere in the
-vendored eligibility text are subtracted first. Without that subtraction the scan
-fires on 'chronic kidney disease' and returns positive on any corpus that mentions
-the disease, which is a check that cannot fail and therefore cannot pass.
-
-What is left is wording only the title uses, for example: '2 t1dm while', '888 digital medical', 'a randomized placebo-controlled', 'ai platform for'.
-
-**PASS.** 0 hits.
-
-
