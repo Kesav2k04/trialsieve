@@ -750,3 +750,58 @@ event kind the recorder offers, writes it, reads it back, and renders it: 24
 tests covering the method surface, dense sequence numbering, LF line endings, the
 `kind` payload collision that `_add` is positional-only to prevent, and that the
 renderer emits every kind rather than silently dropping one.
+
+## 18. The strongest check in the project had never once run
+
+**Found by** running `scripts/contamination.py --counterfactual` for the first
+time on the held-out run, and reading the last line of its own report:
+
+    **0 of 0 follow the perturbation. 0 of 0 reproduce the original number.**
+
+**Why that line is the whole problem.** Check 3 is the one this project leans on
+hardest. Three registered trials with public identifiers is exactly the setup
+where a compiler that memorised a protocol produces perfect output, so the
+argument that the model reads rather than recites rests on moving a threshold and
+requiring the predicate to move with it. "0 of 0" is a ratio over an empty
+denominator. It renders as a clean result and it means nothing happened.
+
+**Three defects, stacked, each hidden by the one in front of it.**
+
+1. **The record had the wrong shape.** The counterfactual built its shadow
+   criterion with `source_text` only. `compile_criterion` renders its plan prompt
+   with `PLAN.format(**criterion)` and `PLAN` contains `{text}`. Every row raised
+   `KeyError: 'text'`.
+
+2. **The return value was a pair.** `compile_criterion` returns
+   `(record, trajectory)`. The loop called `.get` on the tuple. With defect 1
+   fixed, every row raised `'tuple' object has no attribute 'get'` instead. The
+   `except Exception` around the call turned both into `status: error` and the
+   report carried on.
+
+3. **The edit broke words.** With both fixed, the first row came back `refused`,
+   and the reason said the model could not code `T2.7DM`. The number regex had
+   matched the `2` inside `T2DM`. A perturbation that damages a term tests the
+   compiler's tolerance for nonsense rather than its willingness to read, and the
+   refusal it earns is then counted against it. Candidates are now required to be
+   flanked by non-letters, so `T2DM`, `HbA1c`, `CKD3` and `COVID19` are left alone.
+
+**Why none of it was visible.** The loop caught every exception into a row and the
+run exited 0, because the exit code only considered checks 1 and 2. So a script
+whose headline check had never executed printed a report and returned success.
+This is the third instance in this changelog of the same shape, after entry 15's
+blind check and its `run.py diff`: **a check that did not run and a check that
+found nothing print the same thing.**
+
+**What changed.** Both bugs fixed. The perturbation skips numbers inside a term.
+The failure path now records `traceback.format_exc()` rather than only
+`type(exc).__name__: exc`, which is what turned defect 2 from an afternoon into a
+minute. The progress line prints the reason as it goes instead of holding it until
+the JSON is written at the end. When nothing compiles, the report says **NOT
+MEASURED** and names how many attempts raised, instead of printing a ratio. And
+the counterfactual is now part of the exit code, so a run that measured nothing
+fails.
+
+**Evidence.** `tests/test_perturb.py`, five tests: that a digit inside a term is
+never moved, that a standalone threshold is, that the largest number is the one
+chosen rather than an incidental small one, that text with no safe candidate
+declines rather than guessing, and that the new value is never the old one.
