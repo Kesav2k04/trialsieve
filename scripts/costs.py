@@ -74,10 +74,39 @@ def rows() -> list[dict]:
         "the only step that reads a protocol")
     add("segmenter, 3 trials", read(ROOT / "results" / "segmentation.json"),
         "measured separately, not in the scored path")
+    # The extra compilation seeds. The protocol registers at least three, and a
+    # cost table that shows only the scored one understates the work behind the
+    # noise floor by two thirds.
+    for seed in (8, 9):
+        p = ROOT / "runs" / "tierA" / "compiled" / f"criteria_seed{seed}.json"
+        if p.exists() or seed == 8:
+            add(f"recompile under seed {seed}, for the noise floor", read(p),
+                "same criteria, different compilation randomness")
+
     for tag in ("before", "after"):
         add(f"vocabulary probe, {tag}",
             read(ROOT / "runs" / f"probe-{tag}" / "probe.json"),
             "21 concepts, on neither evaluation split")
+    add("vocabulary probe, weak model",
+        read(ROOT / "runs" / "probe-weak" / "probe.json"),
+        "the same 21 concepts on a local 8B, ran on this machine")
+
+    # The three checks that cost model calls. Each one is cited in the writeup,
+    # so leaving it out of the cost table would make the total a smaller number
+    # than the work it describes.
+    cont = read(ROOT / "results" / "contamination.json")
+    if cont and cont.get("counterfactual"):
+        cf = cont["counterfactual"]
+        out.append({"step": "counterfactual thresholds, contamination check 3",
+                    "calls": (cf.get("usage") or {}).get("calls", 0),
+                    "hits": (cf.get("usage") or {}).get("cassette_hits", 0),
+                    "pt": (cf.get("usage") or {}).get("prompt_tokens", 0),
+                    "ct": (cf.get("usage") or {}).get("completion_tokens", 0),
+                    "wall": cf.get("wall_s") or 0.0,
+                    "model": cf.get("model", ""),
+                    "note": f"{cf.get('n_attempted', 0)} perturbed criteria recompiled"})
+    add("critic probe, planted defects", read(ROOT / "results" / "critic_probe.json"),
+        "one call per defect class plus an unmutated control")
 
     for f in sorted((ROOT / "runs" / "tierA" / "cells").glob("meta_*.json")):
         blob = read(f)

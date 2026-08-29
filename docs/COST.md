@@ -15,10 +15,14 @@ call, and its wall clock is seconds.
 |---|---|---|---|---|---|---|
 | compile the held-out protocols, 40 criteria | _not run yet_ | | | | | |
 | segmenter, 3 trials | 3 | 0 | 3,362 | 3,929 | 4 min 15 s | $0.01 |
+| recompile under seed 8, for the noise floor | _not run yet_ | | | | | |
 | vocabulary probe, before | 42 | 36 | 14,333 | 8,276 | 9 min 50 s | $0.02 |
 | vocabulary probe, after | 42 | 38 | 22,981 | 8,493 | 7 min 58 s | $0.03 |
+| vocabulary probe, weak model | 42 | 0 | 26,753 | 7,184 | 5 min 21 s | $0.03 |
+| counterfactual thresholds, contamination check 3 | 5 | 4 | 3,832 | 719 | 0 s | under a cent |
+| critic probe, planted defects | _not run yet_ | | | | | |
 | second blind labeller, Checker B | _not run yet_ | | | | | |
-| **total** | **87** | | **40,676** | **20,698** | **22 min 02 s** | **$0.06** |
+| **total** | **134** | | **71,261** | **28,601** | **27 min 23 s** | **$0.09** |
 
 The right-hand column is an estimate at a mid-tier hosted model at $0.30 in / $2.50 out per million tokens. It is not what this
 run cost. This ran on a locally authenticated vendor CLI on a subscription, so
