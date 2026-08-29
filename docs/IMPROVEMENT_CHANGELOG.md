@@ -12,6 +12,39 @@ of them raised an error. Each would have produced a plausible result with nothin
 in the output to say it was wrong. That is the failure mode this project is about,
 and it turns out to apply to the project itself.
 
+## What the numbers did when the measurements were fixed
+
+Most of the entries below are defects in the system. A handful are defects in the
+way the system was being *measured*, and those are the ones with two numbers: what
+the repository reported before, and what it reports now. Both were measured on the
+same data. Neither is an estimate.
+
+| what was being measured | reported before | reports now | where to check |
+|---|---|---|---|
+| label disagreement floor for this panel | 10.6% | **2.3%** (95% CI 1.2 to 3.6) | `results/results.json`, `label_noise_floor` against `groups.k0_seed7.label_floor_poststratified` |
+| published differences that floor called uninterpretable | 2 of 6 | **0 of 6** | the `vs label floor` column, `results/RESULTS.md` |
+| defect classes the critic probe ever planted | 3 of 5 | **5 of 5** | `by_class` in `results/critic_probe.json` |
+| critic catch rate, absence defects | never planted | **1 of 3** | same file |
+| critic catch rate, every other class | 9 of 9 | **15 of 15** | same file |
+| the B2 comparison, the arm the protocol calls the one that matters | run, never compared | **-0.4050 SER, CI [-0.5550, -0.2550]** | the B2 group in `results/RESULTS.md` |
+| criteria that did not compile | 22, as one number | **21 refusals and 1 lost to the validator** | "What did not compile, and why", `results/RESULTS.md` |
+| broader-only codes used as exact codes | not checked | **2, both named** | `python scripts/grounding_audit.py --run runs/tierA` |
+| narration lines that reached a frame | 24 of every 30 | **30 of 30** | `tests/test_video_geometry.py`, measured in a browser |
+| eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
+
+One row that is **not** in this table: `runs/probe-weak/probe.json` scores 1 of 6
+on broader-only concepts against 6 of 6 for `runs/probe-before/probe.json`. That
+pair is a local 8B model against a frontier one on the same 21 concepts, so it
+measures the model and not this repository's measurements, and putting it here
+would have read as a fix that never happened.
+
+Read the first column, not the third. Every "before" in this table was a number
+this repository published, in a document that passed its own gates, with a test
+suite green. The improvement is not that the numbers got better. Two of them got
+worse: the label floor dropped, which turned two comparisons TrialSieve loses from
+uninterpretable into measured losses, and the critic's absence rate fell from an
+implied 100% to 1 in 3. The improvement is that they became capable of being wrong.
+
 ---
 
 ## 1. A count answered `0` when the record was silent
