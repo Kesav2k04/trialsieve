@@ -87,6 +87,15 @@ protocol text ──▶ [segmenter] ──▶ [grounder] ──▶ [compiler] �
    385 patients ────────────────────────────────▶ [engine, no model] ──▶ worklist
 ```
 
+**The scored pipeline starts at the compiler, not at the segmenter.** The
+segmenter runs and its output is measured in `docs/SEGMENTATION.md`, but the
+criterion set every arm is scored on is hand-authored, in
+`evaluation/gold/criteria_set.py`, so that arms are compared on verdicts rather
+than on how each of them happened to cut the protocol into pieces. That choice
+costs something and the cost is published: the segmenter produced 65 criteria
+across the three trials and the gold set keeps 40, so coverage is reported against
+both denominators in `results/RESULTS.md` and the registered one is 65.
+
 **Compilation happens once per criterion. Execution happens once per patient and
 calls no model at all.** Three things follow.
 
