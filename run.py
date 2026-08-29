@@ -81,9 +81,16 @@ def t_environment() -> None:
         info["git_commit"] = subprocess.run(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True
         ).stdout.strip()
+        # `results/` is what this step writes, so a status that counts it reports
+        # the run's own output as a modification of the tree that produced it,
+        # and every published record said dirty on a clean checkout. What the
+        # reader needs is whether the INPUTS matched the named commit, so the
+        # output directory is excluded and the exclusion is named in the file.
         info["git_dirty"] = bool(subprocess.run(
-            ["git", "status", "--porcelain"], cwd=ROOT, capture_output=True, text=True
+            ["git", "status", "--porcelain", "--", ".", ":(exclude)results"],
+            cwd=ROOT, capture_output=True, text=True
         ).stdout.strip())
+        info["git_dirty_excludes"] = "results/"
     except OSError:
         pass
     out = ROOT / "results" / "environment.json"
@@ -166,6 +173,11 @@ def t_publish(run: str = RUN) -> None:
     against what this wrote. Kept as a separate target so that comparison cannot
     be won by quietly refreshing the baseline.
     """
+    # Rewritten first, not copied as found. The published record is a provenance
+    # claim about the numbers beside it, and the file on disk can predate them by
+    # any number of commits: the first publish froze one naming a commit 15 ahead
+    # of HEAD with a dirty flag, for numbers computed at neither.
+    t_environment()
     for name in ("results.json", "RESULTS.md", "environment.json"):
         src, dst = ROOT / "results" / name, PUBLISHED / name
         if not src.exists():
