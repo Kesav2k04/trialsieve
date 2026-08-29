@@ -216,7 +216,7 @@ A defect in the shared execution engine would cancel between arms and score as a
 which would make the metric blind to exactly the failure modes this project claims to fix.
 So the engine is tested separately, and the gate must pass before any scored run:
 
-about 30 semantic tests covering both boundaries of every date window, both directions of
+the 52 tests in `tests/test_engine.py`, covering both boundaries of every date window, both directions of
 every unit conversion, a parent criterion satisfied by a child code, a missing resource
 yielding INDETERMINATE rather than FALSE, null distinguished from zero, and K3 truth
 tables including `UNKNOWN and FALSE == FALSE`.

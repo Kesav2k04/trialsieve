@@ -71,8 +71,11 @@ def test_reproduce_guide_quotes_the_real_test_count():
                          cwd=ROOT, capture_output=True, text=True).stdout
     ids = [l for l in out.splitlines() if "::" in l]
     total = len(ids)
-    engine = sum(1 for l in ids if l.startswith("tests/test_engine.py")
-                 or l.startswith("tests\test_engine.py"))
+    # The second branch here was written "tests\test_engine.py", which is a tab
+    # followed by est_engine.py, so it never matched anything. Normalising the
+    # separator says what was meant and cannot be mistyped the same way.
+    engine = sum(1 for l in ids
+                 if l.replace(chr(92), "/").startswith("tests/test_engine.py"))
     assert claimed_total == total, (
         f"REPRODUCE.md says {claimed_total} tests, the suite collects {total}")
     assert claimed_engine == engine, (
