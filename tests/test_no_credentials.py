@@ -23,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SELF = Path(__file__).name
+SELF_REL = "tests/" + SELF
 
 #: Each pattern is a secret's shape. The comment is what it is, because a regex
 #: with no explanation is a regex nobody dares delete.
@@ -103,3 +104,44 @@ def test_the_shim_never_writes_an_auth_file_inside_the_repository():
     assert "atexit" in src or "_rm" in src, "nothing removes the copied auth file"
     for bad in ("./auth", "data/auth", 'ROOT / "auth'):
         assert bad not in src, f"the shim writes an auth file into the tree: {bad}"
+
+
+def test_no_credential_is_reachable_anywhere_in_the_history():
+    """A deleted secret is still a published secret.
+
+    The scan above reads the working tree. That is the weaker claim: a key
+    committed once and removed in the next commit is gone from `git grep` and
+    still sitting in the object store, reachable by anyone who clones. For a
+    repository that is about to be handed to strangers, history is the surface
+    that matters.
+
+    Every commit is scanned rather than every blob, which is the same coverage
+    for a linear history and is fast enough to keep in the gate.
+    """
+    import subprocess
+
+    revs = subprocess.run(["git", "rev-list", "--all"], cwd=ROOT,
+                          capture_output=True, text=True, check=True).stdout.split()
+    assert revs, "no commits found; the scan would pass by having nothing to read"
+
+    patterns = "|".join([
+        r"sk-[A-Za-z0-9]{16,}",
+        r"ghp_[A-Za-z0-9]{20,}",
+        r"github_pat_[A-Za-z0-9_]{20,}",
+        r"AIza[A-Za-z0-9_-]{30,}",
+        r"xox[baprs]-[A-Za-z0-9-]{10,}",
+        r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+    ])
+    # `:(exclude)` on this file, for the same reason the tree scan skips SELF.
+    # The positive control a few tests up plants `-----BEGIN RSA PRIVATE KEY-----`
+    # on purpose, and it is in every commit since it was written, so without this
+    # the scan reports 35 hits and every one of them is its own fixture. A scanner
+    # that flags its own test data fails on the day it is added and gets deleted.
+    p = subprocess.run(["git", "grep", "-I", "-n", "-E", patterns, *revs, "--",
+                        f":(exclude){SELF_REL}"],
+                       cwd=ROOT, capture_output=True, text=True)
+    # git grep exits 1 when it finds nothing, which is the outcome we want.
+    hits = [line for line in p.stdout.splitlines() if line.strip()]
+    assert not hits, (
+        f"{len(hits)} credential-shaped string(s) in the history. The first: "
+        f"{hits[0][:160]}")
