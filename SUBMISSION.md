@@ -30,25 +30,39 @@ recorded JSONL, not a reconstruction:
 | adversarial review | `critic_finding` | the counterexample, and whether running it confirmed or dismissed the finding |
 | human checkpoints | `human_checkpoint` | reviewer, role, decision, rationale, and the digest signed |
 
-**Two of those rows describe a mechanism with no instances in the scored run, and
-saying so is part of the deliverable.** A third event kind, `revision`, is empty
-for the same reason and follows from it: a predicate is only revised after a
-confirmed counterexample, so zero findings gives zero revisions necessarily. That
-column exists because changelog entry 5 split it away from `normalisation`,
-precisely so that a run with 6 harness repairs and 0 real revisions could not
-report 6 revisions. It is doing its job by being empty, and the two numbers are
-printed side by side in the index rather than summed.
+**One of those rows describes a mechanism with no instances in the scored run,
+and saying which is part of the deliverable.** The counts below come from
+`python scripts/trajectories.py`, which reads the JSONL rather than being told.
 
-The critic returned OK on every predicate
-it reviewed, so there are no `critic_finding` events in the compile trajectories.
-A component that never fires cannot be told apart from one that does nothing, so
+| event kind | instances in the scored run | where |
+|---|---|---|
+| `critic_finding` | 2 | the compile trajectories, one confirmed by execution and one dismissed by it |
+| `revision` | 1 | the predicate the confirmed counterexample changed |
+| `human_checkpoint` | **0** | nothing in this repository performs one |
+
+Two findings across 18 compiled predicates is a thin sample, and a component that
+fires twice is only marginally more checkable than one that never fires. So
 `evaluation/critic_probe.py` breaks each predicate in a named way and reviews it
-again, and those trajectories are where the findings and the revision path are
-exercised. `docs/CRITIC_PROBE.md` reports the catch rate next to the false alarm
-rate on unmutated controls, because either number alone can be won by a broken
-component.
+again: **9 planted defects, 9 caught, 5 unmutated controls, 0 false alarms**, in
+`docs/CRITIC_PROBE.md`. Both numbers or neither, because a critic that answered
+REVISE to everything would catch every defect and be worthless, and the control
+column is the only thing that separates the two. Those 9 findings are recorded in
+`runs/tierA/trajectories/critic_probe/` and counted separately from the 2 in the
+scored run, rather than summed into one flattering total.
 
-`human_checkpoint` has no instances either, and that one is not going to be fixed
+The `revision` column exists at all because changelog entry 5 split it away from
+`normalisation`, so that a run with 24 harness repairs and 1 real revision could
+not report 25 revisions. The two numbers are printed side by side in the index
+rather than added.
+
+**A note on what was removed.** The index reported 15 critic findings and 3
+revisions until the trajectories behind them were checked. Two thirds of them came
+from compilation seeds 8 and 9, which had replayed seed 7's cassettes rather than
+calling the model, so they were three copies of one run. Deleting the compiled
+output of a run that did not happen is not enough: its trajectories are evidence
+too, and they were being counted. Entry 22 in the changelog has the detail.
+
+`human_checkpoint` is the empty one, and it is not going to be fixed
 by a harness. Signing is a human action, nothing in this repository performs it,
 and no signature exists in this checkout. What is shipped is the mechanism and its
 refusal: `docs/GATE.md` is the gate demonstrated by running into it, exit codes

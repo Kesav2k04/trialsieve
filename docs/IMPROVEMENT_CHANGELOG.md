@@ -1005,3 +1005,56 @@ from the two scored groups rather than typed; `results/results.json` under
 `groups.ow`; `docs/GATE.md` for the refusal; `tests/test_sensitivity_section.py`,
 four tests, one of which fails if any of those figures is ever hand-written back
 into the prose.
+
+## 22. Deleting a run that never happened is not enough
+
+**Found by** rebuilding the trajectory index after the seed fix and reading its
+totals: **15 critic findings, 3 revisions**. Both numbers had roughly tripled and
+nothing in the system had changed to produce them.
+
+**What had happened.** Entry 18's neighbour in this changelog records that `--seed`
+never reached the model, so compilations under seeds 8 and 9 replayed seed 7's
+cassettes and produced byte-identical predicates. When that was found, the fake
+artifacts were deleted: `compiled/criteria_seed8.json`, `criteria_seed9.json`, and
+the cells tagged with those seeds. That felt complete. It was not. Each of those
+runs had also written **114 trajectory files**, and the trajectory index reads the
+directory rather than the compiled output, so it went on counting the findings of
+a run that had made no model call. Every finding in seeds 8 and 9 was the same
+seed 7 finding, recorded three times, and the index summed them.
+
+**Why it mattered more than a wrong number.** The trajectory index is the artifact
+the brief asks for by name. Three copies of one critic finding presented as three
+findings is the difference between "the adversarial review fires occasionally" and
+"it fires routinely", which is exactly the impression a reader would take from a
+count they cannot easily audit. And it inflated in the flattering direction, which
+is the direction that does not get questioned.
+
+**The true counts**, after removing 228 stale files with an mtime predating the
+real seed-8 run:
+
+| | before | after |
+|---|---|---|
+| trajectories | 206 | 92 |
+| model calls | 870 | 469 |
+| critic findings, scored compile | 6 | **2** |
+| critic findings, planted-defect probe | 9 | 9 |
+| predicates revised | 3 | **1** |
+
+**The general shape.** An artifact that derives from a run has more than one
+output, and deleting the one you were looking at leaves the others behind still
+being read. The compiled JSON was the obvious output. The trajectories, the
+cassettes and the cells were all outputs of the same run, and only two of the four
+were cleaned. `scripts/verify.py trajectories` would not have caught it either:
+every one of those stale trajectories matched a real cassette byte for byte,
+because the calls really had been replayed. They were internally consistent
+records of a run that did not happen.
+
+**What changed.** The stale files are gone and `SUBMISSION.md` now states the
+counts as measured, separating the 2 findings in the scored run from the 9 in the
+probe rather than summing them into one total. The 2 confirm the loop fires end to
+end on real work: one finding confirmed by executing the counterexample, one
+dismissed by executing it, and one predicate revised as a result.
+
+**Evidence.** `runs/tierA/trajectories/index.md` and its per-agent counts;
+`python scripts/trajectories.py --run runs/tierA`, which prints the JSON above
+from the JSONL rather than from a stored total.

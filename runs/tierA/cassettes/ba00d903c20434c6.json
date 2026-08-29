@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "ba00d903c20434c6e4ae86987e03b1f0c2d677c1f5f1cab87fe54ec2db0e6a40",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Myocardial infarction\nRecord domain: condition\nMeaning required: diagnosis of myocardial infarction within 6 months prior to index date\n\nCandidate entries from this site's vocabulary:\n          22298006  Myocardial Infarction   (in 7 resources)\n         399211009  History of myocardial infarction (situation)   (in 7 resources)\n   368581000119106  Neuropathy due to type 2 diabetes mellitus (disorder)   (in 9 resources)\n    90781000119102  Microalbuminuria due to type 2 diabetes mellitus (disorder)   (in 1 resources)\n     1551000119108  Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus    (in 5 resources)\n    97331000119101  Macular edema and retinopathy due to type 2 diabetes mellitus (disorde   (in 2 resources)\n          10509002  Acute bronchitis (disorder)   (in 266 resources)\n          65275009  Acute Cholecystitis   (in 2 resources)\n         195662009  Acute viral pharyngitis (disorder)   (in 347 resources)\n          75498004  Acute bacterial sinusitis (disorder)   (in 38 resources)\n         241929008  Acute allergic reaction   (in 6 resources)\n         706870000  Acute pulmonary embolism (disorder)   (in 4 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 354,
+  "latency_s": 37.889,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 945,
+  "text": "```json\n{\n  \"codes\": [\"22298006\"],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"399211009\",\n      \"why\": \"represents a historical finding / personal history situation rather than an acute diagnosis of myocardial infarction\"\n    },\n    {\n      \"code\": \"368581000119106\",\n      \"why\": \"neuropathy due to type 2 diabetes mellitus, unrelated condition\"\n    },\n    {\n      \"code\": \"90781000119102\",\n      \"why\": \"microalbuminuria due to type 2 diabetes mellitus, unrelated condition\"\n    },\n    {\n      \"code\": \"1551000119108\",\n      \"why\": \"nonproliferative diabetic retinopathy due to type 2 diabetes mellitus, unrelated condition\"\n    },\n    {\n      \"code\": \"97331000119101\",\n      \"why\": \"macular edema and retinopathy due to type 2 diabetes mellitus, unrelated condition\"\n    },\n    {\n      \"code\": \"10509002\",\n      \"why\": \"acute bronchitis, unrelated condition\"\n    },\n    {\n      \"code\": \"65275009\",\n      \"why\": \"acute cholecystitis, unrelated condition\"\n    },\n    {\n      \"code\": \"195662009\",\n      \"why\": \"acute viral pharyngitis, unrelated condition\"\n    },\n    {\n      \"code\": \"75498004\",\n      \"why\": \"acute bacterial sinusitis, unrelated condition\"\n    },\n    {\n      \"code\": \"241929008\",\n      \"why\": \"acute allergic reaction, unrelated condition\"\n    },\n    {\n      \"code\": \"706870000\",\n      \"why\": \"acute pulmonary embolism, unrelated condition\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}
