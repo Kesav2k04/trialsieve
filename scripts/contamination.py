@@ -414,6 +414,30 @@ def render(res: dict) -> str:
     return "\n".join(L) + "\n"
 
 
+def failures(res: dict) -> list[str]:
+    """Which checks failed the run. Split out of main so the rule itself can be
+    tested without running the checks, because two of these three branches were
+    added after the exit code was found to be ignoring them.
+    """
+    failed = [k for k in ("templates", "cassettes") if k in res and not res[k]["pass"]]
+    # The counterfactual was outside the exit code, so a run in which every
+    # attempt raised still exited 0 and wrote a document. A check that could not
+    # run is a failure here for the same reason it is in `scripts/verify.py`: it
+    # prints the same zero as a check that ran and found nothing.
+    cf = res.get("counterfactual")
+    if cf is not None and not cf.get("n_compiled"):
+        failed.append("counterfactual (nothing compiled, so nothing was measured)")
+    # Reciting is the signal this check exists for: a predicate still carrying the
+    # original threshold after the criterion was changed read the protocol from
+    # memory rather than from the text in front of it. The report printed that in
+    # bold and the exit code ignored it, so the strongest of the three
+    # contamination checks could not fail the run.
+    if cf is not None and cf.get("n_recites"):
+        failed.append(f"counterfactual ({cf['n_recites']} of {cf.get('n_compiled')} "
+                      "predicates reproduce the original number)")
+    return failed
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
@@ -445,14 +469,7 @@ def main() -> int:
     js.parent.mkdir(parents=True, exist_ok=True)
     js.write_text(json.dumps(res, indent=1) + "\n", encoding="utf-8", newline="\n")
 
-    failed = [k for k in ("templates", "cassettes") if k in res and not res[k]["pass"]]
-    # The counterfactual was outside the exit code, so a run in which every
-    # attempt raised still exited 0 and wrote a document. A check that could not
-    # run is a failure here for the same reason it is in `scripts/verify.py`: it
-    # prints the same zero as a check that ran and found nothing.
-    cf = res.get("counterfactual")
-    if cf is not None and not cf.get("n_compiled"):
-        failed.append("counterfactual (nothing compiled, so nothing was measured)")
+    failed = failures(res)
     print(md)
     print(f"wrote {out} and {js}")
     if failed:

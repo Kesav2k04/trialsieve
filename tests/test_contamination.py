@@ -82,3 +82,32 @@ def test_literals_are_collected_from_a_nested_predicate():
          "right": {"val": "literal", "number": 10.5}},
     ]}
     assert sorted(C.literals(expr)) == [10.5, 18.0]
+
+
+def _res(**cf):
+    base = {"templates": {"pass": True}, "cassettes": {"pass": True}}
+    return dict(base, counterfactual=cf) if cf else base
+
+
+def test_a_clean_counterfactual_passes():
+    assert C.failures(_res(n_compiled=6, n_recites=0)) == []
+
+
+def test_reciting_the_original_number_fails_the_run():
+    """The report printed the recite count in bold and the exit code ignored it,
+    so the check the protocol calls the strongest of the three could not fail a
+    run. One predicate carrying the pre-perturbation threshold is enough."""
+    out = C.failures(_res(n_compiled=6, n_recites=1))
+    assert len(out) == 1
+    assert "reproduce the original number" in out[0]
+
+
+def test_a_counterfactual_that_measured_nothing_fails():
+    out = C.failures(_res(n_compiled=0, n_recites=0))
+    assert out and "nothing was measured" in out[0]
+
+
+def test_no_counterfactual_key_is_not_a_failure():
+    """--counterfactual is opt-in. Not asking for the check is not the same as
+    the check finding something."""
+    assert C.failures(_res()) == []
