@@ -84,13 +84,31 @@ def test_fast_bootstrap_matches_the_slow_one(metric):
     assert fast["ci_high"] == slow["ci_high"]
 
 
-def test_identical_arms_give_an_interval_containing_zero():
-    """An A/A control. If this interval excluded zero the method would be
-    manufacturing differences out of resampling noise."""
+def test_an_arm_against_itself_is_exactly_zero():
+    """A plumbing check, not a control. The same cells on both sides can only
+    give zero, so this proves the pairing lines up and nothing else. It was
+    written as the A/A control, where it could not have failed: the arms were
+    the same list, so no amount of resampling noise could have moved it."""
     a, _ = _panel(n_crit=8, n_pat=25, seed=5, err_a=0.2, err_b=0.2)
     r = paired_bootstrap(a, list(a), metric="ser", b=400, seed=11)
     assert r["observed_difference"] == 0
     assert r["crosses_zero"], r
+
+
+def test_two_arms_of_equal_quality_cross_zero():
+    """The real A/A control: two arms drawn independently at the same error
+    rate, which differ only by noise. If these intervals excluded zero the
+    method would be manufacturing differences out of resampling noise.
+
+    The bar is a rate over ten panels rather than a single one, because a 95
+    percent interval is supposed to miss about one time in twenty and a
+    single-panel assertion would just be a seed that happened to pass."""
+    crossed = 0
+    for seed in range(20, 30):
+        a, b = _panel(n_crit=8, n_pat=25, seed=seed, err_a=0.2, err_b=0.2)
+        r = paired_bootstrap(a, b, metric="ser", b=400, seed=11)
+        crossed += bool(r["crosses_zero"])
+    assert crossed >= 8, f"only {crossed} of 10 equal-quality panels crossed zero"
 
 
 def test_an_incomplete_design_still_works():
