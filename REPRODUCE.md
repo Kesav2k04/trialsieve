@@ -19,7 +19,7 @@ no `make` and the reproduction should not depend on one.
 |---|---|
 | Python | 3.10 or newer. Developed on 3.14.2, CI runs 3.10 and 3.13. |
 | Install | `pytest`, for the test gate. Nothing else. |
-| Runtime dependencies | none. Every import in `src/`, `evaluation/` and `scripts/` is standard library. |
+| Runtime dependencies | none. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. The one exception is the video build, `scripts/make_video.py`, which uses a speech synthesiser and a browser and is not on this path. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
 | Disk | about 40 MB, most of it the vendored patient panel. |
 | API key | not needed to reproduce. Needed only to record new model calls. |

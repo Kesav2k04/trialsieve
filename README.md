@@ -176,8 +176,10 @@ python -m pip install pytest      # the only install
 python run.py reproduce           # offline, no API key, no model
 ```
 
-Zero runtime dependencies: every import in `src/`, `evaluation/` and `scripts/` is
-standard library. Full guide, including what each verification step rules out:
+Zero runtime dependencies: every import in `src/`, `evaluation/`, `scripts/` and
+`tools/` is standard library, and `tests/test_dependencies.py` fails if that stops
+being true. The video build is the one exception and is not on this path. Full
+guide, including what each verification step rules out:
 [REPRODUCE.md](REPRODUCE.md).
 
 The recorded model calls are cassettes keyed on the sha256 of the full canonical
