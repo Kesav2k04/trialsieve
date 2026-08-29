@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9a40b61a4b23d54546b390ed9f267b09675869a0c9ddb343a6c49ac5e0ecbc65",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Anaemia\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 164,
+  "latency_s": 3.104,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 221,
+  "text": "{\n  \"names\": [\n    \"Iron deficiency anemia\",\n    \"Vitamin B12 deficiency anemia\",\n    \"Folate deficiency anemia\",\n    \"Aplastic anemia\",\n    \"Hemolytic anemia\",\n    \"Sickle cell anemia\",\n    \"Thalassemia\",\n    \"Anemia of chronic disease\",\n    \"Anemia, aplastic\",\n    \"Anemia, hemolytic\",\n    \"Anemia, sickle cell\",\n    \"Anemia, thalassemia\"\n  ],\n  \"note\": \"These are common sub-types of anemia that a medical record might code instead of the general term.\"\n}"
+ }
+}

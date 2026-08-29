@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b4b4564e8d962dd3d6bc1747b9941c061b60823a3eb08425a52409b8394dd55b",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Oral glucose tolerance test\nRecord domain: observation\nMeaning required: as a trial protocol would mean it\n\nCandidate entries from this site's vocabulary:\n            5792-7  Glucose [Mass/volume] in Urine by Test strip   (in 254 resources)\n           25428-4  Glucose [Presence] in Urine by Test strip   (in 254 resources)\n            2339-0  Glucose   (in 2521 resources)\n            2345-7  Glucose [Mass/volume] in Serum or Plasma   (in 181 resources)\n            5797-6  Ketones [Mass/volume] in Urine by Test strip   (in 254 resources)\n            5803-2  pH of Urine by Test strip   (in 254 resources)\n            5804-0  Protein [Mass/volume] in Urine by Test strip   (in 254 resources)\n           74006-8  Weight difference [Mass difference] --pre dialysis - post dialysis   (in 1079 resources)\n           20454-5  Protein [Presence] in Urine by Test strip   (in 254 resources)\n           20505-4  Bilirubin.total [Mass/volume] in Urine by Test strip   (in 254 resources)\n            2514-8  Ketones [Presence] in Urine by Test strip   (in 254 resources)\n            5794-3  Hemoglobin [Presence] in Urine by Test strip   (in 254 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 356,
+  "latency_s": 60.321,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 942,
+  "text": "```json\n{\n  \"codes\": [],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"5792-7\",\n      \"why\": \"urine test strip glucose; different specimen and not an oral glucose tolerance test\"\n    },\n    {\n      \"code\": \"25428-4\",\n      \"why\": \"urine test strip glucose presence; different specimen and not an oral glucose tolerance test\"\n    },\n    {\n      \"code\": \"2339-0\",\n      \"why\": \"isolated blood glucose measurement; does not denote an oral glucose challenge or tolerance protocol\"\n    },\n    {\n      \"code\": \"2345-7\",\n      \"why\": \"isolated serum/plasma glucose measurement; does not denote an oral glucose challenge or tolerance protocol\"\n    },\n    {\n      \"code\": \"5797-6\",\n      \"why\": \"different analyte (ketones in urine)\"\n    },\n    {\n      \"code\": \"5803-2\",\n      \"why\": \"different analyte (urine pH)\"\n    },\n    {\n      \"code\": \"5804-0\",\n      \"why\": \"different analyte (protein in urine)\"\n    },\n    {\n      \"code\": \"74006-8\",\n      \"why\": \"unrelated measurement (pre/post dialysis weight difference)\"\n    },\n    {\n      \"code\": \"20454-5\",\n      \"why\": \"different analyte (protein in urine)\"\n    },\n    {\n      \"code\": \"20505-4\",\n      \"why\": \"different analyte (bilirubin in urine)\"\n    },\n    {\n      \"code\": \"2514-8\",\n      \"why\": \"different analyte (ketones in urine)\"\n    },\n    {\n      \"code\": \"5794-3\",\n      \"why\": \"different analyte (hemoglobin in urine)\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

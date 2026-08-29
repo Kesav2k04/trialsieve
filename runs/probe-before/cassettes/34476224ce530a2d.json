@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "34476224ce530a2d48700b678cb8798de4f3e63f6783d1126599fc5a46398c97",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Metformin\nRecord domain: medication\nMeaning required: as a trial protocol would mean it\n\nCandidate entries from this site's vocabulary:\n            860975  24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet   (in 1030 resources)\n            897718  Verapamil Hydrochloride 40 MG   (in 702 resources)\n            835603  tramadol hydrochloride 50 MG Oral Tablet   (in 93 resources)\n           1094107  Phenazopyridine hydrochloride 100 MG Oral Tablet   (in 35 resources)\n            861467  Meperidine Hydrochloride 50 MG Oral Tablet   (in 24 resources)\n           1049630  diphenhydrAMINE Hydrochloride 25 MG Oral Tablet   (in 21 resources)\n           1014676  cetirizine hydrochloride 5 MG Oral Tablet   (in 12 resources)\n            997488  Fexofenadine hydrochloride 30 MG Oral Tablet   (in 12 resources)\n            997223  Donepezil hydrochloride 10 MG Oral Tablet   (in 3 resources)\n            997501  Fexofenadine hydrochloride 60 MG Oral Tablet   (in 3 resources)\n           1014678  cetirizine hydrochloride 10 MG Oral Tablet   (in 2 resources)\n           1091392  Methylphenidate Hydrochloride 20 MG Oral Tablet   (in 2 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nIf no candidate represents the concept, return an empty list. That is a normal\nand useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 283,
+  "latency_s": 19.688,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 533,
+  "text": "```json\n{\n  \"codes\": [\n    \"860975\"\n  ],\n  \"rejected\": [\n    {\n      \"code\": \"897718\",\n      \"why\": \"different active ingredient (verapamil)\"\n    },\n    {\n      \"code\": \"835603\",\n      \"why\": \"different active ingredient (tramadol)\"\n    },\n    {\n      \"code\": \"1094107\",\n      \"why\": \"different active ingredient (phenazopyridine)\"\n    },\n    {\n      \"code\": \"861467\",\n      \"why\": \"different active ingredient (meperidine)\"\n    },\n    {\n      \"code\": \"1049630\",\n      \"why\": \"different active ingredient (diphenhydramine)\"\n    },\n    {\n      \"code\": \"1014676\",\n      \"why\": \"different active ingredient (cetirizine)\"\n    },\n    {\n      \"code\": \"997488\",\n      \"why\": \"different active ingredient (fexofenadine)\"\n    },\n    {\n      \"code\": \"997223\",\n      \"why\": \"different active ingredient (donepezil)\"\n    },\n    {\n      \"code\": \"997501\",\n      \"why\": \"different active ingredient (fexofenadine)\"\n    },\n    {\n      \"code\": \"1014678\",\n      \"why\": \"different active ingredient (cetirizine)\"\n    },\n    {\n      \"code\": \"1091392\",\n      \"why\": \"different active ingredient (methylphenidate)\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

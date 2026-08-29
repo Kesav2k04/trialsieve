@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "05ee2fc0a5598690ca2eddee61b113e148a9aaf7241f689b09d520b764f9c06e",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Type 2 diabetes mellitus\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 296,
+  "latency_s": 12.274,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 227,
+  "text": "{\n  \"names\": [\n    \"Type 2 diabetes mellitus\",\n    \"Diabetes mellitus type 2\",\n    \"Non-insulin-dependent diabetes mellitus\",\n    \"Adult-onset diabetes\",\n    \"Obesity-related diabetes\",\n    \"Late-onset diabetes\",\n    \"Secondary diabetes (type 2)\",\n    \"Diabetes, gestational (after pregnancy)\",\n    \"Impaired glucose tolerance\",\n    \"Insulin resistance with hyperinsulinemia\",\n    \"Diabetic ketoacidosis\",\n    \"Hyperglycemia\",\n    \"Fasting blood glucose >126 mg/dL (7.0 mmol/L)\",\n    \"Postprandial blood glucose >200 mg/dL (11.1 mmol/L)\",\n    \"Hemoglobin A1c (HbA1c) >6.5%\",\n    \"Oral glucose tolerance test (OGTT) 2-hour plasma glucose >200 mg/dL (11.1 mmol/L)\"\n  ],\n  \"note\": \"These are common terms used to describe Type 2 diabetes mellitus in clinical practice.\"\n}"
+ }
+}

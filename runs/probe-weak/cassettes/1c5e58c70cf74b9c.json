@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "1c5e58c70cf74b9c3edf54c2ab7c5b761674e9b262b2f2a71a3493b7f2b471ed",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Type 1 diabetes mellitus\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 246,
+  "latency_s": 13.688,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 227,
+  "text": "{\n  \"names\": [\n    \"Type 1 diabetes mellitus\",\n    \"Juvenile diabetes\",\n    \"Insulin-dependent diabetes mellitus\",\n    \"Diabetes mellitus type 1\",\n    \"Autoimmune diabetes\",\n    \"Taylor disease (rare)\",\n    \"Bressler syndrome (rare)\",\n    \"O'Brien syndrome (rare)\",\n    \"Garcia-Cazerol syndrome (rare)\",\n    \"Diabetes mellitus due to pancreatic beta cell autoimmunity\",\n    \"Diabetes mellitus caused by destruction of pancreatic beta cells\",\n    \"Diabetes mellitus resulting from lack of insulin production\"\n  ],\n  \"note\": \"Type 1 diabetes mellitus is an autoimmune condition where the body's immune system attacks and destroys the insulin-producing beta cells in the pancreas. This results in little to no insulin production, leading to high blood sugar levels.\"\n}"
+ }
+}

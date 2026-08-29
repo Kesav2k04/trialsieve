@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "f457544f56db97c1e0583d9152a552de6822f6bdc07b47edd7f52d57436c09be",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Urine albumin to creatinine ratio\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 176,
+  "latency_s": 6.639,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 227,
+  "text": "{\n  \"names\": [\n    \"Albumin, Urine (AUR)\",\n    \"Urine Albumin to Creatinine Ratio (UACR)\",\n    \"Microalbumin\",\n    \"Urine Protein to Creatinine Ratio (UPCR)\",\n    \"Spot Urine Test for Albumin\",\n    \"24-Hour Urine Protein:Creatinine Ratio\",\n    \"Urine Dipstick Protein Quantitative\",\n    \"Urine Microalbumin\",\n    \"Urine Albumin, Quantitative\",\n    \"Urine Protein, Quantitative\"\n  ],\n  \"note\": \"These are various names for the same laboratory test, which measures the ratio of albumin to creatinine in a urine sample. This test is used to detect and monitor kidney damage.\"\n}"
+ }
+}

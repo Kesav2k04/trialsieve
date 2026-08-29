@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "881778f3fa3a8cddcb9a93a54983de3c23c2e11381e0802027c7894904ef4727",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Oral glucose tolerance test\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 162,
+  "latency_s": 30.751,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 212,
+  "text": "```json\n{\n  \"names\": [\n    \"Oral glucose tolerance test\",\n    \"Glucose tolerance test\",\n    \"OGTT\",\n    \"GTT\",\n    \"2-hour oral glucose tolerance test\",\n    \"1-hour oral glucose tolerance test\",\n    \"3-hour oral glucose tolerance test\",\n    \"Oral glucose challenge test\",\n    \"OGCT\",\n    \"Glucose post 75g glucose PO\",\n    \"Glucose post 100g glucose PO\",\n    \"Glucose post 50g glucose PO\",\n    \"Glucose tolerance test fasting\",\n    \"2 hour post glucose load\",\n    \"Gestational glucose tolerance screen\"\n  ],\n  \"note\": \"Includes standard diagnostic panels, challenge screens, timed post-load measurements, and standard clinical abbreviations.\"\n}\n```"
+ }
+}

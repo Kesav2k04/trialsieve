@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "4cccdd58b9b68c5e4ef314b5fbfe772beb36a703d495a86610554e948720503b",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Essential hypertension\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 173,
+  "latency_s": 33.426,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 222,
+  "text": "{\n  \"names\": [\n    \"Essential Hypertension\",\n    \"Primary Hypertension\",\n    \"Hypertensive Heart Disease\",\n    \"Malignant Hypertension\",\n    \"Benign Hypertension\",\n    \"White Coat Hypertension\",\n    \"Resistant Hypertension\",\n    \"Systolic Hypertension\",\n    \"Diastolic Hypertension\",\n    \"Isolated Systolic Hypertension\",\n    \"Pulmonary Hypertension\",\n    \"Portal Hypertension\",\n    \"Renovascular Hypertension\",\n    \"Hypertensive Crisis\",\n    \"Chronic Kidney Disease due to Hypertension\"\n  ],\n  \"note\": \"These are the various ways essential hypertension might be recorded in a medical context.\"\n}"
+ }
+}

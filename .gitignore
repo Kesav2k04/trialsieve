@@ -40,6 +40,25 @@ runs/checker_b/*
 !runs/checker_b/cassettes/
 !runs/checker_b/trajectories/
 
+# The grounding probes. `README.md`'s hot take rests entirely on the weak-model
+# run, 14 of 21 against 20 of 21, and the rule that produced those numbers is
+# the vocabulary probe's before and after. All three were excluded by `runs/*`,
+# so a judge cloning this repository got the conclusion and none of the record:
+# the probe agent had zero trajectories and zero cassettes in a clone. A claim
+# whose evidence is not in the submission is a claim, not a result.
+!runs/probe-weak/
+runs/probe-weak/*
+!runs/probe-weak/cassettes/
+!runs/probe-weak/trajectories/
+!runs/probe-before/
+runs/probe-before/*
+!runs/probe-before/cassettes/
+!runs/probe-before/trajectories/
+!runs/probe-after/
+runs/probe-after/*
+!runs/probe-after/cassettes/
+!runs/probe-after/trajectories/
+
 # Cells are one row per patient-criterion pair. Replay regenerates them from the
 # cassettes in seconds, and shipping several hundred thousand rows would bury
 # the things worth reading.

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "d7f9a50fc9c5a7171e0a675df65c7a48a3356cf4249d7d5af7567f982ffa3e65",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Estimated glomerular filtration rate\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 121,
+  "latency_s": 29.655,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 214,
+  "text": "```json\n{\n  \"names\": [\n    \"eGFR\",\n    \"Estimated glomerular filtration rate\",\n    \"Glomerular filtration rate, estimated\",\n    \"eGFR (CKD-EPI)\",\n    \"eGFR (MDRD)\",\n    \"eGFR from creatinine\",\n    \"eGFR from cystatin C\",\n    \"eGFRcr\",\n    \"eGFRcys\",\n    \"eGFRcr-cys\",\n    \"Calculated GFR\",\n    \"Glomerular filtration rate/1.73 sq M.predicted\"\n  ],\n  \"note\": \"Includes standard clinical laboratory names, abbreviations, and equation/analyte-specific variants for estimated GFR.\"\n}\n```"
+ }
+}

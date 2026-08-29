@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "2a6b73e5c94d858dba53cc0b9c385c2a5451cfe33cad2b79bb95246b800800f2",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Essential hypertension\nRecord domain: condition\nMeaning required: as a trial protocol would mean it\n\nCandidate entries from this site's vocabulary:\n          59621000  Hypertension   (in 141 resources)\n          95417003  Primary fibromyalgia syndrome   (in 2 resources)\n         201834006  Localized, primary osteoarthritis of the hand   (in 11 resources)\n     5251000175109  Received certificate of high school equivalency (finding)   (in 116 resources)\n         224295006  Only received primary school education (finding)   (in 54 resources)\n         254837009  Malignant neoplasm of breast (disorder)   (in 6 resources)\n         363406005  Malignant tumor of colon   (in 4 resources)\n         109838007  Overlapping malignant neoplasm of colon   (in 2 resources)\n          94260004  Secondary malignant neoplasm of colon   (in 2 resources)\n         314994000  Metastasis from malignant tumor of prostate (disorder)   (in 1 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nIf no candidate represents the concept, return an empty list. That is a normal\nand useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 252,
+  "latency_s": 20.746,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 478,
+  "text": "```json\n{\n  \"codes\": [\n    \"59621000\"\n  ],\n  \"rejected\": [\n    {\n      \"code\": \"95417003\",\n      \"why\": \"fibromyalgia syndrome, unrelated condition\"\n    },\n    {\n      \"code\": \"201834006\",\n      \"why\": \"osteoarthritis of the hand, unrelated condition\"\n    },\n    {\n      \"code\": \"5251000175109\",\n      \"why\": \"educational attainment finding, not a clinical condition\"\n    },\n    {\n      \"code\": \"224295006\",\n      \"why\": \"educational attainment finding, not a clinical condition\"\n    },\n    {\n      \"code\": \"254837009\",\n      \"why\": \"breast malignancy, unrelated condition\"\n    },\n    {\n      \"code\": \"363406005\",\n      \"why\": \"colon malignancy, unrelated condition\"\n    },\n    {\n      \"code\": \"109838007\",\n      \"why\": \"colon malignancy, unrelated condition\"\n    },\n    {\n      \"code\": \"94260004\",\n      \"why\": \"secondary colon neoplasm, unrelated condition\"\n    },\n    {\n      \"code\": \"314994000\",\n      \"why\": \"metastasis from prostate cancer, unrelated condition\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

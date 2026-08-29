@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "bfbb80f913a495f0a059a3bfe38197b04e0745eb034dfe73bebd1322c787d0a8",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Estimated glomerular filtration rate\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 248,
+  "latency_s": 4.552,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 225,
+  "text": "{\n  \"names\": [\n    \"Estimated Glomerular Filtration Rate (eGFR)\",\n    \"Creatinine Clearance\",\n    \"Serum Creatinine-based Calculation\",\n    \"Modification of Diet in Renal Disease (MDRD) Study Equation\",\n    \"Chronic Kidney Disease Epidemiology Collaboration (CKD-EPI) Equation\",\n    \"Cockcroft-Gault Formula\",\n    \"Simplified Modification of Diet in Renal Disease (sMDRD)\",\n    \"Creatinine Clearance by CKD-EPI\",\n    \"Creatinine Clearance by MDRD\",\n    \"Creatinine Clearance by Cockcroft-Gault\",\n    \"Serum Creatinine-based GFR Estimation\",\n    \"eGFR by CKD-EPI\",\n    \"eGFR by MDRD\",\n    \"eGFR by Cockcroft-Gault\"\n  ],\n  \"note\": \"These are the various methods and equations used to estimate the glomerular filtration rate (GFR) in clinical practice.\"\n}"
+ }
+}

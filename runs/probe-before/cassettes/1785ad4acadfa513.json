@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "1785ad4acadfa51317b69e87441d4e8eb4203a62a261df4c61433c53ab6b3c3c",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Anaemia\nRecord domain: condition\nMeaning required: as a trial protocol would mean it\n\nCandidate entries from this site's vocabulary:\n         271737000  Anemia (disorder)   (in 145 resources)\n         431855005  Chronic kidney disease stage 1 (disorder)   (in 10 resources)\n         431856006  Chronic kidney disease stage 2 (disorder)   (in 1 resources)\n          40055000  Chronic sinusitis (disorder)   (in 88 resources)\n          82423001  Chronic pain   (in 22 resources)\n     1121000119107  Chronic neck pain (finding)   (in 54 resources)\n          53741008  Coronary Heart Disease   (in 25 resources)\n          26929004  Alzheimer's disease (disorder)   (in 17 resources)\n         127013003  Diabetic renal disease (disorder)   (in 11 resources)\n         185086009  Chronic obstructive bronchitis (disorder)   (in 2 resources)\n         235595009  Gastroesophageal reflux disease (disorder)   (in 2 resources)\n         278860009  Chronic low back pain (finding)   (in 91 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nIf no candidate represents the concept, return an empty list. That is a normal\nand useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 301,
+  "latency_s": 19.54,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 491,
+  "text": "```json\n{\n  \"codes\": [\n    \"271737000\"\n  ],\n  \"rejected\": [\n    {\n      \"code\": \"431855005\",\n      \"why\": \"different condition (chronic kidney disease stage 1)\"\n    },\n    {\n      \"code\": \"431856006\",\n      \"why\": \"different condition (chronic kidney disease stage 2)\"\n    },\n    {\n      \"code\": \"40055000\",\n      \"why\": \"different condition (chronic sinusitis)\"\n    },\n    {\n      \"code\": \"82423001\",\n      \"why\": \"different condition (chronic pain)\"\n    },\n    {\n      \"code\": \"1121000119107\",\n      \"why\": \"different condition (chronic neck pain)\"\n    },\n    {\n      \"code\": \"53741008\",\n      \"why\": \"different condition (coronary heart disease)\"\n    },\n    {\n      \"code\": \"26929004\",\n      \"why\": \"different condition (Alzheimer's disease)\"\n    },\n    {\n      \"code\": \"127013003\",\n      \"why\": \"different condition (diabetic renal disease)\"\n    },\n    {\n      \"code\": \"185086009\",\n      \"why\": \"different condition (chronic obstructive bronchitis)\"\n    },\n    {\n      \"code\": \"235595009\",\n      \"why\": \"different condition (gastroesophageal reflux disease)\"\n    },\n    {\n      \"code\": \"278860009\",\n      \"why\": \"different condition (chronic low back pain)\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

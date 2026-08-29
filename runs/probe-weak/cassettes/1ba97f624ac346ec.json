@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "1ba97f624ac346ec6beb0f1f21f514ef8a1690dfac8e7a6e7f706d2f30e2b913",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Metoprolol\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 162,
+  "latency_s": 2.971,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 222,
+  "text": "{\n  \"names\": [\n    \"metoprolol succinate\",\n    \"metoprolol tartrate\",\n    \"metoprolol ertabil\",\n    \"metoprolol tartarate\",\n    \"metoprolol lozenge\",\n    \"metoprolol sandoz\",\n    \"metoprolol teva\",\n    \"metoprolol accord\",\n    \"metoprolol mylan\",\n    \"metoprolol generics\"\n  ],\n  \"note\": \"Metoprolol is a beta blocker used to treat high blood pressure, angina, and heart failure. It is also used to prevent migraine headaches and to slow the heart rate in people with atrial fibrillation.\"\n}"
+ }
+}

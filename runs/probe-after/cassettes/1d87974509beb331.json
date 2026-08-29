@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "1d87974509beb3316503e6ef922dfcc56673dcbd5ea273bb90ac2ec453e3028d",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Essential hypertension\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 129,
+  "latency_s": 25.947,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Essential hypertension\",\n    \"Primary hypertension\",\n    \"Essential (primary) hypertension\",\n    \"Benign essential hypertension\",\n    \"Malignant essential hypertension\",\n    \"Idiopathic hypertension\",\n    \"Systemic arterial hypertension\",\n    \"Isolated systolic hypertension\",\n    \"Labile hypertension\",\n    \"Hypertensive vascular disease\"\n  ],\n  \"note\": \"Includes primary/essential hypertension standard diagnostic terms, clinical subtypes, and common EHR condition descriptions.\"\n}\n```"
+ }
+}

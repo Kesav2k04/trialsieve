@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9e63bf3e5b47008ef91b562faa916f5196d936bb6df4bef8ad31128adf621b3a",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Iron deficiency anaemia\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 219,
+  "latency_s": 4.443,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 225,
+  "text": "{\n  \"names\": [\n    \"Iron deficiency anemia\",\n    \"Anemia, Iron Deficiency\",\n    \"IDA\",\n    \"Microcytic hypochromic anemia\",\n    \"Anemia due to iron deficiency\",\n    \"Congestive anemia\",\n    \"Hemoglobinopathy, Iron-deficient\",\n    \"Iron-deficient erythropoiesis\",\n    \"Iron-deficient red blood cell production\",\n    \"Iron-deficient red blood cells\",\n    \"Low iron levels with anemia\",\n    \"Anemia from lack of iron\",\n    \"Iron-deficiency anaemia, secondary\",\n    \"Anemia, Iron Deficiency, Secondary\",\n    \"Iron deficiency anemia due to chronic disease\"\n  ],\n  \"note\": \"These are general terms for Iron Deficiency Anemia. The specific term used in a medical record may vary.\"\n}"
+ }
+}

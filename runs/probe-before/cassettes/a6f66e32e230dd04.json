@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "a6f66e32e230dd0460d7fe4f011cc9d2e7ca46bf2f3c2670259ca46eeb720445",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Systolic blood pressure\nRecord domain: observation\nMeaning required: as a trial protocol would mean it\n\nCandidate entries from this site's vocabulary:\n            8480-6  Systolic Blood Pressure   (in 6103 resources)\n            2703-7  Oxygen [Partial pressure] in Arterial blood   (in 33 resources)\n            2019-8  Carbon dioxide [Partial pressure] in Arterial blood   (in 33 resources)\n           85354-9  Blood Pressure   (in 6071 resources)\n           55284-4  Blood Pressure   (in 32 resources)\n            8462-4  Diastolic Blood Pressure   (in 6103 resources)\n            8478-0  Mean blood pressure   (in 6 resources)\n            2744-1  pH of Arterial blood   (in 33 resources)\n            2708-6  Oxygen saturation in Arterial blood   (in 247 resources)\n            1960-4  Bicarbonate [Moles/volume] in Arterial blood   (in 33 resources)\n           59408-5  Oxygen saturation in Arterial blood by Pulse oximetry   (in 247 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nIf no candidate represents the concept, return an empty list. That is a normal\nand useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 247,
+  "latency_s": 30.227,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 481,
+  "text": "```json\n{\n  \"codes\": [\"8480-6\"],\n  \"rejected\": [\n    {\"code\": \"2703-7\", \"why\": \"arterial oxygen partial pressure measurement, not blood pressure\"},\n    {\"code\": \"2019-8\", \"why\": \"arterial carbon dioxide partial pressure measurement, not blood pressure\"},\n    {\"code\": \"85354-9\", \"why\": \"blood pressure panel/composite, not specific systolic measurement\"},\n    {\"code\": \"55284-4\", \"why\": \"blood pressure panel/composite, not specific systolic measurement\"},\n    {\"code\": \"8462-4\", \"why\": \"diastolic blood pressure, not systolic\"},\n    {\"code\": \"8478-0\", \"why\": \"mean blood pressure, not systolic blood pressure\"},\n    {\"code\": \"2744-1\", \"why\": \"arterial blood pH, different measurement\"},\n    {\"code\": \"2708-6\", \"why\": \"arterial oxygen saturation, different measurement\"},\n    {\"code\": \"1960-4\", \"why\": \"arterial bicarbonate concentration, different measurement\"},\n    {\"code\": \"59408-5\", \"why\": \"pulse oximetry oxygen saturation, different measurement\"}\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

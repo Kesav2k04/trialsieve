@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "f61f87cb30950265c52424e91ebd26d7835b05592bd5e9ec140391ee714dd022",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Haemodialysis\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 219,
+  "latency_s": 3.943,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 223,
+  "text": "{\n  \"names\": [\n    \"Haemodialysis\",\n    \"Chronic Haemodialysis\",\n    \"Acute Haemodialysis\",\n    \"Haemodialysis Treatment\",\n    \"In-Center Haemodialysis\",\n    \"Home Haemodialysis\",\n    \"Nocturnal Haemodialysis\",\n    \"Sustained Low Efficiency Dialysis (SLED)\",\n    \"Short Daily Haemodialysis (SDH)\",\n    \"Daily Haemodialysis\",\n    \"Haemodialysis Session\",\n    \"Haemodialysis Procedure\",\n    \"Haemodialysis Therapy\",\n    \"Haemodialysis Access\",\n    \"Vascular Access for Haemodialysis\"\n  ],\n  \"note\": \"These are general terms for haemodialysis procedures. The specific terms used may vary based on the clinical setting and patient's condition.\"\n}"
+ }
+}

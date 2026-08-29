@@ -74,6 +74,8 @@ account of intent:
 | `gpt-oss-120b-medium` | 181 | Checker B, the independent second labeller |
 | `granite3.1-dense:8b` | 42 | the weak-model probe in `docs/WEAK_MODEL.md` |
 
+Those are counts of **tracked** cassettes, so a judge can recount them in a clone rather than take the table's word for it: every call behind every number in this submission ships with it, including the grounding probes the hot take rests on.
+
 Checker B runs on a **different model family from the system it labels**, which
 is what makes the label noise floor a measurement rather than a model agreeing
 with itself. `python scripts/verify.py blind` reads that independence out of
@@ -113,12 +115,25 @@ and saying which is part of the deliverable.** The counts below come from
 Two findings across 18 compiled predicates is a thin sample, and a component that
 fires twice is only marginally more checkable than one that never fires. So
 `evaluation/critic_probe.py` breaks each predicate in a named way and reviews it
-again: **9 planted defects, 9 caught, 5 unmutated controls, 0 false alarms**, in
-`docs/CRITIC_PROBE.md`. Both numbers or neither, because a critic that answered
-REVISE to everything would catch every defect and be worthless, and the control
-column is the only thing that separates the two. Those 9 findings are recorded in
-`runs/tierA/trajectories/critic_probe/` and counted separately from the 2 in the
-scored run, rather than summed into one flattering total.
+again: **18 planted defects, 16 caught, 6 unmutated controls, 0 false alarms**,
+in `docs/CRITIC_PROBE.md`. Both numbers or neither, because a critic that
+answered REVISE to everything would catch every defect and be worthless, and the
+control column is the only thing that separates the two. Those 19 findings are
+recorded in `runs/tierA/trajectories/critic_probe/` and counted separately from
+the 2 in the scored run, rather than summed into one flattering total.
+
+The 16 of 18 is not spread evenly, and the shape is the result. The critic
+catches **15 of 15** across boundary, threshold, window and direction, and
+**1 of 3** on `absence`, which is silence in the record becoming proof of
+absence. That is the defect behind 358 of the 424 wrong exclusions in the scored
+run. The reviewer is not weak in general; it is weak in the one place where
+being weak is expensive, which is why the scored run's worst failure got past it.
+
+This paragraph read **9 of 9** until entry 24 of the changelog. The probe picked
+its predicates in file order, none of the first six admitted a window or an
+absence defect, and the reporting loop omitted any class with nothing planted, so
+a perfect score was standing in for two classes that had never been tried. The
+number above is what replaced it.
 
 The `revision` column exists at all because changelog entry 5 split it away from
 `normalisation`, so that a run with 24 harness repairs and 1 real revision could

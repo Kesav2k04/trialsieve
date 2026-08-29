@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "8af73f4cecde0cee1ab1e9fd7d8226649b5554eeabdc93ab297e922ffe3a1a7f",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Type 1 diabetes mellitus\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 159,
+  "latency_s": 47.61,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Type 1 diabetes mellitus\",\n    \"Insulin-dependent diabetes mellitus\",\n    \"Juvenile diabetes mellitus\",\n    \"Latent autoimmune diabetes in adults\",\n    \"Type 1 diabetes mellitus without complications\",\n    \"Type 1 diabetes mellitus with ketoacidosis\",\n    \"Type 1 diabetes mellitus with diabetic nephropathy\",\n    \"Type 1 diabetes mellitus with diabetic retinopathy\",\n    \"Type 1 diabetes mellitus with diabetic neuropathy\",\n    \"Brittle diabetes mellitus\",\n    \"Autoimmune diabetes mellitus\"\n  ],\n  \"note\": \"Includes core diagnosis terms, historical synonyms, and common EHR manifestation subtypes.\"\n}\n```"
+ }
+}

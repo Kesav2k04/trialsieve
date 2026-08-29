@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "7f7978920fac79f877cd0dc1ae050e3b94a225e40c769a3f0ad64754768bab41",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Obesity\nRecord domain: condition\nMeaning required: as a trial protocol would mean it\n\nCandidate entries from this site's vocabulary:\n         162864005  Body mass index 30+ - obesity (finding)   (in 209 resources)\n         233678006  Childhood asthma   (in 17 resources)\n          80583007  Severe anxiety (panic) (finding   (in 59 resources)\n         408512008  Body mass index 40+ - severely obese (finding)   (in 5 resources)\n         230265002  Familial Alzheimer's disease of early onset (disorder)   (in 1 resources)\n          55680006  Drug overdose   (in 21 resources)\n         431855005  Chronic kidney disease stage 1 (disorder)   (in 10 resources)\n         431856006  Chronic kidney disease stage 2 (disorder)   (in 1 resources)\n   368581000119106  Neuropathy due to type 2 diabetes mellitus (disorder)   (in 9 resources)\n    90781000119102  Microalbuminuria due to type 2 diabetes mellitus (disorder)   (in 1 resources)\n     1551000119108  Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus    (in 5 resources)\n         424132000  Non-small cell carcinoma of lung, TNM stage 1 (disorder)   (in 5 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nIf no candidate represents the concept, return an empty list. That is a normal\nand useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 281,
+  "latency_s": 20.843,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 528,
+  "text": "```json\n{\n  \"codes\": [\n    \"162864005\",\n    \"408512008\"\n  ],\n  \"rejected\": [\n    {\n      \"code\": \"233678006\",\n      \"why\": \"respiratory condition (asthma), not obesity\"\n    },\n    {\n      \"code\": \"80583007\",\n      \"why\": \"psychiatric condition (anxiety/panic), not obesity\"\n    },\n    {\n      \"code\": \"230265002\",\n      \"why\": \"neurodegenerative disorder (Alzheimer's disease), not obesity\"\n    },\n    {\n      \"code\": \"55680006\",\n      \"why\": \"acute toxicological event (drug overdose), not obesity\"\n    },\n    {\n      \"code\": \"431855005\",\n      \"why\": \"renal disorder (CKD stage 1), not obesity\"\n    },\n    {\n      \"code\": \"431856006\",\n      \"why\": \"renal disorder (CKD stage 2), not obesity\"\n    },\n    {\n      \"code\": \"368581000119106\",\n      \"why\": \"diabetic neuropathy, not obesity\"\n    },\n    {\n      \"code\": \"90781000119102\",\n      \"why\": \"diabetic microalbuminuria, not obesity\"\n    },\n    {\n      \"code\": \"1551000119108\",\n      \"why\": \"diabetic retinopathy, not obesity\"\n    },\n    {\n      \"code\": \"424132000\",\n      \"why\": \"oncologic disorder (lung carcinoma), not obesity\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

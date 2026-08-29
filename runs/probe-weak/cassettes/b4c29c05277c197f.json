@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b4c29c05277c197f658713826ba9a8220664c095f60d24ad34d83e506056ce3b",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Systolic blood pressure\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 177,
+  "latency_s": 4.004,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 222,
+  "text": "{\n  \"names\": [\n    \"Systolic blood pressure\",\n    \"SBP\",\n    \"Blood Pressure, Systolic\",\n    \"Systolic Arterial Pressure\",\n    \"Systolic Blood Pressure Measurement\",\n    \"Systolic BP\",\n    \"Systolic Aortic Pressure\",\n    \"Systolic Peripheral Pressure\",\n    \"Systolic Vascular Pressure\",\n    \"Systolic Cardiac Output Pressure\",\n    \"Systolic Blood Flow Pressure\",\n    \"Systolic Hemodynamic Pressure\",\n    \"Systolic Arterial Pulse Pressure\"\n  ],\n  \"note\": \"These are general terms used to describe systolic blood pressure in clinical practice. The specific term used may vary depending on the context and the recording system.\"\n}"
+ }
+}

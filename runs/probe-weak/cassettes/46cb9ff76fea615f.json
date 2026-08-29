@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "46cb9ff76fea615fd34b937cdbf87c22c5fded737ef145ab30265f845eebd6a3",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Chronic kidney disease stage 3 or worse\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 280,
+  "latency_s": 4.766,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 228,
+  "text": "{\n  \"names\": [\n    \"Chronic Kidney Disease (CKD) stage 3a\",\n    \"Chronic Kidney Disease (CKD) stage 3b\",\n    \"Estimated Glomerular Filtration Rate (eGFR) 30-44 mL/min/1.73m2\",\n    \"Estimated Glomerular Filtration Rate (eGFR) 15-29 mL/min/1.73m2\",\n    \"Chronic Renal Insufficiency (CRI)\",\n    \"Renal Dysfunction\",\n    \"CKD with reduced GFR\",\n    \"CKD with structural or functional abnormalities\",\n    \"CKD due to diabetes mellitus\",\n    \"CKD due to glomerulonephritis\",\n    \"CKD due to hypertension\",\n    \"CKD due to polycystic kidney disease\",\n    \"CKD due to interstitial nephritis\",\n    \"CKD due to urinary tract obstruction\"\n  ],\n  \"note\": \"These are specific conditions that fall under the umbrella term 'Chronic Kidney Disease stage 3 or worse'. They represent various stages and causes of CKD.\"\n}"
+ }
+}

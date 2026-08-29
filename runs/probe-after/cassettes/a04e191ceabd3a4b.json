@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "a04e191ceabd3a4b8070e41db2cceb90249b17346b93cc974c3fa10a07971951",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Acute pancreatitis\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 150,
+  "latency_s": 72.742,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 209,
+  "text": "```json\n{\n  \"names\": [\n    \"Acute pancreatitis\",\n    \"Acute interstitial edematous pancreatitis\",\n    \"Acute necrotizing pancreatitis\",\n    \"Acute hemorrhagic pancreatitis\",\n    \"Acute biliary pancreatitis\",\n    \"Gallstone pancreatitis\",\n    \"Alcohol-induced acute pancreatitis\",\n    \"Idiopathic acute pancreatitis\",\n    \"Drug-induced acute pancreatitis\",\n    \"Hypertriglyceridemia-induced acute pancreatitis\",\n    \"Acute pancreatitis with infected necrosis\"\n  ],\n  \"note\": \"Includes primary acute pancreatitis and common etiologic or pathological subtypes recorded in clinical coding systems.\"\n}\n```"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "10bc6e8ca55981e5f588a27846a04090d80440cf198f5171e257ef3ce0587596",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Gastroparesis\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 214,
+  "latency_s": 3.929,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 222,
+  "text": "{\n  \"names\": [\n    \"Gastroparesis\",\n    \"Delayed Gastric Emptying\",\n    \"Gastric Retention\",\n    \"Qualitative Abnormality of Gastric Emptying\",\n    \"Functional Gastrointestinal Disorder\",\n    \"Postviral Gastroparesis\",\n    \"Idiopathic Gastroparesis\",\n    \"Diabetic Gastroparesis\",\n    \"Vagally Mediated Gastroparesis\",\n    \"Postsurgical Gastroparesis\",\n    \"Medication-Induced Gastroparesis\",\n    \"Gastroparesis Diabeticorum\",\n    \"Gastroparesis Cidalis\",\n    \"Gastroparesis Paralyticus\",\n    \"Gastroparesis Vagale\"\n  ],\n  \"note\": \"These are common terms used to describe the condition in clinical practice. The specific term used may vary depending on the context and the healthcare provider.\"\n}"
+ }
+}

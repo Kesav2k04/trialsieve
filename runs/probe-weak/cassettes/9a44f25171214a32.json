@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9a44f25171214a32116379b462dfe3be939b22d4f51c21769a8850624a066b73",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Hydrochlorothiazide\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 147,
+  "latency_s": 25.932,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 226,
+  "text": "{\n  \"names\": [\n    \"hydrochlorothiazide\",\n    \"HCTZ\",\n    \"Thiazide diuretic\",\n    \"Hydrodiuril\",\n    \"Esidrix\",\n    \"Microzide\",\n    \"Oretic\",\n    \"Hydroflumethiazide\",\n    \"Zylopress\",\n    \"Diucapacide\",\n    \"Hydrochlorothiazide-amiloride\",\n    \"Moduretic\"\n  ],\n  \"note\": \"These are generic and brand names for hydrochlorothiazide, a diuretic medication used to treat high blood pressure and edema.\"\n}"
+ }
+}

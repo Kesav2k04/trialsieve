@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "20f2a2c968d1265a4db85e052c6a075679b7ca02dfd8ab5adbd5d04a2deaefd6",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Iron deficiency anaemia\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 147,
+  "latency_s": 31.206,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Iron deficiency anaemia\",\n    \"Iron deficiency anemia\",\n    \"Microcytic hypochromic anaemia\",\n    \"Microcytic hypochromic anemia\",\n    \"Iron deficiency anaemia secondary to blood loss\",\n    \"Iron deficiency anaemia due to inadequate dietary intake\",\n    \"Iron deficiency anaemia due to malabsorption\",\n    \"Iron-refractory iron deficiency anemia\",\n    \"Plummer-Vinson syndrome\",\n    \"Paterson-Kelly syndrome\",\n    \"Chlorosis\"\n  ],\n  \"note\": \"Covers spelling variants, phenotypic descriptions, underlying etiologies, and associated clinical syndromes.\"\n}\n```"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b162ddf4be9171545a497b802e702c7743df5a39a8d5b99462f51cf703ac737c",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Urine albumin to creatinine ratio\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 127,
+  "latency_s": 18.672,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 213,
+  "text": "```json\n{\n  \"names\": [\n    \"Albumin/creatinine ratio, urine\",\n    \"Urine albumin to creatinine ratio\",\n    \"uACR\",\n    \"Urine ACR\",\n    \"Microalbumin/creatinine ratio, urine\",\n    \"Urine microalbumin to creatinine ratio\",\n    \"Albumin to creatinine ratio\",\n    \"Microalbumin/creatinine ratio\",\n    \"Random urine albumin/creatinine ratio\",\n    \"Albumin/Creatinine, Spot Urine\"\n  ],\n  \"note\": \"Common lab test names, abbreviations, and synonyms for spot urine albumin-to-creatinine ratio measurements.\"\n}\n```"
+ }
+}

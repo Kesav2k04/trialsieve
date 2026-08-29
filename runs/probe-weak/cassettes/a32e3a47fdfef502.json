@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "a32e3a47fdfef5023d45dec00882416953c6d1f679de108bfd4c481ded88ff88",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Obesity\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 200,
+  "latency_s": 8.694,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 220,
+  "text": "{\n  \"names\": [\n    \"Body Mass Index (BMI)\",\n    \"Waist-Hip Ratio (WHR)\",\n    \"Waist Circumference\",\n    \"Obesity Class I (BMI 30-34.9)\",\n    \"Obesity Class II (BMI 35-39.9)\",\n    \"Obesity Class III (BMI >= 40)\",\n    \"Severe Obesity\",\n    \"Morbid Obesity\",\n    \"Superobesity\",\n    \"Grade 2 Obesity\",\n    \"Grade 3 Obesity\",\n    \"Overweight\",\n    \"Classical Obesity\",\n    \"Central Obesity\",\n    \"Android Obesity\"\n  ],\n  \"note\": \"These are common terms used to describe obesity in clinical practice. The specific term used may vary depending on the context and the healthcare provider's preference.\"\n}"
+ }
+}

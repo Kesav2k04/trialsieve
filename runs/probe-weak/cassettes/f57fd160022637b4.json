@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "f57fd160022637b4634bbfd03743c38b6f1eda9e3bd93e0e34761071aa9d6ce4",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Simvastatin\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "granite3.1-dense:8b",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 122,
+  "latency_s": 2.591,
+  "model": "granite3.1-dense:8b",
+  "prompt_tokens": 222,
+  "text": "{\n  \"names\": [\n    \"simvastatin\",\n    \"Zocor\",\n    \"generic simvastatin\",\n    \"40 mg simvastatin\",\n    \"simvastatin 20 mg tablet\",\n    \"simvastatin 80 mg tablet\",\n    \"simvastatin/ezetimibe combination\"\n  ],\n  \"note\": \"Simvastatin is a medication used to lower cholesterol and triglyceride levels in the blood. It belongs to the class of drugs known as statins.\"\n}"
+ }
+}
