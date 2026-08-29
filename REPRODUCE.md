@@ -21,7 +21,7 @@ no `make` and the reproduction should not depend on one.
 | Install | `pytest`, for the test gate. Nothing else. |
 | Runtime dependencies | none. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. The one exception is the video build, `scripts/make_video.py`, which uses a speech synthesiser and a browser and is not on this path. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | about 40 MB, most of it the vendored patient panel. |
+| Disk | about 25 MB for a clone: 12 MB of tracked files, most of it the vendored patient panel, and a similar amount of history. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB
@@ -34,10 +34,14 @@ carries the source URL and the sha256 of the archive they were built from, and
 1. **`results/environment.json`** is written: Python version, platform, git commit,
    and whether the tree was dirty. A number that differs on your machine has
    somewhere to point.
-2. **The engine gate runs.** About 70 semantic tests over the evaluation engine:
+2. **The engine gate runs.** 187 tests, of which 52 are semantic tests over the evaluation engine alone:
    Kleene truth tables, both boundaries of every date window, both directions of
    every unit conversion, absent distinguished from zero. The protocol makes this
-   a precondition for a scored run, so `reproduce` stops here if it fails.
+   a precondition for a scored run, so `reproduce` stops here if it fails. The
+   rest cover the recorder, the sign-off gate, the cassette seal, the
+   contamination perturbation and the mutation harness. `python -m pytest -q`
+   prints the current count, which is the number to trust if this sentence has
+   drifted.
 3. **The compile is replayed** from `runs/tierA/cassettes/`. Each cassette is a
    recorded model call keyed on the sha256 of the full canonical request. Replay
    never falls through to a live call: a missing cassette raises `CassetteMiss`
