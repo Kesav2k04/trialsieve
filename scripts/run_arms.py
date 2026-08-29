@@ -172,7 +172,11 @@ def main() -> int:
             rows.append(row)
         if traj:
             traj.write(run / "trajectories")
-        if pi % 10 == 0 or pi == len(panel):
+        # Report often enough that a long paid run does not look hung. Every
+        # patient when the sample is small, which is exactly when each one is
+        # slow, and every tenth when the panel is the free arms' whole 385.
+        every = 1 if len(panel) <= 40 else 10
+        if pi % every == 0 or pi == len(panel):
             print(f"  {pi}/{len(panel)} patients, {len(rows)} cells, "
                   f"{time.time() - t0:.0f}s", flush=True)
 
