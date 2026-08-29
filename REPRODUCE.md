@@ -54,11 +54,11 @@ carries the source URL and the sha256 of the archive they were built from, and
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The four verification checks run** (see below).
+8. **The five verification checks run** (see below).
 9. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
 
-## The four checks, and what each one rules out
+## The five checks, and what each one rules out
 
 ```bash
 python scripts/verify.py all --run runs/tierA
@@ -70,6 +70,7 @@ python scripts/verify.py all --run runs/tierA
 | `trajectories` | "the trajectories could be a nicer story than what ran." Every recorded model call in every trajectory is matched to a cassette whose stored request is byte-identical to the prompt shown in the trajectory. |
 | `prove-replay` | "a cassette store is just a saved answer file." One space is added to one prompt. The key changes, the lookup misses, and the run stops with `CassetteMiss` instead of returning the previous answer. |
 | `prove-sensitivity` | "the numbers might be stored next to the cassettes rather than computed from them." One comparison in one compiled predicate is flipped and the verdict counts move. |
+| `blind` | "the second labeller could have seen the system's answer." Every recorded Checker B prompt is searched for predicate vocabulary, predicate digests and compiled output. Blindness is read out of the prompt rather than argued from commit order. |
 
 The third and fourth are the ones worth watching. Together they say the recorded
 model output is both load-bearing and tamper-evident.

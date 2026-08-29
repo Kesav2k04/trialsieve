@@ -17,8 +17,18 @@ What B does not do: adjudicate. Where A and B disagree, the disagreement is
 recorded and a human resolves it, with arm identity stripped and case order
 shuffled. B is a second opinion, not a tiebreaker.
 
-Blindness is a git fact. These labels are committed before any commit containing
-system output, so the ordering is checkable rather than promised.
+Blindness is a property of the prompt, not of a timeline. Every one of B's model
+calls is recorded in full, so `python scripts/verify.py blind` answers "did B see
+the system's answer" by reading the request rather than by trusting an ordering.
+It searches every recorded prompt for the vocabulary of the predicate IR, for the
+digests the sign-off gate signs, and for the compiled output.
+
+An earlier version of this file claimed blindness as a git fact: labels committed
+before any commit containing system output. That was true when written and it
+stopped being true, because this labeller and the scored compile ended up running
+at the same time on the same machine. Commit order now records which process
+finished first and nothing else. The prompt scan is the stronger claim anyway, and
+it is the one made here.
 """
 from __future__ import annotations
 

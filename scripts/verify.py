@@ -201,12 +201,15 @@ def _flip_one_comparison(expr: dict) -> str | None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("what", choices=["cassettes", "trajectories", "prove-replay",
-                                     "prove-sensitivity", "all"])
+                                     "prove-sensitivity", "blind", "all"])
     ap.add_argument("--run", default="runs/tierA")
     a = ap.parse_args()
     run = Path(a.run)
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _verify_blind import cmd_blind
     fns = {"cassettes": cmd_cassettes, "trajectories": cmd_trajectories,
-           "prove-replay": cmd_prove_replay, "prove-sensitivity": cmd_prove_sensitivity}
+           "prove-replay": cmd_prove_replay, "prove-sensitivity": cmd_prove_sensitivity,
+           "blind": cmd_blind}
     if a.what == "all":
         rc = 0
         for name, fn in fns.items():

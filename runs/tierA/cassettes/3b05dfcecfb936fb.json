@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "3b05dfcecfb936fbbec916201d7dcd5c0409d11f3527840386ab94fcc6b329c6",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You prepare clinical trial eligibility criteria for automated checking against\nstructured medical records.\n\nYou are careful about what a medical record can and cannot settle. Most criteria\nin a real protocol cannot be settled from a record at all, and saying so is the\ncorrect answer rather than a failure.",
+    "role": "system"
+   },
+   {
+    "content": "Decide whether this criterion can be checked from a structured medical record,\nand list the clinical concepts it needs.\n\nCriterion (exclusion, category medication):\n  Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics\n\nA criterion is checkable ONLY if every part of it can be settled from coded\nrecord data: demographics, coded diagnoses, coded medications, coded procedures,\nor numeric laboratory and vital-sign values, with dates.\n\nThe record carries an index date: the day this prescreen is being run. Study\nevents that have not happened yet are anchored to it. \"at screening\", \"at\nrandomisation\", \"at the time of signing the informed consent form\", \"at baseline\",\n\"prior to randomisation\" all mean \"as of the index date\", and a window measured\nback from one of them is measured back from the index date. That substitution is\nwhat prescreening is, so it does not make a criterion uncheckable. Say in `reason`\nthat you used it, so the reviewer sees the assumption.\n\nWhat stays uncheckable is the participant, not the calendar: whether they will\nconsent, whether they are able to comply, what the investigator will judge.\n\nIt is NOT checkable if it needs any of:\n  - consent, willingness, capacity, ability to comply or to attend\n  - the investigator's opinion, or a judgement about suitability\n  - a measurement a record does not normally hold (waist circumference,\n    performance status, imaging read-outs, questionnaire scores, elastography)\n  - counting prior lines of therapy, or a washout expressed in half-lives\n  - a bound relative to a laboratory's own reference range, such as \"2.5x the\n    upper limit of normal\", since the limit is not a fixed number\n  - contraception, pregnancy intention, or residence and travel plans\n  - enrolment in another study\n\nReturn JSON only:\n\n{\"checkable\": true,\n  \"reason\": \"one sentence; if not checkable, name the specific blocker\",\n  \"concepts\": [{\"name\":\"SGLT2 inhibitor\",\"domain\":\"medication\",\n                 \"intent\":\"currently prescribed drug of this class\"}]}\n\n`concepts` lists every clinical thing that must be looked up by code. Leave it\nempty when the criterion uses only age or sex. Use the exact domain the record\nwould store it in.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 329,
+  "latency_s": 50.495,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 654,
+  "text": "```json\n{\n  \"checkable\": true,\n  \"reason\": \"Current or chronic use of the listed medication classes can be determined from coded prescription and medication administration records active as of the index date.\",\n  \"concepts\": [\n    {\n      \"name\": \"SGLT2 inhibitor\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of an SGLT2 inhibitor\"\n    },\n    {\n      \"name\": \"thiazolidinedione\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of a thiazolidinedione (TZD)\"\n    },\n    {\n      \"name\": \"GLP-1 receptor agonist\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of a GLP-1 receptor agonist\"\n    },\n    {\n      \"name\": \"glucocorticoid\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of a glucocorticoid\"\n    },\n    {\n      \"name\": \"immunosuppressive agent\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of an immune suppressant\"\n    },\n    {\n      \"name\": \"antimicrobial agent\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of an antimicrobial agent\"\n    },\n    {\n      \"name\": \"chemotherapeutic agent\",\n      \"domain\": \"medication\",\n      \"intent\": \"active or chronic prescription of a chemotherapeutic agent\"\n    }\n  ]\n}\n```"
+ }
+}
