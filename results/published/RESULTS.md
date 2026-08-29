@@ -659,7 +659,7 @@ The commit that last touched each prompt-carrying file. If any of these is later
 
 | file           | last touched by                              |
 |----------------|----------------------------------------------|
-| `compiler.py`  | `0b1bd786bbd0aa7a` 2026-08-29T22:44:05+05:30 |
+| `compiler.py`  | `575411381a8fd698` 2026-08-30T00:03:20+05:30 |
 | `critic.py`    | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
 | `grounder.py`  | `270ed8190f8f1af6` 2026-08-29T05:12:12+05:30 |
 | `segmenter.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
