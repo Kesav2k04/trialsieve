@@ -867,3 +867,68 @@ shrink the denominator and flatter both curves at once.
 
 **Evidence.** `results/RESULTS.md`, both curves and the paragraph between them;
 `results/results.json` under `crossfit`; three tests in `tests/test_score.py`.
+
+## 20. A section guarded by `if exists()`, a key that nothing writes, and the two claims it cost
+
+**Found by** looking for the label noise floor in `results/RESULTS.md` after a
+full report run, and not finding it at all.
+
+**Three defects in eleven lines.**
+
+1. The whole section sat behind `if ag_path.exists():`. `evaluation/checker_b/agreement.json`
+   had never been generated, so every report ever produced omitted the section
+   silently. Nothing failed. The document simply went from the arm comparison
+   straight to provenance, and a reader has no way to tell a section that was
+   dropped from a section with nothing to report.
+
+2. Had the file existed, the section would have died immediately: it read
+   `ag['agreement']['cohens_kappa']` and `ag['agreement']['gwets_ac1']`, and
+   `evaluation/score.py` writes `cohen_kappa` and `gwet_ac1`. A `KeyError` that
+   could not fire because the guard in front of it never opened.
+
+3. The prose promised something no code enforced: *"Any difference between arms
+   smaller than that is reported as uninterpretable rather than as a finding."*
+   Nothing compared anything. The comparison table printed six differences and
+   said nothing about whether the labels could resolve them.
+
+**What the floor turned out to be.** 180 cells labelled twice, independently, on a
+different model family: 76.7% raw agreement, kappa 0.650, AC1 0.651.
+
+**Why the disagreement rate is split rather than quoted whole.** 23.3% is not one
+number. 19 of the 42 disagreements are contradictions, one labeller saying a
+patient meets a criterion and the other saying they fail it, and on those cells at
+least one label is wrong. The other 23 are one labeller committing where the other
+abstained, which is a disagreement about how much a record has to say before it
+counts as saying it. That is the judgement this entire system exists to make
+explicit, so folding it into label error would mean scoring the question instead of
+the answer. The bar a measured difference has to clear is therefore **10.6%**, not
+23.3%. Quoting the larger number would have been the conservative-looking choice
+and the wrong one.
+
+**What it cost.** Two of the six published differences fail the rule the report had
+been promising:
+
+| comparison | difference | 95% CI excludes zero | vs 10.6% contradiction rate |
+|---|---|---|---|
+| TS - B1, SER | +0.0305 | yes | **below, uninterpretable** |
+| TS - B1, false-FAILS | +0.0275 | yes | **below, uninterpretable** |
+| TS - B1, coverage | +0.1662 | yes | above |
+
+A confidence interval that excludes zero says the difference survives resampling.
+It says nothing about whether the labels underneath could support a difference
+that small, and those are separate questions that a single table had been letting
+blur. So the surviving claim against B1 is the coverage one: TrialSieve answers
+16.6 points more of the panel, and the error difference at which it does so is
+smaller than these labels can resolve. That is a weaker statement than the one the
+table implied yesterday and it is the one the evidence carries.
+
+**What changed.** `load_label_floor()` returns `None` explicitly and the section
+prints **NOT MEASURED** under its own heading rather than vanishing. The key names
+are read with fallbacks and asserted. The contradiction rate is computed from the
+disagreement pattern and every comparison row is annotated against it, in the row,
+where it cannot be scrolled past.
+
+**Evidence.** `results/RESULTS.md`, the `vs label floor` column and the section
+below it; `results/results.json` under `label_noise_floor`; five tests in
+`tests/test_label_floor.py`, one of which asserts every published comparison row
+carries a verdict, so a future row cannot be added without one.

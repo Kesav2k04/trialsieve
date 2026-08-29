@@ -58,6 +58,40 @@ def pair(a: list[Cell], b: list[Cell]) -> tuple[list[Cell], list[Cell]]:
     return [ka[k] for k in shared], [kb[k] for k in shared]
 
 
+
+def load_label_floor() -> dict | None:
+    """The measured disagreement between the two independent labellers.
+
+    Returns None when the second labeller has not run, and every caller has to
+    handle that case explicitly, because a noise floor that silently vanishes
+    turns "we could not measure this" into "there is nothing here to see". The
+    report prints NOT MEASURED rather than dropping the section.
+    """
+    path = ROOT / "evaluation" / "checker_b" / "agreement.json"
+    if not path.exists():
+        return None
+    blob = json.loads(path.read_text(encoding="utf-8"))
+    ag = blob.get("agreement", blob)
+    pattern = blob.get("disagreement_pattern") or {}
+    n = int(blob.get("n") or ag.get("n") or 0)
+    hard = soft = 0
+    for key, count in pattern.items():
+        a_lab, b_lab = key.split("->") if "->" in key else (key, key)
+        if "INDETERMINATE" in (a_lab, b_lab):
+            soft += int(count)
+        else:
+            hard += int(count)
+    return {"n": n,
+            "percent_agreement": ag.get("percent_agreement"),
+            "cohen_kappa": ag.get("cohen_kappa", ag.get("cohens_kappa")),
+            "gwet_ac1": ag.get("gwet_ac1", ag.get("gwets_ac1")),
+            "marginals_a": blob.get("a_marginals") or ag.get("marginals_a"),
+            "marginals_b": blob.get("b_marginals") or ag.get("marginals_b"),
+            "n_contradictions": hard, "n_confidence_splits": soft,
+            "hard": (hard / n) if n else 0.0,
+            "soft": (soft / n) if n else 0.0}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
@@ -72,6 +106,16 @@ def main() -> int:
 
     results: dict[str, dict] = {"run": str(run), "groups": {}}
     md: list[str] = []
+
+    # The label noise floor is loaded first because the comparison tables below
+    # are annotated against it. Two labellers disagreeing is not one number: a
+    # MEETS against a FAILS is a contradiction, while a MEETS against an
+    # INDETERMINATE is the two of them drawing the confidence line in different
+    # places. Only the first bounds what a difference between arms can mean, so
+    # the two are separated rather than summed into one disagreement rate.
+    floor = load_label_floor()
+    if floor is not None:
+        results["label_noise_floor"] = floor
 
     for tag, rows in sorted(groups.items()):
         merged: dict[tuple[str, str], dict] = {}
@@ -201,13 +245,36 @@ def main() -> int:
             block["paired_bootstrap"] = comparisons
             md.append("\n### Paired difference, two-way bootstrap "
                       f"(B={a.bootstrap}, resampling unique criteria and patients)\n")
-            md.append("| comparison | metric | difference | 95% CI | crosses zero | n_eff |")
-            md.append("|---|---|---|---|---|---|")
+            md.append("| comparison | metric | difference | 95% CI | crosses zero | "
+                      "n_eff | vs label floor |")
+            md.append("|---|---|---|---|---|---|---|")
             for r in comparisons:
+                # The prose under the noise-floor table promises that a difference
+                # smaller than the two labellers' own disagreement is reported as
+                # uninterpretable. It was a promise and nothing enforced it, so the
+                # verdict is computed here and printed in the row it applies to.
+                if floor is None:
+                    verdict = "not measured"
+                elif abs(r["observed_difference"]) >= floor["hard"]:
+                    verdict = "above"
+                elif abs(r["observed_difference"]) >= floor["hard"] / 2:
+                    verdict = "**borderline**"
+                else:
+                    verdict = "**below, uninterpretable**"
+                r["vs_label_floor"] = verdict.replace("*", "")
                 md.append(f"| {r['arms']} | {r['metric']} | {r['observed_difference']:+.4f} | "
                           f"[{r['ci_low']:+.4f}, {r['ci_high']:+.4f}] | "
                           f"{'yes' if r['crosses_zero'] else 'no'} | "
-                          f"{r['n_unique_criteria']} criteria |")
+                          f"{r['n_unique_criteria']} criteria | {verdict} |")
+            if floor is not None:
+                md.append("")
+                md.append(f"The last column compares the absolute difference "
+                          f"against the contradiction rate between the two independent "
+                          f"labellers, {floor['hard']:.1%}, measured on {floor['n']} "
+                          f"doubly-labelled cells and reported in full below. A CI that "
+                          f"excludes zero says the difference is not noise from "
+                          f"resampling; it says nothing about whether the labels "
+                          f"themselves could support a difference that small.")
 
         results["groups"][tag] = block
 
@@ -303,30 +370,58 @@ def main() -> int:
                   "patients, which is the one property this harness cannot reproduce, so "
                   "the curve is a floor on the effect rather than an estimate of it.")
 
-    # label noise floor, if the second checker has run
-    ag_path = ROOT / "evaluation" / "checker_b" / "agreement.json"
-    if ag_path.exists():
-        ag = json.loads(ag_path.read_text(encoding="utf-8"))
-        results["label_noise_floor"] = ag
-        a_pct = ag["agreement"]["percent_agreement"]
-        md.append("\n## Label noise floor\n")
-        md.append(f"Checker A and Checker B labelled the same {ag['n']} cells "
+    # label noise floor
+    md.append("")
+    md.append("## Label noise floor")
+    md.append("")
+    if floor is None:
+        md.append("**NOT MEASURED.** `evaluation/checker_b/agreement.json` is absent, so "
+                  "no second independent labelling exists in this checkout and there is "
+                  "no bound on how much of any difference above is label noise. This "
+                  "section is printed empty rather than omitted, because a missing "
+                  "section and a section with nothing to report look identical once a "
+                  "document has been read past.")
+    else:
+        md.append(f"Checker A and Checker B labelled the same {floor['n']} cells "
                   f"independently. B saw the criterion prose and a flattened patient "
                   f"table, on a different model family, with no sight of the predicate "
-                  f"IR, of A, or of any system output.\n")
+                  f"IR, of A, or of any system output. `python scripts/verify.py blind` "
+                  f"reads that claim out of B's own recorded prompts.")
+        md.append("")
         md.append("| | |")
         md.append("|---|---|")
-        md.append(f"| cells labelled twice | {ag['n']} |")
-        md.append(f"| raw percent agreement | {a_pct:.1%} |")
-        md.append(f"| Cohen's kappa | {ag['agreement']['cohens_kappa']:.3f} |")
-        md.append(f"| Gwet's AC1 | {ag['agreement']['gwets_ac1']:.3f} |")
-        md.append(f"| Checker A marginals | `{json.dumps(ag['a_marginals'])}` |")
-        md.append(f"| Checker B marginals | `{json.dumps(ag['b_marginals'])}` |")
-        md.append(f"\nPre-adjudication disagreement is {1 - a_pct:.1%}. Any difference "
-                  f"between arms smaller than that is reported as uninterpretable rather "
-                  f"than as a finding. Kappa is printed beside AC1 because kappa collapses "
-                  f"under the skewed marginals expected here and would understate "
-                  f"agreement that is real.")
+        md.append(f"| cells labelled twice | {floor['n']} |")
+        md.append(f"| raw percent agreement | {floor['percent_agreement']:.1%} |")
+        md.append(f"| Cohen's kappa | {floor['cohen_kappa']:.3f} |")
+        md.append(f"| Gwet's AC1 | {floor['gwet_ac1']:.3f} |")
+        md.append(f"| **contradictions** (MEETS against FAILS) | "
+                  f"**{floor['n_contradictions']} = {floor['hard']:.1%}** |")
+        md.append(f"| confidence splits (a definite verdict against INDETERMINATE) | "
+                  f"{floor['n_confidence_splits']} = {floor['soft']:.1%} |")
+        md.append(f"| Checker A marginals | `{json.dumps(floor['marginals_a'])}` |")
+        md.append(f"| Checker B marginals | `{json.dumps(floor['marginals_b'])}` |")
+        md.append("")
+        md.append(f"The two labellers disagree on "
+                  f"{1 - floor['percent_agreement']:.1%} of cells, and that total is "
+                  f"split rather than quoted whole because the two halves bound "
+                  f"different things. {floor['n_contradictions']} cells are "
+                  f"contradictions, where one labeller says a patient meets a criterion "
+                  f"and the other says they fail it; those are the cells where at least "
+                  f"one label is simply wrong, and {floor['hard']:.1%} is the figure a "
+                  f"difference between arms has to clear to mean anything. The other "
+                  f"{floor['n_confidence_splits']} are one labeller committing where the "
+                  f"other abstained. That is a disagreement about how much a record has "
+                  f"to say before it counts as saying it, which is the same judgement "
+                  f"this whole system is built to make explicit, so counting it as label "
+                  f"error would be scoring the question rather than the answer.")
+        md.append("")
+        md.append(f"Checker B abstains more than A does "
+                  f"({floor['marginals_b'].get('INDETERMINATE')} against "
+                  f"{floor['marginals_a'].get('INDETERMINATE')} of {floor['n']}), which "
+                  f"is the direction that matters: B was not simply noisier, it drew a "
+                  f"stricter line. Kappa is printed beside AC1 because kappa collapses "
+                  f"under skewed marginals and would understate agreement that is real.")
+        md.append("")
 
     # provenance: which commit last touched each prompt file
     prompts = {}

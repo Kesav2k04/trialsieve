@@ -47,14 +47,36 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff |
-|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9172 | [-0.9655, -0.8556] | no | 40 criteria |
-| TS - B0 | coverage | -0.7588 | [-0.8734, -0.6334] | no | 40 criteria |
-| TS - B0 | false_fails | -0.9201 | [-0.9667, -0.8599] | no | 40 criteria |
-| TS - B1 | ser | +0.0305 | [+0.0021, +0.0811] | no | 40 criteria |
-| TS - B1 | coverage | +0.1662 | [+0.0724, +0.2742] | no | 40 criteria |
-| TS - B1 | false_fails | +0.0275 | [+0.0002, +0.0771] | no | 40 criteria |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9172 | [-0.9655, -0.8556] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7588 | [-0.8734, -0.6334] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9201 | [-0.9667, -0.8599] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0305 | [+0.0021, +0.0811] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1662 | [+0.0724, +0.2742] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0275 | [+0.0002, +0.0771] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## Label noise floor
+
+Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.
+
+| | |
+|---|---|
+| cells labelled twice | 180 |
+| raw percent agreement | 76.7% |
+| Cohen's kappa | 0.650 |
+| Gwet's AC1 | 0.651 |
+| **contradictions** (MEETS against FAILS) | **19 = 10.6%** |
+| confidence splits (a definite verdict against INDETERMINATE) | 23 = 12.8% |
+| Checker A marginals | `{"FAILS": 60, "MEETS": 60, "INDETERMINATE": 60}` |
+| Checker B marginals | `{"FAILS": 46, "MEETS": 63, "INDETERMINATE": 71}` |
+
+The two labellers disagree on 23.3% of cells, and that total is split rather than quoted whole because the two halves bound different things. 19 cells are contradictions, where one labeller says a patient meets a criterion and the other says they fail it; those are the cells where at least one label is simply wrong, and 10.6% is the figure a difference between arms has to clear to mean anything. The other 23 are one labeller committing where the other abstained. That is a disagreement about how much a record has to say before it counts as saying it, which is the same judgement this whole system is built to make explicit, so counting it as label error would be scoring the question rather than the answer.
+
+Checker B abstains more than A does (71 against 60 of 180), which is the direction that matters: B was not simply noisier, it drew a stricter line. Kappa is printed beside AC1 because kappa collapses under skewed marginals and would understate agreement that is real.
+
 
 ## Provenance
 

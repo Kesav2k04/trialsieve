@@ -1,0 +1,36 @@
+{
+ "n": 180,
+ "agreement": {
+  "percent_agreement": 0.7667,
+  "cohen_kappa": 0.65,
+  "gwet_ac1": 0.6507,
+  "n": 180,
+  "marginals_a": {
+   "FAILS": 0.3333,
+   "INDETERMINATE": 0.3333,
+   "MEETS": 0.3333
+  },
+  "marginals_b": {
+   "FAILS": 0.2556,
+   "INDETERMINATE": 0.3944,
+   "MEETS": 0.35
+  }
+ },
+ "a_marginals": {
+  "FAILS": 60,
+  "MEETS": 60,
+  "INDETERMINATE": 60
+ },
+ "b_marginals": {
+  "FAILS": 46,
+  "MEETS": 63,
+  "INDETERMINATE": 71
+ },
+ "disagreement_pattern": {
+  "FAILS->MEETS": 16,
+  "FAILS->INDETERMINATE": 7,
+  "MEETS->INDETERMINATE": 10,
+  "MEETS->FAILS": 3,
+  "INDETERMINATE->FAILS": 6
+ }
+}

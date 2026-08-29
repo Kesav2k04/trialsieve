@@ -815,7 +815,8 @@
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
-     "arms": "TS - B0"
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
     },
     {
      "metric": "coverage",
@@ -827,7 +828,8 @@
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
-     "arms": "TS - B0"
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
     },
     {
      "metric": "false_fails",
@@ -839,7 +841,8 @@
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
-     "arms": "TS - B0"
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
     },
     {
      "metric": "ser",
@@ -851,7 +854,8 @@
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
-     "arms": "TS - B1"
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
     },
     {
      "metric": "coverage",
@@ -863,7 +867,8 @@
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
-     "arms": "TS - B1"
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
     },
     {
      "metric": "false_fails",
@@ -875,10 +880,31 @@
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
-     "arms": "TS - B1"
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
     }
    ]
   }
+ },
+ "label_noise_floor": {
+  "n": 180,
+  "percent_agreement": 0.7667,
+  "cohen_kappa": 0.65,
+  "gwet_ac1": 0.6507,
+  "marginals_a": {
+   "FAILS": 60,
+   "MEETS": 60,
+   "INDETERMINATE": 60
+  },
+  "marginals_b": {
+   "FAILS": 46,
+   "MEETS": 63,
+   "INDETERMINATE": 71
+  },
+  "n_contradictions": 19,
+  "n_confidence_splits": 23,
+  "hard": 0.10555555555555556,
+  "soft": 0.12777777777777777
  },
  "crossfit": {
   "optimism_rows": 0,
