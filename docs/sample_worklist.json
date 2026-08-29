@@ -1,0 +1,32 @@
+{
+ "trial": "NCT06983054",
+ "criteria_used": [
+  "NCT06983054-INC-02",
+  "NCT06983054-INC-03",
+  "NCT06983054-INC-04"
+ ],
+ "n_screens": 385,
+ "n_cells": 1155,
+ "n_ruled_out": 187,
+ "n_eligible": 8,
+ "n_review": 190,
+ "distinct_open_criteria": [
+  "NCT06983054-INC-02",
+  "NCT06983054-INC-04"
+ ],
+ "question_sets": [
+  {
+   "criteria": [
+    "NCT06983054-INC-02"
+   ],
+   "n_patients": 188
+  },
+  {
+   "criteria": [
+    "NCT06983054-INC-02",
+    "NCT06983054-INC-04"
+   ],
+   "n_patients": 2
+  }
+ ]
+}

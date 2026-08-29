@@ -71,6 +71,19 @@ many of the settled cells it gets wrong. Both numbers come from
 `scripts/report.py`, and the second one is the one that decides whether the first
 is worth anything.
 
+**And what is left is shaped like questions, not like patients.** On the published
+worklist (one trial, the zero-false-exclusion operating point) the engine settles
+187 of 385 screens and clears 8 to contact. The 190 that remain open contain **two
+distinct questions**, and 188 of them are open on the same one, so it is answered
+once and they resolve together. That is 1,155 cell judgements reduced to two
+things a person has to find out. It follows from compiling once instead of asking
+per cell: a predicate fails the same way for everyone it fails for, so its residue
+sorts into questions, while a per-cell model answers each patient separately and
+leaves a residue that sorts into patients with nothing to group. The counts are
+generated into [docs/COST.md](docs/COST.md) from
+[docs/sample_worklist.json](docs/sample_worklist.json), and the section there
+states what does and does not generalise from one trial.
+
 The job worth doing is to shrink the list **without a single false exclusion**.
 That constraint is why the interesting number in this repository is not accuracy.
 A system that removes nobody is safe and useless; a system that removes the wrong

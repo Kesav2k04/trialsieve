@@ -77,6 +77,57 @@ def _accuracy_on_the_same_cells() -> list[str]:
     ]
 
 
+def human_time() -> list[str]:
+    """The other currency. Dollars are the cheap half of what screening costs.
+
+    A coordinator's cost is chart-hours, not tokens, and today those hours are
+    spent one cell at a time. This reads the sidecar the worklist writes beside
+    its own document, so the counts come from the artifact rather than from a
+    sentence somebody kept up to date, and it is skipped rather than estimated
+    when the worklist has not been generated.
+    """
+    wl = read(ROOT / "docs" / "sample_worklist.json")
+    if not wl or not wl.get("question_sets"):
+        return []
+    sets = wl["question_sets"]
+    biggest = sets[0]
+    n_q = len(wl["distinct_open_criteria"])
+    return [
+        "## The other currency", "",
+        f"Money is the cheap half. The expensive half is a person reading charts, "
+        f"and `docs/sample_worklist.md` is what this run leaves them. It is one "
+        f"trial ({wl['trial']}) at the zero-false-exclusion operating point, so "
+        f"the panel is {wl['n_screens']:,} screens against "
+        f"{len(wl['criteria_used'])} criteria.", "",
+        "| | count |", "|---|---|",
+        f"| cell judgements, one per patient per criterion | {wl['n_cells']:,} |",
+        f"| screens the engine ruled out with no person involved | {wl['n_ruled_out']:,} |",
+        f"| screens it cleared to contact | {wl['n_eligible']:,} |",
+        f"| screens left open for a human | {wl['n_review']:,} |",
+        f"| distinct question sets those screens contain | {len(sets)} |",
+        f"| **distinct criteria a person has to answer** | **{n_q}** |",
+        f"| screens sharing the single largest question set | {biggest['n_patients']:,} |",
+        "",
+        f"The last two rows are the point. {biggest['n_patients']:,} of the "
+        f"{wl['n_review']:,} open screens are stuck on the same "
+        f"{'question' if len(biggest['criteria']) == 1 else str(len(biggest['criteria'])) + ' questions'}, "
+        f"so it is answered once and they resolve together. The work in "
+        f"front of a coordinator is {n_q} questions, not {wl['n_review']:,} chart "
+        f"reviews and not {wl['n_cells']:,} judgements, and the document groups "
+        f"them that way instead of listing patients one after another.", "",
+        "That shape follows from compiling once rather than asking per cell. A "
+        "predicate fails the same way for everyone it fails for, so what it "
+        "cannot settle comes out sorted into questions. A per-cell model answers "
+        "each patient independently, so what it cannot settle comes out sorted "
+        "into patients, and there is nothing to group.", "",
+        "Two limits worth stating. This is one trial on one synthetic corpus at "
+        "an operating point chosen in sample, so the number 2 is not a claim "
+        "about clinical trials; the grouping is what generalises, not the count. "
+        "And a question answered once still has to be answered by someone with "
+        "access to data the record does not hold.", "",
+    ]
+
+
 def crossover(R: list[dict]) -> list[str]:
     """The section a reader who has to fund this asks for, computed from the table.
 
@@ -281,6 +332,7 @@ def main() -> int:
           "not, so those rows fall back to an estimate of four characters per token, and",
           "the report says which rather than averaging the distinction away.", "",
           *crossover(R),
+          *human_time(),
           "## Reproducing costs nothing", "",
           "`python run.py reproduce` makes no model call. Every recorded call replays from",
           "`runs/tierA/cassettes/`, and replay never falls through to a live call: a",

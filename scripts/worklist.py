@@ -144,6 +144,31 @@ def main() -> int:
     out = Path(a.out) if a.out else run / f"worklist_{nct}.md"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(align_tables(md), encoding="utf-8", newline="\n")
+
+    # A machine-readable sidecar beside the document. `docs/COST.md` reports what
+    # this worklist asks a person to do, and reading those counts back out of
+    # rendered markdown would make a headline number depend on a heading string.
+    groups: dict[tuple, int] = {}
+    for s in wl["review"]:
+        key = tuple(sorted(c["criterion_id"] for c in s["criteria"]
+                           if c["verdict"] == "INDETERMINATE"))
+        if key:
+            groups[key] = groups.get(key, 0) + 1
+    side = {
+        "trial": (wl["trial"] or {}).get("nct_id"),
+        "criteria_used": sorted(wl["criteria_used"]),
+        "n_screens": len(wl["screens"]),
+        "n_cells": len(wl["screens"]) * len(wl["criteria_used"]),
+        "n_ruled_out": len(wl["ruled_out"]),
+        "n_eligible": len(wl["eligible"]),
+        "n_review": len(wl["review"]),
+        "distinct_open_criteria": sorted(wl["open_questions"]),
+        "question_sets": sorted(
+            ({"criteria": list(k), "n_patients": v} for k, v in groups.items()),
+            key=lambda g: (-g["n_patients"], g["criteria"])),
+    }
+    out.with_suffix(".json").write_text(
+        json.dumps(side, indent=1) + chr(10), encoding="utf-8", newline=chr(10))
     row = worklist.summary_row(wl)
     print(json.dumps(row, indent=1))
     print(f"wrote {out}")

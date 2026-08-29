@@ -63,6 +63,26 @@ Cheaper is not the same as worse here, and the two arms are scored on the same 4
 
 Three things this does not say. The dollar figures are the published list rate in the table above, not what this run was billed. The per-cell figure is measured on these 40 criteria against records of this size, and a longer record moves it. And it counts model spend only: the compiled predicates go to a human reviewer before deployment, which is the control `README.md` describes and the one that failed here, and that reviewer's time is a real cost this table does not carry.
 
+## The other currency
+
+Money is the cheap half. The expensive half is a person reading charts, and `docs/sample_worklist.md` is what this run leaves them. It is one trial (NCT06983054) at the zero-false-exclusion operating point, so the panel is 385 screens against 3 criteria.
+
+|                                                      | count |
+|------------------------------------------------------|-------|
+| cell judgements, one per patient per criterion       | 1,155 |
+| screens the engine ruled out with no person involved | 187   |
+| screens it cleared to contact                        | 8     |
+| screens left open for a human                        | 190   |
+| distinct question sets those screens contain         | 2     |
+| **distinct criteria a person has to answer**         | **2** |
+| screens sharing the single largest question set      | 188   |
+
+The last two rows are the point. 188 of the 190 open screens are stuck on the same question, so it is answered once and they resolve together. The work in front of a coordinator is 2 questions, not 190 chart reviews and not 1,155 judgements, and the document groups them that way instead of listing patients one after another.
+
+That shape follows from compiling once rather than asking per cell. A predicate fails the same way for everyone it fails for, so what it cannot settle comes out sorted into questions. A per-cell model answers each patient independently, so what it cannot settle comes out sorted into patients, and there is nothing to group.
+
+Two limits worth stating. This is one trial on one synthetic corpus at an operating point chosen in sample, so the number 2 is not a claim about clinical trials; the grouping is what generalises, not the count. And a question answered once still has to be answered by someone with access to data the record does not hold.
+
 ## Reproducing costs nothing
 
 `python run.py reproduce` makes no model call. Every recorded call replays from
