@@ -134,7 +134,11 @@ def t_reproduce(run: str = RUN) -> None:
            "--patients", str(B2_PATIENTS), "--tag", f"b2_{B2_PATIENTS}p")
 
     banner("audit for recall")
-    sh(PY, "scripts/contamination.py", "--run", run, "--counterfactual")
+    # Replay, not the record default. A reproduce step that can reach the network
+    # is not a reproduce step: with a cassette missing it should stop and say so
+    # rather than quietly pay for a new answer.
+    sh(PY, "scripts/contamination.py", "--run", run, "--counterfactual",
+       "--mode", "replay")
 
     banner("regenerate the documents that quote numbers")
     sh(PY, "scripts/counterexample.py", "--run", run, "--mode", "replay")

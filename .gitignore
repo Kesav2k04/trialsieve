@@ -17,6 +17,13 @@ runs/*
 !runs/tierA/
 runs/tierA/*
 !runs/tierA/cassettes/
+# Two agents record into their own store, and the negations here listed only the
+# main one, so 33 counterfactual and 14 critic-probe cassettes were never
+# tracked. `run.py reproduce` runs the counterfactual step in record mode, so on
+# a fresh clone that step had no cassettes to replay and tried to call a model,
+# against a README that promises the whole pipeline runs offline with no key.
+!runs/tierA/cassettes_counterfactual/
+!runs/tierA/cassettes_critic_probe/
 !runs/tierA/trajectories/
 !runs/tierA/compiled/
 !runs/tierA/signoffs.jsonl

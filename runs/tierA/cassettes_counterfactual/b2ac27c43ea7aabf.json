@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b2ac27c43ea7aabfaaca413ed271da5af90f0c099186f7c8695286a258f03fbd",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Body mass index\nRecord domain: observation\nMeaning required: most recent numeric BMI value exceeding 34.2 kg/m2\n\nCandidate entries from this site's vocabulary:\n           39156-5  Body Mass Index   (in 5187 resources)\n           59576-9  Body mass index (BMI) [Percentile] Per age and gender   (in 1489 resources)\n           29463-7  Body Weight   (in 5956 resources)\n            8302-2  Body Height   (in 5732 resources)\n            8310-5  Body temperature   (in 612 resources)\n            2713-6  Oxygen Saturation   (in 6 resources)\n           14959-1  Microalbumin Creatinine Ratio   (in 695 resources)\n            2708-6  Oxygen saturation in Arterial blood   (in 247 resources)\n            2502-3  Iron saturation [Mass Fraction] in Serum or Plasma   (in 54 resources)\n             788-0  Erythrocyte distribution width [Ratio] by Automated count   (in 179 resources)\n           59408-5  Oxygen saturation in Arterial blood by Pulse oximetry   (in 247 resources)\n           33914-3  Glomerular filtration rate/1.73 sq M.predicted   (in 1583 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 318,
+  "latency_s": 68.224,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 919,
+  "text": "```json\n{\n  \"codes\": [\n    \"39156-5\"\n  ],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"59576-9\",\n      \"why\": \"BMI percentile per age and gender rather than numeric BMI value (kg/m2)\"\n    },\n    {\n      \"code\": \"29463-7\",\n      \"why\": \"body weight measurement, not body mass index\"\n    },\n    {\n      \"code\": \"8302-2\",\n      \"why\": \"body height measurement, not body mass index\"\n    },\n    {\n      \"code\": \"8310-5\",\n      \"why\": \"body temperature measurement, not body mass index\"\n    },\n    {\n      \"code\": \"2713-6\",\n      \"why\": \"oxygen saturation measurement, unrelated to BMI\"\n    },\n    {\n      \"code\": \"14959-1\",\n      \"why\": \"microalbumin to creatinine ratio, unrelated to BMI\"\n    },\n    {\n      \"code\": \"2708-6\",\n      \"why\": \"arterial blood oxygen saturation, unrelated to BMI\"\n    },\n    {\n      \"code\": \"2502-3\",\n      \"why\": \"iron saturation in serum/plasma, unrelated to BMI\"\n    },\n    {\n      \"code\": \"788-0\",\n      \"why\": \"erythrocyte distribution width (RDW), unrelated to BMI\"\n    },\n    {\n      \"code\": \"59408-5\",\n      \"why\": \"pulse oximetry oxygen saturation, unrelated to BMI\"\n    },\n    {\n      \"code\": \"33914-3\",\n      \"why\": \"estimated glomerular filtration rate (eGFR), unrelated to BMI\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}
