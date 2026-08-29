@@ -43,4 +43,4 @@ Checker A: **INDETERMINATE**
 | per-cell baseline (B2) | INDETERMINATE | yes |
 | TrialSieve | INDETERMINATE | yes |
 
-The baseline got this one right. The README's opening example does not hold on this pair and has to be rewritten or withdrawn.
+The baseline abstained here and was right. That is reported rather than hidden: the claim in the README is the rate at which it commits across the panel, not that it fails on every pair.

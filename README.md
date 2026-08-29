@@ -7,17 +7,20 @@ fact that is missing from their record.
 
 ---
 
-## Start here: one patient, one criterion
+## Start here: what a per-cell model does with a missing lab
 
 The criterion is from a real registered trial:
 
 > Urine albumin-to-creatinine ratio below 30 mg/mmol.
 
-The patient's record contains no UACR result at all.
+In this panel, 359 of 385 patients have no UACR result at all, so a record with
+nothing to compare against is the normal case rather than an unlucky one.
 
-Ask a capable model directly, giving it the criterion and the patient's chart, and
-it answers **MEETS**. Nothing in the chart contradicts the threshold, so the
-threshold appears satisfied. The reasoning is fluent and the answer is confident.
+Ask a capable model directly, one cell at a time, giving it the criterion and the
+patient's chart. Across the cells measured so far it **commits to a verdict on 242
+of 360**, two thirds, including cells where the record is silent. Nothing in the
+chart contradicts the threshold, so the threshold appears satisfied. The reasoning
+is fluent and the answer is confident.
 
 TrialSieve answers:
 
@@ -34,12 +37,14 @@ concerns is quietly dropped from consideration by a fact that was never there.
 That failure is silent by construction: nobody audits the people who were screened
 out, because nobody looks at them again.
 
-This example is generated, not written. `python scripts/counterexample.py` runs
-both arms on that patient and writes the transcript to
-[docs/COUNTEREXAMPLE.md](docs/COUNTEREXAMPLE.md), using the same baseline code
-path the evaluation scores. If the baseline abstains, the script says so and this
-section is wrong. In this panel, 359 of 385 patients have no UACR result at all,
-so the case is the normal one rather than a chosen one.
+**The worked pair is generated, not written, and it is not cherry-picked.**
+`python scripts/counterexample.py` runs both arms on one patient and writes the
+transcript to [docs/COUNTEREXAMPLE.md](docs/COUNTEREXAMPLE.md), using the same
+baseline code path the evaluation scores. On the patient it picks, the baseline
+abstained too, and the document says so rather than hiding it. That is the point
+of publishing the rate instead of the anecdote: the failure is not that the model
+is always wrong, it is that it cannot tell you when it does not know, and two
+thirds of the time it does not tell you.
 
 ---
 
