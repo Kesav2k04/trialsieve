@@ -3,7 +3,7 @@
 
 PY ?= python
 
-.PHONY: help check reproduce verify diff live live-smoke panel clean
+.PHONY: help check reproduce verify diff live live-smoke panel clean \n        contamination environment links publish
 
 help:
 	@$(PY) run.py help
@@ -31,3 +31,15 @@ panel:
 
 clean:
 	@$(PY) run.py clean
+
+contamination:
+	@$(PY) run.py contamination
+
+environment:
+	@$(PY) run.py environment
+
+links:
+	@$(PY) run.py links
+
+publish:
+	@$(PY) run.py publish
