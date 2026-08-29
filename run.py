@@ -204,10 +204,16 @@ def t_reproduce(run: str = RUN) -> None:
 
     # The per-cell baseline is the only arm that costs a model call per patient,
     # so it was recorded over a seeded sample rather than the panel. Replayed here
-    # only if it was recorded: a checkout without those cassettes should reproduce
-    # everything else rather than stop.
-    if (ROOT / run / "cells").is_dir() and any(
-            (ROOT / run / "cells").glob("cells_B2_*.jsonl")):
+    # only if it was recorded: a checkout without those recordings should
+    # reproduce everything else rather than stop.
+    #
+    # The condition asks whether the recording exists, not whether a previous
+    # run's output is lying around. It used to look for `cells/cells_B2_*.jsonl`,
+    # which `.gitignore` excludes, so on a clean clone the guard was false, the
+    # baseline arm never ran, and the report came out missing the one group the
+    # whole comparison rests on. The trajectories are committed, so they are what
+    # it reads.
+    if any((ROOT / run / "trajectories" / "baseline-b2").glob("*.jsonl")):
         banner("replay the per-cell baseline over its sample")
         tag = f"b2_{B2_PATIENTS}p"
         cmd = [PY, "scripts/run_arms.py", "--run", run, "--mode", "replay",
