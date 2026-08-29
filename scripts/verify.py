@@ -159,7 +159,23 @@ def cmd_prove_replay(run: Path) -> int:
 
 
 def cmd_prove_sensitivity(run: Path) -> int:
-    """Edit one recorded answer and show that a published number moves."""
+    """Edit compiled predicates and show that the verdicts move.
+
+    What this proves: the verdicts are computed by executing the predicate the
+    compiler produced, so a stored table of answers could not stand in for it.
+
+    What it does not prove, and what the wording here used to claim: nothing
+    about the cassette store. This function reads `compiled/` and never opens a
+    cassette. `prove-replay` is the check that binds the cassettes.
+
+    It used to flip a comparison in the FIRST predicate with enough definite
+    verdicts and fail if that one predicate did not move. The first one is
+    `NCT06983054-INC-01`, whose verdicts are decided by an absent diagnosis code
+    rather than by any comparison, so flipping `>=` to `>` moved nothing and the
+    check reported that the published numbers do not depend on the predicates.
+    Every predicate is tried now, the count that moved is printed, and only a
+    run where none of them move is a failure.
+    """
     src = run / "compiled"
     files = sorted(src.glob("criteria_seed*.json"))
     if not files:
@@ -182,40 +198,52 @@ def cmd_prove_sensitivity(run: Path) -> int:
     from trialsieve.evaluator import evaluate_criterion
 
     panel = load_panel("data/vendor/panel.jsonl.gz")[:120]
-    target = None
+    tried, moved_ids, inert_ids, shown = 0, [], [], None
     for c in compilable:
-        vs = [evaluate_criterion(c, ch)["verdict"] for ch in panel]
-        if sum(1 for v in vs if v in ("MEETS", "FAILS")) >= 10:
-            target = (c, vs)
-            break
-    if target is None:
-        print("no predicate produces enough definite verdicts to perturb", file=sys.stderr)
+        before = [evaluate_criterion(c, ch)["verdict"] for ch in panel]
+        if sum(1 for v in before if v in ("MEETS", "FAILS")) < 10:
+            continue
+        mutated = copy.deepcopy(c)
+        flipped = _flip_one_comparison(mutated["expr"])
+        if not flipped:
+            continue
+        tried += 1
+        after = [evaluate_criterion(mutated, ch)["verdict"] for ch in panel]
+        moved = sum(1 for x, y in zip(before, after) if x != y)
+        if moved:
+            moved_ids.append(c["criterion_id"])
+            if shown is None:
+                shown = (c, flipped, before, after, moved)
+        else:
+            inert_ids.append(c["criterion_id"])
+
+    if not tried:
+        print("NOT VERIFIED: no predicate has both enough definite verdicts and a "
+              "comparison to flip, so nothing was perturbed and this check did not "
+              "run.", file=sys.stderr)
         return 2
 
-    c, before = target
-    counts_before = {v: before.count(v) for v in ("MEETS", "FAILS", "INDETERMINATE")}
-
-    mutated = copy.deepcopy(c)
-    flipped = _flip_one_comparison(mutated["expr"])
-    if not flipped:
-        print("predicate has no comparison to flip", file=sys.stderr)
-        return 2
-    after = [evaluate_criterion(mutated, ch)["verdict"] for ch in panel]
-    counts_after = {v: after.count(v) for v in ("MEETS", "FAILS", "INDETERMINATE")}
-    moved = sum(1 for x, y in zip(before, after) if x != y)
-
-    print(f"criterion      : {c['criterion_id']}")
-    print(f"perturbation   : {flipped}")
-    print(f"before         : {counts_before}")
-    print(f"after          : {counts_after}")
-    print(f"verdicts moved : {moved} of {len(panel)}")
-    if moved == 0:
-        print("\nFAIL: editing the recorded predicate changed nothing, so the published "
-              "numbers do not depend on it.", file=sys.stderr)
+    if shown is not None:
+        c, flipped, before, after, moved = shown
+        def counts(vs):
+            return {v: vs.count(v) for v in ("MEETS", "FAILS", "INDETERMINATE")}
+        print(f"criterion      : {c['criterion_id']}")
+        print(f"perturbation   : {flipped}")
+        print(f"before         : {counts(before)}")
+        print(f"after          : {counts(after)}")
+        print(f"verdicts moved : {moved} of {len(panel)}")
+    print(f"predicates moved by a flipped comparison: {len(moved_ids)} of {tried}")
+    if inert_ids:
+        names = ", ".join(inert_ids[:5])
+        print(f"unmoved, decided by something other than a comparison: {names}")
+    if not moved_ids:
+        print("\nFAIL: flipping a comparison in every compiled predicate changed "
+              "nothing, so the published numbers do not depend on them.",
+              file=sys.stderr)
         return 1
-    print("\nPASS: the recorded model output is load-bearing. Changing one comparison in "
-          "one compiled predicate moves the verdicts, so the reported numbers are computed "
-          "from the cassettes rather than stored beside them.")
+    print("\nPASS: the compiled predicates are load-bearing. Flipping one comparison "
+          "moves the verdicts, so the reported numbers are computed by executing the "
+          "predicate rather than read from a table stored beside it.")
     return 0
 
 
