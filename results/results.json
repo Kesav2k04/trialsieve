@@ -2099,6 +2099,24 @@
   "range": 0.0013,
   "n_seeds": 2
  },
+ "noise_floor_primary_across_seeds": {
+  "panel_reduction": {
+   "mean": 0.5342,
+   "sd": 0.098,
+   "min": 0.4649,
+   "max": 0.6035,
+   "range": 0.1386,
+   "n_seeds": 2
+  },
+  "false_exclusions": {
+   "mean": 101.0,
+   "sd": 114.5513,
+   "min": 20.0,
+   "max": 182.0,
+   "range": 162.0,
+   "n_seeds": 2
+  }
+ },
  "criterion_coverage": {
   "n_segmented": 65,
   "n_gold": 40,

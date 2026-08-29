@@ -21,7 +21,7 @@ no `make` and the reproduction should not depend on one.
 | Install | `pytest`, for the test gate. Nothing else. |
 | Runtime dependencies | none. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. The one exception is the video build, `scripts/make_video.py`, which uses a speech synthesiser and a browser and is not on this path. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | about 25 MB for a clone: 12 MB of tracked files, most of it the vendored patient panel, and a similar amount of history. |
+| Disk | about 65 MB for a clone: 41 MB of tracked files and about 25 MB of history. The tracked bulk is `runs/` at 32 MB, the recorded cassettes and trajectories that make the replay possible, not the vendored panel, which is 6.6 MB. Measure it yourself with `git ls-tree -r -l HEAD`. The earlier figure here said 12 MB and named the panel as the bulk, and both halves were wrong.
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB

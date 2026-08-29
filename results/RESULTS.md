@@ -193,6 +193,10 @@ An effect smaller than this spread is reported as not detected. The execution en
 
 **This is 2 seed(s), and the protocol registers at least 3.** What is printed above is the range between 2 points rather than an estimate of the spread, and it is almost certainly narrower than the real floor. Treat it as a lower bound on the noise and read every difference near it as undecided.
 
+**The registered floor is the spread of the primary metric, and that is not SER.** Panel reduction across the same seeds: `{"mean": 0.5342, "sd": 0.098, "min": 0.4649, "max": 0.6035, "range": 0.1386, "n_seeds": 2}`. False exclusions: `{"mean": 101.0, "sd": 114.5513, "min": 20.0, "max": 182.0, "range": 162.0, "n_seeds": 2}`.
+
+SER is stable across seeds and the primary metric is not, which is the finding rather than a footnote. Recompiling the same criteria under a different seed moves the number a coordinator would act on by more than ten points and moves the count of wrongly excluded patients by most of its own size. No difference in this report smaller than that spread is claimed as detected, and a floor quoted on SER alone would have hidden it.
+
 ## Label noise floor
 
 Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.

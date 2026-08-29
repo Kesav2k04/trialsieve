@@ -403,6 +403,7 @@ def main() -> int:
 
     # noise floor across compilation seeds
     seed_groups: dict[int, list[float]] = defaultdict(list)
+    seed_primary: dict[int, list[tuple]] = defaultdict(list)
     for tag, block in results["groups"].items():
         ts = block.get("cell_scores", {}).get("TS")
         if ts and "_seed" in tag:
@@ -411,6 +412,14 @@ def main() -> int:
             except ValueError:
                 continue
             seed_groups[seed].append(ts["ser"])
+            # The registered floor is the spread of the PRIMARY metric, and the primary
+            # metric is not SER. Publishing SER alone made the floor look tight while
+            # panel reduction moved 60.3 to 46.5 points and false exclusions moved 182
+            # to 20 across the same two seeds. A floor measured on the one number that
+            # does not move is a floor that clears everything.
+            ps = block.get("panel_scores", {}).get("TS")
+            if ps:
+                seed_primary[seed].append((ps["reduction"], ps["false_exclusions"]))
     sers = [v[0] for v in seed_groups.values() if v]
 
     # A floor of exactly zero across seeds is far more likely to mean the seeds
@@ -457,6 +466,25 @@ def main() -> int:
                       f"is almost certainly narrower than the real floor. Treat it as a "
                       f"lower bound on the noise and read every difference near it as "
                       f"undecided.")
+    reds = [v[0][0] for v in seed_primary.values() if v]
+    fxs = [v[0][1] for v in seed_primary.values() if v]
+    if len(reds) >= 2:
+        results["noise_floor_primary_across_seeds"] = {
+            "panel_reduction": seed_spread(reds),
+            "false_exclusions": seed_spread([float(x) for x in fxs])}
+        md.append("")
+        md.append("**The registered floor is the spread of the primary metric, and "
+                  "that is not SER.** Panel reduction across the same seeds: "
+                  f"`{json.dumps(seed_spread(reds))}`. False exclusions: "
+                  f"`{json.dumps(seed_spread([float(x) for x in fxs]))}`.")
+        md.append("")
+        md.append("SER is stable across seeds and the primary metric is not, which "
+                  "is the finding rather than a footnote. Recompiling the same "
+                  "criteria under a different seed moves the number a coordinator "
+                  "would act on by more than ten points and moves the count of "
+                  "wrongly excluded patients by most of its own size. No difference "
+                  "in this report smaller than that spread is claimed as detected, "
+                  "and a floor quoted on SER alone would have hidden it.")
 
     # degradation curve, read across the k groups rather than within one
     curve = []
