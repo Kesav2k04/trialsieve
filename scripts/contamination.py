@@ -200,8 +200,22 @@ def perturb(text: str) -> tuple[str, float, float] | None:
     1.37 and rounding keeps the value plausible for its unit, which matters: a
     threshold of 900 for an HbA1c would be rejected on its face by a careful
     model and the check would pass for the wrong reason.
+
+    A number is only a candidate if it stands alone. `NUM_RE` alone matched the
+    `2` inside `T2DM` and the check duly rewrote the criterion to say `T2.7DM`,
+    which is not a threshold moved to a new value, it is a word broken. The
+    compiler refused it, correctly, and the refusal was counted as a row that
+    failed to follow the perturbation. A check whose failures are its own
+    malformed inputs measures nothing.
     """
-    nums = [(float(m.group(1)), m.span(1)) for m in NUM_RE.finditer(text)]
+    nums = []
+    for m in NUM_RE.finditer(text):
+        i, j = m.span(1)
+        before = text[i - 1] if i else " "
+        after = text[j] if j < len(text) else " "
+        if before.isalpha() or after.isalpha():
+            continue  # T2DM, HbA1c, CKD3, a1c
+        nums.append((float(m.group(1)), (i, j)))
     if not nums:
         return None
     value, (i, j) = max(nums, key=lambda p: p[0])
@@ -252,7 +266,11 @@ def counterfactual(run: Path, provider: str, model: str | None, mode: str,
         row = {"criterion_id": crit["criterion_id"], "original": old,
                "perturbed": new, "text": new_text}
         try:
-            out = compile_criterion(client, shadow, traj=traj)
+            # `compile_criterion` returns (record, trajectory). Treating the pair
+            # as the record raised `'tuple' object has no attribute 'get'` on
+            # every row, which the loop swallowed into `status: error`, and the
+            # report then printed "0 of 0 follow the perturbation" as a result.
+            out, traj = compile_criterion(client, shadow, traj=traj)
             traj.write(run / "trajectories")
             if not out.get("compilable"):
                 row.update(status="refused", reason=out.get("reason_not_compilable", ""))
@@ -267,8 +285,13 @@ def counterfactual(run: Path, provider: str, model: str | None, mode: str,
             row.update(status="error", reason=f"{type(exc).__name__}: {exc}",
                        traceback=traceback.format_exc()[-1400:])
         rows.append(row)
+        # The reason goes on the progress line, not only into the JSON written at
+        # the end. A long run that prints `error` fifteen times and explains none
+        # of them until it finishes is a run you cannot fix while it is going.
+        tail = f" literals {row['literals']}" if row["status"] == "compiled" \
+            else f"  {str(row.get('reason', ''))[:90]}"
         print(f"  [{i:2d}/{len(picked)}] {row['status']:9s} {row['criterion_id']:24s} "
-              f"{old} -> {new} literals {row.get('literals')}", flush=True)
+              f"{old} -> {new}{tail}", flush=True)
 
     compiled = [r for r in rows if r["status"] == "compiled"]
     return {"n_attempted": len(rows), "n_compiled": len(compiled),
