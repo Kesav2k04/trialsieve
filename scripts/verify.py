@@ -49,22 +49,49 @@ def cmd_cassettes(run: Path) -> int:
 
 
 def cmd_trajectories(run: Path) -> int:
-    """Every recorded model call must point at a cassette that exists and matches."""
+    """Every recorded model call must point at a cassette that exists and matches, on
+    both sides of the call.
+
+    The cassette key is a hash of the REQUEST, so re-hashing a cassette to its key
+    proves nothing about the answer it carries: edit `response.text` and the key
+    still verifies, the filename still matches, and `verify cassettes` still says
+    PASS. The only thing that moved was the corpus digest, which was printed and
+    compared against nothing.
+
+    The trajectory holds the other copy. `llm_response` carries the text the model
+    returned, written at call time into a different file, so the two have to agree.
+    Neither side is produced by this check, which is what stops it being a fixed
+    point.
+
+    The limit, said plainly: a trajectory written in replay mode read its text from
+    the cassette, so it agrees with a tampered cassette by construction. This binds
+    the committed record-mode trajectories, and re-recording to hide an edit
+    rewrites those files where a reader can see it.
+    """
     from trialsieve.llm import CASSETTE_VERSION  # noqa: F401
-    cass = {p.stem: p for p in (run / "cassettes").glob("*.json")}
+    # Two agents record into their own cassette store, and this check looked only
+    # in the main one, so every contamination and critic-probe call read as "no
+    # cassette": 31 of them, a check failing on its own bookkeeping rather than on
+    # anything about the run. The store is chosen per agent, which is the directory
+    # the trajectory sits in.
+    stores = {"contamination": "cassettes_counterfactual",
+              "critic_probe": "cassettes_critic_probe"}
+    cass = {name: {q.stem: q for q in (run / name).glob("*.json")}
+            for name in ["cassettes", *stores.values()]}
     files = sorted((run / "trajectories").rglob("*.jsonl"))
-    bad, checked, seqbad = [], 0, []
+    bad, checked, seqbad, answers = [], 0, [], 0
     for p in files:
         events = [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
         seqs = [e["seq"] for e in events]
         if seqs != list(range(1, len(seqs) + 1)):
             seqbad.append(p.name)
-        for e in events:
-            if e["event"] != "llm_request":
-                continue
+        # Each request is paired with the response that follows it, in file order,
+        # which is the order the recorder appends them in.
+        replies = [e for e in events if e["event"] == "llm_response"]
+        for i, e in enumerate(e for e in events if e["event"] == "llm_request"):
             checked += 1
             key = e["cassette_key"]
-            f = cass.get(key[:16])
+            f = cass[stores.get(p.parent.name, "cassettes")].get(key[:16])
             if f is None:
                 bad.append({"file": p.name, "seq": e["seq"], "reason": "no cassette"})
                 continue
@@ -72,14 +99,21 @@ def cmd_trajectories(run: Path) -> int:
             if rec["request"]["messages"] != e["messages"]:
                 bad.append({"file": p.name, "seq": e["seq"],
                             "reason": "trajectory prompt differs from the recorded request"})
+            if i < len(replies):
+                answers += 1
+                if rec["response"]["text"] != replies[i].get("text"):
+                    bad.append({"file": p.name, "seq": replies[i]["seq"],
+                                "reason": "cassette answer differs from the trajectory answer"})
     print(json.dumps({"trajectory_files": len(files), "llm_requests_checked": checked,
+                      "llm_answers_checked": answers,
                       "mismatched": bad[:10], "n_mismatched": len(bad),
                       "non_contiguous_seq": seqbad}, indent=1))
     if bad or seqbad:
         print("\nFAIL", file=sys.stderr)
         return 1
     print(f"\nPASS: {checked} recorded model calls all resolve to a cassette whose stored "
-          f"request is byte-identical to the prompt in the trajectory.")
+          f"request is byte-identical to the prompt in the trajectory, and {answers} "
+          f"of their answers are byte-identical to the recorded response.")
     return 0
 
 
