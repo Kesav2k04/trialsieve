@@ -134,6 +134,204 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
+## k10_seed7  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 23.8% | 3.1% | 475 | 423 | 52 | 228 | 0 | 40 |
+| B0 | 100.0% | 95.0% | 14623 | 14623 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2357 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 189 | 59.1% |
+| B0 | **VOID** | 608 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 683 | 59.1% | **189** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **608** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 16.1% | 186 | 0 | 5 |
+| 1 | 27.3% | 315 | 1 | 6 |
+| 2 | 37.1% | 428 | 1 | 7 |
+| 5 | 41.7% | 482 | 3 | 8 |
+| 10 | 41.8% | 483 | 4 | 9 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 20.5% | 237 | 1 | 7 |
+| 1 | 20.5% | 237 | 1 | 7 |
+| 2 | 29.3% | 339 | 1 | 7 |
+| 5 | 40.1% | 463 | 3 | 8 |
+| 10 | 41.8% | 483 | 4 | 9 |
+
+1 of 5 rows lose their guarantee under cross-fitting. The in-sample row is the optimism, and the cross-fitted row is the one to read.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9187 | [-0.9667, -0.8575] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7621 | [-0.8757, -0.6377] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9221 | [-0.9681, -0.8621] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0308 | [+0.0023, +0.0814] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1629 | [+0.0709, +0.2689] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0275 | [+0.0006, +0.0766] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k20_seed7  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 23.4% | 3.0% | 467 | 422 | 45 | 258 | 0 | 40 |
+| B0 | 100.0% | 95.0% | 14625 | 14625 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2320 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 188 | 58.8% |
+| B0 | **VOID** | 611 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 679 | 58.8% | **188** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **611** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 14.1% | 163 | 0 | 4 |
+| 1 | 24.7% | 285 | 1 | 5 |
+| 2 | 33.9% | 392 | 2 | 6 |
+| 5 | 35.8% | 413 | 2 | 7 |
+| 10 | 40.9% | 472 | 3 | 9 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 20.2% | 233 | 2 | 8 |
+| 1 | 20.2% | 233 | 2 | 8 |
+| 2 | 28.7% | 331 | 2 | 8 |
+| 5 | 37.1% | 428 | 3 | 9 |
+| 10 | 40.9% | 472 | 3 | 9 |
+
+3 of 5 rows lose their guarantee under cross-fitting. The in-sample row is the optimism, and the cross-fitted row is the one to read.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9194 | [-0.9670, -0.8583] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7657 | [-0.8779, -0.6426] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9223 | [-0.9683, -0.8623] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0303 | [+0.0022, +0.0812] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1593 | [+0.0687, +0.2637] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0274 | [+0.0006, +0.0767] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k40_seed7  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 22.5% | 3.3% | 503 | 442 | 61 | 309 | 0 | 40 |
+| B0 | 100.0% | 95.3% | 14677 | 14677 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2183 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 206 | 56.5% |
+| B0 | **VOID** | 650 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 652 | 56.5% | **206** | 14 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **650** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 31.9% | 369 | 0 | 9 |
+| 1 | 31.9% | 369 | 0 | 9 |
+| 2 | 31.9% | 369 | 0 | 9 |
+| 5 | 32.0% | 370 | 1 | 10 |
+| 10 | 32.0% | 370 | 1 | 10 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 31.9% | 369 | 0 | 9 |
+| 1 | 31.9% | 369 | 0 | 9 |
+| 2 | 31.9% | 369 | 0 | 9 |
+| 5 | 32.0% | 370 | 1 | 10 |
+| 10 | 32.0% | 370 | 1 | 10 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 14 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 5 make 361, 29, 29, 20, 3. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9204 | [-0.9676, -0.8595] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7754 | [-0.8831, -0.6556] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9244 | [-0.9697, -0.8648] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0327 | [+0.0023, +0.0849] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1495 | [+0.0642, +0.2495] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0287 | [+0.0014, +0.0788] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the contradiction rate between the two independent labellers, 10.6%, measured on 180 doubly-labelled cells and reported in full below. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
 ## ow  (sensitivity: every absence forced to unknown)
 
 **This is not a different system and it is not the headline.** It is the same compiled predicates from the same run, executed with `--absent-means-override unknown`, which ignores every `absent_means` decision the compiler made and treats a silent record as silent everywhere. The flag predates this run and exists to answer one question: how much of TrialSieve's error is the model asserting a closed world it was not entitled to? The section at the end of this document has the answer with the numbers attached.
@@ -196,6 +394,19 @@ An effect smaller than this spread is reported as not detected. The execution en
 **The registered floor is the spread of the primary metric, and that is not SER.** Panel reduction across the same seeds: `{"mean": 0.5342, "sd": 0.098, "min": 0.4649, "max": 0.6035, "range": 0.1386, "n_seeds": 2}`. False exclusions: `{"mean": 101.0, "sd": 114.5513, "min": 20.0, "max": 182.0, "range": 162.0, "n_seeds": 2}`.
 
 SER is stable across seeds and the primary metric is not, which is the finding rather than a footnote. Recompiling the same criteria under a different seed moves the number a coordinator would act on by more than ten points and moves the count of wrongly excluded patients by most of its own size. No difference in this report smaller than that spread is claimed as detected, and a floor quoted on SER alone would have hidden it.
+
+## Degradation curve
+
+Synthea records are complete by construction, so the failure mode this design exists for barely occurs at k=0, and any silent error rate measured there is a lower bound. Each row damages k percent of the resources the *gold* predicates read, never the ones the system compiled, so the harness cannot favour the arm under test.
+
+| k | coverage | SER | false-FAILS | panel reduction | false exclusions |
+|---|---|---|---|---|---|
+| 0% | 24.1% | 3.0% | 424 | 60.4% | **182** |
+| 10% | 23.8% | 3.1% | 423 | 59.1% | **189** |
+| 20% | 23.4% | 3.0% | 422 | 58.8% | **188** |
+| 40% | 22.4% | 3.3% | 442 | 56.5% | **206** |
+
+Real missingness is not random. It tracks fragmented care and sicker patients, which is the one property this harness cannot reproduce, so the curve is a floor on the effect rather than an estimate of it.
 
 ## Label noise floor
 

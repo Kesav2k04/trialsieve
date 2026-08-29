@@ -59,7 +59,7 @@
   "pass": true
  },
  "cassettes": {
-  "cassettes_scanned": 309,
+  "cassettes_scanned": 833,
   "distinct_title_ngrams": 77,
   "legitimate_ngrams_subtracted": 3016,
   "example_ngrams": [
@@ -76,16 +76,16 @@
   "pass": true
  },
  "counterfactual": {
-  "n_attempted": 8,
+  "n_attempted": 15,
   "n_compiled": 6,
-  "n_follows": 3,
+  "n_follows": 6,
   "n_recites": 0,
   "usage": {
    "calls": 24,
    "prompt_tokens": 19373,
    "completion_tokens": 3569,
    "wall_s": 3135.68,
-   "cassette_hits": 11
+   "cassette_hits": 24
   },
   "rows": [
    {
@@ -94,8 +94,11 @@
     "perturbed": 13.7,
     "text": "HbA1c 6.5-13.7%",
     "status": "compiled",
-    "literals": [],
-    "follows": false,
+    "literals": [
+     6.5,
+     13.7
+    ],
+    "follows": true,
     "recites": false
    },
    {
@@ -104,8 +107,11 @@
     "perturbed": 116.5,
     "text": "Age 18 - 116.5 years of age",
     "status": "compiled",
-    "literals": [],
-    "follows": false,
+    "literals": [
+     18.0,
+     116.5
+    ],
+    "follows": true,
     "recites": false
    },
    {
@@ -134,8 +140,11 @@
     "perturbed": 123.3,
     "text": "Estimated GFR 60-123.3 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
     "status": "compiled",
-    "literals": [],
-    "follows": false,
+    "literals": [
+     60.0,
+     123.3
+    ],
+    "follows": true,
     "recites": false
    },
    {
@@ -170,6 +179,69 @@
     ],
     "follows": true,
     "recites": false
+   },
+   {
+    "criterion_id": "NCT06983054-EXC-02",
+    "original": 30.0,
+    "perturbed": 41.1,
+    "text": "UACR > 41.1 mg/mmol",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-02-CF#a0 (key 96e2c483377494d1). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-02-CF#a0 (key 96e2c483377494d1). Replay never falls through to a live call. Run in record mode to create it.\n"
+   },
+   {
+    "criterion_id": "NCT06983054-EXC-04",
+    "original": 1.0,
+    "perturbed": 1.4,
+    "text": "History of diabetic ketoacidosis (DKA) requiring medical intervention within 1.4 month prior to the Screening visit.",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-04-CF#a0 (key 11cc12893dfa6cfc). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-04-CF#a0 (key 11cc12893dfa6cfc). Replay never falls through to a live call. Run in record mode to create it.\n"
+   },
+   {
+    "criterion_id": "NCT06983054-EXC-05",
+    "original": 6.0,
+    "perturbed": 8.2,
+    "text": "Recent (<8.2 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-05-CF#a0 (key 68aee2650f51c338). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-05-CF#a0 (key 68aee2650f51c338). Replay never falls through to a live call. Run in record mode to create it.\n"
+   },
+   {
+    "criterion_id": "NCT06989723-INC-01",
+    "original": 20.0,
+    "perturbed": 27.4,
+    "text": "Adults aged 27.4 years or older.",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06989723-INC-01-CF#a0 (key 6dbf057c9f299807). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06989723-INC-01-CF#a0 (key 6dbf057c9f299807). Replay never falls through to a live call. Run in record mode to create it.\n"
+   },
+   {
+    "criterion_id": "NCT06989723-INC-02",
+    "original": 10.0,
+    "perturbed": 13.7,
+    "text": "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 13.7%",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06989723-INC-02-CF#a0 (key 03b762cfa2eb3e3b). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06989723-INC-02-CF#a0 (key 03b762cfa2eb3e3b). Replay never falls through to a live call. Run in record mode to create it.\n"
+   },
+   {
+    "criterion_id": "NCT06989723-INC-03",
+    "original": 4.0,
+    "perturbed": 5.5,
+    "text": "currently treated with metformin monotherapy, metformin and a sulfonylurea, metformin and a DPP-5.5 inhibitor, or triple therapy including metformin",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06989723-INC-03-CF#a0 (key 4552d5a5796c63ff). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06989723-INC-03-CF#a0 (key 4552d5a5796c63ff). Replay never falls through to a live call. Run in record mode to create it.\n"
+   },
+   {
+    "criterion_id": "NCT06989723-INC-04",
+    "original": 268.0,
+    "perturbed": 367.2,
+    "text": "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) >= 367.2 dB/m",
+    "status": "error",
+    "reason": "CassetteMiss: no cassette for compile-plan:NCT06989723-INC-04-CF#a0 (key 46228746cc79a01a). Replay never falls through to a live call. Run in record mode to create it.",
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\trialsieve\\scripts\\contamination.py\", line 292, in counterfactual\n    out, traj = compile_criterion(client, shadow, traj=traj)\n                ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\compiler.py\", line 294, in compile_criterion\n    plan = ask_json(client, traj,\n                    [{\"role\": \"system\", \"content\": PLAN_SYSTEM},\n                     {\"role\": \"user\", \"content\": PLAN.format(**criterion)}],\n                    _v_plan, tag=f\"compile-plan:{cid}\", prompt_version=PROMPT_VERSION)\n  File \"D:\\trialsieve\\src\\trialsieve\\agents\\common.py\", line 80, in ask_json\n    resp = client.complete(req)\n  File \"D:\\trialsieve\\src\\trialsieve\\llm.py\", line 307, in complete\n    raise CassetteMiss(\n    ...<2 lines>...\n    )\ntrialsieve.llm.CassetteMiss: no cassette for compile-plan:NCT06989723-INC-04-CF#a0 (key 46228746cc79a01a). Replay never falls through to a live call. Run in record mode to create it.\n"
    }
   ]
  }

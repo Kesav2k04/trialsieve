@@ -488,12 +488,21 @@ def main() -> int:
 
     # degradation curve, read across the k groups rather than within one
     curve = []
+    # The group tags are `k0_seed7`, `k10_seed7`, `ow`. This looked for "_k" and
+    # split on it, which matches none of them, so the curve was empty for every run
+    # and the section never rendered. The harness had also never been run, so an
+    # empty curve looked like the expected state instead of a parse that could not
+    # succeed. Only the scored seed is charted, because a curve that mixes seeds
+    # would be reading the seed spread as a degradation effect.
     for tag, block in sorted(results["groups"].items()):
-        if "_k" not in tag:
+        if not tag.startswith("k") or "_seed" not in tag:
             continue
         try:
-            k = int(tag.split("_k")[-1].split("_")[0])
+            k = int(tag[1:].split("_")[0])
+            seed = int(tag.split("_seed")[-1])
         except ValueError:
+            continue
+        if seed != 7:
             continue
         ts = block.get("cell_scores", {}).get("TS")
         ps = block.get("panel_scores", {}).get("TS")
