@@ -51,8 +51,12 @@ SPEC = [
     {"id": "07-probe", "section": 4, "kind": "cmd",
      "title": "before and after, on probes neither split contains",
      "source": "scripts/compare_probes.py",
+     # Without an explicit --json this writes results/probe_comparison.json, the
+     # same path the weak-model comparison writes, so capturing this shot
+     # silently replaced a committed artifact with a different pair of runs.
      "cmd": [sys.executable, "scripts/compare_probes.py",
-             "runs/probe-before/probe.json", "runs/probe-after/probe.json"]},
+             "runs/probe-before/probe.json", "runs/probe-after/probe.json",
+             "--json", "results/probe_comparison_before_after.json"]},
 
     {"id": "08-reproduce", "section": 5, "kind": "cmd",
      "title": "one command, offline, no key",
