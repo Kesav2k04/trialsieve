@@ -27,7 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from trialsieve import explain  # noqa: E402
+from trialsieve import explain, trace  # noqa: E402
 from trialsieve.signoff import Signoff, append, check, load  # noqa: E402
 
 MENU = """
@@ -106,11 +106,25 @@ def cmd_review(run: Path, reviewer: str, role: str) -> int:
         while not rationale:
             print("  a signature without a reason is not reviewable.")
             rationale = input("  in one line, why: ").strip()
+        signed_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         append(run / "signoffs.jsonl", Signoff(
             criterion_id=c["criterion_id"], predicate_sha256=c["predicate_sha256"],
             reviewer=reviewer, decision=decision, rationale=rationale,
-            signed_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            reviewer_role=role))
+            signed_at=signed_at, reviewer_role=role))
+        # The ledger is what the gate reads. The trajectory is what a reader
+        # follows, and a decision a human took about this criterion belongs in the
+        # same ordered log as everything the agents did to it. Writing it in only
+        # one of the two places is how "human checkpoints appear in the
+        # trajectories" became a sentence with no call site behind it.
+        seed = blob.get("seed", 7)
+        written = trace.append_human_checkpoint(
+            run / "trajectories", "compiler", f"{c['criterion_id']}-seed{seed}",
+            reviewer=reviewer, reviewer_role=role, decision=decision,
+            rationale=rationale, artifact_sha256=c["predicate_sha256"],
+            signed_at=signed_at)
+        if written is None:
+            print(f"  note: no compiler trajectory for {c['criterion_id']}; the "
+                  f"signature is in signoffs.jsonl only")
         done += 1
         print(f"  recorded {decision}")
 

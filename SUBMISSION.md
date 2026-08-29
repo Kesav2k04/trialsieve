@@ -46,6 +46,17 @@ and no signature exists in this checkout. What is shipped is the mechanism and i
 refusal: `docs/GATE.md` is the gate demonstrated by running into it, exit codes
 captured rather than transcribed.
 
+The mechanism is wired at both ends. A decision taken in `scripts/signoff.py` is
+appended to `<run>/signoffs.jsonl`, which is what the gate reads, **and** appended
+to the compiler trajectory of the predicate it approved, continuing that log's
+sequence, which is what a reader follows. It used to go to the ledger only. The
+event kind existed, the renderer knew how to draw it, the index counted a column
+for it, and no line of code ever emitted one, so the column reported a zero that
+was true for the wrong reason. `tests/test_human_checkpoint.py` drives the script
+the way a reviewer does and asserts the decision lands in both places, that a
+rejection is recorded the same way as an approval, and that a run whose
+trajectories were not kept still records the signature rather than losing it.
+
 The index is sorted so the trajectories that went wrong come first, because a run
 of uniformly clean trajectories is either a trivial task or an edited log.
 

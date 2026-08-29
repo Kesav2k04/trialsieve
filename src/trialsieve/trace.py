@@ -93,9 +93,41 @@ class Trajectory:
         self._add("revision", what=what, before=before, after=after)
 
     def human_checkpoint(self, reviewer: str, decision: str, rationale: str,
-                         artifact_sha256: str) -> None:
+                         artifact_sha256: str, reviewer_role: str = "") -> None:
         self._add("human_checkpoint", reviewer=reviewer, decision=decision,
-                  rationale=rationale, artifact_sha256=artifact_sha256)
+                  rationale=rationale, artifact_sha256=artifact_sha256,
+                  reviewer_role=reviewer_role)
+
+
+def append_human_checkpoint(root: str | Path, agent: str, subject: str,
+                            **payload: Any) -> Path | None:
+    """Add a checkpoint to a trajectory that was written and closed long ago.
+
+    A sign-off happens hours or days after the compile that produced the
+    predicate, in a different process, so there is no live `Trajectory` object to
+    call `human_checkpoint` on. Without this the event kind existed, was rendered,
+    was counted, and was never once emitted: the trajectory index described a
+    mechanism with no call site, which is the same defect as a check that cannot
+    fail.
+
+    The event is appended to the existing file rather than rewritten, and the
+    sequence number continues from the last line, so the log stays a single
+    ordered record of everything that happened to that criterion including the
+    part a human did.
+
+    Returns the path written, or None if there is no such trajectory. A missing
+    file is not an error here: signing a run whose trajectories were not kept is
+    allowed, and losing the signature over it would be worse.
+    """
+    p = Path(root) / agent / f"{_safe(subject)}.jsonl"
+    if not p.exists():
+        return None
+    lines = [x for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+    last = json.loads(lines[-1]) if lines else {}
+    event = {"seq": int(last.get("seq", 0)) + 1, "event": "human_checkpoint", **payload}
+    with open(p, "a", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
+    return p
 
     def final(self, **payload: Any) -> None:
         self._add("final", **payload)
@@ -133,7 +165,14 @@ def render_markdown(path: str | Path) -> str:
         k = e["event"]
         head = f"### {e['seq']}. {k}"
         if k == "instructions":
-            lines += [head + f" (prompt {e['prompt_version']})", "", "```", e["text"], "```", ""]
+            # `.get`, not `[]`. This renderer reads JSONL off disk, including logs
+            # written by an earlier version of the recorder, and a missing
+            # optional field used to raise KeyError and take the whole index build
+            # down with it. One old event should degrade one heading, not stop
+            # every trajectory in the run from rendering.
+            ver = e.get("prompt_version")
+            lines += [head + (f" (prompt {ver})" if ver else " (prompt version not recorded)"),
+                      "", "```", e.get("text", ""), "```", ""]
         elif k == "llm_request":
             body = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in e["messages"])
             lines += [head + f" -> {e['model']}  cassette `{e['cassette_key'][:16]}`", "",
