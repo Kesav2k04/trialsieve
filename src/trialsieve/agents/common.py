@@ -58,7 +58,7 @@ def extract_json(text: str) -> Any:
 def ask_json(client: Client, traj: Trajectory, messages: list[dict[str, str]],
              validate: Callable[[Any], None], *, tag: str, model: str = "",
              prompt_version: str = "v1", max_repairs: int = 2,
-             temperature: float = 0.0, seed: int | None = 7) -> Any:
+             temperature: float = 0.0, seed: int | None = None) -> Any:
     """One model turn, validated, with a bounded repair loop.
 
     Returns the first payload that passes `validate`. Raises after the repair
@@ -66,6 +66,11 @@ def ask_json(client: Client, traj: Trajectory, messages: list[dict[str, str]],
     degrades quietly to something almost right is how a bad predicate reaches a
     patient.
     """
+    # None means "whatever this run is seeded with", which is the right default
+    # for every agent: none of them has a reason to pin a seed of its own, and
+    # the one that hardcoded 7 silently disabled the multi-seed noise floor.
+    if seed is None:
+        seed = getattr(client, "seed", 7)
     convo = list(messages)
     last_err = ""
     for attempt in range(max_repairs + 1):

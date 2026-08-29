@@ -193,6 +193,14 @@ class Client:
         self.base_url = base_url or os.environ.get("TRIALSIEVE_BASE_URL",
                                                    "https://api.openai.com/v1")
         self.api_key_env = api_key_env
+        #: The seed every Request made through this client carries, and therefore
+        #: part of every cassette key. It lives on the client rather than on each
+        #: call site because `--seed 8` has to reach the model, not just the
+        #: output filename. It did not: `ask_json` defaulted to 7, so recompiling
+        #: under three seeds replayed seed 7's cassettes 211 times out of 211 and
+        #: produced three byte-identical predicate sets. The noise floor computed
+        #: from them would have been exactly zero, published, and false.
+        self.seed: int | None = 7
         self.cli_cmd = cli_cmd
         self.usage = Usage()
         self.trajectory_dir = Path(trajectory_dir) if trajectory_dir else None

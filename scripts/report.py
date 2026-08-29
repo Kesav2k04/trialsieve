@@ -158,7 +158,32 @@ def main() -> int:
                 continue
             seed_groups[seed].append(ts["ser"])
     sers = [v[0] for v in seed_groups.values() if v]
-    if len(sers) >= 2:
+
+    # A floor of exactly zero across seeds is far more likely to mean the seeds
+    # were not independent than to mean compilation is deterministic. It happened:
+    # `--seed` never reached the model, so three "seeds" replayed one set of
+    # cassettes and produced identical predicates. The published floor would have
+    # been 0.0 and every difference would have cleared it. So the predicate
+    # digests are compared directly, and identical ones disqualify the floor
+    # rather than producing a very impressive one.
+    digests = {}
+    for seed in sorted(seed_groups):
+        src = Path(run) / "compiled" / f"criteria_seed{seed}.json"
+        if src.exists():
+            blob = json.loads(src.read_text(encoding="utf-8"))
+            digests[seed] = tuple(c.get("predicate_sha256") for c in blob["criteria"])
+    identical = len(digests) >= 2 and len(set(digests.values())) == 1
+    results["seed_predicates_identical"] = identical
+
+    if identical:
+        md.append("\n## Noise floor\n")
+        md.append(f"**NOT MEASURED.** The {len(digests)} compilation seeds produced "
+                  f"byte-identical predicates, so the spread between them is zero for "
+                  f"a reason that has nothing to do with compilation being stable: the "
+                  f"seeds were not independent. A floor of zero would clear every "
+                  f"difference in this report, so none is claimed against one. "
+                  f"`docs/EVAL_PROTOCOL.md` registers this floor and it is outstanding.")
+    elif len(sers) >= 2:
         results["noise_floor_ser_across_seeds"] = seed_spread(sers)
         md.append("\n## Noise floor\n")
         md.append(f"TrialSieve SER across {len(sers)} compilation seeds: "

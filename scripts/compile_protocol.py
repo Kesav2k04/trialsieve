@@ -85,6 +85,14 @@ def main() -> int:
     client = Client(provider="openai", model=model, mode=a.mode,
                     cassette_dir=run / "cassettes",
                     base_url=a.base_url or base_url)
+    # `--seed` has to reach the model. It names the output file and the
+    # trajectory subject, and until this line it did nothing else: every request
+    # went out carrying seed 7, so recompiling under seeds 8 and 9 replayed seed
+    # 7's cassettes and produced identical predicates. The registered noise floor
+    # would have been exactly zero and would have made every difference look
+    # significant. The seed is part of the cassette key, so setting it here also
+    # means each seed records its own cassettes rather than sharing one set.
+    client.seed = a.seed
 
     if a.split == "dev":
         sys.path.insert(0, str(ROOT / "evaluation" / "dev"))
