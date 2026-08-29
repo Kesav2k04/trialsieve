@@ -1,0 +1,641 @@
+{
+ "model": "gpt-5.6-terra",
+ "seed": 7,
+ "provider": "shim",
+ "n_criteria": 30,
+ "stats": {
+  "compiled": 4,
+  "refused_plan": 10,
+  "refused_grounding": 9,
+  "errors": 7,
+  "critic_confirmed": 1,
+  "critic_dismissed": 0,
+  "revised": 1
+ },
+ "usage": {
+  "calls": 94,
+  "prompt_tokens": 40356,
+  "completion_tokens": 8998,
+  "wall_s": 1779.11,
+  "cassette_hits": 3
+ },
+ "wall_s": 1832.7,
+ "criteria": [
+  {
+   "criterion_id": "NCT06338553-EXC-12",
+   "nct_id": "NCT06338553",
+   "kind": "exclusion",
+   "category": "lab",
+   "source_text": "Diagnosis of pancreatitis or gastroparesis within the past 3 years",
+   "content_hash": "NCT06338553-EXC-12",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. pancreatitis: the vocabulary returned candidates but none of them represents the concept; gastroparesis: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "pancreatitis",
+    "gastroparesis"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "46f74756e9dc1d4b2513f100678b662df0b38f573ac44ba3cf2a63a9ac88fca1"
+  },
+  {
+   "criterion_id": "NCT06338553-EXC-13",
+   "nct_id": "NCT06338553",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Medications: Any diabetes medication, any antioxidant vitamin supplement (<2 weeks before a study), any systemic glucocorticoid, antipsychotic, atenolol, metoprolol, propranolol, niacin, any thiazide diuretic, any OCP with > 35 mcg ethinyl estradiol, growth hormone, any immunosuppressant, antihypertensive, any antihyperlipidemic",
+   "content_hash": "NCT06338553-EXC-13",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. antioxidant vitamin supplements: the vocabulary returned candidates but none of them represents the concept; antipsychotics: no entry in this site's medication vocabulary matches any of chlorpromazine, fluphenazine, haloperidol, loxapine, perphenazine, thioridazine and others; atenolol: no entry in this site's medication vocabulary matches any of atenolol; metoprolol: the vocabulary returned candidates but none of them represents the concept; propranolol: the vocabulary returned candidates but none of them represents the concept; niacin: the vocabulary returned candidates but none of them represents the concept; oral contraceptives containing ethinyl estradiol: the vocabulary returned candidates but none of them represents the concept; growth hormone: no entry in this site's medication vocabulary matches any of somatropin, somapacitan, lonapegsomatropin, somatrogon, somatrem",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "antioxidant vitamin supplements",
+    "antipsychotics",
+    "atenolol",
+    "metoprolol",
+    "propranolol",
+    "niacin",
+    "oral contraceptives containing ethinyl estradiol",
+    "growth hormone"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "1c34ce7abcb905942847ab603385d7f08c1e82fdde95d2eab0562f388b79c2e1"
+  },
+  {
+   "criterion_id": "NCT06338553-EXC-19",
+   "nct_id": "NCT06338553",
+   "kind": "exclusion",
+   "category": "lab",
+   "source_text": "HbA1c 5.7% to 6.4% with oral glucose test meeting ADA criteria for stage 3 T1DM within the past three months prior to or during screening visit",
+   "content_hash": "NCT06338553-EXC-19",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Oral glucose tolerance test glucose result: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Oral glucose tolerance test glucose result"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "568e3b88a9e6a9ae7476d521487c909261e9202f9ef474431009b42ee42c714b"
+  },
+  {
+   "criterion_id": "NCT06338553-EXC-24",
+   "nct_id": "NCT06338553",
+   "kind": "exclusion",
+   "category": "lab",
+   "source_text": "Diagnosis of pancreatitis or gastroparesis within the past 3 years",
+   "content_hash": "NCT06338553-EXC-24",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. pancreatitis: the vocabulary returned candidates but none of them represents the concept; gastroparesis: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "pancreatitis",
+    "gastroparesis"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "3a53ea2707c50212617a78c49502ae5f9a93ef099d85129053db7f5d5108fb44"
+  },
+  {
+   "criterion_id": "NCT06338553-EXC-25",
+   "nct_id": "NCT06338553",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Medications: Any diabetes medication, any antioxidant vitamin supplement (<2 weeks before a study), any systemic glucocorticoid, antipsychotic, atenolol, metoprolol, propranolol, niacin, any thiazide diuretic, any OCP with > 35 mcg ethinyl estradiol, growth hormone, any immunosuppressant, antihypertensive, any antihyperlipidemic",
+   "content_hash": "NCT06338553-EXC-25",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. antioxidant vitamin supplements: the vocabulary returned candidates but none of them represents the concept; antipsychotics: no entry in this site's medication vocabulary matches any of chlorpromazine, fluphenazine, haloperidol, loxapine, perphenazine, thioridazine and others; atenolol: no entry in this site's medication vocabulary matches any of atenolol; metoprolol: the vocabulary returned candidates but none of them represents the concept; propranolol: the vocabulary returned candidates but none of them represents the concept; niacin: the vocabulary returned candidates but none of them represents the concept; oral contraceptives containing ethinyl estradiol: the vocabulary returned candidates but none of them represents the concept; growth hormone: no entry in this site's medication vocabulary matches any of somatropin, somapacitan, lonapegsomatropin, somatrogon, somatrem",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "antioxidant vitamin supplements",
+    "antipsychotics",
+    "atenolol",
+    "metoprolol",
+    "propranolol",
+    "niacin",
+    "oral contraceptives containing ethinyl estradiol",
+    "growth hormone"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "7bd496fb233c0c502f8100ad1ae5262b115a0e27f016a019f7e9a62d751c9c48"
+  },
+  {
+   "criterion_id": "NCT06338553-INC-06",
+   "nct_id": "NCT06338553",
+   "kind": "inclusion",
+   "category": "lab",
+   "source_text": "During an OGTT having a glucose of > 199 mg/dL at 30, 60, or 90 minutes)",
+   "content_hash": "NCT06338553-INC-06",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Oral glucose tolerance test glucose measurement: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Oral glucose tolerance test glucose measurement"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "3437eb51fdc92397d0f729ed903099d85d6fca0384f2fa4680c5508db5352924"
+  },
+  {
+   "criterion_id": "NCT06578078-EXC-13",
+   "nct_id": "NCT06578078",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Patients on haemodialysis or haemofiltration",
+   "content_hash": "NCT06578078-EXC-13",
+   "compilable": true,
+   "expr": {
+    "op": "or",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "procedure",
+       "codes": [
+        "302497006"
+       ],
+       "within_days": null,
+       "active_only": true,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "procedure",
+       "codes": [
+        "265764009"
+       ],
+       "within_days": null,
+       "active_only": true,
+       "absent_means": "unknown"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "haemodialysis",
+     "domain": "procedure",
+     "status": "PARTIAL",
+     "codes": [
+      "302497006"
+     ]
+    },
+    {
+     "concept": "haemofiltration",
+     "domain": "procedure",
+     "status": "PARTIAL",
+     "codes": [
+      "265764009"
+     ]
+    }
+   ],
+   "unit_note": "No units specified.",
+   "absence_note": "Procedure records may be incomplete if dialysis occurred outside the available record, so absence is unknown.",
+   "confidence": "medium",
+   "compiler_prompt_version": "compiler-v1",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "997a1d5bff3b0ee213f83f9b8b5dcd602dedca906a9d67aa9badaa0a3028ec1a"
+  },
+  {
+   "criterion_id": "NCT06578078-EXC-24",
+   "nct_id": "NCT06578078",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Treated with potassium supplements within 7 days prior to randomization. 15. Positive hepatitis C antibody hepatitis B virus surface antigen or hepatitis B virus core antibody, at screening",
+   "content_hash": "NCT06578078-EXC-24",
+   "compilable": false,
+   "reason_not_compilable": "The randomization and screening dates are study-specific events not normally available as coded medical-record data.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "980b39a5dcd20a34a94cfe5046590f4e3ff3d597e92e79a55ba54f55392f4812"
+  },
+  {
+   "criterion_id": "NCT06578078-EXC-26",
+   "nct_id": "NCT06578078",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Known history of drug or alcohol abuse within 3 year of screening",
+   "content_hash": "NCT06578078-EXC-26",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Drug abuse: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Drug abuse"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "4874ae14e8e4e13fe66cc8ee53406f2080b32a4c1f4f6a1e35e5e9f75693f8a6"
+  },
+  {
+   "criterion_id": "NCT06578078-EXC-27",
+   "nct_id": "NCT06578078",
+   "kind": "exclusion",
+   "category": "administrative",
+   "source_text": "Involvement in the planning and/or conduct of the study (applies to both Investigator staff and/or staff at the study site)",
+   "content_hash": "NCT06578078-EXC-27",
+   "compilable": false,
+   "reason_not_compilable": "Study planning or conduct and site staff roles are administrative employment information, not coded clinical record data.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "451851a7d88b7a19964b13a1d0399af465beaacb04e6c807df75353f7ce315da"
+  },
+  {
+   "criterion_id": "NCT06578078-INC-01",
+   "nct_id": "NCT06578078",
+   "kind": "inclusion",
+   "category": "administrative",
+   "source_text": "Capable of giving signed informed consent which includes compliance with the requirements and restrictions listed in the informed consent form (ICF) and in this protocol",
+   "content_hash": "NCT06578078-INC-01",
+   "compilable": false,
+   "reason_not_compilable": "Requires assessing the participant's capacity and willingness to provide informed consent and comply with protocol requirements, which structured coded records cannot settle.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "bcb6550f4d8a517ffd6bdecbc1f7242f28dd39cc605c85cfbefd4af52b9ad828"
+  },
+  {
+   "criterion_id": "NCT06578078-INC-03",
+   "nct_id": "NCT06578078",
+   "kind": "inclusion",
+   "category": "administrative",
+   "source_text": "Individuals must be >= 70 years of age at the time of signing the informed consent form",
+   "content_hash": "NCT06578078-INC-03",
+   "compilable": false,
+   "reason_not_compilable": "Not checkable because the time of signing the informed consent form is not settled by structured medical record data.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "a4ad9686547930534076f8a33fd86eda5bd42d55f9698080e6e50f7524ffef36"
+  },
+  {
+   "criterion_id": "NCT06578078-INC-05",
+   "nct_id": "NCT06578078",
+   "kind": "inclusion",
+   "category": "diagnosis",
+   "source_text": "Individuals must have previously been admitted to hospital due to HF decompensation requiring intravenous diuretics",
+   "content_hash": "NCT06578078-INC-05",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Intravenous diuretic: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Intravenous diuretic"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "3d768e126db66e8c68004c52158887ba7a08ae73f5d953961fe734c93ef98be0"
+  },
+  {
+   "criterion_id": "NCT06578078-INC-06",
+   "nct_id": "NCT06578078",
+   "kind": "inclusion",
+   "category": "lab",
+   "source_text": "Individuals must have been stabilised for at least 24-48h of their HF decompensation before randomisation",
+   "content_hash": "NCT06578078-INC-06",
+   "compilable": false,
+   "reason_not_compilable": "Stabilisation of heart failure decompensation requires a clinical judgement that cannot be settled from coded record data.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "3c0948f570ada7d81ecf5624ad8762546fb8c944cce24b4877834401fa3c25f6"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-04",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "lab",
+   "source_text": "Active malignant neoplasm (except non-melanoma skin cancer or carcinoma in situ). Patients with a history of malignant neoplasm who have remained disease-free for the past 3 years may be included",
+   "content_hash": "NCT06998862-EXC-04",
+   "compilable": false,
+   "reason_not_compilable": "The required three-year disease-free status cannot be conclusively established from coded record data alone.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "b6a55cec605e3b1cbab49d4c6ebe2f174ecc8036661a5cd1eb8c7d946d887c12"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-05",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Uncontrolled or symptomatic chronic inflammatory disease (rheumatoid arthritis, systemic lupus erythematosus, Crohn's disease, ulcerative colitis, etc.)",
+   "content_hash": "NCT06998862-EXC-05",
+   "compilable": false,
+   "reason_not_compilable": "The terms \"uncontrolled\" and \"symptomatic\" require clinical assessment of disease activity and symptoms that coded record data cannot reliably settle.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "f381f25caa691d4b54aa3ca80f73d65d3804a97e1d9a31549e1e0c8337789d85"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-09",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Chronic treatment with non-steroidal anti-inflammatory drugs (NSAIDs)",
+   "content_hash": "NCT06998862-EXC-09",
+   "compilable": false,
+   "reason_not_compilable": "The term \"chronic treatment\" requires a protocol-specific duration or continuity definition that cannot be settled from coded medication records alone.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "f1e9229b3d19df0c9111f690eef2707010d85deaf22ef730f1fe33dfa2ee9cb7"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-10",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Poorly controlled hypertension (>160/90 mmHg) at the time of inclusion",
+   "content_hash": "NCT06998862-EXC-10",
+   "compilable": false,
+   "reason_not_compilable": "The blood-pressure threshold is coded and measurable, but its required timing at study inclusion cannot be established from a structured medical record alone.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "c7cbf81fc8c4193d19c7b2f22c12d924bcf66708370c7cb2afd8b08dbcc88a19"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-13",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "thrombocytopenia <50,000 cells/μL during the month prior to inclusion",
+   "content_hash": "NCT06998862-EXC-13",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": "<",
+    "left": {
+     "val": "observation",
+     "codes": [
+      "26515-7",
+      "777-3"
+     ],
+     "unit": "cells/μL",
+     "agg": "min",
+     "within_days": 30
+    },
+    "right": {
+     "val": "literal",
+     "number": 50000,
+     "unit": "cells/μL"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Platelet count",
+     "domain": "observation",
+     "status": "MAPPED",
+     "codes": [
+      "26515-7",
+      "777-3"
+     ]
+    }
+   ],
+   "unit_note": "cells/μL",
+   "absence_note": "No exists query is used; missing platelet observations yield an unknown comparison rather than assuming no thrombocytopenia.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v1",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "1ed1df3c20bbaebe3559efd8b424a1b010c5cdfced7cefd43e17b2e1518c2108"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-14",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Neutropenia defined as <1500 cells/mcL during the month prior to inclusion",
+   "content_hash": "NCT06998862-EXC-14",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": "<",
+    "left": {
+     "val": "observation",
+     "codes": [
+      "751-8"
+     ],
+     "unit": "cells/mcL",
+     "agg": "min",
+     "within_days": 30
+    },
+    "right": {
+     "val": "literal",
+     "number": 1500,
+     "unit": "cells/mcL"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "absolute neutrophil count",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "751-8"
+     ]
+    }
+   ],
+   "unit_note": "cells/mcL",
+   "absence_note": "No exists query is used; absence semantics do not apply to the observation comparison.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v1",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "98532628206a6a3b397ead745584173f3f7c9767ba37144c51596f00f6469d67"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-16",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "History of aplastic anemia diagnosed through bone marrow biopsy",
+   "content_hash": "NCT06998862-EXC-16",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Aplastic anemia: the vocabulary returned candidates but none of them represents the concept; Bone marrow biopsy: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Aplastic anemia",
+    "Bone marrow biopsy"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "8d5c157b91650647c21f2952b1673af864299d6c084e3694d20eeebbb7281cf6"
+  },
+  {
+   "criterion_id": "NCT06998862-EXC-17",
+   "nct_id": "NCT06998862",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Treatment with CYP3A4 inhibitors and/or P-glycoprotein inhibitors (antivirals, azole antifungals, aminoglycosides, cyclosporine) in the month prior to their inclusion in the study",
+   "content_hash": "NCT06998862-EXC-17",
+   "compilable": true,
+   "expr": {
+    "op": "or",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "medication",
+       "codes": [
+        "834357",
+        "897718"
+       ],
+       "within_days": 30,
+       "active_only": false,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "medication",
+       "codes": [
+        "200033",
+        "834357",
+        "897718"
+       ],
+       "within_days": 30,
+       "active_only": false,
+       "absent_means": "unknown"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "CYP3A4 inhibitor",
+     "domain": "medication",
+     "status": "PARTIAL",
+     "codes": [
+      "834357",
+      "897718"
+     ]
+    },
+    {
+     "concept": "P-glycoprotein inhibitor",
+     "domain": "medication",
+     "status": "PARTIAL",
+     "codes": [
+      "200033",
+      "834357",
+      "897718"
+     ]
+    }
+   ],
+   "unit_note": "No units are stated in the criterion.",
+   "absence_note": "unknown because treatment in the month before study inclusion may have occurred outside the available medication record.",
+   "confidence": "medium",
+   "compiler_prompt_version": "compiler-v1",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "e575e67b61da4f85b7a3b960909e52b5ad197e31b2bce7373def0517565b0ec1"
+  },
+  {
+   "criterion_id": "NCT07065383-EXC-13",
+   "nct_id": "NCT07065383",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Patients with any dietary habits that may interfere with the investigation (for example high fat vegan diets, as we know form prior research that they have very different intramyocellular fat storage compared to those on no dietary preferences)",
+   "content_hash": "NCT07065383-EXC-13",
+   "compilable": false,
+   "reason_not_compilable": "Dietary habits and whether they may interfere with the investigation require diet-history data and investigator judgement, neither of which is reliably available as coded structured record data.",
+   "blocked_at": "plan",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "300b1f3d3d6348f5b390f287afae2e8c5465dd7e88c11050ce335f82e5a5798d"
+  },
+  {
+   "criterion_id": "NCT07588256-INC-07",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "lab",
+   "source_text": "HbA1c >6.5%",
+   "text": "HbA1c >6.5%",
+   "content_hash": "NCT07588256-INC-07",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  },
+  {
+   "criterion_id": "NCT07588256-INC-09",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "lab",
+   "source_text": "Urine albumin-to-creatinine ratio (UACR) >30 mg/g",
+   "text": "Urine albumin-to-creatinine ratio (UACR) >30 mg/g",
+   "content_hash": "NCT07588256-INC-09",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  },
+  {
+   "criterion_id": "NCT07588256-INC-10",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "diagnosis",
+   "source_text": "Including coronary artery disease, cerebrovascular disease, peripheral arterial disease, or aortic pathology",
+   "text": "Including coronary artery disease, cerebrovascular disease, peripheral arterial disease, or aortic pathology",
+   "content_hash": "NCT07588256-INC-10",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  },
+  {
+   "criterion_id": "NCT07588256-INC-15",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "lab",
+   "source_text": "LDL-C >100 mg/dL (or >70 mg/dL in patients with diabetes or established ASCVD)",
+   "text": "LDL-C >100 mg/dL (or >70 mg/dL in patients with diabetes or established ASCVD)",
+   "content_hash": "NCT07588256-INC-15",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  },
+  {
+   "criterion_id": "NCT07588256-INC-18",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "lab",
+   "source_text": "Estimated glomerular filtration rate (eGFR) <60 mL/min/1.73 m², and",
+   "text": "Estimated glomerular filtration rate (eGFR) <60 mL/min/1.73 m², and",
+   "content_hash": "NCT07588256-INC-18",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  },
+  {
+   "criterion_id": "NCT07588256-INC-21",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "diagnosis",
+   "source_text": "Morning home blood pressure (HBP) >130/80 mmHg: weekly average (>=4 days) >130/80 mmHg,",
+   "text": "Morning home blood pressure (HBP) >130/80 mmHg: weekly average (>=4 days) >130/80 mmHg,",
+   "content_hash": "NCT07588256-INC-21",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  },
+  {
+   "criterion_id": "NCT07588256-INC-25",
+   "nct_id": "NCT07588256",
+   "kind": "inclusion",
+   "category": "medication",
+   "source_text": "Average home blood pressure <=130/80 mmHg (used to determine treatment strategy)",
+   "text": "Average home blood pressure <=130/80 mmHg (used to determine treatment strategy)",
+   "content_hash": "NCT07588256-INC-25",
+   "compilable": false,
+   "reason_not_compilable": "compiler failed: HTTPError",
+   "compile_error": true
+  }
+ ]
+}
