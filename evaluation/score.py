@@ -281,13 +281,91 @@ def paired_bootstrap(cells_a: list[Cell], cells_b: list[Cell], metric: str = "se
     base_pairs = list(by_ch.values())
     observed = stat(base_pairs)
 
+    # -- the same resample, counted instead of materialised --------------------
+    #
+    # The obvious loop builds the resampled cell list and walks it: for forty
+    # criteria and three hundred and eighty-five patients that is fifteen
+    # thousand tuples per draw, and ten thousand draws of it takes about twenty
+    # minutes. A reproduction step that appears to hang for twenty minutes is one
+    # a reader kills, so the numbers stop being checkable for a reason that has
+    # nothing to do with the numbers.
+    #
+    # The design is crossed and complete: every criterion meets every patient. So
+    # the count of a 0/1 indicator over the resample is
+    #
+    #     sum over criteria c of  (times c was drawn) * sum over patients p of
+    #                             (times p was drawn) * indicator(c, p)
+    #
+    # and the indicator is sparse for the metrics that matter. A silent error is
+    # rare, so the list of patients where it fires is short, and the inner sum
+    # runs over that list rather than over the panel. Coverage is dense, so it is
+    # counted through its complement.
+    #
+    # The random draws are byte-for-byte the ones the slow loop made: the same
+    # calls in the same order on the same seeded generator. Only the arithmetic
+    # changed. `tests/test_bootstrap.py` asserts the two agree.
+    p_index = {p: i for i, p in enumerate(pats)}
+    c_index = {c: i for i, c in enumerate(crits)}
+    complete = len(by_ch) == len(crits) * len(pats)
+
+    def _flag(cell) -> bool:
+        if metric == "ser":
+            return cell.silent_error
+        if metric == "coverage":
+            return cell.committed
+        if metric == "false_fails":
+            return cell.false_fails
+        raise ValueError(metric)
+
+    #: For each arm and criterion, the patient indices where the indicator is 1,
+    #: unless that is the majority, in which case the zeros are stored instead and
+    #: the count is taken from the complement.
+    def _sparse(which: int):
+        rows, inverted = [], []
+        for c in crits:
+            hits = [p_index[p] for p in pats
+                    if (c, p) in by_ch and _flag(by_ch[(c, p)][which])]
+            if len(hits) * 2 > len(pats):
+                rows.append([p_index[p] for p in pats
+                             if (c, p) in by_ch and not _flag(by_ch[(c, p)][which])])
+                inverted.append(True)
+            else:
+                rows.append(hits)
+                inverted.append(False)
+        return rows, inverted
+
     rng = random.Random(seed)
     draws = []
-    for _ in range(b):
-        cs = [crits[rng.randrange(len(crits))] for _ in range(len(crits))]
-        ps = [pats[rng.randrange(len(pats))] for _ in range(len(pats))]
-        pairs = [by_ch[(c, p)] for c in cs for p in ps if (c, p) in by_ch]
-        draws.append(stat(pairs))
+    if complete:
+        rows_a, inv_a = _sparse(0)
+        rows_b, inv_b = _sparse(1)
+        n_c, n_p = len(crits), len(pats)
+        for _ in range(b):
+            cs = [crits[rng.randrange(len(crits))] for _ in range(len(crits))]
+            ps = [pats[rng.randrange(len(pats))] for _ in range(len(pats))]
+            pmult = [0] * n_p
+            for p in ps:
+                pmult[p_index[p]] += 1
+            cmult = [0] * n_c
+            for c in cs:
+                cmult[c_index[c]] += 1
+            total = n_c * n_p
+            na = nb = 0
+            for i in range(n_c):
+                m = cmult[i]
+                if not m:
+                    continue
+                ra = sum(pmult[j] for j in rows_a[i])
+                rb = sum(pmult[j] for j in rows_b[i])
+                na += m * ((n_p - ra) if inv_a[i] else ra)
+                nb += m * ((n_p - rb) if inv_b[i] else rb)
+            draws.append(na / total - nb / total)
+    else:
+        for _ in range(b):
+            cs = [crits[rng.randrange(len(crits))] for _ in range(len(crits))]
+            ps = [pats[rng.randrange(len(pats))] for _ in range(len(pats))]
+            pairs = [by_ch[(c, p)] for c in cs for p in ps if (c, p) in by_ch]
+            draws.append(stat(pairs))
     draws.sort()
     lo = draws[int(alpha / 2 * b)]
     hi = draws[min(b - 1, int((1 - alpha / 2) * b))]

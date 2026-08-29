@@ -466,3 +466,52 @@ engine answers UNKNOWN rather than MEETS for a patient carrying it, so the failu
 is an abstention where a correct FALSE was available. It costs coverage, not
 correctness. It is not fixed, and it is reported in the results rather than left
 for a reader to find.
+
+---
+
+## 13. A reproduction step that appears to hang is not reproducible
+
+**Found by** running the scoring step for the first time on the full panel and
+watching it print nothing for fifteen minutes before I killed it.
+
+**Why this is a correctness problem and not a comfort one.** The whole
+reproducibility claim is that a reader runs one command and gets the published
+numbers. A step that produces no output for twenty minutes on a laptop is a step
+a reader kills, and then the numbers are unchecked for a reason that has nothing
+to do with the numbers. "It would have worked if you had waited" is not a
+reproduction.
+
+**Where the time went.** The paired bootstrap resampled criteria and patients,
+then materialised the induced cell list and walked it. Forty criteria by three
+hundred and eighty-five patients is fifteen thousand four hundred tuples built and
+walked twice, ten thousand times, for each of three metrics and each arm
+comparison.
+
+**What changed.** The resample is counted rather than built. The design is crossed
+and complete, so the count of a 0/1 indicator over a resample is
+
+    sum over criteria c of  (times c was drawn)
+                          * sum over patients p of (times p was drawn) * indicator(c, p)
+
+and the indicator is sparse for the metric that matters: a silent error is rare,
+so the list of patients where it fires is short and the inner sum runs over that
+list rather than over the panel. Coverage is dense, so it is counted through its
+complement instead. An incomplete design falls back to the original loop rather
+than counting cells that do not exist.
+
+**The measurement.** On a forty by three hundred and eighty-five design, the
+paired comparison is **33 times faster** at 300 resamples. End to end, the scoring
+step at the same 10,000 resamples went from **over fifteen minutes without
+finishing** to **27 seconds**.
+
+**What makes this safe to have done.** The random draws are the same calls in the
+same order on the same seeded generator. Only the arithmetic over each draw
+changed, so the two implementations can agree to the last digit, and
+`tests/test_bootstrap.py` requires it: the old loop is kept in the test file as an
+oracle and the interval endpoints are compared exactly. An optimisation that also
+changed the draw order would have had to be argued statistically, which is a much
+weaker thing to be able to say about a published confidence interval.
+
+The same file also carries an A/A control: two identical arms must produce an
+interval containing zero. A bootstrap that manufactured a difference out of
+resampling noise would pass every speed test and fail that one.
