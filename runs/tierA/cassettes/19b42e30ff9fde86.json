@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "19b42e30ff9fde8659d4281d693e0251444044c44e4f0ac657522b0f5b2eb954",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Squamous cell carcinoma of skin\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 141,
+  "latency_s": 17.464,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 212,
+  "text": "```json\n{\n  \"names\": [\n    \"Squamous cell carcinoma of skin\",\n    \"Cutaneous squamous cell carcinoma\",\n    \"Squamous cell carcinoma in situ of skin\",\n    \"Bowen's disease\",\n    \"Keratoacanthoma\",\n    \"Invasive cutaneous squamous cell carcinoma\",\n    \"Verrucous carcinoma of skin\",\n    \"Spindle cell squamous cell carcinoma of skin\",\n    \"Acantholytic squamous cell carcinoma of skin\",\n    \"Marjolin ulcer\",\n    \"Adenosquamous carcinoma of skin\"\n  ],\n  \"note\": \"Includes primary cutaneous SCC, in situ disease (Bowen's), and recognized histological subtypes.\"\n}\n```"
+ }
+}

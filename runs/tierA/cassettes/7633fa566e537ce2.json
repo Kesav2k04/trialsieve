@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "7633fa566e537ce2122ebed30375b9dff8c698f43b08292cf5dfdeb41c4f0b7c",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Bilateral tubal occlusion or ligation\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 149,
+  "latency_s": 20.621,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 214,
+  "text": "```json\n{\n  \"names\": [\n    \"Bilateral tubal ligation\",\n    \"Laparoscopic bilateral tubal ligation\",\n    \"Bilateral tubal occlusion with clips\",\n    \"Bilateral tubal occlusion with silicone ring\",\n    \"Bilateral partial salpingectomy\",\n    \"Pomeroy tubal ligation\",\n    \"Parkland tubal ligation\",\n    \"Postpartum tubal ligation\",\n    \"Bilateral salpingectomy for sterilization\",\n    \"Bilateral electrocoagulation of fallopian tubes\",\n    \"Hysteroscopic bilateral tubal occlusion\"\n  ],\n  \"note\": \"Includes standard surgical, laparoscopic, and transcervical methods for female sterilization.\"\n}\n```"
+ }
+}

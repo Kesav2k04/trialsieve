@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "02f9349ed47ec825951d8f51772c57d665d8772ed8d0812b48ae7bc4382a633b",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Stroke\nRecord domain: condition\nMeaning required: diagnosis of ischemic or hemorrhagic stroke within 6 months prior to the index date\n\nCandidate entries from this site's vocabulary:\n         230690007  Stroke   (in 25 resources)\n          22298006  Myocardial Infarction   (in 7 resources)\n         128188000  Cerebral palsy (disorder)   (in 3 resources)\n         399211009  History of myocardial infarction (situation)   (in 7 resources)\n          10509002  Acute bronchitis (disorder)   (in 266 resources)\n          65275009  Acute Cholecystitis   (in 2 resources)\n         195662009  Acute viral pharyngitis (disorder)   (in 347 resources)\n          75498004  Acute bacterial sinusitis (disorder)   (in 38 resources)\n         241929008  Acute allergic reaction   (in 6 resources)\n         706870000  Acute pulmonary embolism (disorder)   (in 4 resources)\n          65710008  Acute respiratory failure (disorder)   (in 2 resources)\n   132281000119108  Acute deep venous thrombosis (disorder)   (in 2 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 281,
+  "latency_s": 29.231,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 908,
+  "text": "```json\n{\n  \"codes\": [\"230690007\"],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\"code\": \"22298006\", \"why\": \"myocardial infarction, not cerebrovascular accident / stroke\"},\n    {\"code\": \"128188000\", \"why\": \"cerebral palsy is a developmental neuromuscular disorder, not acute ischemic or hemorrhagic stroke\"},\n    {\"code\": \"399211009\", \"why\": \"history of myocardial infarction, not stroke\"},\n    {\"code\": \"10509002\", \"why\": \"acute bronchitis, respiratory disorder\"},\n    {\"code\": \"65275009\", \"why\": \"acute cholecystitis, gallbladder disorder\"},\n    {\"code\": \"195662009\", \"why\": \"acute viral pharyngitis, upper respiratory infection\"},\n    {\"code\": \"75498004\", \"why\": \"acute bacterial sinusitis, upper respiratory infection\"},\n    {\"code\": \"241929008\", \"why\": \"acute allergic reaction, immune/allergic condition\"},\n    {\"code\": \"706870000\", \"why\": \"acute pulmonary embolism, pulmonary vascular condition\"},\n    {\"code\": \"65710008\", \"why\": \"acute respiratory failure, respiratory condition\"},\n    {\"code\": \"132281000119108\", \"why\": \"acute deep venous thrombosis, peripheral venous condition\"}\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "2d8532e40b17954409105db3eb30f3a8aa6f47f1626286f182d1774014bfa7ba",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Dialysis\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 156,
+  "latency_s": 17.412,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 206,
+  "text": "```json\n{\n  \"names\": [\n    \"hemodialysis\",\n    \"peritoneal dialysis\",\n    \"continuous renal replacement therapy\",\n    \"continuous venovenous hemofiltration\",\n    \"continuous venovenous hemodialysis\",\n    \"continuous venovenous hemodiafiltration\",\n    \"continuous ambulatory peritoneal dialysis\",\n    \"automated peritoneal dialysis\",\n    \"sustained low-efficiency dialysis\",\n    \"hemofiltration\",\n    \"hemodiafiltration\",\n    \"intermittent hemodialysis\",\n    \"maintenance hemodialysis\",\n    \"acute hemodialysis\"\n  ],\n  \"note\": \"Common clinical procedure terms and modalities for renal replacement therapy and dialysis.\"\n}\n```"
+ }
+}

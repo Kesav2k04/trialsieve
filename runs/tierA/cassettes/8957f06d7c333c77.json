@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "8957f06d7c333c77e172bfd18f24c2da5f66f5e63b1b913e656783eeb7937e22",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Sulfonylureas\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 83,
+  "latency_s": 23.907,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"glipizide\",\n    \"glimepiride\",\n    \"glyburide\",\n    \"gliclazide\",\n    \"tolbutamide\",\n    \"chlorpropamide\",\n    \"tolazamide\",\n    \"glibenclamide\",\n    \"acetohexamide\",\n    \"gliquidone\"\n  ],\n  \"note\": \"Generic ingredient names for first- and second-generation sulfonylurea antidiabetic medications.\"\n}\n```"
+ }
+}

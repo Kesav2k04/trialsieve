@@ -1,0 +1,37 @@
+{
+ "cassette_version": 1,
+ "key": "c8724f8cf3c116ae72861d2317ffaf0b3256132f69d6f366f6850b0c4fda3df6",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You prepare clinical trial eligibility criteria for automated checking against\nstructured medical records.\n\nYou are careful about what a medical record can and cannot settle. Most criteria\nin a real protocol cannot be settled from a record at all, and saying so is the\ncorrect answer rather than a failure.",
+    "role": "system"
+   },
+   {
+    "content": "Decide whether this criterion can be checked from a structured medical record,\nand list the clinical concepts it needs.\n\nCriterion (exclusion, category temporal_event):\n  Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.\n\nA criterion is checkable ONLY if every part of it can be settled from coded\nrecord data: demographics, coded diagnoses, coded medications, coded procedures,\nor numeric laboratory and vital-sign values, with dates.\n\nThe record carries an index date: the day this prescreen is being run. Study\nevents that have not happened yet are anchored to it. \"at screening\", \"at\nrandomisation\", \"at the time of signing the informed consent form\", \"at baseline\",\n\"prior to randomisation\" all mean \"as of the index date\", and a window measured\nback from one of them is measured back from the index date. That substitution is\nwhat prescreening is, so it does not make a criterion uncheckable. Say in `reason`\nthat you used it, so the reviewer sees the assumption.\n\nWhat stays uncheckable is the participant, not the calendar: whether they will\nconsent, whether they are able to comply, what the investigator will judge.\n\nIt is NOT checkable if it needs any of:\n  - consent, willingness, capacity, ability to comply or to attend\n  - the investigator's opinion, or a judgement about suitability\n  - a measurement a record does not normally hold (waist circumference,\n    performance status, imaging read-outs, questionnaire scores, elastography)\n  - counting prior lines of therapy, or a washout expressed in half-lives\n  - a bound relative to a laboratory's own reference range, such as \"2.5x the\n    upper limit of normal\", since the limit is not a fixed number\n  - contraception, pregnancy intention, or residence and travel plans\n  - enrolment in another study\n\nReturn JSON only:\n\n{\"checkable\": true,\n  \"reason\": \"one sentence; if not checkable, name the specific blocker\",\n  \"concepts\": [{\"name\":\"SGLT2 inhibitor\",\"domain\":\"medication\",\n                 \"intent\":\"currently prescribed drug of this class\"}]}\n\n`concepts` lists every clinical thing that must be looked up by code. Leave it\nempty when the criterion uses only age or sex. Use the exact domain the record\nwould store it in.",
+    "role": "user"
+   },
+   {
+    "content": "```json\n{\n  \"checkable\": true,\n  \"reason\": \"All specified cardiovascular and cerebrovascular events and hospitalizations can be identified via coded diagnoses and inpatient encounter records within the 180 days prior to the index date, anchoring screening to the index date.\",\n  \"concepts\": [\n    {\n      \"name\": \"Myocardial infarction\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of myocardial infarction within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Stroke\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of ischemic or hemorrhagic stroke within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Transient ischaemic attack\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of transient ischemic attack within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Unstable angina pectoris\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of unstable angina pectoris occurring during an inpatient hospitalization within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Inpatient encounter\",\n      \"domain\": \"encounter\",\n      \"intent\": \"hospitalization record within 180 days prior to index date\"\n    }\n  ]\n}\n```",
+    "role": "assistant"
+   },
+   {
+    "content": "That reply was rejected by the schema validator.\n\nError: AgentError: concepts[4].domain is 'encounter'; it must be exactly one of condition, medication, procedure, observation\n\nReturn the corrected JSON only, with no commentary and no code fence. Do not restate the task. Fix exactly the error above and keep everything else identical.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 295,
+  "latency_s": 19.309,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 1037,
+  "text": "{\n  \"checkable\": true,\n  \"reason\": \"All specified cardiovascular and cerebrovascular events and hospitalizations can be identified via coded diagnoses and inpatient encounter records within the 180 days prior to the index date, anchoring screening to the index date.\",\n  \"concepts\": [\n    {\n      \"name\": \"Myocardial infarction\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of myocardial infarction within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Stroke\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of ischemic or hemorrhagic stroke within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Transient ischaemic attack\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of transient ischemic attack within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Unstable angina pectoris\",\n      \"domain\": \"condition\",\n      \"intent\": \"diagnosis of unstable angina pectoris occurring during an inpatient hospitalization within 180 days prior to index date\"\n    },\n    {\n      \"name\": \"Inpatient encounter\",\n      \"domain\": \"procedure\",\n      \"intent\": \"hospitalization record within 180 days prior to index date\"\n    }\n  ]\n}"
+ }
+}

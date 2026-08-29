@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "537c7e424b80b7c8c20f8c272939bf81a21adab5e57a3337e83dd31b430c0a53",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You prepare clinical trial eligibility criteria for automated checking against\nstructured medical records.\n\nYou are careful about what a medical record can and cannot settle. Most criteria\nin a real protocol cannot be settled from a record at all, and saying so is the\ncorrect answer rather than a failure.",
+    "role": "system"
+   },
+   {
+    "content": "Decide whether this criterion can be checked from a structured medical record,\nand list the clinical concepts it needs.\n\nCriterion (exclusion, category medication):\n  Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).\n\nA criterion is checkable ONLY if every part of it can be settled from coded\nrecord data: demographics, coded diagnoses, coded medications, coded procedures,\nor numeric laboratory and vital-sign values, with dates.\n\nThe record carries an index date: the day this prescreen is being run. Study\nevents that have not happened yet are anchored to it. \"at screening\", \"at\nrandomisation\", \"at the time of signing the informed consent form\", \"at baseline\",\n\"prior to randomisation\" all mean \"as of the index date\", and a window measured\nback from one of them is measured back from the index date. That substitution is\nwhat prescreening is, so it does not make a criterion uncheckable. Say in `reason`\nthat you used it, so the reviewer sees the assumption.\n\nWhat stays uncheckable is the participant, not the calendar: whether they will\nconsent, whether they are able to comply, what the investigator will judge.\n\nIt is NOT checkable if it needs any of:\n  - consent, willingness, capacity, ability to comply or to attend\n  - the investigator's opinion, or a judgement about suitability\n  - a measurement a record does not normally hold (waist circumference,\n    performance status, imaging read-outs, questionnaire scores, elastography)\n  - counting prior lines of therapy, or a washout expressed in half-lives\n  - a bound relative to a laboratory's own reference range, such as \"2.5x the\n    upper limit of normal\", since the limit is not a fixed number\n  - contraception, pregnancy intention, or residence and travel plans\n  - enrolment in another study\n\nReturn JSON only:\n\n{\"checkable\": true,\n  \"reason\": \"one sentence; if not checkable, name the specific blocker\",\n  \"concepts\": [{\"name\":\"SGLT2 inhibitor\",\"domain\":\"medication\",\n                 \"intent\":\"currently prescribed drug of this class\"}]}\n\n`concepts` lists every clinical thing that must be looked up by code. Leave it\nempty when the criterion uses only age or sex. Use the exact domain the record\nwould store it in.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 264,
+  "latency_s": 18.091,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 656,
+  "text": "```json\n{\n  \"checkable\": true,\n  \"reason\": \"Prescriptions and dispensations for the specified drugs and drug classes can be identified from coded medication records within a 3-month lookback window anchored to the index date.\",\n  \"concepts\": [\n    {\n      \"name\": \"GLP-1 receptor agonist\",\n      \"domain\": \"medication\",\n      \"intent\": \"prescription or use of a GLP-1 receptor agonist within the past 3 months\"\n    },\n    {\n      \"name\": \"SGLT2 inhibitor\",\n      \"domain\": \"medication\",\n      \"intent\": \"prescription or use of an SGLT2 inhibitor within the past 3 months\"\n    },\n    {\n      \"name\": \"rosiglitazone\",\n      \"domain\": \"medication\",\n      \"intent\": \"prescription or use of rosiglitazone within the past 3 months\"\n    },\n    {\n      \"name\": \"vitamin E\",\n      \"domain\": \"medication\",\n      \"intent\": \"prescription or use of vitamin E within the past 3 months\"\n    },\n    {\n      \"name\": \"ursodeoxycholic acid\",\n      \"domain\": \"medication\",\n      \"intent\": \"prescription or use of ursodeoxycholic acid within the past 3 months\"\n    }\n  ]\n}\n```"
+ }
+}

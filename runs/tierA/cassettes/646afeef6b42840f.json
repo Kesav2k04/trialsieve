@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "646afeef6b42840f25c5faeedd02f109cc85831d28fcc1aeed23f93cbc557098",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Low-risk prostate cancer\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 166,
+  "latency_s": 18.947,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "{\n  \"names\": [\n    \"Low risk prostate cancer\",\n    \"Very low risk prostate cancer\",\n    \"Malignant neoplasm of prostate, low risk\",\n    \"Prostatic adenocarcinoma, Gleason score 6\",\n    \"Adenocarcinoma of prostate, Gleason grade 3+3=6\",\n    \"Prostatic adenocarcinoma, Grade Group 1\",\n    \"Low risk localized adenocarcinoma of prostate\",\n    \"Stage T1a adenocarcinoma of prostate\",\n    \"Stage T1b adenocarcinoma of prostate\",\n    \"Stage T1c adenocarcinoma of prostate\",\n    \"Stage T2a adenocarcinoma of prostate\"\n  ],\n  \"note\": \"Encompasses localized prostate adenocarcinoma characterized by Grade Group 1 (Gleason 6, 3+3) and early clinical T-stages (T1-T2a).\"\n}"
+ }
+}

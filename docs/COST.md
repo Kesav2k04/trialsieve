@@ -15,18 +15,23 @@ call, and its wall clock is seconds.
 |---|---|---|---|---|---|---|
 | compile the held-out protocols, 40 criteria | 211 | 112 | 155,324 | 35,939 | 1 h 49 min | $0.14 |
 | segmenter, 3 trials | 3 | 0 | 3,362 | 3,929 | 4 min 15 s | $0.01 |
-| recompile under seed 8, for the noise floor | _not run yet_ | | | | | |
+| recompile under seed 8, for the noise floor | 200 | 136 | 146,310 | 34,729 | 33 min 54 s | $0.13 |
+| recompile under seed 9, for the noise floor | 206 | 32 | 142,250 | 35,422 | 62 min 47 s | $0.13 |
 | vocabulary probe, before | 42 | 36 | 14,333 | 8,276 | 9 min 50 s | $0.02 |
 | vocabulary probe, after | 42 | 38 | 22,981 | 8,493 | 7 min 58 s | $0.03 |
 | vocabulary probe, weak model | 42 | 0 | 26,753 | 7,184 | 5 min 21 s | $0.03 |
-| counterfactual thresholds, contamination check 3 | 24 | 11 | 19,373 | 3,569 | 0 s | $0.01 |
+| counterfactual thresholds, contamination check 3 | 24 | 24 | 19,373 | 3,569 | 0 s | $0.01 |
 | critic probe, planted defects | 14 | 0 | 10,222 | 1,652 | 12 min 15 s | $0.01 |
+| arms B2 over 10 patients | 400 | 387 | 1,656,168 | 31,769 | 6 min 23 s | $0.58 |
 | arms TS, B0, B1 over 385 patients | 0 | 0 | 0 | 0 | 6 s | under a cent |
+| arms TS, B0, B1 over 385 patients | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| arms TS, B0, B1 over 385 patients | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| arms TS, B0, B1 over 385 patients | 0 | 0 | 0 | 0 | 3 s | under a cent |
+| arms TS, B0, B1 over 385 patients | 0 | 0 | 0 | 0 | 4 s | under a cent |
+| arms TS, B0, B1 over 385 patients | 0 | 0 | 0 | 0 | 11 s | under a cent |
 | arms TS over 385 patients | 0 | 0 | 0 | 0 | 7 s | under a cent |
 | second blind labeller, Checker B | 100 | 0 | 444,910 | 2,680 | 1 h 55 min | $0.14 |
-| **total so far, 1 step not yet run** | **478** | | **697,258** | **71,722** | **4 h 25 min** | **$0.39** |
-
-**PARTIAL.** 1 step in the table above has not run, so the total is a floor rather than the cost of the work: *recompile under seed 8, for the noise floor*. That step is a recording step, so running it raises the recorded totals and changes nothing about reproduction, which replays and calls no model.
+| **total** | **1,284** | | **2,641,986** | **173,642** | **6 h 08 min** | **$1.23** |
 
 The right-hand column is an estimate at a mid-tier hosted model at $0.30 in / $2.50 out per million tokens. It is not what this
 run cost. This ran on a locally authenticated vendor CLI on a subscription, so

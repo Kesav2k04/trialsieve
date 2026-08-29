@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "a7ec0e0ba8af7a3388c5a1734a79b0bdfa87d8e387ce142b7e33b59f60cae857",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Hysterectomy\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 159,
+  "latency_s": 17.281,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 207,
+  "text": "```json\n{\n  \"names\": [\n    \"Total abdominal hysterectomy\",\n    \"Vaginal hysterectomy\",\n    \"Total laparoscopic hysterectomy\",\n    \"Laparoscopically-assisted vaginal hysterectomy\",\n    \"Supracervical hysterectomy\",\n    \"Subtotal abdominal hysterectomy\",\n    \"Radical hysterectomy\",\n    \"Robotic-assisted total laparoscopic hysterectomy\",\n    \"Laparoscopic supracervical hysterectomy\",\n    \"Total hysterectomy with bilateral salpingo-oophorectomy\",\n    \"Radical abdominal hysterectomy\",\n    \"Abdominal hysterectomy\"\n  ],\n  \"note\": \"Includes primary surgical approaches, extents of excision, and common combined procedural terms.\"\n}\n```"
+ }
+}

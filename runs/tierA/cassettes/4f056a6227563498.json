@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "4f056a6227563498814d9d1142149eb66d8a38fcf711534f43b148c1cd3aafa0",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Hemodialysis\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 130,
+  "latency_s": 16.823,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 207,
+  "text": "```json\n{\n  \"names\": [\n    \"hemodialysis\",\n    \"acute hemodialysis\",\n    \"chronic hemodialysis\",\n    \"maintenance hemodialysis\",\n    \"intermittent hemodialysis\",\n    \"continuous venovenous hemodialysis\",\n    \"home hemodialysis\",\n    \"in-center hemodialysis\",\n    \"nocturnal hemodialysis\",\n    \"hemodialysis with single evaluation\",\n    \"hemodialysis with repeated evaluation\",\n    \"extracorporeal dialysis\"\n  ],\n  \"note\": \"Common clinical procedure names and coding terms for hemodialysis modalities and sessions\"\n}\n```"
+ }
+}

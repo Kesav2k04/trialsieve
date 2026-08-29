@@ -1,0 +1,1622 @@
+{
+ "model": "gemini-3.7-flash-medium",
+ "seed": 9,
+ "provider": "shim",
+ "n_criteria": 40,
+ "stats": {
+  "compiled": 19,
+  "refused_plan": 8,
+  "refused_grounding": 13,
+  "errors": 0,
+  "critic_confirmed": 1,
+  "critic_dismissed": 1,
+  "revised": 1
+ },
+ "usage": {
+  "calls": 206,
+  "prompt_tokens": 142250,
+  "completion_tokens": 35422,
+  "wall_s": 4927.98,
+  "cassette_hits": 32
+ },
+ "wall_s": 3767.3,
+ "criteria": [
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "diagnosis",
+   "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+   "content_hash": "NCT06983054-INC-01",
+   "compilable": true,
+   "expr": {
+    "op": "and",
+    "args": [
+     {
+      "op": "compare",
+      "cmp": ">=",
+      "left": {
+       "val": "age"
+      },
+      "right": {
+       "val": "literal",
+       "number": 18,
+       "unit": "years"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "condition",
+       "codes": [
+        "1501000119109",
+        "1551000119108",
+        "368581000119106",
+        "422034002",
+        "90781000119102",
+        "97331000119101"
+       ],
+       "broader_codes": [
+        "44054006"
+       ],
+       "within_days": null,
+       "active_only": false,
+       "absent_means": "unknown"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Type 2 diabetes mellitus",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "1501000119109",
+      "1551000119108",
+      "368581000119106",
+      "422034002",
+      "90781000119102",
+      "97331000119101"
+     ],
+     "broader_codes": [
+      "44054006"
+     ]
+    }
+   ],
+   "unit_note": "Age is specified in years (adults defined as >= 18 years).",
+   "absence_note": "absent_means is set to 'unknown' because a prior diagnosis of Type 2 Diabetes could have been established at an external site or prior to EHR records, and silence in the record should not conclusively rule out eligibility.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "1fdf4ef9810641e9cf1524008b50fb1256c03978fe2e2b1171de14d37959882a"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "HbA1c 6.5-10%",
+   "content_hash": "NCT06983054-INC-02",
+   "compilable": true,
+   "expr": {
+    "op": "between",
+    "value": {
+     "val": "observation",
+     "codes": [
+      "4548-4"
+     ],
+     "unit": "%",
+     "agg": "latest",
+     "within_days": null
+    },
+    "low": 6.5,
+    "high": 10.0,
+    "inclusive": [
+     true,
+     true
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "HbA1c",
+     "domain": "observation",
+     "status": "MAPPED",
+     "codes": [
+      "4548-4"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "HbA1c is specified in %.",
+   "absence_note": "No query object requiring absent_means is used; evaluation is based on observation value aggregation.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "4472e638f02c385427f66089fa11ea64e0bd17ad622e862530236392457fabdd"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-03",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "demographic",
+   "source_text": "Age 18 - 85 years of age",
+   "content_hash": "NCT06983054-INC-03",
+   "compilable": true,
+   "expr": {
+    "op": "between",
+    "value": {
+     "val": "age"
+    },
+    "low": 18,
+    "high": 85,
+    "inclusive": [
+     true,
+     true
+    ]
+   },
+   "grounded": [],
+   "unit_note": "years (demographic age)",
+   "absence_note": "No EHR queries used; age is calculated directly from demographic birth date at screening.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "00950dbd43dceff04598e97dac30cc473ddf9f360116ce1404cfbfb1b7cc0b09"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-04",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "Overweight or obese with BMI: >25 kg/m2",
+   "content_hash": "NCT06983054-INC-04",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": ">",
+    "left": {
+     "val": "derived",
+     "name": "bmi",
+     "within_days": null
+    },
+    "right": {
+     "val": "literal",
+     "number": 25,
+     "unit": "kg/m2"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Body mass index",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "39156-5"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "BMI is specified in kg/m2.",
+   "absence_note": "Not applicable as no query object with absent_means is used; criterion is evaluated as a derived BMI comparison.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "b847eed14996b1b77939dfe0a855bfc68d689f06c17c7b2489e88b52d165a6f1"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-05",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "reproductive",
+   "source_text": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)",
+   "content_hash": "NCT06983054-INC-05",
+   "compilable": false,
+   "reason_not_compilable": "Menstrual history (no menses for >1 year) is not reliably captured in structured coded data, and the criterion involves prospective clinical judgment and testing in case of doubt.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "dfb4d5f8177d1017156a699e39a6021a04126608f511cd43a6d6ded33d5d493d"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-06",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "consent_or_capacity",
+   "source_text": "Ability to provide signed and dated, written informed consent prior to any study procedures",
+   "content_hash": "NCT06983054-INC-06",
+   "compilable": false,
+   "reason_not_compilable": "Ability to provide informed consent reflects participant willingness and capacity, which cannot be determined from structured medical records.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "f4f0fb8b3c3895ed0e6a8a6963ecd7bd44f693028bf6f256d7d003a4dc9cb685"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-07",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "Estimated GFR 60-90 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+   "content_hash": "NCT06983054-INC-07",
+   "compilable": true,
+   "expr": {
+    "op": "between",
+    "value": {
+     "val": "derived",
+     "name": "egfr_ckdepi_2021",
+     "within_days": null
+    },
+    "low": 60,
+    "high": 90,
+    "inclusive": [
+     true,
+     true
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Estimated glomerular filtration rate by CKD-EPI",
+     "domain": "observation",
+     "status": "BROADER_ONLY",
+     "codes": [],
+     "broader_codes": [
+      "33914-3"
+     ]
+    }
+   ],
+   "unit_note": "ml/min/1.73m2",
+   "absence_note": "No query absent_means is required as this criterion evaluates a derived clinical calculation rather than an existence query.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "b97721d829d68eb4519271165f6101a9044726330e544d33e7ca4b72097ef42e"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-08",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "lifestyle_or_social",
+   "source_text": "Sodium intake at baseline < 200 mmol/day",
+   "content_hash": "NCT06983054-INC-08",
+   "compilable": false,
+   "reason_not_compilable": "Daily dietary sodium intake is dietary/lifestyle assessment data that is not routinely captured as structured coded data in medical records.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "359b1ddcd68c90252bb512c5a830ca21c0da4ea62346bf9f1b3ef8adfc2bb669"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-09",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "UACR < 30 mg/mmol",
+   "content_hash": "NCT06983054-INC-09",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": "<",
+    "left": {
+     "val": "observation",
+     "codes": [
+      "14959-1"
+     ],
+     "unit": "mg/mmol",
+     "agg": "latest",
+     "within_days": null
+    },
+    "right": {
+     "val": "literal",
+     "number": 30,
+     "unit": "mg/mmol"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Urine albumin-to-creatinine ratio",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "14959-1"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "UACR is specified in mg/mmol as written in the criterion.",
+   "absence_note": "No existential query used; lab value observation missingness is handled at the observation evaluation level.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "04d5d44148fb8de1a5740b33d2d765688d1ec71f34f1efae0db804ed61b7afa1"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-10",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "medication",
+   "source_text": "All participants need to be on a stable dose of diabetes medication, including Metformin, SU, DPP4-inhibitors, or insulin.",
+   "content_hash": "NCT06983054-INC-10",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Sulfonylureas: no entry in this site's medication vocabulary matches any of glipizide, glimepiride, glyburide, gliclazide, tolbutamide, chlorpropamide and others; DPP-4 inhibitors: no entry in this site's medication vocabulary matches any of sitagliptin, saxagliptin, linagliptin, alogliptin, vildagliptin, teneligliptin and others",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Sulfonylureas",
+    "DPP-4 inhibitors"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "d90ebcbfd7c0ffa0c5c069eebd777ed6334b412097835f8b62c5c42d1465b2a7"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-01",
+   "nct_id": "NCT06983054",
+   "kind": "exclusion",
+   "category": "lab_value",
+   "source_text": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 90 mL/min/1.73m2 determined by CKD-EPI",
+   "content_hash": "NCT06983054-EXC-01",
+   "compilable": true,
+   "expr": {
+    "op": "or",
+    "args": [
+     {
+      "op": "compare",
+      "cmp": "<",
+      "left": {
+       "val": "derived",
+       "name": "egfr_ckdepi_2021",
+       "within_days": null
+      },
+      "right": {
+       "val": "literal",
+       "number": 60,
+       "unit": "mL/min/1.73m2"
+      }
+     },
+     {
+      "op": "compare",
+      "cmp": ">",
+      "left": {
+       "val": "derived",
+       "name": "egfr_ckdepi_2021",
+       "within_days": null
+      },
+      "right": {
+       "val": "literal",
+       "number": 90,
+       "unit": "mL/min/1.73m2"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Estimated GFR by CKD-EPI",
+     "domain": "observation",
+     "status": "BROADER_ONLY",
+     "codes": [],
+     "broader_codes": [
+      "33914-3"
+     ]
+    }
+   ],
+   "unit_note": "Criterion uses mL/min/1.73m2 as the unit of measurement.",
+   "absence_note": "No direct query with absent_means is used since eGFR is evaluated via the derived CKD-EPI calculation; missing required lab or demographic data evaluates to unknown.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "7a78f992b348beeea9bd9e9cbc26958e12707dac6502662f896dedd5059f463f"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-02",
+   "nct_id": "NCT06983054",
+   "kind": "exclusion",
+   "category": "lab_value",
+   "source_text": "UACR > 30 mg/mmol",
+   "content_hash": "NCT06983054-EXC-02",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": ">",
+    "left": {
+     "val": "observation",
+     "codes": [
+      "14959-1"
+     ],
+     "unit": "mg/mmol",
+     "agg": "latest",
+     "within_days": null
+    },
+    "right": {
+     "val": "literal",
+     "number": 30,
+     "unit": "mg/mmol"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Urine albumin-to-creatinine ratio",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "14959-1"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "UACR is specified in mg/mmol as written in the criterion.",
+   "absence_note": "Not applicable since this criterion is modeled as a direct observation comparison rather than an existence query.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "b3e28e7fec80e69948c87c6af2a6d966e0a3bb3a534a5ede9d6d8b643a543d31"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-03",
+   "nct_id": "NCT06983054",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Current/chronic use of the following medication: SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, immune suppressants, antimicrobial agents, chemotherapeutics",
+   "content_hash": "NCT06983054-EXC-03",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. SGLT2 inhibitor: no entry in this site's medication vocabulary matches any of empagliflozin, dapagliflozin, canagliflozin, ertugliflozin, bexagliflozin, sotagliflozin and others; Thiazolidinedione: no entry in this site's medication vocabulary matches any of pioglitazone, rosiglitazone, troglitazone, lobeglitazone, ciglitazone, balaglitazone and others; GLP-1 receptor agonist: no entry in this site's medication vocabulary matches any of semaglutide, liraglutide, dulaglutide, exenatide, tirzepatide, lixisenatide and others",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "SGLT2 inhibitor",
+    "Thiazolidinedione",
+    "GLP-1 receptor agonist"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "926fefca20c72ac3ed3051ff3ff8756277bf098979c058e0f3a0edcf5d4c5246"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-04",
+   "nct_id": "NCT06983054",
+   "kind": "exclusion",
+   "category": "temporal_event",
+   "source_text": "History of diabetic ketoacidosis (DKA) requiring medical intervention within 1 month prior to the Screening visit.",
+   "content_hash": "NCT06983054-EXC-04",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. diabetic ketoacidosis: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "diabetic ketoacidosis"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "7ae8953be24fcbf3139feb8c7b5cf6fcc7c2eb62a4d17193e7e401ea8e39bd13"
+  },
+  {
+   "criterion_id": "NCT06983054-EXC-05",
+   "nct_id": "NCT06983054",
+   "kind": "exclusion",
+   "category": "temporal_event",
+   "source_text": "Recent (<6 months) history of cardiovascular disease, including acute coronary syndrome, chronic heart failure, myocardial infarction or stroke",
+   "content_hash": "NCT06983054-EXC-05",
+   "compilable": true,
+   "expr": {
+    "op": "exists",
+    "query": {
+     "domain": "condition",
+     "codes": [
+      "132281000119108",
+      "22298006",
+      "230690007",
+      "49436004",
+      "53741008",
+      "59621000",
+      "88805009"
+     ],
+     "within_days": 183,
+     "absent_means": "unknown"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Cardiovascular disease",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "132281000119108",
+      "22298006",
+      "230690007",
+      "49436004",
+      "53741008",
+      "59621000",
+      "88805009"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Acute coronary syndrome",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "22298006"
+     ],
+     "broader_codes": [
+      "53741008"
+     ]
+    },
+    {
+     "concept": "Chronic heart failure",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "88805009"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Myocardial infarction",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "22298006"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Stroke",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "230690007"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "No unit is specified in the criterion.",
+   "absence_note": "absent_means is set to 'unknown' because acute and recent cardiovascular events or hospitalizations may have occurred outside the primary site, meaning an absence of records cannot prove the patient did not experience an event.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "4b6743e491401527c64d33445237c029091559006889b6b39cb36e178b5d5251"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-01",
+   "nct_id": "NCT06989723",
+   "kind": "inclusion",
+   "category": "demographic",
+   "source_text": "Adults aged 20 years or older.",
+   "content_hash": "NCT06989723-INC-01",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": ">=",
+    "left": {
+     "val": "age"
+    },
+    "right": {
+     "val": "literal",
+     "number": 20,
+     "unit": "years"
+    }
+   },
+   "grounded": [],
+   "unit_note": "Criterion specifies age in years.",
+   "absence_note": "No clinical code query was required, so absent_means is not applicable.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "35b1c23d3e6bf72d9c339f1031ec38b46302a833bed59d3a36da5e78d16a9eab"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-02",
+   "nct_id": "NCT06989723",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "Patients with inadequately controlled type 2 diabetes mellitus, defined as HbA1c between 7% and 10%",
+   "content_hash": "NCT06989723-INC-02",
+   "compilable": true,
+   "expr": {
+    "op": "and",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "condition",
+       "codes": [
+        "1501000119109",
+        "1551000119108",
+        "368581000119106",
+        "422034002",
+        "90781000119102",
+        "97331000119101"
+       ],
+       "broader_codes": [
+        "44054006"
+       ],
+       "within_days": null,
+       "active_only": false,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "between",
+      "value": {
+       "val": "observation",
+       "codes": [
+        "4548-4"
+       ],
+       "unit": "%",
+       "agg": "latest",
+       "within_days": null
+      },
+      "low": 7.0,
+      "high": 10.0,
+      "inclusive": [
+       true,
+       true
+      ]
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Type 2 diabetes mellitus",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "1501000119109",
+      "1551000119108",
+      "368581000119106",
+      "422034002",
+      "90781000119102",
+      "97331000119101"
+     ],
+     "broader_codes": [
+      "44054006"
+     ]
+    },
+    {
+     "concept": "Hemoglobin A1c",
+     "domain": "observation",
+     "status": "MAPPED",
+     "codes": [
+      "4548-4"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "HbA1c unit is '%' as stated directly in the criterion text ('between 7% and 10%').",
+   "absence_note": "absent_means is set to 'unknown' for the type 2 diabetes condition query because absence of coded entries in a single EHR record does not definitively rule out a prior or externally managed diagnosis.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "085daaf5838da34199866a244f941eefce7cfa4531555d5afde0de68f4184146"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-03",
+   "nct_id": "NCT06989723",
+   "kind": "inclusion",
+   "category": "medication",
+   "source_text": "currently treated with metformin monotherapy, metformin and a sulfonylurea, metformin and a DPP-4 inhibitor, or triple therapy including metformin",
+   "content_hash": "NCT06989723-INC-03",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. sulfonylurea: no entry in this site's medication vocabulary matches any of glipizide, glyburide, glibenclamide, glimepiride, gliclazide, tolbutamide and others; DPP-4 inhibitor: no entry in this site's medication vocabulary matches any of sitagliptin, linagliptin, saxagliptin, alogliptin, vildagliptin, teneligliptin and others",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "sulfonylurea",
+    "DPP-4 inhibitor"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "eb988ab1d304305cdc1b93c5d118fa77f2e6aa76ba1e8bc54bb3bab5b25c765b"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-04",
+   "nct_id": "NCT06989723",
+   "kind": "inclusion",
+   "category": "procedure",
+   "source_text": "Evidence of hepatic steatosis within the past 3 months, confirmed by Fibroscan with a controlled attenuation parameter (CAP) >= 268 dB/m",
+   "content_hash": "NCT06989723-INC-04",
+   "compilable": false,
+   "reason_not_compilable": "FibroScan controlled attenuation parameter (CAP) is an elastography and imaging read-out measurement that structured medical records do not normally hold as coded numeric values.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "ba3547a26619347c27a5727008aa725fcbf15198f651cd3cc5d344a1889fb429"
+  },
+  {
+   "criterion_id": "NCT06989723-INC-05",
+   "nct_id": "NCT06989723",
+   "kind": "inclusion",
+   "category": "vital_sign",
+   "source_text": "Presence of at least one of the following metabolic abnormalities: blood pressure >=130 mmHg systolic or >=85 mmHg diastolic or use of antihypertensive medication; serum triglycerides >=150 mg/dL or current use of lipid-lowering agents; HDL-cholesterol <=45 mg/dL for men or <=50 mg/dL for women",
+   "content_hash": "NCT06989723-INC-05",
+   "compilable": true,
+   "expr": {
+    "op": "at_least",
+    "n": 1,
+    "args": [
+     {
+      "op": "or",
+      "args": [
+       {
+        "op": "compare",
+        "cmp": ">=",
+        "left": {
+         "val": "derived",
+         "name": "systolic_bp",
+         "within_days": null
+        },
+        "right": {
+         "val": "literal",
+         "number": 130,
+         "unit": "mmHg"
+        }
+       },
+       {
+        "op": "compare",
+        "cmp": ">=",
+        "left": {
+         "val": "derived",
+         "name": "diastolic_bp",
+         "within_days": null
+        },
+        "right": {
+         "val": "literal",
+         "number": 85,
+         "unit": "mmHg"
+        }
+       },
+       {
+        "op": "exists",
+        "query": {
+         "domain": "medication",
+         "codes": [
+          "197361",
+          "200033",
+          "308136",
+          "310798",
+          "314076",
+          "314077",
+          "979492"
+         ],
+         "within_days": null,
+         "active_only": true,
+         "absent_means": "false"
+        }
+       }
+      ]
+     },
+     {
+      "op": "or",
+      "args": [
+       {
+        "op": "compare",
+        "cmp": ">=",
+        "left": {
+         "val": "observation",
+         "codes": [
+          "2571-8"
+         ],
+         "unit": "mg/dL",
+         "agg": "latest",
+         "within_days": null
+        },
+        "right": {
+         "val": "literal",
+         "number": 150,
+         "unit": "mg/dL"
+        }
+       },
+       {
+        "op": "exists",
+        "query": {
+         "domain": "medication",
+         "codes": [
+          "259255",
+          "312961",
+          "314231"
+         ],
+         "within_days": null,
+         "active_only": true,
+         "absent_means": "false"
+        }
+       }
+      ]
+     },
+     {
+      "op": "or",
+      "args": [
+       {
+        "op": "and",
+        "args": [
+         {
+          "op": "compare",
+          "cmp": "==",
+          "left": {
+           "val": "sex"
+          },
+          "right": {
+           "val": "literal",
+           "number": 0,
+           "unit": "male"
+          }
+         },
+         {
+          "op": "compare",
+          "cmp": "<=",
+          "left": {
+           "val": "observation",
+           "codes": [
+            "2085-9"
+           ],
+           "unit": "mg/dL",
+           "agg": "latest",
+           "within_days": null
+          },
+          "right": {
+           "val": "literal",
+           "number": 45,
+           "unit": "mg/dL"
+          }
+         }
+        ]
+       },
+       {
+        "op": "and",
+        "args": [
+         {
+          "op": "compare",
+          "cmp": "==",
+          "left": {
+           "val": "sex"
+          },
+          "right": {
+           "val": "literal",
+           "number": 0,
+           "unit": "female"
+          }
+         },
+         {
+          "op": "compare",
+          "cmp": "<=",
+          "left": {
+           "val": "observation",
+           "codes": [
+            "2085-9"
+           ],
+           "unit": "mg/dL",
+           "agg": "latest",
+           "within_days": null
+          },
+          "right": {
+           "val": "literal",
+           "number": 50,
+           "unit": "mg/dL"
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Systolic blood pressure",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "8480-6"
+     ],
+     "broader_codes": [
+      "55284-4",
+      "85354-9"
+     ]
+    },
+    {
+     "concept": "Diastolic blood pressure",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "8462-4"
+     ],
+     "broader_codes": [
+      "55284-4",
+      "85354-9"
+     ]
+    },
+    {
+     "concept": "Antihypertensive agent",
+     "domain": "medication",
+     "status": "MAPPED",
+     "codes": [
+      "197361",
+      "200033",
+      "308136",
+      "310798",
+      "314076",
+      "314077",
+      "979492"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Serum triglycerides",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "2571-8"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Lipid-lowering agent",
+     "domain": "medication",
+     "status": "PARTIAL",
+     "codes": [
+      "259255",
+      "312961",
+      "314231"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "HDL cholesterol",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "2085-9"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "Blood pressure measurements are in mmHg; serum triglycerides and HDL-cholesterol are in mg/dL.",
+   "absence_note": "Medication queries for antihypertensive and lipid-lowering agents use absent_means: 'false' because structured active medication lists can be reliably treated as complete.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "304a6fae3031363cf94582689dd1d7217351296bca092ba71f8e8f24afdb6604"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-01",
+   "nct_id": "NCT06989723",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
+   "content_hash": "NCT06989723-EXC-01",
+   "compilable": true,
+   "expr": {
+    "op": "or",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "medication",
+       "codes": [
+        "106892"
+       ],
+       "broader_codes": [],
+       "within_days": null,
+       "active_only": true,
+       "absent_means": "false"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "condition",
+       "codes": [
+        "44054006"
+       ],
+       "broader_codes": [],
+       "within_days": null,
+       "active_only": false,
+       "absent_means": "false"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Insulin",
+     "domain": "medication",
+     "status": "PARTIAL",
+     "codes": [
+      "106892"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Type 1 diabetes mellitus",
+     "domain": "condition",
+     "status": "BROADER_ONLY",
+     "codes": [],
+     "broader_codes": [
+      "44054006"
+     ]
+    }
+   ],
+   "unit_note": "No units specified in the criterion.",
+   "absence_note": "Absent means false was selected for medication and condition domains assuming standard reconciled active medication and problem lists where absence of documentation indicates the patient is not on the therapy or diagnosed with the condition.",
+   "confidence": "medium",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "45b734098effdcc5e5af29948a60b1acab713702bb679528ad5962eb2157ece1"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-02",
+   "nct_id": "NCT06989723",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Use of the following medications within the past 3 months: GLP-1 receptor agonists, SGLT2 inhibitors, rosiglitazone (TZD), vitamin E, or ursodeoxycholic acid (UDCA).",
+   "content_hash": "NCT06989723-EXC-02",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. GLP-1 receptor agonist: no entry in this site's medication vocabulary matches any of semaglutide, liraglutide, dulaglutide, exenatide, tirzepatide, lixisenatide and others; SGLT2 inhibitor: no entry in this site's medication vocabulary matches any of empagliflozin, dapagliflozin, canagliflozin, ertugliflozin, bexagliflozin, sotagliflozin and others; rosiglitazone: the vocabulary returned candidates but none of them represents the concept; vitamin E: the vocabulary returned candidates but none of them represents the concept; ursodeoxycholic acid: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "GLP-1 receptor agonist",
+    "SGLT2 inhibitor",
+    "rosiglitazone",
+    "vitamin E",
+    "ursodeoxycholic acid"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "cd9432c197cc7a4e59387fcfa79fb86df155576e2af4ab80d443c965a61b9399"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-03",
+   "nct_id": "NCT06989723",
+   "kind": "exclusion",
+   "category": "lab_value",
+   "source_text": "Renal failure: Serum creatinine >= 2.0 mg/dL, estimated glomerular filtration rate (eGFR) < 30 mL/min/1.73 m2 (CKD-EPI formula), or patients with end-stage renal disease or on dialysis.",
+   "content_hash": "NCT06989723-EXC-03",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. End-stage renal disease: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "End-stage renal disease"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "81527eec0652ce322104d6c972b272dc3461236d00f978f3e442d8e1a3bc10d3"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-04",
+   "nct_id": "NCT06989723",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Presence of hepatocellular carcinoma, active malignancy, or metastatic cancer",
+   "content_hash": "NCT06989723-EXC-04",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Hepatocellular carcinoma: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Hepatocellular carcinoma"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "aded44c220eb7fddedd503b0eadf453a4b1904f10271471fd253cc992083fa35"
+  },
+  {
+   "criterion_id": "NCT06989723-EXC-05",
+   "nct_id": "NCT06989723",
+   "kind": "exclusion",
+   "category": "investigator_judgement",
+   "source_text": "No changes in anti-diabetic or metabolic medications within the past 3 months, unless the changes are deemed by the investigator not to affect study outcomes.",
+   "content_hash": "NCT06989723-EXC-05",
+   "compilable": false,
+   "reason_not_compilable": "The criterion is not checkable because it requires investigator judgement to decide whether medication changes affect study outcomes.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "e038fbe4193f71d24e55c5516bc521a6c6b3a1740f2e5276b7719de07dcbf347"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-01",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "demographic",
+   "source_text": "Age 18 years or above at the time of signing the informed consent.",
+   "content_hash": "NCT06717698-INC-01",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": ">=",
+    "left": {
+     "val": "age"
+    },
+    "right": {
+     "val": "literal",
+     "number": 18,
+     "unit": "years"
+    }
+   },
+   "grounded": [],
+   "unit_note": "Age is expressed in years.",
+   "absence_note": "No record queries are required; evaluates directly against patient demographic age.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "459b293dd492f66258765c30fae16e3e63a42962816d88d458bc58c608f7e771"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-02",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "reproductive",
+   "source_text": "Female of non-childbearing potential, or male.",
+   "content_hash": "NCT06717698-INC-02",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Postmenopausal state: the vocabulary returned candidates but none of them represents the concept; Hysterectomy: the vocabulary returned candidates but none of them represents the concept; Bilateral oophorectomy: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Postmenopausal state",
+    "Hysterectomy",
+    "Bilateral oophorectomy"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "f5164c00f38d0ff09197c8242b90647eaa733be981c8104ee7e2934c1f7a50a9"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-03",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "BMI greater than or equal to 27.0 kg/m^2 at screening.",
+   "content_hash": "NCT06717698-INC-03",
+   "compilable": true,
+   "expr": {
+    "op": "compare",
+    "cmp": ">=",
+    "left": {
+     "val": "derived",
+     "name": "bmi",
+     "within_days": null
+    },
+    "right": {
+     "val": "literal",
+     "number": 27.0,
+     "unit": "kg/m2"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Body mass index",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "39156-5"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "Criterion is written in kg/m^2 (represented as kg/m2).",
+   "absence_note": "No query using absent_means was needed as BMI is evaluated as a derived value.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "f7a733898e9df66c8afc18e731cc09f951bf2bc19f6c8bc9652d05d04d3f765c"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-04",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "Kidney impairment defined by serum creatinine and cystatin C-based eGFR greater than or equal to 15 and less than 90 mL/min/1.73 m^2.",
+   "content_hash": "NCT06717698-INC-04",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. eGFR based on serum creatinine and cystatin C: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "eGFR based on serum creatinine and cystatin C"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "93839553cb0bfcf7dc63c5d7292264ba7521bc9f5e0d087f6d3b309e431dd54c"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-05",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "Albuminuria defined by Urine Albumin-to-Creatinine Ratio (UACR) greater than or equal to 100 and less than 5000 mg/g.",
+   "content_hash": "NCT06717698-INC-05",
+   "compilable": true,
+   "expr": {
+    "op": "between",
+    "value": {
+     "val": "observation",
+     "codes": [
+      "14959-1"
+     ],
+     "unit": "mg/g",
+     "agg": "latest",
+     "within_days": null
+    },
+    "low": 100,
+    "high": 5000,
+    "inclusive": [
+     true,
+     false
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Urine albumin-to-creatinine ratio",
+     "domain": "observation",
+     "status": "PARTIAL",
+     "codes": [
+      "14959-1"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "Criterion specifies UACR in mg/g.",
+   "absence_note": "Not applicable; evaluating an observation value rather than an existence query.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "5d24458f05622328683aaf221ef04ee63eeebbc464003851589a167665482d42"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-06",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "medication",
+   "source_text": "Treatment with maximum labelled or tolerated dose of an ACE inhibitor or an ARB, unless contraindicated or not tolerated in the opinion of the investigator. Treatment dose must be stable for at least 30 days prior to screening.",
+   "content_hash": "NCT06717698-INC-06",
+   "compilable": false,
+   "reason_not_compilable": "The criterion relies on the investigator's opinion regarding drug tolerability and contraindications, as well as subjective determination of maximum tolerated dose.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "ba65ff834630b284c5be7f76ae2dc5faa285c6eae2f49d47821b2a260c54f0b4"
+  },
+  {
+   "criterion_id": "NCT06717698-INC-07",
+   "nct_id": "NCT06717698",
+   "kind": "inclusion",
+   "category": "diagnosis",
+   "source_text": "Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus.",
+   "content_hash": "NCT06717698-INC-07",
+   "compilable": true,
+   "expr": {
+    "op": "or",
+    "args": [
+     {
+      "op": "compare",
+      "cmp": ">",
+      "left": {
+       "val": "count",
+       "query": {
+        "domain": "condition",
+        "codes": [
+         "1501000119109",
+         "1551000119108",
+         "368581000119106",
+         "422034002",
+         "90781000119102",
+         "97331000119101"
+        ],
+        "broader_codes": [
+         "44054006"
+        ],
+        "within_days": null,
+        "active_only": false,
+        "absent_means": "false"
+       }
+      },
+      "right": {
+       "val": "count",
+       "query": {
+        "domain": "condition",
+        "codes": [
+         "1501000119109",
+         "1551000119108",
+         "368581000119106",
+         "422034002",
+         "90781000119102",
+         "97331000119101"
+        ],
+        "broader_codes": [
+         "44054006"
+        ],
+        "within_days": 180,
+        "active_only": false,
+        "absent_means": "false"
+       }
+      }
+     },
+     {
+      "op": "not",
+      "arg": {
+       "op": "exists",
+       "query": {
+        "domain": "condition",
+        "codes": [
+         "1501000119109",
+         "1551000119108",
+         "368581000119106",
+         "422034002",
+         "90781000119102",
+         "97331000119101"
+        ],
+        "broader_codes": [
+         "44054006"
+        ],
+        "within_days": null,
+        "active_only": false,
+        "absent_means": "false"
+       }
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "type 2 diabetes mellitus",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "1501000119109",
+      "1551000119108",
+      "368581000119106",
+      "422034002",
+      "90781000119102",
+      "97331000119101"
+     ],
+     "broader_codes": [
+      "44054006"
+     ]
+    }
+   ],
+   "unit_note": "None; the criterion is based on condition diagnosis history and time elapsed rather than numerical observation units.",
+   "absence_note": "absent_means is set to 'false' so that an absence of records evaluates to 0 in count comparisons and correctly confirms the patient has no diagnosis of type 2 diabetes mellitus.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "e1418ff8e6603c9d73968630c5d3589f0ad4bc148f508db092913e5cce1495af"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-01",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "temporal_event",
+   "source_text": "Myocardial infarction, stroke, transient ischaemic attack, or hospitalization for unstable angina pectoris within 180 days before screening.",
+   "content_hash": "NCT06717698-EXC-01",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Transient ischaemic attack: the vocabulary returned candidates but none of them represents the concept; Unstable angina pectoris: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Transient ischaemic attack",
+    "Unstable angina pectoris"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "9f29c2fe89fc3cd960de81d1c01833abcd8adbe8d937f242a2180359731c20c7"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-02",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "procedure",
+   "source_text": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.",
+   "content_hash": "NCT06717698-EXC-02",
+   "compilable": true,
+   "expr": {
+    "op": "exists",
+    "query": {
+     "domain": "procedure",
+     "codes": [
+      "302497006"
+     ],
+     "broader_codes": [
+      "265764009"
+     ],
+     "within_days": 90,
+     "absent_means": "unknown"
+    }
+   },
+   "grounded": [
+    {
+     "concept": "Hemodialysis",
+     "domain": "procedure",
+     "status": "PARTIAL",
+     "codes": [
+      "302497006"
+     ],
+     "broader_codes": [
+      "265764009"
+     ]
+    },
+    {
+     "concept": "Peritoneal dialysis",
+     "domain": "procedure",
+     "status": "BROADER_ONLY",
+     "codes": [],
+     "broader_codes": [
+      "265764009"
+     ]
+    }
+   ],
+   "unit_note": "None; the criterion defines a 90-day temporal window rather than a laboratory measurement with units.",
+   "absence_note": "Dialysis may have been administered at an outside hospital or specialized dialysis center, so the absence of records at this site does not reliably confirm the patient did not receive dialysis ('unknown').",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "51906bc52ef52594acb729d976cfc4cc7e5f2a3330ffb781beb7947b0399522c"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-03",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "medication",
+   "source_text": "Use of any GLP-1 RA (including medication with GLP-1 RA activity) within 90 days prior to screening.",
+   "content_hash": "NCT06717698-EXC-03",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. GLP-1 receptor agonist: no entry in this site's medication vocabulary matches any of semaglutide, liraglutide, dulaglutide, exenatide, tirzepatide, lixisenatide and others",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "GLP-1 receptor agonist"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "3441ab12bc54ca1f6c426957929a78268962e8bb84de11e197f0192657896bc8"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-04",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Lupus nephritis or antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis.",
+   "content_hash": "NCT06717698-EXC-04",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Lupus nephritis: the vocabulary returned candidates but none of them represents the concept; ANCA-associated vasculitis: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Lupus nephritis",
+    "ANCA-associated vasculitis"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "59b5efc8ca3d1ffed80b6c52d5b5bd4669fc805a27187e2c091882eade1d3971"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-05",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "temporal_event",
+   "source_text": "Receiving immunosuppressive therapy for primary or secondary renal disease within 6 months prior to screening.",
+   "content_hash": "NCT06717698-EXC-05",
+   "compilable": true,
+   "expr": {
+    "op": "and",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "medication",
+       "codes": [
+        "105585",
+        "1734919",
+        "312615",
+        "312617"
+       ],
+       "within_days": 183,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "condition",
+       "codes": [
+        "127013003",
+        "431855005",
+        "431856006",
+        "45816000"
+       ],
+       "within_days": null,
+       "absent_means": "unknown"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "immunosuppressive therapy",
+     "domain": "medication",
+     "status": "PARTIAL",
+     "codes": [
+      "105585",
+      "1734919",
+      "312615",
+      "312617"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "primary or secondary renal disease",
+     "domain": "condition",
+     "status": "PARTIAL",
+     "codes": [
+      "127013003",
+      "431855005",
+      "431856006",
+      "45816000"
+     ],
+     "broader_codes": []
+    }
+   ],
+   "unit_note": "None; criterion does not specify laboratory or numeric observation units.",
+   "absence_note": "absent_means is set to 'unknown' for both medication and condition because therapies prescribed or diagnoses made at external facilities or specialist clinics may not be fully represented in the local record.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "6f3a0c49654594790d0dc09bf8c5bdbf0808f569fb1896d4d2f0539f9506e858"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-06",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Only applicable for participants with type 2 diabetes: uncontrolled and potentially unstable diabetic retinopathy or diabetic maculopathy, verified by an eye examination performed within 90 days before screening.",
+   "content_hash": "NCT06717698-EXC-06",
+   "compilable": false,
+   "reason_not_compilable": "Determining whether diabetic retinopathy or maculopathy is 'uncontrolled and potentially unstable' relies on qualitative eye examination read-outs and clinical judgment that are not captured in structured coded data.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "d4f7155a210d0cb832a84c4763918782842b08de253c862afa04bfcd13d58caf"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-07",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "diagnosis",
+   "source_text": "Presence or history of malignant neoplasms or in situ carcinomas (other than basal or squamous cell skin cancer, low-risk prostate cancer, or in-situ carcinomas of the cervix or high grade prostatic intraepithelial neoplasia) within 5 years before screening.",
+   "content_hash": "NCT06717698-EXC-07",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Basal cell carcinoma of skin: the vocabulary returned candidates but none of them represents the concept; Squamous cell carcinoma of skin: the vocabulary returned candidates but none of them represents the concept; Cervical carcinoma in situ: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Basal cell carcinoma of skin",
+    "Squamous cell carcinoma of skin",
+    "Cervical carcinoma in situ"
+   ],
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "6162b8dafbea426adef54fcaa813232338d43eaa09dc2f86962b6f27960a8551"
+  },
+  {
+   "criterion_id": "NCT06717698-EXC-08",
+   "nct_id": "NCT06717698",
+   "kind": "exclusion",
+   "category": "reproductive",
+   "source_text": "Female who is pregnant, breast-feeding or intends to become pregnant.",
+   "content_hash": "NCT06717698-EXC-08",
+   "compilable": false,
+   "reason_not_compilable": "The criterion is not checkable because a patient's intention to become pregnant cannot be determined from structured medical records.",
+   "blocked_at": "plan",
+   "seed": 9,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "bd528d1b71a6b1e7b3b040f5da646864e2774a0bee75b172dfe5205cb67606cd"
+  }
+ ]
+}

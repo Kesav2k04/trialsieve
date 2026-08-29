@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "af6f9f16888c52b10072dfff9dbabff4a871b895ff3adac6b5fd0295153f9d66",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Stroke\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 142,
+  "latency_s": 26.088,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 206,
+  "text": "```json\n{\n  \"names\": [\n    \"Cerebrovascular accident\",\n    \"Ischemic stroke\",\n    \"Cerebral infarction\",\n    \"Acute ischemic stroke\",\n    \"Hemorrhagic stroke\",\n    \"Intracerebral hemorrhage\",\n    \"Subarachnoid hemorrhage\",\n    \"Transient ischemic attack\",\n    \"Lacunar infarction\",\n    \"Embolic cerebral infarction\",\n    \"Thrombotic cerebral infarction\",\n    \"Brainstem infarction\",\n    \"Cerebellar infarction\"\n  ],\n  \"note\": \"Includes primary acute stroke types (ischemic, intracerebral/subarachnoid hemorrhage), common subtypes, and transient ischemic attack.\"\n}\n```"
+ }
+}

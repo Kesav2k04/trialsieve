@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "8dfd9c6b90c5e14295619db4bd4a7ad2ad48cc7f87db662afa83713e24297c88",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Lupus nephritis\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 160,
+  "latency_s": 16.962,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"Lupus nephritis\",\n    \"Lupus glomerulonephritis\",\n    \"Systemic lupus erythematosus with nephritis\",\n    \"Diffuse proliferative lupus nephritis\",\n    \"Focal proliferative lupus nephritis\",\n    \"Membranous lupus nephritis\",\n    \"Mesangial lupus nephritis\",\n    \"Class I lupus nephritis\",\n    \"Class II lupus nephritis\",\n    \"Class III lupus nephritis\",\n    \"Class IV lupus nephritis\",\n    \"Class V lupus nephritis\",\n    \"Class VI lupus nephritis\",\n    \"Advanced sclerosing lupus nephritis\"\n  ],\n  \"note\": \"Includes general diagnostic terms and ISN/RPS histologic classification stages for lupus nephritis.\"\n}\n```"
+ }
+}

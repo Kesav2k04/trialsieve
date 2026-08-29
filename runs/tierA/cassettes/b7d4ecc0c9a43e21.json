@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b7d4ecc0c9a43e21ddb1b15e974384ba1e5f3975fe9f3f588ca0c86aeaa85588",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Antihypertensive agent\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 107,
+  "latency_s": 19.598,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"lisinopril\",\n    \"amlodipine\",\n    \"losartan\",\n    \"hydrochlorothiazide\",\n    \"metoprolol\",\n    \"valsartan\",\n    \"atenolol\",\n    \"enalapril\",\n    \"ramipril\",\n    \"diltiazem\",\n    \"carvedilol\",\n    \"spironolactone\",\n    \"clonidine\",\n    \"nifedipine\",\n    \"chlorthalidone\"\n  ],\n  \"note\": \"Common generic active ingredients across major first-line and second-line antihypertensive drug classes.\"\n}\n```"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "3d63df1eb53a829e01f7c0d21839dc7802493883376d6c241683f2b1ef73741d",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: End-stage renal disease\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 9,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 129,
+  "latency_s": 19.172,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"End stage renal disease\",\n    \"End-stage kidney disease\",\n    \"Chronic kidney disease, stage 5\",\n    \"Chronic kidney disease, stage 5 requiring dialysis\",\n    \"Chronic renal failure, end stage\",\n    \"End stage renal disease on hemodialysis\",\n    \"End stage renal disease on peritoneal dialysis\",\n    \"End-stage renal failure\",\n    \"Renal dialysis dependence\"\n  ],\n  \"note\": \"Includes standard diagnostic descriptions for ESRD, CKD stage 5, and dialysis-dependent disease variants.\"\n}\n```"
+ }
+}

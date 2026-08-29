@@ -38,6 +38,25 @@ def load_cells(run: Path) -> dict[str, list[dict]]:
             for line in fh:
                 if line.strip():
                     groups[tag].append(json.loads(line))
+
+    # B2 costs a model call per cell, so it ran on a 10-patient subsample and its
+    # file carries B2 verdicts only. With nothing to pair against, the report
+    # scored it alone and printed no comparison at all, while the protocol calls
+    # B2 the arm that matters. Comparing a 400-cell arm to a 15,400-cell arm on
+    # different patients would not be a comparison either, so the scored run's
+    # verdicts for exactly those cells are joined in and every B2 row is paired.
+    base = {(r["patient_id"], r["criterion_id"]): r
+            for r in groups.get("k0_seed7", [])}
+    for tag, rows in groups.items():
+        if not any("B2" in r for r in rows):
+            continue
+        for r in rows:
+            src = base.get((r["patient_id"], r["criterion_id"]))
+            if not src:
+                continue
+            for arm in ("TS", "B0", "B1"):
+                if arm in src and arm not in r:
+                    r[arm] = src[arm]
     return groups
 
 
