@@ -175,9 +175,17 @@ count. The predicate explainer printed that number with the words "in the panel"
 next to it. A reviewer signing that predicate would have read "1079 in the panel"
 about a code no patient in the panel carries.
 
-Measured across the whole vocabulary: **50 of 724 catalog codes, 7%, appear in no
+Measured across the whole vocabulary: **47 of 724 catalog codes, 6.5%, appear in no
 panel patient.** By domain: 19 of 136 medications, 16 of 191 conditions, 8 of 160
-procedures, 7 of 237 observations.
+procedures, 4 of 237 observations.
+
+**This paragraph said 50 and 7% until entry 16 recounted it.** The three-code
+difference was the same defect this entry is about, sitting inside this entry's own
+fix: the counts file it was read from listed 674 codes when the panel carries 677.
+The corrected figures come from `python scripts/build_panel_counts.py --check`,
+which recomputes from the panel and exits non-zero when the committed file
+disagrees. There was no generator when this entry was first written, which is why
+nothing caught it.
 
 **Why it matters beyond the wrong label.** This is the UNMAPPABLE hazard one level
 deeper. The grounder refuses a concept with no code at all, which is what stops an
@@ -515,3 +523,165 @@ weaker thing to be able to say about a published confidence interval.
 The same file also carries an A/A control: two identical arms must produce an
 interval containing zero. A bootstrap that manufactured a difference out of
 resampling noise would pass every speed test and fail that one.
+
+## 14. The prediction about how this fails was wrong, and in the dangerous direction
+
+**Found by** running the grounding probe against a local 8B model
+(`granite3.1-dense:8b` through ollama) to turn a claim in the README into a number.
+
+**The claim.** "How it fails" said the compiler degrades by refusing rather than
+by lying: a weak model that cannot ground a concept should return UNMAPPABLE and
+stop the criterion, so the architecture should lose coverage rather than gain
+silent errors. It was labelled a design claim rather than a measurement, which was
+honest about its status and did nothing about its truth.
+
+**The measurement.** 21 concepts, same probe set, both runs rescored under today's
+acceptance rule so the rule change cannot show up as a result.
+
+| | gemini-3.7-flash-medium | granite3.1-dense:8b |
+|---|---|---|
+| correct, of 21 | 20 | 14 |
+| wrong by accepting too much | 1 | 7 |
+| wrong by accepting too little | 0 | 0 |
+
+Every error in both runs is an over-acceptance. There is not one refusal in either
+column. The prediction was not merely unsupported, it was backwards.
+
+**The worst single case appears in both columns.** "Type 1 diabetes mellitus" has
+no code in this Synthea site's vocabulary. The correct output is UNMAPPABLE, which
+is the whole reason that status exists. Both models instead return `44054006`,
+which is type 2. A criterion excluding type 1 patients would then exclude the type
+2 population the trial is recruiting.
+
+**Two things that make this worse rather than better.** Nothing was invented: the
+grounder drops any code absent from the candidate list the vocabulary returned, and
+that filter did not fire once across the weak run. Every wrong answer was a real
+code from this site's own vocabulary that means something adjacent. So the
+containment already in the code is aimed at a failure mode that did not occur, and
+the failure that did occur walks around the UNMAPPABLE path rather than through it.
+
+**What changed.** The README paragraph, which now states the measurement and drops
+the prediction. `scripts/compare_probes.py` gained a markdown writer and an output
+path, so the comparison is generated rather than transcribed, and it reports the
+over-acceptance and under-acceptance counts separately instead of one accuracy
+number. `docs/WEAK_MODEL.md` is that output.
+
+**What did not change, on purpose.** The grounder prompt is frozen for the
+evaluation and the held-out run was already compiling against it when this
+measurement landed. Editing the prompt now would make the published numbers the
+product of a prompt chosen after seeing a held-out result, which is the thing
+`docs/EVAL_PROTOCOL.md` exists to prevent. The fix belongs to the next protocol
+version and the shape of it is already visible: the selection step is asked which
+candidates mean the concept and is not asked to justify the entailment in the
+direction that matters, so a sibling code satisfies it.
+
+**What is left holding this** is the human checkpoint rather than the model.
+`explain.py` resolves every code to the display name the site's own records use, so
+a predicate for "type 1 diabetes mellitus" puts the type 2 display in front of the
+reviewer who has to sign it. That is a property of the artifact and it is checkable
+by reading the file. It is not a measurement that a reviewer catches it, and this
+changelog is not going to claim it is.
+
+## 15. Three checks that could not fail, and one that reported a pass for a comparison it never made
+
+**Found by** two reviewers reading the tree against its own claims rather than
+running it. Every item here was a sentence in the writeup that the code did not
+back. None of them showed up as a failing test, because each one failed by
+returning success.
+
+**`scripts/_verify_blind.py` searched for a key nothing writes.** The blindness
+check reads every recorded Checker B prompt looking for anything the system
+produced, and one of the four things it looks for is the predicate digest.
+`_compiled_digests()` read `c["digest"]` and `c["predicate_digest"]`. The key is
+`predicate_sha256`, and it has been since the compiler was written. So the digest
+set was empty on every run, the loop over it did nothing, and the check printed
+PASS. The only symptom was `"compiled_digests_searched": 0` in the JSON it prints,
+which is exactly what a genuine clean result looks like. A second promise in the
+same docstring, that the gold label text is searched, was declared as
+`ANSWER_FILES` and never read at all.
+
+**What changed.** The key is corrected. The answer-file search is implemented, and
+it searches source lines rather than every long line, because the criterion text
+legitimately appears in a Checker B prompt and matching on it would report a leak
+on every cassette. It now searches 79 distinctive lines from the gold file. Most
+importantly, `verify_blind` returns `empty_term_sets` and refuses to pass when any
+term set is empty:
+
+    NOT VERIFIED: compiled digests came back empty, so the search for it could
+    not have found anything. This is reported as a failure rather than a pass
+    because a check that searched nothing and a check that found nothing print
+    the same zero.
+
+That is the general fix. The bug was not that the key was wrong, it is that a
+search over an empty set is indistinguishable from a search that found nothing,
+and only one of those is a pass.
+
+**`run.py diff` returned 0 when there was nothing to compare.** The reproduction
+target ends by byte-comparing this machine's numbers against the published ones.
+With no published baseline it printed "nothing to compare against yet" and
+returned, so `python run.py reproduce` ran to the end and reported a clean run
+having checked the one thing it exists to check. It now exits 1 and says NOT
+COMPARED. A reproduction that compares nothing is not a reproduction, and it has
+to say so in the same voice it would use to say the numbers differ.
+
+**"`scripts/worklist.py` refuses, by exit code, and the refusal is tested" was
+false.** `tests/test_signoff.py` tests `signoff.enforce()`, the library function.
+That passes even if the script never calls it, calls it and ignores the result, or
+catches the exception and carries on. Nothing invoked the script or read its exit
+status. `tests/test_worklist_gate.py` now runs it as a subprocess and asserts exit
+3, asserts no document was written, asserts the refusal names the command that
+clears it, asserts `--allow-unsigned` stamps NOT FOR USE into the artifact, and
+asserts no bulk approval flag is declared on `signoff.py`.
+
+Two things about that last test are worth stating. It parses the `add_argument`
+calls out of the source rather than grepping the file, because the first version
+grepped and failed on the docstring sentence saying there is no `--approve-all`:
+it flagged its own rule description as a violation of the rule. And it runs against
+a small committed fixture rather than the scored run, because pointing it at the
+scored run made all four tests skip on a clean checkout, which is precisely when a
+reader checking the claim would run them. A skipped test backs no claim.
+
+**The claim in `SUBMISSION.md` also omitted `--allow-unsigned`.** The README
+disclosed the override and the submission document did not, so the two disagreed
+about how strong the gate is. The submission now names it, says what it stamps on
+the document, and points at `docs/GATE.md`.
+
+## 16. A committed data file with no generator, and the check it broke
+
+**Found by** a reviewer recomputing a published figure. `data/vendor/panel_code_counts.json`
+holds rows and distinct patients per code for the 385-patient panel. It listed 674
+codes. The panel carries 677.
+
+**The three it omitted.** `2532-0` lactate dehydrogenase, on 9 patients.
+`59408-5` oxygen saturation, on 35. And `8331-1` oral temperature, on **214 of the
+385**.
+
+**What that broke.** `explain.empty_closed_world_codes` warns a reviewer when a
+predicate treats absence as proof over a code no panel patient carries, which is
+the failure that returns the same answer for everyone and looks like a result. It
+read a missing entry as a count of zero. So a reviewer building a predicate on
+oral temperature was shown "STOP. These codes are in the site vocabulary but on no
+chart in this panel" about a code most of the panel carries. A warning that fires
+on a common code teaches a reviewer to click past it, which switches the check off
+for the case it was built for.
+
+**Why nobody caught it.** `grep -rn panel_code_counts --include=*.py` found one
+reader and no writer. The file was produced once, by hand or by something that did
+not survive, and after that there was no way to notice it had gone stale. A
+committed artifact with no generator cannot be checked against the thing it
+describes.
+
+**What changed.** `scripts/build_panel_counts.py` generates it and, with `--check`,
+recomputes from the panel and exits non-zero on any disagreement. Running it found
+3 missing and 0 miscounted, so the file was truncated rather than wrong, which is
+the kind of defect that survives a spot check of any individual number.
+`empty_closed_world_codes` now reports only codes the table says are carried by
+nobody, and a new `unknown_panel_codes` reports codes the table says nothing about,
+under a heading that names it as a defect in the checkout rather than a fact about
+the cohort. The two call for different actions and folding them together made a
+build error read as a clinical finding.
+
+**The recount changed a published figure.** Entry 6 said 50 of 724 catalog codes,
+7%, appear in no panel patient. It is 47, 6.5%, and the observation domain is 4
+rather than 7. Entry 6 is corrected in place with a note. The defect entry 6
+describes was sitting inside entry 6's own fix.

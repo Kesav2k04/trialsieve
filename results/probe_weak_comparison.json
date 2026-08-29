@@ -87,5 +87,15 @@
    "demoted": 0
   }
  },
- "new_probes": {}
+ "new_probes": {},
+ "over_under_before": [
+  1,
+  0
+ ],
+ "over_under_after": [
+  7,
+  0
+ ],
+ "model_before": "gemini-3.7-flash-medium",
+ "model_after": "granite3.1-dense:8b"
 }

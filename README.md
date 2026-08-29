@@ -49,12 +49,24 @@ A prescreening system that turns a panel of several hundred patients into a rank
 worklist: the people who are provably ineligible are removed with a dated citation
 each, and everyone else is ordered by how few questions remain.
 
-The bottleneck it targets is not the individual chart. A coordinator is already
-fast at one chart, roughly two minutes to check a few cheap disqualifiers and move
-on. The problem is that a site with 400 candidates cannot look at 400 charts, so
-candidates get worked in whatever order the list arrives in and enrolment stalls.
+The bottleneck it targets is not the individual chart. A coordinator reading one
+chart against one criterion is not the slow step, and this project has no
+measurement of how long that takes, so it does not put a number on it. The slow
+step is that the list is longer than the reading capacity, so candidates get worked
+in whatever order the list arrives in.
+
+What can be measured here is the shrink. The panel is 385 Synthea patients and the
+held-out protocol is 40 criteria, giving 15,400 patient-criterion cells.
+`results/RESULTS.md` reports what fraction of that grid the system settles and how
+many of the settled cells it gets wrong. Both numbers come from
+`scripts/report.py`, and the second one is the one that decides whether the first
+is worth anything.
 
 The job worth doing is to shrink the list **without a single false exclusion**.
+That constraint is why the interesting number in this repository is not accuracy.
+A system that removes nobody is safe and useless; a system that removes the wrong
+person has done the one harm prescreening can do. Coverage and silent error are
+reported as a pair for that reason, and neither is reported alone.
 
 ## The architecture, and why it is shaped this way
 
@@ -231,12 +243,29 @@ removes people from the list. That figure is also a registered prediction here:
 `docs/EVAL_PROTOCOL.md` says coverage should land at 30 to 40% and that a number
 far above it would suggest the criteria were cherry-picked.
 
-**The compiler degrades by refusing, not by lying, and that is a design claim
-rather than a measurement.** The architecture should lose coverage on a weak model
-rather than gain silent errors, because a model that cannot ground a concept
-produces UNMAPPABLE and stops the criterion. It is a claim about a failure mode, and
-what is measured here is the failure mode of one model family. A weak-model arm is
-the obvious next experiment and it is not in these results.
+**The compiler does not degrade by refusing. It degrades by accepting.** An
+earlier version of this file predicted the opposite, that a weak model would lose
+coverage rather than gain silent errors, because a model that cannot ground a
+concept produces UNMAPPABLE and stops the criterion. The measurement went the other
+way, so the prediction is gone and the number is here. On a local 8B model the
+grounding probe scores 14 of 21 against 20 of 21 on the model used for the results.
+All seven errors are over-acceptance and none is a refusal. The capable model's
+single error has the same shape: both map "type 1 diabetes mellitus", which this
+site's vocabulary cannot express, onto the type 2 code.
+[docs/WEAK_MODEL.md](docs/WEAK_MODEL.md) has the per-concept table.
+
+Two details make that worse rather than better. Nothing was invented: the grounder
+drops any code that is not on the candidate list the vocabulary returned, and that
+filter did not fire once in the weak run. Every wrong answer was a real code from
+this site's own vocabulary that means something adjacent. And the UNMAPPABLE path,
+which exists so a concept the site cannot express stops the criterion instead of
+clearing everyone, is the path these errors walk around.
+
+What is left holding this is the checkpoint rather than the model. `explain.py`
+resolves every code to the display name the site's own records use, so a predicate
+for "type 1 diabetes mellitus" shows the type 2 display to the reviewer who has to
+sign it. That is a property of the artifact. It is not a measurement that a reviewer
+catches it.
 
 **The registry text is not the protocol.** ClinicalTrials.gov's eligibility field is
 the sponsor's summary. A site screens against a document with more structure and
