@@ -813,3 +813,57 @@ fails.
 never moved, that a standalone threshold is, that the largest number is the one
 chosen rather than an incidental small one, that text with no safe candidate
 declines rather than guessing, and that the new value is never the old one.
+
+## 19. The headline operating point was chosen using the labels it was scored on
+
+**Found by** reading `operating_curve` in `evaluation/score.py` after the first
+full report, and noticing what its selection loop counts:
+
+    bad = sum(1 for r in fails if r.gold != "FAILS")
+
+**The defect.** The curve ranks criteria by how many false exclusions each one
+makes, keeps the safest until the budget runs out, and then scores the panel. The
+gold labels driving that ranking belong to the same 385 patients the row then
+reports on. So the top row, **43.5% panel reduction at zero false exclusions**,
+said that a clean subset of criteria existed. It did not say a coordinator could
+have found that subset in advance, which is the only version of the claim worth
+anything, and it is the version a reader takes away. A number selected on the
+evaluation set and read back as a result is the oldest way to be wrong in public.
+
+**Why the obvious fix was not available.** The honest answer is to select on one
+split and score on another. The dev split here is deliberately unlabelled, by
+`docs/DEV_SPLIT.md`, so there is nothing on it to select against.
+
+**What changed.** `operating_curve_cv` runs the identical greedy rule cross-fitted
+over 5 folds of patients: each patient's verdict comes from a subset chosen on the
+other four folds, so no patient contributes to the decision that scores them, and
+the training budget is scaled by the training fraction so the tolerated rate per
+patient matches rather than sitting `(k-1)/k` looser. Both curves are printed. The
+in-sample one is now labelled an upper bound in its own docstring and in the
+report.
+
+**The result, and the reason it needed a control.** The two curves are identical
+on every row. Zero optimism is the best outcome available, and it is also exactly
+what a cross-fit that quietly reused the in-sample selection would print, which is
+the failure shape this changelog has now recorded five times. So two things were
+added rather than one.
+
+First, the report computes and states why they agree: of the 12 criteria that ever
+exclude a patient, **8 make no false exclusion anywhere in 385 patients** and the
+other 4 make 358, 31, 31 and 4. Nothing sits near the threshold, so all five folds
+select the same 8. The equality is a property of the separation, and the report
+now says so with the numbers rather than leaving a reader to assume it.
+
+Second, `tests/test_score.py` carries a positive control: a panel with one
+criterion that excludes all 100 patients and is wrong about exactly one of them.
+In sample it is dropped at budget 0 and the curve reports no false exclusion.
+Cross-fitted, the fold holding that patient trains on a set where the criterion
+looks perfect, keeps it, and excludes them, so the cross-fitted curve reports the
+false exclusion the in-sample selection had hidden. The agreement on real data is
+therefore a measurement. A negative control asserts the two curves agree when
+there is genuinely nothing to find, and a third test asserts the fold assignment
+partitions every patient exactly once, because a fold that dropped patients would
+shrink the denominator and flatter both curves at once.
+
+**Evidence.** `results/RESULTS.md`, both curves and the paragraph between them;
+`results/results.json` under `crossfit`; three tests in `tests/test_score.py`.

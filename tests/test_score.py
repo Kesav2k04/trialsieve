@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import sys
+from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "evaluation"))
@@ -116,3 +117,69 @@ def test_kappa_collapses_under_a_dominant_category_but_ac1_does_not():
     r = agreement(a, b)
     assert r["percent_agreement"] == 0.98
     assert r["cohen_kappa"] < r["gwet_ac1"]
+
+
+# ---------------------------------------------------------------------------
+# Positive control for the cross-fitted operating curve.
+#
+# On the scored panel the in-sample and cross-fitted curves agree on every row,
+# and two identical tables are exactly what a cross-fit that silently reused the
+# in-sample selection would also print. This builds a panel where the two must
+# disagree, so the agreement on real data is a measurement rather than a no-op.
+# ---------------------------------------------------------------------------
+
+def _panel_with_one_lucky_criterion(n_patients=100, unlucky="p_bad"):
+    """One criterion that excludes everybody and is wrong about exactly one.
+
+    In sample it has a false exclusion and is dropped at budget 0. Cross-fitted,
+    the fold holding the one patient it is wrong about trains on a set where it
+    looks perfect, keeps it, and then excludes that patient. The optimism the
+    in-sample curve hides is worth exactly that one patient.
+    """
+    cells = []
+    ids = [f"p{i}" for i in range(n_patients - 1)] + [unlucky]
+    for pid in ids:
+        gold = "MEETS" if pid == unlucky else "FAILS"
+        cells.append(Cell(pid, "T-C1", "sweeper", gold, "FAILS"))
+    return cells
+
+
+def test_crossfit_curve_reveals_selection_optimism():
+    from score import operating_curve_cv
+    cells = _panel_with_one_lucky_criterion()
+    ins = {r["false_exclusion_budget"]: r for r in operating_curve(cells, budgets=(0,))}
+    cv = {r["false_exclusion_budget"]: r for r in
+          operating_curve_cv(cells, budgets=(0,), folds=5, seed=13)}
+    assert ins[0]["false_exclusions"] == 0, "in-sample drops the criterion at budget 0"
+    assert ins[0]["criteria_used"] == 0
+    assert cv[0]["false_exclusions"] == 1, (
+        "cross-fitting must surface the false exclusion the in-sample selection "
+        "avoided by looking at the patient it was scored on")
+    assert cv[0]["n_ineligible"] > ins[0]["n_ineligible"]
+
+
+def test_crossfit_curve_agrees_when_criteria_are_cleanly_separated():
+    """The other half of the control: no optimism to find, and none reported."""
+    from score import operating_curve_cv
+    cells = []
+    for i in range(100):
+        pid = f"p{i}"
+        cells.append(Cell(pid, "T-C1", "clean", "FAILS" if i % 2 else "MEETS",
+                          "FAILS" if i % 2 else "INDETERMINATE"))
+        cells.append(Cell(pid, "T-C2", "filthy", "MEETS", "FAILS"))
+    ins = operating_curve(cells, budgets=(0,))[0]
+    cv = operating_curve_cv(cells, budgets=(0,), folds=5, seed=13)[0]
+    assert ins["false_exclusions"] == cv["false_exclusions"] == 0
+    assert ins["n_ineligible"] == cv["n_ineligible"]
+    assert ins["criteria_used"] == cv["criteria_used"] == 1
+
+
+def test_crossfit_folds_partition_every_patient_exactly_once():
+    """A fold assignment that dropped patients would shrink the denominator and
+    make both curves look better, which is the failure this guards."""
+    from score import _fold_of
+    ids = [f"p{i}" for i in range(97)]
+    assign = _fold_of(ids * 3, folds=5, seed=13)
+    assert set(assign) == set(ids)
+    sizes = sorted(Counter(assign.values()).values())
+    assert sizes[-1] - sizes[0] <= 1

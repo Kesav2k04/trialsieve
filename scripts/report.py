@@ -15,14 +15,15 @@ import argparse
 import json
 import subprocess
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "evaluation"))
 
 from score import (  # noqa: E402
-    Cell, agreement, operating_curve, paired_bootstrap, score_arm, score_panel, seed_spread,
+    Cell, agreement, operating_curve, operating_curve_cv, paired_bootstrap, score_arm,
+    score_panel, seed_spread,
 )
 
 ARMS = ("TS", "B0", "B1", "B2", "B3")
@@ -121,6 +122,69 @@ def main() -> int:
                 md.append(f"| {r['false_exclusion_budget']} | {r['reduction']:.1%} | "
                           f"{r['n_ineligible']} | {r['false_exclusions']} | "
                           f"{r['criteria_used']} |")
+
+            # The curve above chooses which criteria to trust by counting their
+            # false exclusions on the same patients it then scores, so its zero
+            # row is a hindsight optimum. This one runs the identical rule with
+            # the choice made on other patients. Printing only the first would be
+            # reporting a selection made on the evaluation set as a result.
+            cv = operating_curve_cv(to_cells(rows, "TS"))
+            block["operating_curve_TS_crossfitted"] = cv
+            k = cv[0]["folds"] if cv else 0
+            md.append("")
+            md.append(f"The curve above is **in-sample**: each row picks the criterion "
+                      f"subset using the gold labels of the patients it then scores, so it "
+                      f"reports that a clean subset existed rather than that one could have "
+                      f"been chosen in advance. Below is the same greedy rule cross-fitted "
+                      f"over {k} folds of patients, so no patient contributes to the "
+                      f"decision that scores them. The gap between the two is the "
+                      f"selection's optimism.")
+            md.append("")
+            md.append(f"### TrialSieve operating curve, cross-fitted ({k}-fold over patients)")
+            md.append("")
+            md.append("| false-exclusion budget | reduction | ruled out | actual false "
+                      "exclusions | criteria used (union) |")
+            md.append("|---|---|---|---|---|")
+            for r in cv:
+                md.append(f"| {r['false_exclusion_budget']} | {r['reduction']:.1%} | "
+                          f"{r['n_ineligible']} | {r['false_exclusions']} | "
+                          f"{r['criteria_used']} |")
+            base = {r["false_exclusion_budget"]: r for r in curve}
+            worse = [r for r in cv
+                     if r["false_exclusions"] > base[r["false_exclusion_budget"]]["false_exclusions"]]
+            results.setdefault("crossfit", {})["optimism_rows"] = len(worse)
+
+            # Two identical curves is also what a cross-fit that silently did
+            # nothing would print, so the separation that produces the equality is
+            # measured and stated rather than assumed.
+            fires, badc = Counter(), Counter()
+            for c in to_cells(rows, "TS"):
+                if c.system == "FAILS":
+                    fires[c.criterion_hash] += 1
+                    if c.gold != "FAILS":
+                        badc[c.criterion_hash] += 1
+            clean = sorted(h for h in fires if not badc[h])
+            dirty = sorted((badc[h] for h in fires if badc[h]), reverse=True)
+            results["crossfit"].update({"excluding_criteria": len(fires),
+                                        "clean_criteria": len(clean),
+                                        "dirty_false_exclusion_counts": dirty})
+            md.append("")
+            if not worse:
+                md.append(f"The two curves agree on every row. That is a property of "
+                          f"this panel rather than a curve that was not recomputed: of "
+                          f"the {len(fires)} criteria that ever exclude a patient, "
+                          f"{len(clean)} make no false exclusion anywhere in "
+                          f"{len({c.patient_id for c in to_cells(rows, 'TS')})} patients "
+                          f"and the remaining {len(dirty)} make "
+                          f"{', '.join(str(x) for x in dirty)}. Nothing sits near the "
+                          f"threshold, so every fold selects the same subset. "
+                          f"`tests/test_score.py` carries a panel where they do differ, "
+                          f"so the agreement here is a measurement and not a no-op.")
+            else:
+                md.append(f"{len(worse)} of {len(cv)} rows lose their guarantee under "
+                          f"cross-fitting. The in-sample row is the optimism, and the "
+                          f"cross-fitted row is the one to read.")
+            md.append("")
 
         comparisons = []
         for other in [x for x in present if x != "TS"]:

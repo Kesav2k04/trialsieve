@@ -199,37 +199,21 @@ def operating_curve(cells: Iterable[Cell], budgets=(0, 1, 2, 5, 10)) -> list[dic
     A single all-or-nothing gate at zero rewards compiling fewer criteria: one bad
     cell in a hundred thousand would void the headline. The curve shows the whole
     trade instead, with zero highlighted rather than mandatory.
+
+    **This is an in-sample curve and the protocol treats it as an upper bound.**
+    The subset is chosen by counting each criterion's false exclusions on the same
+    patients the row then scores, so the zero row reports that a clean subset
+    existed, not that it could have been picked in advance. `operating_curve_cv`
+    is the cross-fitted answer to the second question, and both are printed.
     """
     cells = list(cells)
-    by_crit: dict[str, list[Cell]] = defaultdict(list)
-    for c in cells:
-        by_crit[c.criterion_hash].append(c)
-
-    # Cost and benefit of each excluding criterion, so they can be ranked.
-    stats = []
-    for h, rows in by_crit.items():
-        fails = [r for r in rows if r.system == "FAILS"]
-        if not fails:
-            continue
-        bad = sum(1 for r in fails if r.gold != "FAILS")
-        stats.append((h, len(fails), bad))
-    stats.sort(key=lambda x: (x[2], -x[1]))         # safest first, then most useful
-
     out = []
     for b in budgets:
-        keep, spent = set(), 0
-        for h, _, bad in stats:
-            if spent + bad <= b:
-                keep.add(h)
-                spent += bad
-        subset = [c if c.criterion_hash in keep else
-                  Cell(c.patient_id, c.criterion_id, c.criterion_hash, c.gold,
-                       "INDETERMINATE" if c.system == "FAILS" else c.system, c.stratum)
-                  for c in cells]
-        ps = score_panel(f"budget<={b}", subset)
+        keep = _select_criteria(cells, b)
+        ps = score_panel(f"budget<={b}", _muted(cells, keep))
         out.append({"false_exclusion_budget": b, "reduction": round(ps.reduction, 4),
                     "n_ineligible": ps.n_ineligible, "false_exclusions": ps.false_exclusions,
-                    "criteria_used": len(keep)})
+                    "criteria_used": len(keep), "in_sample": True})
     return out
 
 
@@ -410,3 +394,83 @@ def agreement(a: list[str], b: list[str]) -> dict[str, float]:
             "gwet_ac1": round(ac1, 4), "n": n,
             "marginals_a": {c: round(pa[c], 4) for c in cats},
             "marginals_b": {c: round(pb[c], 4) for c in cats}}
+
+
+def _fold_of(patients: list[str], folds: int, seed: int) -> dict[str, int]:
+    """Deterministic patient-to-fold assignment, stable across runs and platforms."""
+    order = sorted(set(patients))
+    random.Random(seed).shuffle(order)
+    return {p: i % folds for i, p in enumerate(order)}
+
+
+def _select_criteria(cells: Iterable[Cell], budget: float) -> set[str]:
+    """The greedy subset `operating_curve` uses, factored out so the cross-fitted
+    version can run exactly the same selection rule on a different set of cells."""
+    by_crit: dict[str, list[Cell]] = defaultdict(list)
+    for c in cells:
+        by_crit[c.criterion_hash].append(c)
+    stats = []
+    for h, rows in by_crit.items():
+        fails = [r for r in rows if r.system == "FAILS"]
+        if not fails:
+            continue
+        bad = sum(1 for r in fails if r.gold != "FAILS")
+        stats.append((h, len(fails), bad))
+    stats.sort(key=lambda x: (x[2], -x[1]))          # safest first, then most useful
+    keep, spent = set(), 0
+    for h, _, bad in stats:
+        if spent + bad <= budget:
+            keep.add(h)
+            spent += bad
+    return keep
+
+
+def _muted(cells: Iterable[Cell], keep: set[str]) -> list[Cell]:
+    """Every FAILS from a criterion outside `keep` becomes an abstention."""
+    return [c if c.criterion_hash in keep else
+            Cell(c.patient_id, c.criterion_id, c.criterion_hash, c.gold,
+                 "INDETERMINATE" if c.system == "FAILS" else c.system, c.stratum)
+            for c in cells]
+
+
+def operating_curve_cv(cells: Iterable[Cell], budgets=(0, 1, 2, 5, 10),
+                       folds: int = 5, seed: int = 13) -> list[dict]:
+    """The operating curve, cross-fitted over patients.
+
+    `operating_curve` picks which criteria to trust by counting how often each one
+    excludes a patient it should not have, using the gold labels of the same cells
+    it then scores. The zero in its first row is therefore a hindsight optimum: it
+    says a subset with no false exclusions existed, not that a coordinator could
+    have found it. Reported without that qualification it is a selection made on
+    the evaluation set and read back as a result.
+
+    This runs the identical greedy rule, but the subset for each patient is chosen
+    from the other folds only, so no patient contributes to the decision that
+    scores them. Reduction and false exclusions are then pooled over all patients,
+    giving a pair directly comparable to the in-sample row above it. The gap
+    between the two curves is the selection's optimism, and it is worth printing.
+
+    The training budget is scaled by the training fraction so the tolerated rate
+    per patient is the same in both curves rather than (folds-1)/folds looser.
+    """
+    cells = list(cells)
+    assign = _fold_of([c.patient_id for c in cells], folds, seed)
+    n_pat = len(assign)
+    out = []
+    for b in budgets:
+        train_budget = b * (folds - 1) / folds
+        scored: list[Cell] = []
+        kept_any: set[str] = set()
+        for f in range(folds):
+            train = [c for c in cells if assign[c.patient_id] != f]
+            test = [c for c in cells if assign[c.patient_id] == f]
+            if not test:
+                continue
+            keep = _select_criteria(train, train_budget)
+            kept_any |= keep
+            scored.extend(_muted(test, keep))
+        ps = score_panel(f"cv-budget<={b}", scored)
+        out.append({"false_exclusion_budget": b, "reduction": round(ps.reduction, 4),
+                    "n_ineligible": ps.n_ineligible, "false_exclusions": ps.false_exclusions,
+                    "criteria_used": len(kept_any), "folds": folds, "n_patients": n_pat})
+    return out
