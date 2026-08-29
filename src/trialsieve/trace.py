@@ -51,9 +51,22 @@ class Trajectory:
         self._add("llm_request", cassette_key=cassette_key, model=model, messages=messages)
 
     def llm_response(self, text: str, source: str, prompt_tokens: int,
-                     completion_tokens: int, latency_s: float) -> None:
+                     completion_tokens: int, latency_s: float,
+                     transport_retries: list[str] | None = None) -> None:
         self._add("llm_response", source=source, text=text, prompt_tokens=prompt_tokens,
                   completion_tokens=completion_tokens, latency_s=latency_s)
+        for i, why in enumerate(transport_retries or [], 1):
+            self.transport_retry(i, why)
+
+    def transport_retry(self, attempt: int, error: str) -> None:
+        """The endpoint failed and the same request was sent again.
+
+        A separate event kind from `retry`, which means the model returned
+        something the validator rejected and was given the error text back. This
+        one carries no information about the model at all. Counting them together
+        would let a bad evening on a gateway be read as a bad model.
+        """
+        self._add("transport_retry", attempt=attempt, error=error)
 
     def validation_error(self, message: str) -> None:
         self._add("validation_error", message=message)

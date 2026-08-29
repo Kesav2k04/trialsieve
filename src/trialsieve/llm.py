@@ -19,12 +19,22 @@ import json
 import os
 import subprocess
 import time
+import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 CASSETTE_VERSION = 1
+
+
+class TransportError(RuntimeError):
+    """The endpoint could not be reached, after the retry budget was spent.
+
+    Separate from every model-level error on purpose. This one says nothing at
+    all about the model's answer, so a run that ends here has not measured the
+    model and must not be reported as if it had.
+    """
 
 
 class CassetteMiss(RuntimeError):
@@ -71,6 +81,11 @@ class Response:
     latency_s: float = 0.0
     from_cassette: bool = False
     provider: str = ""
+    #: Transport failures survived on the way to this response. Deliberately a
+    #: separate field from anything the trajectory calls a retry: a gateway
+    #: returning 502 is not the model producing an unusable answer, and summing
+    #: the two would make an unreliable network look like an unreliable model.
+    transport_retries: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -100,6 +115,51 @@ class Usage:
 
 
 # ---------------------------------------------------------------------------
+
+
+#: Transport retry policy. Only these HTTP statuses are retried, and only these.
+#: 502 and 503 are a gateway or a local CLI shim failing to produce a reply at
+#: all; 429 and 529 are rate limiting. A 4xx that is not 429 is the request being
+#: wrong, and retrying it sends the same wrong request again.
+RETRY_STATUS = {429, 500, 502, 503, 504, 529}
+TRANSPORT_ATTEMPTS = 4
+TRANSPORT_BACKOFF = (2.0, 6.0, 15.0)
+
+
+def _urlopen_json(request: urllib.request.Request) -> tuple[dict, list[str]]:
+    """POST and parse, surviving a transient gateway failure.
+
+    Why this exists. A long compile is a few hundred sequential calls through a
+    local shim onto a vendor CLI, and a single 502 partway through used to abort
+    one criterion and leave an ERROR row in a scored table. An ERROR row is worse
+    than a slow run: it is indistinguishable, in the summary, from the model
+    failing to answer, so a flaky evening would read as a worse system.
+
+    The failure text is kept and returned rather than swallowed, because a run
+    that needed nine retries is a run whose timings mean something different from
+    one that needed none, and the report says which.
+    """
+    retries: list[str] = []
+    for attempt in range(TRANSPORT_ATTEMPTS):
+        try:
+            with urllib.request.urlopen(request, timeout=300) as fh:
+                return json.load(fh), retries
+        except urllib.error.HTTPError as exc:
+            detail = ""
+            try:
+                detail = exc.read().decode("utf-8", "replace")[:400]
+            except Exception:
+                pass
+            note = f"HTTP {exc.code}: {detail or exc.reason}"
+            if exc.code not in RETRY_STATUS or attempt == TRANSPORT_ATTEMPTS - 1:
+                raise TransportError(f"{note} after {len(retries)} retries") from exc
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            note = f"{type(exc).__name__}: {exc}"
+            if attempt == TRANSPORT_ATTEMPTS - 1:
+                raise TransportError(f"{note} after {len(retries)} retries") from exc
+        retries.append(note)
+        time.sleep(TRANSPORT_BACKOFF[min(attempt, len(TRANSPORT_BACKOFF) - 1)])
+    raise TransportError("unreachable")
 
 
 def _approx_tokens(s: str) -> int:
@@ -183,15 +243,14 @@ class Client:
         r = urllib.request.Request(f"{self.base_url.rstrip('/')}/chat/completions",
                                    data=data, headers=headers)
         t0 = time.time()
-        with urllib.request.urlopen(r, timeout=300) as fh:
-            out = json.load(fh)
+        out, retries = _urlopen_json(r)
         dt = time.time() - t0
         text = out["choices"][0]["message"]["content"] or ""
         u = out.get("usage") or {}
         return Response(text, out.get("model", req.model),
                         u.get("prompt_tokens") or _approx_tokens(json.dumps(req.messages)),
                         u.get("completion_tokens") or _approx_tokens(text),
-                        dt, provider="openai")
+                        dt, provider="openai", transport_retries=retries)
 
     def _call_cli(self, req: Request) -> Response:
         prompt = "\n\n".join(

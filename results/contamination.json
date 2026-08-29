@@ -1,0 +1,78 @@
+{
+ "templates": {
+  "templates": [
+   {
+    "template": "baselines.B2_INSTRUCTIONS",
+    "slots": [
+     "criterion",
+     "index_date",
+     "kind",
+     "record"
+    ]
+   },
+   {
+    "template": "compiler.EMIT",
+    "slots": [
+     "category",
+     "examples",
+     "grammar",
+     "grounded",
+     "kind",
+     "text"
+    ]
+   },
+   {
+    "template": "compiler.PLAN",
+    "slots": [
+     "category",
+     "kind",
+     "text"
+    ]
+   },
+   {
+    "template": "critic.INSTRUCTIONS",
+    "slots": [
+     "codes",
+     "expr",
+     "kind",
+     "text"
+    ]
+   },
+   {
+    "template": "grounder.EXPAND",
+    "slots": [
+     "concept",
+     "domain"
+    ]
+   },
+   {
+    "template": "grounder.SELECT",
+    "slots": [
+     "candidates",
+     "concept",
+     "domain",
+     "intent"
+    ]
+   }
+  ],
+  "offending": [],
+  "pass": true
+ },
+ "cassettes": {
+  "cassettes_scanned": 26,
+  "distinct_title_ngrams": 77,
+  "legitimate_ngrams_subtracted": 3016,
+  "example_ngrams": [
+   "2 t1dm while",
+   "888 digital medical",
+   "a randomized placebo-controlled",
+   "ai platform for",
+   "and cardio-renal-vascular diseases",
+   "and systemic hemodynamics",
+   "best strategy for",
+   "can reduce kidney"
+  ],
+  "hits": [],
+  "pass": true
+ }
+}

@@ -74,7 +74,8 @@ def ask_json(client: Client, traj: Trajectory, messages: list[dict[str, str]],
         traj.llm_request(req.key(), convo, req.model)
         resp = client.complete(req)
         traj.llm_response(resp.text, "cassette" if resp.from_cassette else resp.provider,
-                          resp.prompt_tokens, resp.completion_tokens, resp.latency_s)
+                          resp.prompt_tokens, resp.completion_tokens, resp.latency_s,
+                          resp.transport_retries)
         try:
             payload = extract_json(resp.text)
             validate(payload)
