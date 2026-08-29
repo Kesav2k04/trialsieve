@@ -97,9 +97,17 @@ def main() -> int:
         panel, changes = degrade_panel(panel, a.k, a.degrade_seed, gold_relevant_codes())
 
     if a.patients:
+        # Shuffle once, then take a prefix, rather than drawing a sample of size
+        # n. Both are uniform, but only the prefix nests: the first ten patients
+        # of the shuffle are the first ten of the fifteen. That matters because
+        # the paid arms are recorded against cassettes, so extending the sample
+        # later has to replay the earlier calls rather than draw a fresh set and
+        # pay for all of them again. `random.sample(panel, 10)` and
+        # `random.sample(panel, 15)` on one seed share no such guarantee.
         rng = random.Random(a.patient_seed)
         panel = sorted(panel, key=lambda c: c.patient_id)
-        panel = rng.sample(panel, min(a.patients, len(panel)))
+        rng.shuffle(panel)
+        panel = panel[:min(a.patients, len(panel))]
         panel.sort(key=lambda c: c.patient_id)
 
     compiled_path = run / "compiled" / f"criteria_seed{a.seed}.json"
