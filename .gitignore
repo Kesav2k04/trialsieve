@@ -39,3 +39,12 @@ runs/tierA/cells/
 /AppData/
 local_dev.db
 profile-claim.lock
+
+# Video build intermediates. Regenerable offline from what is tracked:
+# `python scripts/make_video.py shots` recaptures, `assemble` re-renders.
+docs/video/frames/
+docs/video/shots/
+# The rendered file itself is tens of megabytes and is hosted, not committed.
+# The link is in docs/VIDEO.md. What is tracked is everything needed to rebuild
+# it: the script, the narration audio, its cue timings, and the shot spec.
+docs/video/*.mp4
