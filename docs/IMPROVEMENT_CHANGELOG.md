@@ -713,7 +713,7 @@ trajectory of the predicate that was signed."
 `render_markdown` had a branch for drawing it. `scripts/trajectories.py` counted
 it, gave it a weight in the interest score, and printed a row for it in the
 summary table. `grep -rn human_checkpoint --include=*.py` found every one of those
-and no caller. `scripts/signoff.py` appended the decision to `signoffs.jsonl` and
+and no caller. `scripts/signoff.py` appended the decision to `runs/tierA/signoffs.jsonl` and
 stopped there.
 
 So the index printed `| human checkpoints | 0 |`, which was true, and true for a
@@ -1024,7 +1024,7 @@ nothing in the system had changed to produce them.
 **What had happened.** Entry 18's neighbour in this changelog records that `--seed`
 never reached the model, so compilations under seeds 8 and 9 replayed seed 7's
 cassettes and produced byte-identical predicates. When that was found, the fake
-artifacts were deleted: `compiled/criteria_seed8.json`, `criteria_seed9.json`, and
+artifacts were deleted: `runs/tierA/compiled/criteria_seed8.json`, `criteria_seed9.json`, and
 the cells tagged with those seeds. That felt complete. It was not. Each of those
 runs had also written **114 trajectory files**, and the trajectory index reads the
 directory rather than the compiled output, so it went on counting the findings of

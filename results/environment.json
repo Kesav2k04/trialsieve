@@ -4,8 +4,8 @@
  "platform": "Windows-11-10.0.26200-SP0",
  "machine": "AMD64",
  "cwd": "D:\\trialsieve",
- "utc": "2026-08-29T10:51:56Z",
- "git_commit": "c680cdd7de44691fd8b1498c3f8d814539c3004e",
- "git_dirty": false,
+ "utc": "2026-08-29T10:57:07Z",
+ "git_commit": "bed9a000bb1d1da5b714f4ebe7cab73eb5ed7e46",
+ "git_dirty": true,
  "git_dirty_excludes": "results/"
 }

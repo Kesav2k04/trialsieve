@@ -27,7 +27,7 @@ None has a slot for a trial identifier or title.
 
 A template audit cannot see a string joined on by hand, so this reads the
 requests that were actually sent. Every model call in this system is recorded
-in full. 833 recorded requests were searched for the
+in full. 1020 recorded requests were searched for the
 identifiers and for 77 title-specific three-word sequences.
 
 Title-specific is doing work in that sentence. A registered title contains the

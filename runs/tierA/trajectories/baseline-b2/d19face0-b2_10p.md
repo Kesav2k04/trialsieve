@@ -162,7 +162,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 2. llm_response (openai, 110 tok, 35.29407334327698s)
+### 2. llm_response (cassette, 110 tok, 35.294s)
 
 ```
 ```json
@@ -341,7 +341,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 4. llm_response (openai, 88 tok, 26.169976949691772s)
+### 4. llm_response (cassette, 88 tok, 26.17s)
 
 ```
 ```json
@@ -519,7 +519,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 6. llm_response (openai, 51 tok, 27.812264919281006s)
+### 6. llm_response (cassette, 51 tok, 27.812s)
 
 ```
 ```json
@@ -697,7 +697,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 8. llm_response (openai, 63 tok, 28.475112199783325s)
+### 8. llm_response (cassette, 63 tok, 28.475s)
 
 ```
 ```json
@@ -875,7 +875,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 10. llm_response (openai, 64 tok, 29.402238607406616s)
+### 10. llm_response (cassette, 64 tok, 29.402s)
 
 ```
 ```json
@@ -1053,7 +1053,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 12. llm_response (openai, 55 tok, 28.218648433685303s)
+### 12. llm_response (cassette, 55 tok, 28.219s)
 
 ```
 ```json
@@ -1229,7 +1229,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 14. llm_response (openai, 90 tok, 33.829998254776s)
+### 14. llm_response (cassette, 90 tok, 33.83s)
 
 ```
 ```json
@@ -1408,7 +1408,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 16. llm_response (openai, 54 tok, 78.28351998329163s)
+### 16. llm_response (cassette, 54 tok, 78.284s)
 
 ```
 ```json
@@ -1584,7 +1584,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 18. llm_response (openai, 47 tok, 20.765479803085327s)
+### 18. llm_response (cassette, 47 tok, 20.765s)
 
 ```
 ```json
@@ -1760,7 +1760,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 20. llm_response (openai, 122 tok, 28.59216594696045s)
+### 20. llm_response (cassette, 122 tok, 28.592s)
 
 ```
 ```json
@@ -1940,7 +1940,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 22. llm_response (openai, 52 tok, 27.329963445663452s)
+### 22. llm_response (cassette, 52 tok, 27.33s)
 
 ```
 ```json
@@ -2116,7 +2116,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 24. llm_response (openai, 45 tok, 27.518267393112183s)
+### 24. llm_response (cassette, 45 tok, 27.518s)
 
 ```
 ```json
@@ -2292,7 +2292,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 26. llm_response (openai, 140 tok, 30.299488306045532s)
+### 26. llm_response (cassette, 140 tok, 30.299s)
 
 ```
 ```json
@@ -2472,7 +2472,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 28. llm_response (openai, 57 tok, 33.68728995323181s)
+### 28. llm_response (cassette, 57 tok, 33.687s)
 
 ```
 ```json
@@ -2648,7 +2648,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 30. llm_response (openai, 71 tok, 29.884749174118042s)
+### 30. llm_response (cassette, 71 tok, 29.885s)
 
 ```
 ```json
@@ -2824,7 +2824,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 32. llm_response (openai, 54 tok, 24.143067359924316s)
+### 32. llm_response (cassette, 54 tok, 24.143s)
 
 ```
 ```json
@@ -3002,7 +3002,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 34. llm_response (openai, 120 tok, 28.761399030685425s)
+### 34. llm_response (cassette, 120 tok, 28.761s)
 
 ```
 ```json
@@ -3181,7 +3181,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 36. llm_response (openai, 128 tok, 29.236572742462158s)
+### 36. llm_response (cassette, 128 tok, 29.237s)
 
 ```
 ```json
@@ -3361,7 +3361,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 38. llm_response (openai, 55 tok, 27.38027858734131s)
+### 38. llm_response (cassette, 55 tok, 27.38s)
 
 ```
 ```json
@@ -3537,7 +3537,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 40. llm_response (openai, 85 tok, 30.19187641143799s)
+### 40. llm_response (cassette, 85 tok, 30.192s)
 
 ```
 ```json
@@ -3715,7 +3715,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 42. llm_response (openai, 141 tok, 30.298255443572998s)
+### 42. llm_response (cassette, 141 tok, 30.298s)
 
 ```
 ```json
@@ -3896,7 +3896,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 44. llm_response (openai, 123 tok, 29.179880380630493s)
+### 44. llm_response (cassette, 123 tok, 29.18s)
 
 ```
 ```json
@@ -4076,7 +4076,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 46. llm_response (openai, 83 tok, 29.36751914024353s)
+### 46. llm_response (cassette, 83 tok, 29.368s)
 
 ```
 ```json
@@ -4254,7 +4254,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 48. llm_response (openai, 62 tok, 32.75236415863037s)
+### 48. llm_response (cassette, 62 tok, 32.752s)
 
 ```
 ```json
@@ -4430,7 +4430,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 50. llm_response (openai, 124 tok, 35.69988393783569s)
+### 50. llm_response (cassette, 124 tok, 35.7s)
 
 ```
 ```json
@@ -4610,7 +4610,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 52. llm_response (openai, 52 tok, 21.414392471313477s)
+### 52. llm_response (cassette, 52 tok, 21.414s)
 
 ```
 ```json
@@ -4788,7 +4788,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 54. llm_response (openai, 57 tok, 27.36451745033264s)
+### 54. llm_response (cassette, 57 tok, 27.365s)
 
 ```
 ```json
@@ -4966,7 +4966,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 56. llm_response (openai, 69 tok, 27.176937103271484s)
+### 56. llm_response (cassette, 69 tok, 27.177s)
 
 ```
 ```json
@@ -5144,7 +5144,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 58. llm_response (openai, 64 tok, 28.925148487091064s)
+### 58. llm_response (cassette, 64 tok, 28.925s)
 
 ```
 ```json
@@ -5320,7 +5320,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 60. llm_response (openai, 60 tok, 26.230512380599976s)
+### 60. llm_response (cassette, 60 tok, 26.231s)
 
 ```
 ```json
@@ -5496,7 +5496,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 62. llm_response (openai, 114 tok, 33.68988299369812s)
+### 62. llm_response (cassette, 114 tok, 33.69s)
 
 ```
 ```json
@@ -5676,7 +5676,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 64. llm_response (openai, 76 tok, 24.51641607284546s)
+### 64. llm_response (cassette, 76 tok, 24.516s)
 
 ```
 ```json
@@ -5854,7 +5854,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 66. llm_response (openai, 83 tok, 30.514383792877197s)
+### 66. llm_response (cassette, 83 tok, 30.514s)
 
 ```
 ```json
@@ -6032,7 +6032,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 68. llm_response (openai, 58 tok, 26.87768268585205s)
+### 68. llm_response (cassette, 58 tok, 26.878s)
 
 ```
 ```json
@@ -6208,7 +6208,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 70. llm_response (openai, 129 tok, 24.372377157211304s)
+### 70. llm_response (cassette, 129 tok, 24.372s)
 
 ```
 ```json
@@ -6389,7 +6389,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 72. llm_response (openai, 77 tok, 29.234529972076416s)
+### 72. llm_response (cassette, 77 tok, 29.235s)
 
 ```
 ```json
@@ -6565,7 +6565,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 74. llm_response (openai, 127 tok, 31.011014223098755s)
+### 74. llm_response (cassette, 127 tok, 31.011s)
 
 ```
 ```json
@@ -6745,7 +6745,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 76. llm_response (openai, 71 tok, 26.430381059646606s)
+### 76. llm_response (cassette, 71 tok, 26.43s)
 
 ```
 ```json
@@ -6923,7 +6923,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 78. llm_response (openai, 58 tok, 29.764763832092285s)
+### 78. llm_response (cassette, 58 tok, 29.765s)
 
 ```
 ```json
@@ -7099,7 +7099,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 80. llm_response (openai, 66 tok, 26.975321769714355s)
+### 80. llm_response (cassette, 66 tok, 26.975s)
 
 ```
 ```json

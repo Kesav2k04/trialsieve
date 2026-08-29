@@ -59,7 +59,7 @@
   "pass": true
  },
  "cassettes": {
-  "cassettes_scanned": 833,
+  "cassettes_scanned": 1020,
   "distinct_title_ngrams": 77,
   "legitimate_ngrams_subtracted": 3016,
   "example_ngrams": [
