@@ -122,8 +122,15 @@ class Usage:
 #: all; 429 and 529 are rate limiting. A 4xx that is not 429 is the request being
 #: wrong, and retrying it sends the same wrong request again.
 RETRY_STATUS = {429, 500, 502, 503, 504, 529}
-TRANSPORT_ATTEMPTS = 4
-TRANSPORT_BACKOFF = (2.0, 6.0, 15.0)
+
+#: Six attempts, not four. The observed failure rate on this backend is about one
+#: call in five, which four attempts covers on paper: the chance of four
+#: independent failures is under two in a thousand. They are not independent. The
+#: failures arrive in bursts, and a burst wider than the backoff window exhausts
+#: the budget and turns a transient outage into an ERROR row in a scored table.
+#: The last two attempts cost nothing on a healthy call and buy the width.
+TRANSPORT_ATTEMPTS = 6
+TRANSPORT_BACKOFF = (2.0, 6.0, 15.0, 30.0, 60.0)
 
 
 def _urlopen_json(request: urllib.request.Request) -> tuple[dict, list[str]]:
