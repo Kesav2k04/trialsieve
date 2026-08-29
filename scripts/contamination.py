@@ -173,14 +173,33 @@ def scan_cassettes(run: Path, trials: list[dict]) -> dict:
 NUM_RE = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)(?![\d.])")
 
 
+#: Every slot in the IR that can hold a number the criterion supplied. Taken from
+#: the grammar in `src/trialsieve/agents/compiler.py`, not guessed.
+#:
+#: This list is the whole check. An earlier version read only
+#: `{"val":"literal","number":N}`, which is the shape a `compare` uses, and missed
+#: `between`, which keeps its bounds in `low` and `high`. So a predicate that
+#: carried the perturbed value perfectly reported no literals at all, "follows"
+#: came back false, and the strongest anti-contamination check in the project was
+#: about to report maximum recitation on a compiler that had done exactly the
+#: right thing. A gate blind to one syntax fails the cases written in it.
+#:
+#: `tests/test_perturb.py` parses the grammar and fails if it declares a
+#: numeric slot this tuple does not name. That test found `n`, the count in
+#: `at_least`, on its first run.
+NUMERIC_SLOTS = ("number", "low", "high", "within_days", "n")
+
+
 def literals(expr: dict) -> list[float]:
-    """Every number the compiled predicate compares against."""
+    """Every number the compiled predicate carries, in any slot that holds one."""
     out: list[float] = []
 
     def walk(node):
         if isinstance(node, dict):
-            if node.get("val") == "literal" and isinstance(node.get("number"), (int, float)):
-                out.append(float(node["number"]))
+            for slot in NUMERIC_SLOTS:
+                v = node.get(slot)
+                if isinstance(v, (int, float)) and not isinstance(v, bool):
+                    out.append(float(v))
             for v in node.values():
                 walk(v)
         elif isinstance(node, list):

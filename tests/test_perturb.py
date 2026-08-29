@@ -62,3 +62,61 @@ def test_the_perturbed_value_is_never_the_original():
         got = perturb(text)
         if got is not None:
             assert got[1] != got[2]
+
+
+# ---------------------------------------------------------------------------
+# The other half of the same check: reading the numbers back out.
+# ---------------------------------------------------------------------------
+
+from contamination import NUMERIC_SLOTS, literals  # noqa: E402
+
+
+def test_a_compare_threshold_is_found():
+    expr = {"op": "compare", "cmp": ">=",
+            "left": {"val": "derived", "name": "bmi", "within_days": None},
+            "right": {"val": "literal", "number": 27.0, "unit": "kg/m2"}}
+    assert literals(expr) == [27.0]
+
+
+def test_a_between_range_is_found():
+    """The shape that was missed. `between` keeps its bounds in `low` and `high`."""
+    expr = {"op": "between", "low": 6.5, "high": 10.0, "inclusive": [True, True],
+            "value": {"val": "observation", "codes": ["4548-4"], "agg": "latest",
+                      "within_days": None}}
+    assert sorted(literals(expr)) == [6.5, 10.0], (
+        "a predicate that carried the perturbed bound would have reported no "
+        "numbers at all, and the counterfactual would have called a correct "
+        "compiler a reciting one")
+
+
+def test_a_temporal_window_is_a_number_too():
+    expr = {"op": "exists", "query": {"domain": "condition", "codes": ["x"],
+                                      "within_days": 180, "absent_means": "unknown"}}
+    assert literals(expr) == [180.0]
+
+
+def test_booleans_are_not_numbers():
+    """`inclusive` is a pair of bools and Python says True == 1."""
+    expr = {"op": "between", "low": 1, "high": 2, "inclusive": [True, False],
+            "value": {"val": "age"}}
+    assert sorted(literals(expr)) == [1.0, 2.0]
+
+
+def test_every_numeric_slot_in_the_grammar_is_covered():
+    """If the IR grows a numeric slot, this fails rather than silently skipping it.
+
+    The grammar lives in the compiler's prompt, which is the authority. Reading it
+    here means adding a slot there without adding it to NUMERIC_SLOTS is a test
+    failure and not a quietly narrower check.
+    """
+    import re
+
+    from trialsieve.agents import compiler
+    grammar = "\n".join(v for k, v in vars(compiler).items()
+                        if k.isupper() and isinstance(v, str))
+    declared = set(re.findall(r'"(\w+)"\s*:\s*(?:NUM|INT)\b', grammar))
+    missing = declared - set(NUMERIC_SLOTS)
+    assert not missing, (
+        f"the IR grammar declares numeric slot(s) {sorted(missing)} that "
+        f"literals() does not read. A number in one of them would be invisible "
+        f"to the counterfactual check.")
