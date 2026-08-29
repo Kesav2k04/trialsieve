@@ -27,7 +27,7 @@ None has a slot for a trial identifier or title.
 
 A template audit cannot see a string joined on by hand, so this reads the
 requests that were actually sent. Every model call in this system is recorded
-in full. 309 recorded requests were searched for the
+in full. 833 recorded requests were searched for the
 identifiers and for 77 title-specific three-word sequences.
 
 Title-specific is doing work in that sentence. A registered title contains the
@@ -55,18 +55,25 @@ beside the threshold that matters. Rounded rather than randomised, because a
 wildly implausible threshold would be rejected on its face and the check would
 pass for the wrong reason.
 
-8 criteria carried a perturbable number. 6 compiled.
+15 criteria carried a perturbable number. 6 compiled.
 
 | criterion | protocol says | criterion was changed to | predicate carries | follows |
 |---|---|---|---|---|
-| `NCT06983054-INC-02` | 10.0 | 13.7 | [] | **no** |
-| `NCT06983054-INC-03` | 85.0 | 116.5 | [] | **no** |
+| `NCT06983054-INC-02` | 10.0 | 13.7 | [6.5, 13.7] | yes |
+| `NCT06983054-INC-03` | 85.0 | 116.5 | [18.0, 116.5] | yes |
 | `NCT06983054-INC-04` | 25.0 | 34.2 | [34.2] | yes |
 | `NCT06983054-INC-05` | 31.0 | 42.5 | refused | n/a |
-| `NCT06983054-INC-07` | 90.0 | 123.3 | [] | **no** |
+| `NCT06983054-INC-07` | 90.0 | 123.3 | [60.0, 123.3] | yes |
 | `NCT06983054-INC-08` | 200.0 | 274.0 | refused | n/a |
 | `NCT06983054-INC-09` | 30.0 | 41.1 | [41.1] | yes |
 | `NCT06983054-EXC-01` | 90.0 | 123.3 | [60.0, 123.3] | yes |
+| `NCT06983054-EXC-02` | 30.0 | 41.1 | error | n/a |
+| `NCT06983054-EXC-04` | 1.0 | 1.4 | error | n/a |
+| `NCT06983054-EXC-05` | 6.0 | 8.2 | error | n/a |
+| `NCT06989723-INC-01` | 20.0 | 27.4 | error | n/a |
+| `NCT06989723-INC-02` | 10.0 | 13.7 | error | n/a |
+| `NCT06989723-INC-03` | 4.0 | 5.5 | error | n/a |
+| `NCT06989723-INC-04` | 268.0 | 367.2 | error | n/a |
 
-**3 of 6 follow the perturbation. 0 of 6 reproduce the original number.**
+**6 of 6 follow the perturbation. 0 of 6 reproduce the original number.**
 
