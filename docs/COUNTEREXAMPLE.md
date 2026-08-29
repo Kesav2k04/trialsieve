@@ -38,9 +38,9 @@ Checker A: **INDETERMINATE**
 
 ---
 
-| arm | verdict | agrees with gold |
-|---|---|---|
-| per-cell baseline (B2) | INDETERMINATE | yes |
-| TrialSieve | INDETERMINATE | yes |
+| arm                    | verdict       | agrees with gold |
+|------------------------|---------------|------------------|
+| per-cell baseline (B2) | INDETERMINATE | yes              |
+| TrialSieve             | INDETERMINATE | yes              |
 
 The baseline abstained here and was right. That is reported rather than hidden: the claim in the README is the rate at which it commits across the panel, not that it fails on every pair.

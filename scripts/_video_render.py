@@ -33,7 +33,14 @@ ROOT = Path(__file__).resolve().parents[1]
 W, H = 1920, 1080
 FPS = 30
 COLS = 104
-LINES_PER_PAGE = 30
+#: Lines per frame. Measured against the layout below, not chosen. At 26px on a
+#: 1.42 line height the text box starts 131.7px down a 1080px frame and fits
+#: 25.7 lines, so 30 put six of every thirty off the bottom of the screen: the
+#: viewer never saw them and no page carried them, because the next page started
+#: at 31. One short of the 25 that fit, so the last line clears the page counter.
+#: `tests/test_video_geometry.py` measures the real layout and fails if this
+#: number stops fitting.
+LINES_PER_PAGE = 24
 
 CSS = """
 * { margin:0; padding:0; box-sizing:border-box; }

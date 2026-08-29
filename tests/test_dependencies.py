@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCAL = {"trialsieve", "criteria_set", "plainview", "score", "dev_criteria",
          "vocab_probe", "contamination", "checker_b", "segmentation",
          "_video_figures", "_video_render", "_video_shots", "_video_capture",
-         "_verify_blind"}
+         "_verify_blind", "_md_tables"}
 
 #: Third-party imports that are allowed, and only in these files. The video build
 #: is not on the reproduction path: nothing `python run.py reproduce` executes

@@ -23,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from _md_tables import align as align_tables
 sys.path.insert(0, str(ROOT / "evaluation" / "gold"))
 
 import plainview  # noqa: E402
@@ -159,7 +160,7 @@ def main() -> int:
 
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text("\n".join(L), encoding="utf-8", newline="\n")
+    out.write_text(align_tables("\n".join(L)), encoding="utf-8", newline="\n")
     print("\n".join(L))
     print(f"\nwrote {out}")
     # The document said in words that a baseline agreeing with gold withdraws

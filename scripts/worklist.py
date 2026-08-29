@@ -24,6 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from _md_tables import align as align_tables
 
 from trialsieve import worklist  # noqa: E402
 from trialsieve.chart import load_panel  # noqa: E402
@@ -140,7 +141,7 @@ def main() -> int:
 
     out = Path(a.out) if a.out else run / f"worklist_{nct}.md"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(md, encoding="utf-8", newline="\n")
+    out.write_text(align_tables(md), encoding="utf-8", newline="\n")
     row = worklist.summary_row(wl)
     print(json.dumps(row, indent=1))
     print(f"wrote {out}")

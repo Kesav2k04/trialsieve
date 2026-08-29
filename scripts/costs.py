@@ -23,6 +23,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _md_tables import align as align_tables
+
 ROOT = Path(__file__).resolve().parents[1]
 
 #: Published rates for a mid-tier hosted model, dollars per million tokens, as a
@@ -190,7 +193,7 @@ def main() -> int:
           "and needs no key.", ""]
 
     dest = ROOT / "docs" / "COST.md"
-    dest.write_text("\n".join(L), encoding="utf-8", newline="\n")
+    dest.write_text(align_tables("\n".join(L)), encoding="utf-8", newline="\n")
     print("\n".join(L))
     print(f"\nwrote {dest}")
     return 0

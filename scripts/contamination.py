@@ -41,6 +41,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from _md_tables import align as align_tables
 
 NCT_RE = re.compile(r"NCT\d{8}")
 
@@ -463,7 +464,7 @@ def main() -> int:
     md = render(res)
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(md, encoding="utf-8", newline="\n")
+    out.write_text(align_tables(md), encoding="utf-8", newline="\n")
 
     js = Path(a.json)
     js.parent.mkdir(parents=True, exist_ok=True)
