@@ -261,9 +261,35 @@ def t_diff() -> None:
         print(f"missing {mine}", file=sys.stderr)
         raise SystemExit(1)
     a, b = _canonical(mine), _canonical(theirs)
-    if a == b:
-        print("IDENTICAL: every published number reproduced on this machine.")
+
+    # `publish` freezes three files and this compared one of them. RESULTS.md is
+    # the document a reader actually reads, and every sentence in it is generated
+    # from the same run, so a prose or table change that no number in
+    # results.json can express would have reproduced "IDENTICAL" while the report
+    # said something else. Compared byte for byte, because unlike results.json it
+    # carries no timestamp to canonicalise away.
+    md_mine, md_theirs = ROOT / "results" / "RESULTS.md", PUBLISHED / "RESULTS.md"
+    md_same = (not md_theirs.exists()
+               or (md_mine.exists()
+                   and md_mine.read_bytes() == md_theirs.read_bytes()))
+
+    if a == b and md_same:
+        print("IDENTICAL: every published number reproduced on this machine, and "
+              "results/RESULTS.md is byte-identical to the published copy.")
         return
+    if a == b and not md_same:
+        print("DIFFERENT: every number in results.json reproduced, but "
+              "results/RESULTS.md does not match the published copy byte for "
+              "byte. Something the report says changed without a number "
+              "changing.", file=sys.stderr)
+        import difflib
+        for line in list(difflib.unified_diff(
+                md_theirs.read_text(encoding="utf-8").splitlines(),
+                md_mine.read_text(encoding="utf-8").splitlines(),
+                fromfile="published/RESULTS.md", tofile="this machine",
+                lineterm=""))[:40]:
+            print(line, file=sys.stderr)
+        raise SystemExit(1)
     import difflib
     print("DIFFERENT. The first 40 differing lines:\n", file=sys.stderr)
     for line in list(difflib.unified_diff(
