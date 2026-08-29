@@ -1,0 +1,86 @@
+{
+ "model": "gpt-5.6-terra",
+ "seed": 7,
+ "provider": "shim",
+ "n_criteria": 2,
+ "stats": {
+  "compiled": 1,
+  "refused_plan": 0,
+  "refused_grounding": 1,
+  "errors": 0,
+  "critic_confirmed": 0,
+  "critic_dismissed": 0,
+  "revised": 0
+ },
+ "usage": {
+  "calls": 8,
+  "prompt_tokens": 4369,
+  "completion_tokens": 570,
+  "wall_s": 291.26,
+  "cassette_hits": 0
+ },
+ "wall_s": 291.3,
+ "criteria": [
+  {
+   "criterion_id": "NCT06983054-INC-01",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "diagnosis",
+   "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria",
+   "content_hash": "NCT06983054-INC-01",
+   "compilable": false,
+   "reason_not_compilable": "cannot be represented in this site's vocabulary. Type 2 diabetes mellitus: the vocabulary returned candidates but none of them represents the concept",
+   "blocked_at": "grounding",
+   "unmappable_concepts": [
+    "Type 2 diabetes mellitus"
+   ],
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "3556101e47f0e1d0b5d88ed4e91e666f27d56b37c139d9a6a0396e2e033814cc"
+  },
+  {
+   "criterion_id": "NCT06983054-INC-02",
+   "nct_id": "NCT06983054",
+   "kind": "inclusion",
+   "category": "lab_value",
+   "source_text": "HbA1c 6.5-10%",
+   "content_hash": "NCT06983054-INC-02",
+   "compilable": true,
+   "expr": {
+    "op": "between",
+    "value": {
+     "val": "observation",
+     "codes": [
+      "4548-4"
+     ],
+     "unit": "%",
+     "agg": "latest",
+     "within_days": null
+    },
+    "low": 6.5,
+    "high": 10.0,
+    "inclusive": [
+     true,
+     true
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Hemoglobin A1c",
+     "domain": "observation",
+     "status": "MAPPED",
+     "codes": [
+      "4548-4"
+     ]
+    }
+   ],
+   "unit_note": "HbA1c is written as a percentage (%).",
+   "absence_note": "No exists query is used, so absent_means does not apply.",
+   "confidence": "high",
+   "compiler_prompt_version": "compiler-v1",
+   "seed": 7,
+   "model": "gpt-5.6-terra",
+   "predicate_sha256": "4472e638f02c385427f66089fa11ea64e0bd17ad622e862530236392457fabdd"
+  }
+ ]
+}

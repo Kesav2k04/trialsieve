@@ -189,8 +189,17 @@ def t_diff() -> None:
     mine = ROOT / "results" / "results.json"
     theirs = PUBLISHED / "results.json"
     if not theirs.exists():
-        print(f"no published baseline at {theirs}; nothing to compare against yet")
-        return
+        # Not a pass. A reproduction step whose comparison did not happen has to
+        # say so in the same voice it would use to say the numbers differ,
+        # because the reader's question is "did the numbers reproduce" and the
+        # honest answer here is "nothing was compared", not silence. Returning 0
+        # made `reproduce` print a clean run having checked nothing.
+        print(f"NOT COMPARED: there is no published baseline at {theirs}.\n"
+              f"The author freezes one with `python run.py publish`. Until that "
+              f"file is committed there is nothing for this step to check, and a "
+              f"reproduction that compares nothing is not a reproduction.",
+              file=sys.stderr)
+        raise SystemExit(1)
     if not mine.exists():
         print(f"missing {mine}", file=sys.stderr)
         raise SystemExit(1)

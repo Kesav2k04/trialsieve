@@ -27,6 +27,7 @@ that fires on its own instructions is a check that cannot pass.
 """
 from __future__ import annotations
 
+import sys
 import json
 from pathlib import Path
 
@@ -37,27 +38,57 @@ ROOT = Path(__file__).resolve().parents[1]
 #: reached the labeller.
 IR_TOKENS = ('"absent_means"', '"expr"', '"op":', '"val":', '"codes":',
              '"agg":', '"window_days"', 'egfr_ckdepi_2021', '"cmp":',
-             '"broader_codes"', '"compilable"', '"predicate_digest"')
+             '"broader_codes"', '"compilable"', '"predicate_sha256"')
 
-#: Files whose content is a system answer. Any long line from one of these turning
-#: up in a prompt is the same leak by another route.
+#: Files whose content is a system answer. Any distinctive line from one of these
+#: turning up in a prompt is the same leak by another route.
 ANSWER_FILES = ("evaluation/gold/criteria_set.py",)
+
+#: A line from an answer file only counts as a probe if it is unmistakably source
+#: rather than clinical prose. The criterion text legitimately appears in a
+#: Checker B prompt, so searching for every long line would report a leak on
+#: every cassette and the check would be worse than useless.
+SOURCE_MARKS = ("plain.", "def gold", "return ", "elif ", " and ", " or ")
 
 
 def _compiled_digests(run: Path) -> set[str]:
+    """Every predicate digest this run produced.
+
+    The key is `predicate_sha256`. An earlier version of this function looked for
+    `digest` and `predicate_digest`, neither of which anything in this system
+    writes, so it searched an empty set on every run and reported PASS. That is
+    the reason `verify_blind` now refuses to pass when a term set comes back
+    empty: the bug was invisible because its only symptom was a zero.
+    """
     out: set[str] = set()
     for f in sorted((run / "compiled").glob("criteria_seed*.json")):
         blob = json.loads(f.read_text(encoding="utf-8"))
         for c in blob.get("criteria", []):
-            for k in ("digest", "predicate_digest"):
-                if c.get(k):
-                    out.add(str(c[k]))
+            if c.get("predicate_sha256"):
+                out.add(str(c["predicate_sha256"]))
+    return out
+
+
+def _answer_lines() -> set[str]:
+    """Distinctive source lines from the files that hold the gold answers."""
+    out: set[str] = set()
+    for rel in ANSWER_FILES:
+        p = ROOT / rel
+        if not p.exists():
+            continue
+        for raw in p.read_text(encoding="utf-8").splitlines():
+            line = raw.strip()
+            if len(line) < 30 or line.startswith("#"):
+                continue
+            if any(m in line for m in SOURCE_MARKS):
+                out.add(line)
     return out
 
 
 def verify_blind(b_run: Path, sys_run: Path) -> dict:
     cassettes = sorted((b_run / "cassettes").glob("*.json"))
     digests = _compiled_digests(sys_run)
+    answers = _answer_lines()
 
     hits, scanned = [], 0
     for f in cassettes:
@@ -76,8 +107,24 @@ def verify_blind(b_run: Path, sys_run: Path) -> dict:
             if d and d in req:
                 hits.append({"cassette": f.name, "kind": "predicate digest",
                              "detail": d[:16]})
+        for line in answers:
+            if line in req:
+                hits.append({"cassette": f.name, "kind": "gold answer text",
+                             "detail": line[:60]})
+
+    # A search over an empty term set finds nothing and looks exactly like a
+    # search that found nothing. Three of the four term sets are built from the
+    # tree at run time and any of them can silently come back empty, so an empty
+    # one is reported as a distinct outcome rather than folded into the pass.
+    empty = [name for name, n in (("compiled digests", len(digests)),
+                                  ("gold answer lines", len(answers)),
+                                  ("IR tokens", len(IR_TOKENS)),
+                                  ("cassettes", scanned)) if not n]
     return {"cassettes_scanned": scanned, "compiled_digests_searched": len(digests),
-            "ir_tokens_searched": len(IR_TOKENS), "hits": hits, "pass": not hits}
+            "ir_tokens_searched": len(IR_TOKENS),
+            "answer_lines_searched": len(answers),
+            "empty_term_sets": empty, "hits": hits,
+            "pass": not hits and not empty}
 
 
 def cmd_blind(run: Path) -> int:
@@ -93,6 +140,12 @@ def cmd_blind(run: Path) -> int:
               f"system produced. The agreement rate is not a noise floor.")
         for h in r["hits"][:10]:
             print(f"  {h['cassette']}: {h['kind']}, {h['detail']}")
+        return 1
+    if r["empty_term_sets"]:
+        print(f"\nNOT VERIFIED: {', '.join(r['empty_term_sets'])} came back empty, so "
+              f"the search for it could not have found anything. This is reported as "
+              f"a failure rather than a pass because a check that searched nothing "
+              f"and a check that found nothing print the same zero.", file=sys.stderr)
         return 1
     print(f"\nPASS: none of {r['cassettes_scanned']} recorded Checker B prompts "
           f"contains a predicate, a digest, or any part of the compiled output. "
