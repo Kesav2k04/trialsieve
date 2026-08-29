@@ -45,6 +45,13 @@ EXEMPT = {
     "runs/tierA/trajectories/",
     "data/vendor/",
     "tests/",
+    # The sign-off ledger. The README and SUBMISSION.md point at it to say where
+    # the fact lives rather than to assert the fact, and the whole point of the
+    # gate is that no automated step creates this file. It is absent in an
+    # unsigned checkout by design, so a link checker that failed on it would be
+    # reporting the safety property as a defect. If a reviewer signs, it appears
+    # and this line stops doing anything.
+    "runs/tierA/signoffs.jsonl",
 }
 
 
