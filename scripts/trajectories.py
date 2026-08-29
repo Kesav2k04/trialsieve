@@ -191,6 +191,36 @@ def main() -> int:
     L.append(f"| human checkpoints | {tot['human_checkpoints']} |")
     L.append(f"| completion tokens | {tot['completion_tokens']} |")
     L.append("")
+    L.append("## Which agent is where, and the two that have no trajectory")
+    L.append("")
+    L.append("Six agents. Four of them make model calls and appear below. Two do not, "
+             "and their absence is the design rather than a gap:")
+    L.append("")
+    L.append("| agent | where its trajectory is |")
+    L.append("|---|---|")
+    L.append("| `segmenter` | `segmenter/`, one per trial. Recorded by "
+             "`evaluation/segmentation.py`, because the scored pipeline uses the "
+             "hand-authored criterion set so a gold label can stay attached to a "
+             "stable identifier. |")
+    L.append("| `grounder` | inside each `compiler/` trajectory, as its `tool_call` "
+             "to the terminology search and the model calls either side of it. It is "
+             "a step of compiling one criterion, not a separate run, and splitting it "
+             "out would break the thread a reader is following. |")
+    L.append("| `compiler` | `compiler/`, one per criterion per seed. |")
+    L.append("| `critic` | `critic/`, one per compiled criterion. |")
+    L.append("| `adjudicator` | **none, and this is the whole bet.** It makes zero "
+             "model calls. It is a pure function of predicate, chart and unit policy, "
+             "so there is no trajectory to record: run it twice and it returns the "
+             "same bytes. Its behaviour is in `tests/`, not in a log. |")
+    L.append("| `worklist` | **none.** It renders a document and refuses to render it "
+             "without a signature. The signature is a `human_checkpoint` event, and it "
+             "lives in the compiler trajectory of the predicate that was signed. |")
+    L.append("")
+    L.append("The baselines and the second labeller are recorded the same way and to "
+             "the same standard, under `baseline-b2/` and `checker_b/`, so an arm this "
+             "project is measured against cannot be a weaker implementation than the "
+             "one it is compared to.")
+    L.append("")
     L.append("Sorted so the trajectories that went wrong come first. Those are the ones "
              "worth reading: they show what the agent was told about its own output and "
              "what it did next.")
