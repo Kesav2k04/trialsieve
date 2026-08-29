@@ -30,6 +30,9 @@ ROOT = Path(__file__).resolve().parent
 PY = sys.executable
 
 RUN = "runs/tierA"
+
+#: Patients in the per-cell baseline sample. The free arms use the whole panel.
+B2_PATIENTS = 10
 PUBLISHED = ROOT / "results" / "published"
 
 
@@ -108,8 +111,18 @@ def t_reproduce(run: str = RUN) -> None:
     sh(PY, "scripts/compile_protocol.py", "--run", run, "--mode", "replay",
        "--provider", "shim", "--seed", "7")
 
-    banner("run the arms")
+    banner("run the free arms over the whole panel")
     sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "TS,B0,B1")
+
+    # The per-cell baseline is the only arm that costs a model call per patient,
+    # so it was recorded over a seeded sample rather than the panel. Replayed here
+    # only if it was recorded: a checkout without those cassettes should reproduce
+    # everything else rather than stop.
+    if (ROOT / run / "cells").is_dir() and any(
+            (ROOT / run / "cells").glob("cells_B2_*.jsonl")):
+        banner("replay the per-cell baseline over its sample")
+        sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "B2",
+           "--patients", str(B2_PATIENTS), "--tag", f"b2_{B2_PATIENTS}p")
 
     banner("audit for recall")
     sh(PY, "scripts/contamination.py", "--run", run)
@@ -130,6 +143,26 @@ def t_reproduce(run: str = RUN) -> None:
 
     t_verify(run)
     t_diff()
+
+
+def t_publish(run: str = RUN) -> None:
+    """Freeze this machine's numbers as the ones the repository claims.
+
+    Run once, after a recording run, by the author. A judge never runs this: they
+    run `reproduce`, which regenerates the same files and byte-compares them
+    against what this wrote. Kept as a separate target so that comparison cannot
+    be won by quietly refreshing the baseline.
+    """
+    for name in ("results.json", "RESULTS.md", "environment.json"):
+        src, dst = ROOT / "results" / name, PUBLISHED / name
+        if not src.exists():
+            print(f"missing {src}; score a run first", file=sys.stderr)
+            raise SystemExit(2)
+        PUBLISHED.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+        print(f"published {dst.relative_to(ROOT)}")
+    print()
+    print("now run `python run.py reproduce` and confirm it prints IDENTICAL.")
 
 
 def t_links() -> None:
@@ -243,6 +276,7 @@ TARGETS = {
     "check": t_check,
     "contamination": t_contamination,
     "links": t_links,
+    "publish": t_publish,
     "environment": t_environment,
     "reproduce": t_reproduce,
     "verify": t_verify,
