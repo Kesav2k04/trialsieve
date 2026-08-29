@@ -266,7 +266,13 @@ and be scored on it, its accuracy figure is a measure of its willingness to gues
   token to a temporary directory outside the tree and deletes it at exit.
 - No consequential action is taken. The system produces a document. It enrols
   nobody, contacts nobody, and writes to no clinical system.
-- The reviewer who signed the predicates in this repository is the author and is not
-  a clinician. That is recorded in the signature itself, in the `reviewer_role`
-  field, rather than left to be assumed. A deployment would put a qualified clinical
-  reviewer in exactly that slot; the gate is already built for it.
+- The sign-off gate is a human action and it is left to a human. Whether it has been
+  cleared in this checkout is a fact in the repository rather than a claim in this
+  file: `python scripts/signoff.py --run runs/tierA --list` prints it, and
+  `runs/tierA/signoffs.jsonl` is where it lives. Any signature here is the author's,
+  who is not a clinician, and the `reviewer_role` field records that rather than
+  leaving it to be assumed. A deployment puts a qualified clinical reviewer in
+  exactly that slot.
+- Until the gate is cleared, `scripts/worklist.py` refuses with exit code 3, and
+  that refusal is the demonstration. There is an `--allow-unsigned` flag for showing
+  the document anyway, and using it stamps **NOT FOR USE** across every page.
