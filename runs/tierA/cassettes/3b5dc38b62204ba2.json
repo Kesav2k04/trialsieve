@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "3b5dc38b62204ba23f6b7ffd9d758dd55772b6fc1cca4f1df9e2071704e8d685",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Unstable angina pectoris\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 112,
+  "latency_s": 83.238,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Unstable angina\",\n    \"Unstable angina pectoris\",\n    \"Crescendo angina\",\n    \"Preinfarction syndrome\",\n    \"Preinfarction angina\",\n    \"Accelerated angina\",\n    \"Intermediate coronary syndrome\",\n    \"Post-infarction angina\",\n    \"Rest angina\",\n    \"New-onset severe angina\",\n    \"Impending infarction\"\n  ],\n  \"note\": \"Includes synonyms, clinical subtypes, and standard coding descriptions for unstable angina.\"\n}\n```"
+ }
+}

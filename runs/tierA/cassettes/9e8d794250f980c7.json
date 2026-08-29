@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9e8d794250f980c71be327cdfaab1912c6459f43a1c0f4aba7403a87878135c7",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Glucocorticoid\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 99,
+  "latency_s": 42.291,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"prednisone\",\n    \"prednisolone\",\n    \"methylprednisolone\",\n    \"dexamethasone\",\n    \"hydrocortisone\",\n    \"triamcinolone\",\n    \"betamethasone\",\n    \"budesonide\",\n    \"fluticasone\",\n    \"beclomethasone\",\n    \"mometasone\",\n    \"cortisone\",\n    \"deflazacort\",\n    \"clobetasol\"\n  ],\n  \"note\": \"Common systemic and topical glucocorticoid generic active ingredients.\"\n}\n```"
+ }
+}

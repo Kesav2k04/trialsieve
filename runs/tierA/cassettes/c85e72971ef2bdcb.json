@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "c85e72971ef2bdcbbacdd7ec1a26c7fdd286e9fd69bacc35a39f986fb701de4f",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Rosiglitazone\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 80,
+  "latency_s": 180.284,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"rosiglitazone\",\n    \"rosiglitazone maleate\",\n    \"Avandia\",\n    \"Avandamet\",\n    \"Avandaryl\",\n    \"rosiglitazone / metformin\",\n    \"rosiglitazone / glimepiride\"\n  ],\n  \"note\": \"Includes generic ingredient, salt form, brand names, and combination formulations containing rosiglitazone.\"\n}\n```"
+ }
+}

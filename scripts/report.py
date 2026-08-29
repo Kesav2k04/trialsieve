@@ -59,6 +59,41 @@ def pair(a: list[Cell], b: list[Cell]) -> tuple[list[Cell], list[Cell]]:
 
 
 
+
+def coverage_denominators() -> dict | None:
+    """Both denominators for criterion coverage, and the registered prediction.
+
+    A coverage figure is a fraction, and this project had been publishing the
+    numerator against the friendlier of two available denominators. The segmenter
+    produced 65 criteria across the three held-out trials; the hand-authored gold
+    set keeps 40; 24 of those 40 are marked `checkable`. 24/40 is 60%. 24/65 is
+    37%. `docs/EVAL_PROTOCOL.md` registered "coverage will land at 30-40% **of
+    segmented criteria**", so the registered denominator is 65, and the 25
+    criteria the gold set drops are not a random 25: they skew hard toward
+    informed consent, psychiatric history, substance use and site affiliation,
+    which a structured record cannot settle. Dropping them raises coverage
+    mechanically, and reporting only the number they raise is choosing the
+    denominator after seeing both.
+    """
+    seg = ROOT / "results" / "segmentation.json"
+    if not seg.exists():
+        return None
+    trials = json.loads(seg.read_text(encoding="utf-8")).get("trials", [])
+    n_auto = sum(int(t.get("n_auto") or 0) for t in trials)
+    sys.path.insert(0, str(ROOT / "evaluation" / "gold"))
+    from criteria_set import CRITERIA
+    n_gold = len(CRITERIA)
+    n_checkable = sum(1 for c in CRITERIA if c.get("checkable"))
+    if not (n_auto and n_gold):
+        return None
+    return {"n_segmented": n_auto, "n_gold": n_gold, "n_checkable": n_checkable,
+            "coverage_of_segmented": round(n_checkable / n_auto, 4),
+            "coverage_of_gold": round(n_checkable / n_gold, 4),
+            "registered_band": [0.30, 0.40],
+            "per_trial": [{"nct_id": t.get("nct_id"), "segmented": t.get("n_auto"),
+                           "gold": t.get("n_gold")} for t in trials]}
+
+
 def load_label_floor() -> dict | None:
     """The measured disagreement between the two independent labellers.
 
@@ -565,6 +600,66 @@ def main() -> int:
                   "sign-off gate, where a human reads the predicate in English before "
                   "any worklist exists: `docs/GATE.md`.")
         md.append("")
+
+    # Criterion coverage, against both available denominators. Printed before
+    # the cell tables are read rather than after, because a reader who has already
+    # taken 24.1% as the headline will not revise it downward from a footnote.
+    cd = coverage_denominators()
+    md.append("")
+    md.append("## Criterion coverage, both denominators")
+    md.append("")
+    if cd is None:
+        md.append("**NOT MEASURED.** `results/segmentation.json` is absent, so the "
+                  "number of criteria the segmenter produced is unknown and coverage "
+                  "can only be quoted against the hand-authored set. Regenerate it "
+                  "with `python evaluation/segmentation.py`.")
+    else:
+        lo, hi = cd["registered_band"]
+        md.append(f"The system expresses **{cd['n_checkable']}** criteria as "
+                  f"predicates. That is a numerator, and it has two defensible "
+                  f"denominators, so both are published.")
+        md.append("")
+        md.append("| denominator | what it counts | coverage |")
+        md.append("|---|---|---|")
+        md.append(f"| {cd['n_gold']} | the hand-authored gold set | "
+                  f"{cd['coverage_of_gold']:.0%} |")
+        md.append(f"| **{cd['n_segmented']}** | **every criterion the segmenter "
+                  f"produced from the three protocols** | "
+                  f"**{cd['coverage_of_segmented']:.0%}** |")
+        md.append("")
+        inband = lo <= cd["coverage_of_segmented"] <= hi
+        md.append(f"`docs/EVAL_PROTOCOL.md` registered, before any scored run, that "
+                  f"coverage would land at {lo:.0%} to {hi:.0%} **of segmented "
+                  f"criteria**, following Kopcke et al., and that a number far above "
+                  f"that would suggest the criteria had been cherry-picked. The "
+                  f"registered denominator is therefore {cd['n_segmented']}, not "
+                  f"{cd['n_gold']}. Against it the result is "
+                  f"{cd['coverage_of_segmented']:.0%}, which is "
+                  f"{'inside' if inband else 'outside'} the registered band.")
+        md.append("")
+        md.append(f"Against {cd['n_gold']} it is {cd['coverage_of_gold']:.0%}, twenty "
+                  f"points above the prediction, and that is the number this report "
+                  f"used to lead with. The {cd['n_segmented'] - cd['n_gold']} criteria "
+                  f"the gold set drops are listed in full in `docs/SEGMENTATION.md` "
+                  f"and they are not a random sample: informed consent, psychiatric "
+                  f"history, substance use, site affiliation, pregnancy intent, "
+                  f"allergy to study agents. A structured record cannot settle any of "
+                  f"them, so removing them raises coverage without the system having "
+                  f"answered anything more. Beating a registered prediction by picking "
+                  f"the denominator afterwards is not beating it.")
+        md.append("")
+        md.append("| trial | segmenter | hand-authored |")
+        md.append("|---|---|---|")
+        for t in cd["per_trial"]:
+            md.append(f"| `{t['nct_id']}` | {t['segmented']} | {t['gold']} |")
+        md.append("")
+        md.append(f"The panel-reduction figures above inherit the same denominator: "
+                  f"a screen is ruled ineligible on the {cd['n_gold']} hand-authored "
+                  f"criteria, and a coordinator runs the whole protocol. The reduction "
+                  f"is therefore what these criteria achieve, not what the protocol "
+                  f"would.")
+        md.append("")
+        results["criterion_coverage"] = cd
 
     # provenance: which commit last touched each prompt file
     prompts = {}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "3ef05a3bc70c8a84af5ea8999a08b22e86cdfc1c6a4282b7a2e4563c34dde3db",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Bilateral salpingectomy or tubal occlusion\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 187,
+  "latency_s": 44.953,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 215,
+  "text": "```json\n{\n  \"names\": [\n    \"Bilateral salpingectomy\",\n    \"Bilateral tubal ligation\",\n    \"Bilateral tubal occlusion\",\n    \"Laparoscopic bilateral salpingectomy\",\n    \"Laparoscopic bilateral tubal ligation\",\n    \"Bilateral partial salpingectomy\",\n    \"Pomeroy tubal ligation\",\n    \"Parkland tubal ligation\",\n    \"Laparoscopic tubal occlusion by clip\",\n    \"Laparoscopic tubal occlusion by ring\",\n    \"Laparoscopic tubal electrocautery\",\n    \"Postpartum bilateral tubal ligation\",\n    \"Hysteroscopic bilateral fallopian tube occlusion\",\n    \"Salpingectomy for sterilization\"\n  ],\n  \"note\": \"Includes surgical removal (salpingectomy) and mechanical, electrical, or hysteroscopic occlusion methods for bilateral fallopian tube sterilization.\"\n}\n```"
+ }
+}

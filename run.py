@@ -8,7 +8,7 @@ library, and `pytest` is needed only to run the test gate.
 
     python run.py check          the engine gate, about a second
     python run.py reproduce      the published numbers, offline, from cassettes
-    python run.py verify         the four checks that make replay falsifiable
+    python run.py verify         the five checks that make replay falsifiable
     python run.py live-smoke     two criteria against a real model
     python run.py live           a full recording run, needs a model backend
 
@@ -134,7 +134,7 @@ def t_reproduce(run: str = RUN) -> None:
            "--patients", str(B2_PATIENTS), "--tag", f"b2_{B2_PATIENTS}p")
 
     banner("audit for recall")
-    sh(PY, "scripts/contamination.py", "--run", run)
+    sh(PY, "scripts/contamination.py", "--run", run, "--counterfactual")
 
     banner("regenerate the documents that quote numbers")
     sh(PY, "scripts/counterexample.py", "--run", run, "--mode", "replay")

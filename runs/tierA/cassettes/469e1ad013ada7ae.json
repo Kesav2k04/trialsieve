@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "469e1ad013ada7ae7bf7818799f4614d79cbacbe298489992e674e2d52be159a",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Squamous cell carcinoma of skin\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 206,
+  "latency_s": 194.079,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 212,
+  "text": "```json\n{\n  \"names\": [\n    \"Cutaneous squamous cell carcinoma\",\n    \"Squamous cell carcinoma of skin\",\n    \"Bowen's disease\",\n    \"Squamous cell carcinoma in situ of skin\",\n    \"Keratoacanthoma\",\n    \"Squamous cell carcinoma of skin of face\",\n    \"Squamous cell carcinoma of skin of scalp and neck\",\n    \"Squamous cell carcinoma of skin of lip\",\n    \"Squamous cell carcinoma of skin of ear\",\n    \"Squamous cell carcinoma of skin of upper limb\",\n    \"Squamous cell carcinoma of skin of lower limb\",\n    \"Squamous cell carcinoma of skin of trunk\",\n    \"Verrucous carcinoma of skin\",\n    \"Spindle cell squamous cell carcinoma of skin\",\n    \"Acantholytic squamous cell carcinoma of skin\"\n  ],\n  \"note\": \"Includes primary cutaneous SCC, anatomical site-specific codes, in situ disease, and recognized histologic variants.\"\n}\n```"
+ }
+}

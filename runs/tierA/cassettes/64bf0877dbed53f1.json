@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "64bf0877dbed53f1fda15fc94048bdc00da2a3c8147f943e02898b46886df6fc",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Bilateral oophorectomy\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 177,
+  "latency_s": 43.351,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Bilateral oophorectomy\",\n    \"Bilateral salpingo-oophorectomy\",\n    \"Bilateral ovariectomy\",\n    \"Laparoscopic bilateral oophorectomy\",\n    \"Laparoscopic bilateral salpingo-oophorectomy\",\n    \"Robotic-assisted bilateral oophorectomy\",\n    \"Robotic-assisted bilateral salpingo-oophorectomy\",\n    \"Total abdominal hysterectomy with bilateral salpingo-oophorectomy\",\n    \"Laparoscopic total hysterectomy with bilateral salpingo-oophorectomy\",\n    \"Excision of bilateral ovaries\",\n    \"Bilateral surgical removal of ovaries\"\n  ],\n  \"note\": \"Covers open, laparoscopic, and robotic excision of both ovaries, as well as combined salpingo-oophorectomy and hysterectomy procedures.\"\n}\n```"
+ }
+}

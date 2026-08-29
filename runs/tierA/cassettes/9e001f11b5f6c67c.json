@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9e001f11b5f6c67c56b5a6822ca8176a8d0f59933042ca17261ba18f6e57dc9b",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Lupus nephritis\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 149,
+  "latency_s": 53.138,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"Lupus nephritis\",\n    \"Systemic lupus erythematosus with nephritis\",\n    \"Lupus glomerulonephritis\",\n    \"Minimal mesangial lupus nephritis\",\n    \"Mesangial proliferative lupus nephritis\",\n    \"Focal lupus nephritis\",\n    \"Diffuse lupus nephritis\",\n    \"Membranous lupus nephritis\",\n    \"Advanced sclerosing lupus nephritis\",\n    \"Glomerulonephritis in systemic lupus erythematosus\",\n    \"Systemic lupus erythematosus with glomerular disease\"\n  ],\n  \"note\": \"Includes general SLE renal involvement and WHO/ISN/RPS histologic classification classes I through VI.\"\n}\n```"
+ }
+}

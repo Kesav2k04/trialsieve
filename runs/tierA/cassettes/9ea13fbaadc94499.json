@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "9ea13fbaadc9449929f127853fdf4e92d1f1071a45a6ef7f703359428c5aa3dc",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Inpatient hospitalization\nRecord domain: procedure\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 133,
+  "latency_s": 46.617,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 211,
+  "text": "```json\n{\n  \"names\": [\n    \"Initial hospital care\",\n    \"Subsequent hospital care\",\n    \"Hospital admission\",\n    \"Hospital discharge day management\",\n    \"Inpatient consultation\",\n    \"Critical care evaluation and management\",\n    \"Inpatient stay\",\n    \"Admission to hospital\",\n    \"Inpatient pediatric critical care\",\n    \"Inpatient neonatal intensive care\",\n    \"Continuous inpatient care\"\n  ],\n  \"note\": \"Standard CPT, HCPCS, and SNOMED encounter and service procedure concepts for inpatient hospital admissions and care.\"\n}\n```"
+ }
+}

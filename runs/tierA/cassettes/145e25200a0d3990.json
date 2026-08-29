@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "145e25200a0d399090e3b8f1ae5446cfd2f14351dffd17ca0446d4b26f7d2a63",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Unstable angina pectoris\nRecord domain: condition\nMeaning required: diagnosis of unstable angina within 180 days prior to index date\n\nCandidate entries from this site's vocabulary:\n          22298006  Myocardial Infarction   (in 7 resources)\n         237602007  Metabolic syndrome X (disorder)   (in 29 resources)\n         399211009  History of myocardial infarction (situation)   (in 7 resources)\n          95417003  Primary fibromyalgia syndrome   (in 2 resources)\n          67782005  Acute respiratory distress syndrome (disorder)   (in 2 resources)\n          53741008  Coronary Heart Disease   (in 25 resources)\n          80583007  Severe anxiety (panic) (finding   (in 59 resources)\n         408512008  Body mass index 40+ - severely obese (finding)   (in 5 resources)\n         230265002  Familial Alzheimer's disease of early onset (disorder)   (in 1 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 307,
+  "latency_s": 50.167,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 872,
+  "text": "```json\n{\n  \"codes\": [],\n  \"broader_codes\": [\"53741008\"],\n  \"rejected\": [\n    {\n      \"code\": \"22298006\",\n      \"why\": \"Myocardial infarction involves acute myocardial necrosis and is a distinct clinical entity from unstable angina\"\n    },\n    {\n      \"code\": \"237602007\",\n      \"why\": \"Metabolic syndrome X is a metabolic disorder, not unstable angina\"\n    },\n    {\n      \"code\": \"399211009\",\n      \"why\": \"History of myocardial infarction represents past medical history of MI, not a diagnosis of unstable angina\"\n    },\n    {\n      \"code\": \"95417003\",\n      \"why\": \"Primary fibromyalgia syndrome is a chronic musculoskeletal pain disorder, not a cardiovascular condition\"\n    },\n    {\n      \"code\": \"67782005\",\n      \"why\": \"Acute respiratory distress syndrome is a pulmonary condition, not unstable angina\"\n    },\n    {\n      \"code\": \"80583007\",\n      \"why\": \"Severe anxiety/panic is a psychiatric finding, not unstable angina\"\n    },\n    {\n      \"code\": \"408512008\",\n      \"why\": \"Severe obesity is a nutritional/BMI finding, not unstable angina\"\n    },\n    {\n      \"code\": \"230265002\",\n      \"why\": \"Familial Alzheimer's disease is a neurodegenerative disorder, not unstable angina\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

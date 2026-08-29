@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "1d68eb18ed685c7233005333129c635aa3ad090a16974cdf808fc3559abeefc5",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Body mass index\nRecord domain: observation\nMeaning required: most recent recorded BMI value\n\nCandidate entries from this site's vocabulary:\n           39156-5  Body Mass Index   (in 5187 resources)\n           59576-9  Body mass index (BMI) [Percentile] Per age and gender   (in 1489 resources)\n           29463-7  Body Weight   (in 5956 resources)\n            8302-2  Body Height   (in 5732 resources)\n            8310-5  Body temperature   (in 612 resources)\n           76504-0  Total score [HARK]   (in 1156 resources)\n           72106-8  Total score [MMSE]   (in 41 resources)\n           82667-7  Total score [DAST-10]   (in 1208 resources)\n           75626-2  Total score [AUDIT-C]   (in 1202 resources)\n           32624-9  Which race(s) are you?   (in 3835 resources)\n           38265-5  DXA [T-score] Bone density   (in 39 resources)\n           72514-3  Pain severity - 0-10 verbal numeric rating [Score] - Reported   (in 7146 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 334,
+  "latency_s": 32.578,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 891,
+  "text": "```json\n{\n  \"codes\": [\"39156-5\"],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"59576-9\",\n      \"why\": \"measures BMI percentile per age and gender, not the absolute BMI value\"\n    },\n    {\n      \"code\": \"29463-7\",\n      \"why\": \"measures body weight, not body mass index\"\n    },\n    {\n      \"code\": \"8302-2\",\n      \"why\": \"measures body height, not body mass index\"\n    },\n    {\n      \"code\": \"8310-5\",\n      \"why\": \"measures body temperature, not body mass index\"\n    },\n    {\n      \"code\": \"76504-0\",\n      \"why\": \"HARK domestic violence screening score, unrelated to body mass index\"\n    },\n    {\n      \"code\": \"72106-8\",\n      \"why\": \"Mini-Mental State Examination score, unrelated to body mass index\"\n    },\n    {\n      \"code\": \"82667-7\",\n      \"why\": \"DAST-10 drug abuse screening score, unrelated to body mass index\"\n    },\n    {\n      \"code\": \"75626-2\",\n      \"why\": \"AUDIT-C alcohol screening score, unrelated to body mass index\"\n    },\n    {\n      \"code\": \"32624-9\",\n      \"why\": \"race demographic survey question, unrelated to body mass index\"\n    },\n    {\n      \"code\": \"38265-5\",\n      \"why\": \"DXA bone mineral density T-score, unrelated to body mass index\"\n    },\n    {\n      \"code\": \"72514-3\",\n      \"why\": \"pain severity rating score, unrelated to body mass index\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

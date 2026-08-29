@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "ca605a38623a595ef26e5a93af308ecefb72e7283c8f63ae40f5927fda8ac06a",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Urine albumin-to-creatinine ratio\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 153,
+  "latency_s": 29.863,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 213,
+  "text": "```json\n{\n  \"names\": [\n    \"Urine albumin-to-creatinine ratio\",\n    \"Urine albumin/creatinine ratio\",\n    \"Albumin/creatinine ratio, urine\",\n    \"Albumin/creatinine [Mass Ratio] in Urine\",\n    \"Albumin/creatinine [Ratio] in Urine\",\n    \"Microalbumin/creatinine ratio, urine\",\n    \"Urine microalbumin/creatinine ratio\",\n    \"Microalbumin to creatinine ratio, urine\",\n    \"uACR\",\n    \"ACR, urine\",\n    \"Microalbumin, urine spot ratio\",\n    \"Albumin/Creat Ratio, Ur\"\n  ],\n  \"note\": \"Standard clinical, LOINC, and laboratory synonyms and abbreviations for spot urine albumin-to-creatinine ratio measurements.\"\n}\n```"
+ }
+}

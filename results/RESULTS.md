@@ -140,6 +140,28 @@ One predicate accounts for most of it. `NCT06983054-INC-01` compiles *Adults wit
 The compiler prompt states that a wrong `false` rules a patient out on the strength of a gap in their record and to choose `unknown` when in doubt. The critic's fourth review rule is the same check. Both are model-side, both had the information in front of them, and both passed it. What stops it reaching a coordinator is the sign-off gate, where a human reads the predicate in English before any worklist exists: `docs/GATE.md`.
 
 
+## Criterion coverage, both denominators
+
+The system expresses **24** criteria as predicates. That is a numerator, and it has two defensible denominators, so both are published.
+
+| denominator | what it counts | coverage |
+|---|---|---|
+| 40 | the hand-authored gold set | 60% |
+| **65** | **every criterion the segmenter produced from the three protocols** | **37%** |
+
+`docs/EVAL_PROTOCOL.md` registered, before any scored run, that coverage would land at 30% to 40% **of segmented criteria**, following Kopcke et al., and that a number far above that would suggest the criteria had been cherry-picked. The registered denominator is therefore 65, not 40. Against it the result is 37%, which is inside the registered band.
+
+Against 40 it is 60%, twenty points above the prediction, and that is the number this report used to lead with. The 25 criteria the gold set drops are listed in full in `docs/SEGMENTATION.md` and they are not a random sample: informed consent, psychiatric history, substance use, site affiliation, pregnancy intent, allergy to study agents. A structured record cannot settle any of them, so removing them raises coverage without the system having answered anything more. Beating a registered prediction by picking the denominator afterwards is not beating it.
+
+| trial | segmenter | hand-authored |
+|---|---|---|
+| `NCT06717698` | 17 | 15 |
+| `NCT06983054` | 29 | 15 |
+| `NCT06989723` | 19 | 10 |
+
+The panel-reduction figures above inherit the same denominator: a screen is ruled ineligible on the 40 hand-authored criteria, and a coordinator runs the whole protocol. The reduction is therefore what these criteria achieve, not what the protocol would.
+
+
 ## Provenance
 
 The commit that last touched each prompt-carrying file. If any of these is later than the commit that produced these numbers, the run is invalid and is rerun. See `docs/DEV_SPLIT.md`.

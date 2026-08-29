@@ -360,7 +360,15 @@ def main() -> int:
                     cassette_dir=Path(a.run) / "cassettes", base_url=base_url)
     n = label_cells(cells, panel, client, Path(a.run))
     print(f"\nwrote {n} new label(s) to {LABELS}")
-    print(f"usage: {client.usage.as_dict()}")
+    # The cost table read `agreement.json`, which carries no usage, so the
+    # 100 calls and 445k prompt tokens this step actually spent were
+    # published as zero. Usage is recorded next to the labels instead.
+    usage = client.usage.as_dict()
+    (Path(a.run).parent / "checker_b_usage.json").write_text(
+        json.dumps({"model": a.model or default_model, "usage": usage,
+                    "wall_s": usage.get("wall_s"), "n_new_labels": n},
+                   indent=1) + chr(10), encoding="utf-8", newline=chr(10))
+    print(f"usage: {usage}")
     return 0
 
 

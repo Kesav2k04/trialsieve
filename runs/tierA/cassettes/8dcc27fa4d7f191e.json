@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "8dcc27fa4d7f191e990021fc2e62b2520b87db3e8931c019d16727e5ddafe782",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Chemotherapeutic agent\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 100,
+  "latency_s": 28.744,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "{\n  \"names\": [\n    \"cisplatin\",\n    \"carboplatin\",\n    \"oxaliplatin\",\n    \"fluorouracil\",\n    \"capecitabine\",\n    \"gemcitabine\",\n    \"methotrexate\",\n    \"pemetrexed\",\n    \"doxorubicin\",\n    \"paclitaxel\",\n    \"docetaxel\",\n    \"cyclophosphamide\",\n    \"irinotecan\",\n    \"etoposide\",\n    \"vincristine\"\n  ],\n  \"note\": \"Common cytotoxic and antineoplastic chemotherapy agents across major drug classes.\"\n}"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "8c8cd2623f08f18de783686d54499c99e4113fb10a12c33dd92f5fe6418abd7d",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Antimicrobial agent\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 108,
+  "latency_s": 32.808,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 209,
+  "text": "{\n  \"names\": [\n    \"amoxicillin\",\n    \"ciprofloxacin\",\n    \"azithromycin\",\n    \"ceftriaxone\",\n    \"doxycycline\",\n    \"vancomycin\",\n    \"metronidazole\",\n    \"levofloxacin\",\n    \"trimethoprim\",\n    \"sulfamethoxazole\",\n    \"fluconazole\",\n    \"acyclovir\",\n    \"piperacillin\",\n    \"meropenem\",\n    \"cephalexin\"\n  ],\n  \"note\": \"Common generic antimicrobial ingredients spanning major antibacterial, antifungal, and antiviral classes.\"\n}"
+ }
+}

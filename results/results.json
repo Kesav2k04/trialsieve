@@ -1176,6 +1176,34 @@
   ]
  },
  "seed_predicates_identical": false,
+ "criterion_coverage": {
+  "n_segmented": 65,
+  "n_gold": 40,
+  "n_checkable": 24,
+  "coverage_of_segmented": 0.3692,
+  "coverage_of_gold": 0.6,
+  "registered_band": [
+   0.3,
+   0.4
+  ],
+  "per_trial": [
+   {
+    "nct_id": "NCT06717698",
+    "segmented": 17,
+    "gold": 15
+   },
+   {
+    "nct_id": "NCT06983054",
+    "segmented": 29,
+    "gold": 15
+   },
+   {
+    "nct_id": "NCT06989723",
+    "segmented": 19,
+    "gold": 10
+   }
+  ]
+ },
  "prompt_files_last_commit": {
   "compiler.py": "7128be0d7dedd30481b7751b7d7bfc595929878c 2026-08-29T05:12:12+05:30",
   "critic.py": "bd4322a1fa95e3b8642331616557d7c58b7c15ba 2026-08-29T02:08:48+05:30",

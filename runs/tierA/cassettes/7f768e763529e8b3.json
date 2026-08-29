@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "7f768e763529e8b398e58bd6b8c48f8e51d094e97a6b8d003466c9ae63894793",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Acute coronary syndrome\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 130,
+  "latency_s": 30.826,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Acute coronary syndrome\",\n    \"ST-elevation myocardial infarction\",\n    \"Non-ST-elevation myocardial infarction\",\n    \"Unstable angina\",\n    \"Acute myocardial infarction\",\n    \"STEMI\",\n    \"NSTEMI\",\n    \"Anterior wall myocardial infarction\",\n    \"Inferior wall myocardial infarction\",\n    \"Subendocardial infarction\",\n    \"Transmural myocardial infarction\"\n  ],\n  \"note\": \"Includes core ACS components: STEMI, NSTEMI, unstable angina, and common site-specific acute MI designations.\"\n}\n```"
+ }
+}

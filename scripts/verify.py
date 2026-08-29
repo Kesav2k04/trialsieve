@@ -1,4 +1,4 @@
-"""The four checks that turn "reproducible" from a claim into something you can watch.
+"""The five checks that turn "reproducible" from a claim into something you can watch.
 
     python scripts/verify.py cassettes      --run runs/tierA
     python scripts/verify.py trajectories   --run runs/tierA

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b1725a5d29d241dd4901c3d7dec7f91c08e3b9d386c71b5866a55051486526b6",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Diabetic ketoacidosis\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 176,
+  "latency_s": 34.612,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Diabetic ketoacidosis\",\n    \"Type 1 diabetes mellitus with ketoacidosis\",\n    \"Type 2 diabetes mellitus with ketoacidosis\",\n    \"Type 1 diabetes mellitus with ketoacidosis without coma\",\n    \"Type 1 diabetes mellitus with ketoacidosis with coma\",\n    \"Type 2 diabetes mellitus with ketoacidosis without coma\",\n    \"Type 2 diabetes mellitus with ketoacidosis with coma\",\n    \"Euglycemic diabetic ketoacidosis\",\n    \"Diabetic ketoacidotic coma\",\n    \"Diabetes mellitus with ketoacidosis\",\n    \"Secondary diabetes mellitus with ketoacidosis\"\n  ],\n  \"note\": \"Includes general, diabetes-type-specific, coma-stratified, and euglycemic presentations of diabetic ketoacidosis.\"\n}\n```"
+ }
+}

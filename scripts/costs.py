@@ -124,7 +124,10 @@ def rows() -> list[dict]:
                     "note": f"{blob.get('n_cells')} cells"
                             + ("" if paid else ", no model call at all")})
 
-    b = read(ROOT / "evaluation" / "checker_b" / "agreement.json")
+    # `agreement.json` records the comparison, not what it cost to produce. The
+    # usage lives beside the run. Reading the wrong file published this step at
+    # zero calls and zero tokens for every version of this table so far.
+    b = read(ROOT / "runs" / "checker_b_usage.json")
     add("second blind labeller, Checker B", b, "a different model family")
     return out
 
@@ -153,8 +156,26 @@ def main() -> int:
             continue
         L.append(f"| {r['step']} | {r['calls']:,} | {r['hits']:,} | {r['pt']:,} | "
                  f"{r['ct']:,} | {clock(r['wall'])} | {money(r['pt'], r['ct'])} |")
-    L += [f"| **total** | **{tot_c:,}** | | **{tot_p:,}** | **{tot_o:,}** | "
-          f"**{clock(tot_w)}** | **{money(tot_p, tot_o)}** |", "",
+    # A total summed over a table with "not run yet" rows in it is a partial
+    # total, and printed as **total** it reads as the cost of the project. The
+    # word changes and the shortfall is named, because a reader who budgets from
+    # this number has to know which steps are not in it.
+    missing = [r["step"] for r in R if r.get("missing")]
+    n_m = len(missing)
+    plural = "step" if n_m == 1 else "steps"
+    label = "total" if not missing else f"total so far, {n_m} {plural} not yet run"
+    L += [f"| **{label}** | **{tot_c:,}** | | **{tot_p:,}** | **{tot_o:,}** | "
+          f"**{clock(tot_w)}** | **{money(tot_p, tot_o)}** |", ""]
+    if missing:
+        verb = "has" if n_m == 1 else "have"
+        each = "That step is" if n_m == 1 else "Each is"
+        it = "it" if n_m == 1 else "them"
+        names = "; ".join(f"*{m}*" for m in missing)
+        L += [f"**PARTIAL.** {n_m} {plural} in the table above {verb} not run, so the "
+              f"total is a floor rather than the cost of the work: {names}. {each} a "
+              f"recording step, so running {it} raises the recorded totals and changes "
+              f"nothing about reproduction, which replays and calls no model.", ""]
+    L += [
           f"The right-hand column is an estimate at {RATE_LABEL}. It is not what this",
           "run cost. This ran on a locally authenticated vendor CLI on a subscription, so",
           "the marginal cost of a call was zero, and reporting zero would be true and",

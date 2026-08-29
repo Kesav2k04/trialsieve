@@ -51,3 +51,29 @@ def test_every_makefile_rule_calls_run_py():
     for line in src.splitlines():
         if line.startswith("\t") and line.strip() and not line.strip().startswith("#"):
             assert "run.py" in line, f"rule body does not forward to run.py: {line.strip()}"
+
+
+def test_reproduce_guide_quotes_the_real_test_count():
+    """A count in prose drifts silently. `REPRODUCE.md` said 187 while the suite
+    collected 203, which is the harmless version of a claim nobody rechecks and
+    the same shape as the harmful ones. The number is asserted here so that
+    adding a test either updates the document or fails the gate."""
+    import re
+    import subprocess
+    import sys as _sys
+
+    doc = (ROOT / "REPRODUCE.md").read_text(encoding="utf-8")
+    m = re.search(r"The engine gate runs\.\*\* (\d+) tests, of which (\d+) are semantic", doc)
+    assert m, "the sentence that quotes the counts has been reworded; update this test"
+    claimed_total, claimed_engine = int(m.group(1)), int(m.group(2))
+
+    out = subprocess.run([_sys.executable, "-m", "pytest", "--collect-only", "-q"],
+                         cwd=ROOT, capture_output=True, text=True).stdout
+    ids = [l for l in out.splitlines() if "::" in l]
+    total = len(ids)
+    engine = sum(1 for l in ids if l.startswith("tests/test_engine.py")
+                 or l.startswith("tests\test_engine.py"))
+    assert claimed_total == total, (
+        f"REPRODUCE.md says {claimed_total} tests, the suite collects {total}")
+    assert claimed_engine == engine, (
+        f"REPRODUCE.md says {claimed_engine} engine tests, test_engine.py has {engine}")

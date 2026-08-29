@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "5a62c9dcd5516318138d1f228e87bbd9eb6fb7edf76b8197b11423f6f1701e13",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Hemoglobin A1c\nRecord domain: observation\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 96,
+  "latency_s": 93.41,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"Hemoglobin A1c\",\n    \"HbA1c\",\n    \"Glycated hemoglobin\",\n    \"Glycosylated hemoglobin\",\n    \"A1c\",\n    \"Glycohemoglobin\",\n    \"Hgb A1c\",\n    \"Hb A1c\",\n    \"Hemoglobin A1c/Hemoglobin.total in Blood\",\n    \"Hemoglobin A1c (glycated hemoglobin)\"\n  ],\n  \"note\": \"Common clinical, laboratory, and LOINC synonym terms for glycated hemoglobin measurements.\"\n}\n```"
+ }
+}
