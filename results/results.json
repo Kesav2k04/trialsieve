@@ -195,7 +195,8 @@
       }
      ],
      "n_eff_excluding_criteria": 12,
-     "rule_of_three_upper": null
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
     },
     "B0": {
      "arm": "B0",
@@ -702,7 +703,8 @@
       }
      ],
      "n_eff_excluding_criteria": 40,
-     "rule_of_three_upper": null
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
     },
     "B1": {
      "arm": "B1",
@@ -712,7 +714,8 @@
      "false_exclusions": 0,
      "false_exclusion_examples": [],
      "n_eff_excluding_criteria": 2,
-     "rule_of_three_upper": 1.5
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
     }
    },
    "operating_curve_TS": [
@@ -1103,7 +1106,8 @@
       }
      ],
      "n_eff_excluding_criteria": 12,
-     "rule_of_three_upper": null
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
     },
     "B0": {
      "arm": "B0",
@@ -1610,7 +1614,8 @@
       }
      ],
      "n_eff_excluding_criteria": 40,
-     "rule_of_three_upper": null
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
     },
     "B1": {
      "arm": "B1",
@@ -1620,7 +1625,8 @@
      "false_exclusions": 0,
      "false_exclusion_examples": [],
      "n_eff_excluding_criteria": 2,
-     "rule_of_three_upper": 1.5
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
     }
    },
    "operating_curve_TS": [
@@ -1959,7 +1965,8 @@
       }
      ],
      "n_eff_excluding_criteria": 10,
-     "rule_of_three_upper": null
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
     }
    },
    "operating_curve_TS": [

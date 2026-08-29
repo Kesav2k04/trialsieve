@@ -183,3 +183,32 @@ def test_crossfit_folds_partition_every_patient_exactly_once():
     assert set(assign) == set(ids)
     sizes = sorted(Counter(assign.values()).values())
     assert sizes[-1] - sizes[0] <= 1
+
+
+def _screen_cells(n_screens, n_ruled_out, n_wrongly_ruled_out):
+    """One criterion per screen, so a screen is ruled out exactly when its cell FAILS."""
+    out = []
+    for i in range(n_screens):
+        sysv = "FAILS" if i < n_ruled_out else "MEETS"
+        goldv = "MEETS" if i < n_wrongly_ruled_out else sysv
+        out.append(Cell(f"p{i:03d}", "NCT00000000-INC-01", "h", goldv, sysv))
+    return out
+
+
+def test_the_primary_outcome_is_void_when_a_patient_is_wrongly_excluded():
+    """The protocol registers VOID, not a reduction with a caveat beside it.
+
+    This rule was written down before any run and then never implemented, so the
+    report published a bare reduction next to a non-zero false-exclusion count for
+    every scored arm."""
+    ps = score_panel("TS", _screen_cells(100, 40, 3))
+    assert ps.false_exclusions == 3
+    assert ps.primary_outcome == "VOID"
+    assert ps.as_dict()["primary_outcome"] == "VOID"
+
+
+def test_the_primary_outcome_is_the_reduction_when_nobody_is_wrongly_excluded():
+    ps = score_panel("TS", _screen_cells(100, 40, 0))
+    assert ps.false_exclusions == 0
+    assert abs(ps.primary_outcome - 0.40) < 1e-9
+    assert abs(ps.as_dict()["primary_outcome"] - 0.40) < 1e-9

@@ -146,11 +146,26 @@ class PanelScore:
     n_eff_excluding_criteria: int
     rule_of_three_upper: float | None
 
+    @property
+    def primary_outcome(self) -> float | str:
+        """The registered primary outcome, which is not the reduction.
+
+        `docs/EVAL_PROTOCOL.md` registers it as the reduction only when the arm
+        made no false exclusions, and VOID otherwise, reported with the count.
+        That rule was written down before any run and then never implemented, so
+        the report published a bare reduction beside a bold false-exclusion count
+        and left the reader to apply the rule the protocol had already applied.
+        Guessing voids the result. That is the whole point of the metric.
+        """
+        return self.reduction if self.false_exclusions == 0 else "VOID"
+
     def as_dict(self) -> dict[str, Any]:
         d = dict(vars(self))
         d["reduction"] = round(d["reduction"], 4)
         if d["rule_of_three_upper"] is not None:
             d["rule_of_three_upper"] = round(d["rule_of_three_upper"], 5)
+        po = self.primary_outcome
+        d["primary_outcome"] = round(po, 4) if isinstance(po, float) else po
         return d
 
 

@@ -249,6 +249,23 @@ def main() -> int:
                       f"{s.n_false_fails} | {s.n_false_meets} | "
                       f"{s.unnecessary_abstention} | {s.n_error} | {s.n_unique_criteria} |")
 
+        md.append("\n### Primary outcome, as registered\n")
+        md.append("`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel "
+                  "reduction **at zero false exclusions**, and VOID otherwise, reported "
+                  "with the count. VOID is not a formatting choice. An arm that rules out "
+                  "a patient who was in fact eligible has done the one thing this system "
+                  "exists to prevent, and no reduction figure earns credit beside it. The "
+                  "rule was registered before any run and then not implemented, so the "
+                  "report printed a bare reduction and left the reader to apply it.")
+        md.append("")
+        md.append("| arm | primary outcome | false exclusions | reduction, descriptive only |")
+        md.append("|---|---|---|---|")
+        for arm in present:
+            _ps = score_panel(arm, to_cells(rows, arm))
+            _po = _ps.primary_outcome
+            _shown = f"{_po:.1%}" if isinstance(_po, float) else "**VOID**"
+            md.append(f"| {arm} | {_shown} | {_ps.false_exclusions} | {_ps.reduction:.1%} |")
+        
         md.append("\n### Panel reduction\n")
         md.append("| arm | screens | ruled out | reduction | false exclusions | "
                   "criteria used | 95% upper bound |")
