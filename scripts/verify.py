@@ -4,6 +4,7 @@
     python scripts/verify.py trajectories   --run runs/tierA
     python scripts/verify.py prove-replay   --run runs/tierA
     python scripts/verify.py prove-sensitivity --run runs/tierA
+    python scripts/verify.py blind           --run runs/tierA
 
 The distinction being proved is between a cassette store and an answer file.
 
