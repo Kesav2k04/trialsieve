@@ -59,3 +59,9 @@ docs/video/shots/
 # The link is in docs/VIDEO.md. What is tracked is everything needed to rebuild
 # it: the script, the narration audio, its cue timings, and the shot spec.
 docs/video/*.mp4
+
+# Internal planning and the internal review passes. These carry internal
+# notes and working notes, which is
+# working material and not a deliverable. SUBMISSION.md requires none of it, and
+# the pre-registration a reader needs is in docs/EVAL_PROTOCOL.md.
+plan/

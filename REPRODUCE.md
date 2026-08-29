@@ -103,7 +103,7 @@ ollama serve && ollama pull granite3.1-dense:8b
 python run.py live-smoke      # two criteria, to check the wiring
 
 # or front an authenticated CLI with the local shim, which speaks the same
-# HTTP the judge would, so recording and replay share one code path
+# HTTP a reader would, so recording and replay share one code path
 python tools/cli_openai_shim.py --port 8100 --cli codex --backend codex \
     --default-model gpt-5.6-terra --concurrency 3
 python run.py live

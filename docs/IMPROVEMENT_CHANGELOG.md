@@ -129,7 +129,7 @@ now requires `--dirty-home` and says so.
 startup. The probe is reproducible: ask any backend to quote its instruction files.
 
 **What it would have cost.** Recorded output shaped by a file that is not in this
-repository. Every cassette would replay identically for a judge, and every attempt
+repository. Every cassette would replay identically for any reader, and every attempt
 to re-record would produce something different, with no way to see why. It would
 have been reproducible and wrong at the same time, which is worse than being
 obviously broken.
