@@ -75,6 +75,19 @@ def build(compiled: list[dict], panel: list[Chart], trial: dict,
             "compiled": {c["criterion_id"]: c for c in compiled}}
 
 
+def _short(text: str, limit: int = 34) -> str:
+    """A column heading from criterion prose, cut on a word rather than mid-token.
+
+    Cutting at a fixed width turned "BMI: >25 kg/m2" into "BMI: >25 kg/m", which
+    is a different criterion.
+    """
+    text = " ".join(text.split())
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0]
+    return (cut or text[:limit]) + "..."
+
+
 def _cite(c: dict, limit: int = 2) -> str:
     ev = [e for e in c.get("evidence", []) if e.get("kind") != "absent"][:limit]
     if not ev:
@@ -127,6 +140,48 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
             L.append(f"| `{cid}` | {cnt} | {src[:88]} |")
         L.append("")
 
+    # The one group this document counted in its summary and never printed. A
+    # coordinator's first question is who can be contacted today, and the answer
+    # was computed on line 54 and dropped on the floor. Printed first, in full,
+    # because it is the shortest path from this panel to an enrolled patient.
+    L.append("## Ready to contact")
+    L.append("")
+    if not el:
+        L.append("No patient in this panel meets every applied criterion outright. "
+                 "That is an ordinary result rather than a failure: most records "
+                 "leave at least one question open, and those patients are below.")
+    else:
+        L.append(f"{len(el)} of {n} patients meet **every** criterion applied here, "
+                 f"each on a dated fact already in the record, with nothing left "
+                 f"open. Start here.")
+        L.append("")
+        # One column per criterion rather than every citation crushed into one
+        # cell. These patients meet all of them by definition, so the columns are
+        # the same for every row and the value under each is what a coordinator
+        # is actually checking. Truncating a shared list mid-date read as a draft.
+        cols = [c for c in el[0]["criteria"] if c["verdict"] == "MEETS"]
+        if 1 <= len(cols) <= 6:
+            head = " | ".join(_short(c["source_text"]) for c in cols)
+            L.append(f"| patient | age | sex | {head} |")
+            L.append("|---|---|---|" + "---|" * len(cols))
+            for s in el[:max_listed]:
+                by_id = {c["criterion_id"]: c for c in s["criteria"]}
+                cells = " | ".join(_cite(by_id[c["criterion_id"]], 1)
+                                   if c["criterion_id"] in by_id else "n/a"
+                                   for c in cols)
+                L.append(f"| `{s['patient_id'][:8]}` | {s['age']} | {s['sex']} | "
+                         f"{cells} |")
+        else:
+            L.append("| patient | age | sex |")
+            L.append("|---|---|---|")
+            for s in el[:max_listed]:
+                L.append(f"| `{s['patient_id'][:8]}` | {s['age']} | {s['sex']} |")
+        if len(el) > max_listed:
+            L.append("")
+            L.append(f"_{len(el) - max_listed} further eligible patients in the "
+                     f"machine-readable output._")
+    L.append("")
+
     L.append("## Ruled out")
     L.append("")
     if not ro:
@@ -155,19 +210,39 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
                  "record could not settle, written out so they can be answered without "
                  "reopening the chart from the beginning.")
         L.append("")
-        for s in rv[:max_listed]:
-            L.append(f"### `{s['patient_id'][:8]}`  ({s['age']}, {s['sex']}) "
-                     f"- {s['n_indeterminate']} open, {s['n_meets']} already met")
+        # Grouped by the questions left open, not listed patient by patient.
+        # Ranking alone put 190 patients on one rung and broke the tie on patient
+        # id, so the top of the page was twenty identical rows in hash order.
+        # A queue ordered by a hash is the thing this document exists to replace,
+        # and the coordinator's real unit of work is the question, not the row:
+        # one HbA1c result settles all 190 of them at once.
+        groups: dict[tuple, list[dict]] = {}
+        for s in rv:
+            key = tuple(sorted(c["criterion_id"] for c in s["criteria"]
+                               if c["verdict"] == "INDETERMINATE"))
+            groups.setdefault(key, []).append(s)
+        for key, members in sorted(groups.items(),
+                                   key=lambda kv: (len(kv[0]), -len(kv[1]))):
+            q = [c for c in members[0]["criteria"]
+                 if c["verdict"] == "INDETERMINATE"]
+            L.append(f"### {len(members)} patients, {len(q)} open")
             L.append("")
-            for c in s["criteria"]:
-                if c["verdict"] != "INDETERMINATE":
-                    continue
+            for c in q:
                 why = (c.get("unknown_because") or [c["reason"]])[0]
                 L.append(f"- **{c['source_text'][:96]}**  \n  {why[:150]}")
             L.append("")
-        if len(rv) > max_listed:
-            L.append(f"_{len(rv) - max_listed} further patients in the machine-readable "
-                     f"output._")
+            if len(members) > 8:
+                asked = ("question" if len(q) == 1
+                         else f"{len(q)} questions")
+                L.append(f"The same {asked} for all {len(members)}. Answered once, "
+                         f"they resolve together.")
+                L.append("")
+            ids = ", ".join(f"`{s['patient_id'][:8]}` ({s['age']}, {s['sex']})"
+                            for s in members[:12])
+            more = (f" and {len(members) - 12} more in the machine-readable output"
+                    if len(members) > 12 else "")
+            L.append(f"{ids}{more}.")
+            L.append("")
     L.append("")
 
     if wl["open_questions"]:

@@ -30,6 +30,21 @@ Two things a reader should hold against this. The subset was chosen by counting 
 | `NCT06983054-INC-04` | 59               | Overweight or obese with BMI: >25 kg/m2 |
 | `NCT06983054-INC-03` | 10               | Age 18 - 85 years of age                |
 
+## Ready to contact
+
+8 of 385 patients meet **every** criterion applied here, each on a dated fact already in the record, with nothing left open. Start here.
+
+| patient    | age | sex    | HbA1c 6.5-10%                                                  | Age 18 - 85 years of age            | Overweight or obese with BMI: >25...       |
+|------------|-----|--------|----------------------------------------------------------------|-------------------------------------|--------------------------------------------|
+| `4b10c406` | 69  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 6.86 % (2021-05-27) | Age at index date = 69 (2021-07-08) | Body Mass Index = 27.44 kg/m2 (2021-05-27) |
+| `509f9a77` | 56  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 7.46 % (2021-11-15) | Age at index date = 56 (2021-11-15) | Body Mass Index = 29.83 kg/m2 (2021-11-15) |
+| `56cfe6a5` | 51  | male   | Hemoglobin A1c/Hemoglobin.total in Blood = 6.95 % (2021-03-06) | Age at index date = 51 (2021-03-06) | Body Mass Index = 33.82 kg/m2 (2021-03-06) |
+| `76b289fd` | 36  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 7.47 % (2019-05-19) | Age at index date = 36 (2021-10-03) | Body Mass Index = 29.88 kg/m2 (2019-05-19) |
+| `80534c6c` | 26  | male   | Hemoglobin A1c/Hemoglobin.total in Blood = 6.6 % (2019-10-18)  | Age at index date = 26 (2021-04-16) | Body Mass Index = 26.75 kg/m2 (2019-10-18) |
+| `83f922a9` | 57  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 7 % (2020-12-12)    | Age at index date = 57 (2021-09-10) | Body Mass Index = 28.01 kg/m2 (2020-12-12) |
+| `aade3c61` | 35  | male   | Hemoglobin A1c/Hemoglobin.total in Blood = 6.6 % (2020-04-01)  | Age at index date = 35 (2021-05-19) | Body Mass Index = 26.03 kg/m2 (2020-04-01) |
+| `d362f4e5` | 47  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 7.49 % (2021-09-10) | Age at index date = 47 (2021-09-10) | Body Mass Index = 29.99 kg/m2 (2021-09-10) |
+
 ## Ruled out
 
 Each line names the criterion that removed the patient and the record entry it read. A blank here would be an assertion; there are none.
@@ -63,107 +78,24 @@ _167 further ruled-out patients in the machine-readable output._
 
 Ranked by how few questions remain. The questions are the ones the record could not settle, written out so they can be answered without reopening the chart from the beginning.
 
-### `0288c42c`  (41, female) - 1 open, 2 already met
+### 188 patients, 1 open
 
 - **HbA1c 6.5-10%**  
   no observation with code 4548-4 in the record
 
-### `03777c32`  (53, female) - 1 open, 2 already met
+The same question for all 188. Answered once, they resolve together.
+
+`0288c42c` (41, female), `03777c32` (53, female), `03b291e7` (82, male), `03bb882e` (64, female), `03e502b6` (54, female), `055bcb42` (40, male), `05801c88` (27, female), `065e8a3d` (24, male), `0896b0af` (64, female), `0ad457cc` (25, male), `0ae08855` (35, female), `0b43ab26` (33, male) and 176 more in the machine-readable output.
+
+### 2 patients, 2 open
 
 - **HbA1c 6.5-10%**  
   no observation with code 4548-4 in the record
+- **Overweight or obese with BMI: >25 kg/m2**  
+  no observation with code 39156-5 in the record
 
-### `03b291e7`  (82, male) - 1 open, 2 already met
+`094c294d` (30, female), `355a3cad` (30, female).
 
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `03bb882e`  (64, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `03e502b6`  (54, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `055bcb42`  (40, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `05801c88`  (27, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `065e8a3d`  (24, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0896b0af`  (64, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0ad457cc`  (25, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0ae08855`  (35, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0b43ab26`  (33, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0b48bf9b`  (47, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0bbf4179`  (40, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0d281c81`  (46, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0d61d17e`  (29, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0e78dfee`  (57, male) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0ee91088`  (35, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `0fc183b2`  (50, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-### `122d96b5`  (65, female) - 1 open, 2 already met
-
-- **HbA1c 6.5-10%**  
-  no observation with code 4548-4 in the record
-
-_170 further patients in the machine-readable output._
 
 ## Where the review time goes
 
