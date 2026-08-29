@@ -36,6 +36,7 @@ import argparse
 import json
 import re
 import sys
+import traceback
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -237,7 +238,15 @@ def counterfactual(run: Path, provider: str, model: str | None, mode: str,
 
     rows = []
     for i, (crit, new_text, old, new) in enumerate(picked, 1):
-        shadow = dict(crit, source_text=new_text,
+        # `compile_criterion` reads `text`, and the gold criterion set stores the
+        # wording under `source_text`. Setting only `source_text` left `text`
+        # holding the ORIGINAL wording where it was present, and absent where it
+        # was not, so every row came back `KeyError: 'text'` and the report
+        # printed "0 of 0 follow the perturbation" as though that were a finding.
+        # Both keys are set here, from the perturbed text, the way
+        # `scripts/compile_protocol.py` builds the same record.
+        shadow = dict(crit, source_text=new_text, text=new_text,
+                      content_hash=crit["criterion_id"] + "-CF",
                       criterion_id=crit["criterion_id"] + "-CF")
         traj = Trajectory("contamination", shadow["criterion_id"])
         row = {"criterion_id": crit["criterion_id"], "original": old,
@@ -252,7 +261,11 @@ def counterfactual(run: Path, provider: str, model: str | None, mode: str,
                 row.update(status="compiled", literals=nums,
                            follows=new in nums, recites=old in nums)
         except Exception as exc:
-            row.update(status="error", reason=f"{type(exc).__name__}: {exc}")
+            # The traceback, not just the exception. "KeyError: 'text'" names a
+            # key and not the line that wanted it, and this loop wraps a call
+            # chain several modules deep.
+            row.update(status="error", reason=f"{type(exc).__name__}: {exc}",
+                       traceback=traceback.format_exc()[-1400:])
         rows.append(row)
         print(f"  [{i:2d}/{len(picked)}] {row['status']:9s} {row['criterion_id']:24s} "
               f"{old} -> {new} literals {row.get('literals')}", flush=True)
@@ -338,8 +351,20 @@ def render(res: dict) -> str:
             L.append(f"| `{r['criterion_id']}` | {r['original']} | {r['perturbed']} | "
                      f"{r['literals']} | {'yes' if r['follows'] else '**no**'} |")
         n = k["n_compiled"]
-        L += ["", f"**{k['n_follows']} of {n} follow the perturbation. "
-                  f"{k['n_recites']} of {n} reproduce the original number.**", ""]
+        if not n:
+            # "0 of 0 follow the perturbation" reads like a clean result and is
+            # the output of a check that measured nothing. It was the only
+            # symptom of a wrong dict key that made every row error.
+            failed = [r for r in k["rows"] if r["status"] == "error"]
+            L += ["", "**NOT MEASURED. Nothing compiled, so nothing was tested.** A ratio "
+                      "over an empty denominator is not evidence of anything, and the "
+                      "shape it prints is indistinguishable from a pass.", ""]
+            if failed:
+                L += [f"{len(failed)} of {len(k['rows'])} attempts raised. The first: "
+                      f"`{failed[0].get('reason', '')[:120]}`", ""]
+        else:
+            L += ["", f"**{k['n_follows']} of {n} follow the perturbation. "
+                      f"{k['n_recites']} of {n} reproduce the original number.**", ""]
         if k["n_recites"]:
             L += ["A predicate carrying the original threshold after the criterion was",
                   "changed is reciting the protocol. Those rows are listed above with both",
@@ -379,8 +404,17 @@ def main() -> int:
     js.write_text(json.dumps(res, indent=1) + "\n", encoding="utf-8", newline="\n")
 
     failed = [k for k in ("templates", "cassettes") if k in res and not res[k]["pass"]]
+    # The counterfactual was outside the exit code, so a run in which every
+    # attempt raised still exited 0 and wrote a document. A check that could not
+    # run is a failure here for the same reason it is in `scripts/verify.py`: it
+    # prints the same zero as a check that ran and found nothing.
+    cf = res.get("counterfactual")
+    if cf is not None and not cf.get("n_compiled"):
+        failed.append("counterfactual (nothing compiled, so nothing was measured)")
     print(md)
     print(f"wrote {out} and {js}")
+    if failed:
+        print(f"\nFAIL: {', '.join(failed)}", file=sys.stderr)
     return 1 if failed else 0
 
 
