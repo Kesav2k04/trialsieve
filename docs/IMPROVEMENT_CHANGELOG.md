@@ -396,3 +396,61 @@ increasing strength, and a report that is generated rather than asserted.
 **Evidence.** `docs/CONTAMINATION.md` is generated output. `tests/test_contamination.py`,
 nine tests, including one that makes the audit fail on purpose: without it, a
 rename that made the template scan find nothing would report a clean pass forever.
+
+---
+
+## 12. The measuring instrument was wrong twice, and both errors flattered the old system
+
+**Found by** reading the rows rather than the totals. The vocabulary probe scored
+17 of 18 before a prompt change and 17 of 18 after it, which reads as no effect.
+Two of the individual rows said something else.
+
+**The first error: an accept list cannot say "or anything narrower".** For "type 2
+diabetes mellitus" the grounder returned seven codes. The probe accepted one and
+scored the answer as over-acceptance. The other six are, in this catalog,
+`Proliferative diabetic retinopathy due to type II diabetes mellitus`,
+`Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus`,
+`Neuropathy due to type 2 diabetes mellitus`, `Diabetic retinopathy associated with
+type II diabetes mellitus`, `Microalbuminuria due to type 2 diabetes mellitus` and
+`Macular edema and retinopathy due to type 2 diabetes mellitus`. Every one of them
+entails type 2 diabetes. A patient carrying any of them has the disease.
+
+The grounder was right and the probe was wrong. The acceptance rule is now
+entailment rather than identity, and it is stated in the probe file.
+
+**The second error: two different relations were sharing one class.** The probe
+asked for "chronic kidney disease stage 3 or worse" to be answered with this
+corpus's stage 1 and stage 2 codes, as broader codes. That is a design error.
+`broader_codes` means presence yields UNKNOWN, which is right for containment: an
+unqualified anaemia code might be iron deficiency anaemia. It is wrong for an
+ordinal neighbour. A patient explicitly coded stage 1 is **not** stage 3 or worse,
+and the correct verdict is FALSE. Answering UNKNOWN there would have thrown away a
+correct answer on the eight panel patients who carry the stage 1 code.
+
+The grounder returned UNMAPPABLE. The probe was asking for the worse answer.
+
+**What changed.** The type 2 accept list was widened to the six entailing codes.
+The kidney probe was reclassified from `broader` to `absent`. On the eighteen
+probes both runs were given, the comparison moves from 17 and 17 to **17 before,
+18 after**.
+
+**The disclosure that matters.** Both corrections were made after seeing a result,
+and both moved the number in the new system's favour. That is exactly the shape of
+an answer sheet being edited to fit, so:
+
+- The widening cannot help the earlier run. It returned nothing at all for type 2
+  diabetes, and an empty answer is not rescued by a longer accept list.
+- The reclassification is checkable against the corpus rather than against taste:
+  `data/vendor/terminology_catalog.json` contains CKD stage 1 and stage 2 and no
+  stage 3, 4 or 5 code of any kind.
+- Both are written into the probe file itself, at the top, where a reader meets
+  them before the numbers.
+
+**The honest negative that came with it.** `broader_codes` opened a new way to be
+wrong, and the control probe caught it. Asked for **type 1** diabetes, the grounder
+returned 44054006 as a broader code. 44054006 is type 2 specifically: a sibling,
+not a parent. The cost is bounded and it is in the safe direction, because the
+engine answers UNKNOWN rather than MEETS for a patient carrying it, so the failure
+is an abstention where a correct FALSE was available. It costs coverage, not
+correctness. It is not fixed, and it is reported in the results rather than left
+for a reader to find.

@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "82d953345e28168f51ff0a7eff66709efeaed6c879d402fa3f37def88d7aa7f1",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You prepare clinical trial eligibility criteria for automated checking against\nstructured medical records.\n\nYou are careful about what a medical record can and cannot settle. Most criteria\nin a real protocol cannot be settled from a record at all, and saying so is the\ncorrect answer rather than a failure.",
+    "role": "system"
+   },
+   {
+    "content": "Decide whether this criterion can be checked from a structured medical record,\nand list the clinical concepts it needs.\n\nCriterion (inclusion, category reproductive):\n  Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >31 U/L)\n\nA criterion is checkable ONLY if every part of it can be settled from coded\nrecord data: demographics, coded diagnoses, coded medications, coded procedures,\nor numeric laboratory and vital-sign values, with dates.\n\nThe record carries an index date: the day this prescreen is being run. Study\nevents that have not happened yet are anchored to it. \"at screening\", \"at\nrandomisation\", \"at the time of signing the informed consent form\", \"at baseline\",\n\"prior to randomisation\" all mean \"as of the index date\", and a window measured\nback from one of them is measured back from the index date. That substitution is\nwhat prescreening is, so it does not make a criterion uncheckable. Say in `reason`\nthat you used it, so the reviewer sees the assumption.\n\nWhat stays uncheckable is the participant, not the calendar: whether they will\nconsent, whether they are able to comply, what the investigator will judge.\n\nIt is NOT checkable if it needs any of:\n  - consent, willingness, capacity, ability to comply or to attend\n  - the investigator's opinion, or a judgement about suitability\n  - a measurement a record does not normally hold (waist circumference,\n    performance status, imaging read-outs, questionnaire scores, elastography)\n  - counting prior lines of therapy, or a washout expressed in half-lives\n  - a bound relative to a laboratory's own reference range, such as \"2.5x the\n    upper limit of normal\", since the limit is not a fixed number\n  - contraception, pregnancy intention, or residence and travel plans\n  - enrolment in another study\n\nReturn JSON only:\n\n{\"checkable\": true,\n  \"reason\": \"one sentence; if not checkable, name the specific blocker\",\n  \"concepts\": [{\"name\":\"SGLT2 inhibitor\",\"domain\":\"medication\",\n                 \"intent\":\"currently prescribed drug of this class\"}]}\n\n`concepts` lists every clinical thing that must be looked up by code. Leave it\nempty when the criterion uses only age or sex. Use the exact domain the record\nwould store it in.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 138,
+  "latency_s": 62.73,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 657,
+  "text": "```json\n{\n  \"checkable\": false,\n  \"reason\": \"Menstrual history (no menses for >1 year) is not tracked in structured coded medical records, and resolving postmenopausal status in doubtful cases relies on prospective protocol testing and clinical judgment.\",\n  \"concepts\": [\n    {\n      \"name\": \"Postmenopausal state\",\n      \"domain\": \"condition\",\n      \"intent\": \"coded diagnosis of postmenopausal status\"\n    },\n    {\n      \"name\": \"Follicle-Stimulating Hormone\",\n      \"domain\": \"measurement\",\n      \"intent\": \"serum FSH level >31 U/L\"\n    }\n  ]\n}\n```"
+ }
+}

@@ -26,6 +26,40 @@ Four classes, and the third is the interesting one.
            `broader_codes` and NOT in `codes`, because presence cannot settle the
            criterion and absence still can.
 `absent`   the concept is not in this vocabulary at any grain. Both lists empty.
+
+The acceptance rule for `gap` and `control` is **entailment, not identity**. A code
+strictly narrower than the concept still establishes it: "Proliferative diabetic
+retinopathy due to type II diabetes mellitus" is not type 2 diabetes mellitus, but
+a patient carrying it has type 2 diabetes mellitus. A code strictly broader does
+not, which is what the `broader` class is for, and a sibling does not either, which
+is what the type 1 control is for.
+
+Two probes were corrected after a run, and both corrections moved the number in the
+system's favour
+-----------------------------------------------------------------------------------
+
+Recorded here rather than in a commit message, because a reader should be able to
+discount them without going looking.
+
+**Type 2 diabetes mellitus, accept list widened.** The run returned seven codes; the
+probe accepted one and scored the answer as over-acceptance. The other six are
+`Proliferative diabetic retinopathy due to type II diabetes mellitus`, `Nonproliferative
+diabetic retinopathy due to type 2 diabetes mellitus`, `Neuropathy due to type 2
+diabetes mellitus`, `Diabetic retinopathy associated with type II diabetes mellitus`,
+`Microalbuminuria due to type 2 diabetes mellitus` and `Macular edema and retinopathy
+due to type 2 diabetes mellitus`. Every one entails type 2 diabetes. The grounder was
+right and the probe was wrong: an enumerated accept list cannot express "or anything
+narrower", and the rule above now says so. The widening cannot flatter the earlier run,
+which returned nothing at all for this concept.
+
+**Chronic kidney disease stage 3 or worse, reclassified from `broader` to `absent`.**
+This was a design error in the probe, not a scoring convenience. `broader_codes` means
+presence yields UNKNOWN, and that is right for a containment relation: an unqualified
+anaemia code might be iron deficiency anaemia. It is wrong for an ordinal neighbour.
+A patient explicitly coded CKD stage 1 is not stage 3 or worse, and the correct verdict
+is FALSE. Naming stages 1 and 2 as broader codes would have replaced a correct answer
+with an abstention on the eight panel patients who carry stage 1. The grounder returned
+UNMAPPABLE, which is the better answer, and the probe was asking for the worse one.
 """
 from __future__ import annotations
 
@@ -88,17 +122,21 @@ PROBES = [
     P("Iron deficiency anaemia", "condition", "broader", broader=["271737000"],
       why="the only anaemia code here is unqualified, so it contains iron deficiency "
           "anaemia without establishing it; absence still rules the patient out"),
-    P("Chronic kidney disease stage 3 or worse", "condition", "broader",
-      broader=["431855005", "431856006"],
-      why="this corpus codes stages 1 and 2 only. Neither establishes stage 3, and "
-          "a patient coded stage 1 is not thereby stage 3 either, so the honest "
-          "answer names them as related-but-not-sufficient rather than as a match"),
+    P("Chronic kidney disease stage 3 or worse", "condition", "absent",
+      why="RECLASSIFIED, see the note above. This corpus codes CKD stages 1 and 2 "
+          "only. A stage 1 code does not contain stage 3, it excludes it: the right "
+          "verdict for a patient coded stage 1 is FALSE, not UNKNOWN, so naming those "
+          "codes as broader would replace a correct answer with an abstention"),
 
     # -- the display is one word and the code is exact, which is the trap ----
-    P("Type 2 diabetes mellitus", "condition", "gap", codes=["44054006"],
+    P("Type 2 diabetes mellitus", "condition", "gap",
+      codes=["44054006", "1501000119109", "1551000119108", "368581000119106",
+             "422034002", "90781000119102", "97331000119101"],
       why="SNOMED 44054006 is Diabetes mellitus type 2. This corpus displays it as "
           "the single word 'Diabetes', which reads as an unspecified parent concept "
-          "and is not one. Judging the display rejects the one code that is right"),
+          "and is not one. Judging the display rejects the one code that is right. "
+          "WIDENED, see the note above: the other six are type 2 complication codes "
+          "in this catalog, each of which entails type 2 diabetes"),
     P("Type 1 diabetes mellitus", "condition", "absent",
       why="44054006 is type 2 specifically, so it is a sibling of type 1 rather than "
           "a parent. Returning it here, in either list, is the over-acceptance this "

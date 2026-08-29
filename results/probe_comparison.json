@@ -1,0 +1,100 @@
+{
+ "before": "runs\\probe-before\\probe.json",
+ "after": "runs\\probe-after\\probe.json",
+ "compared_on": [
+  "Acute pancreatitis",
+  "Anaemia",
+  "Diabetic nephropathy",
+  "Essential hypertension",
+  "Estimated glomerular filtration rate",
+  "Gastroparesis",
+  "Glycated haemoglobin",
+  "Haemodialysis",
+  "Hydrochlorothiazide",
+  "Metformin",
+  "Metoprolol",
+  "Obesity",
+  "Oral glucose tolerance test",
+  "Prediabetes",
+  "Simvastatin",
+  "Systolic blood pressure",
+  "Type 2 diabetes mellitus",
+  "Urine albumin to creatinine ratio"
+ ],
+ "before_correct": 17,
+ "after_correct": 18,
+ "n_common": 18,
+ "by_class_before": {
+  "absent": {
+   "n": 4,
+   "correct": 4,
+   "over": 0,
+   "under": 0,
+   "demoted": 0
+  },
+  "control": {
+   "n": 5,
+   "correct": 5,
+   "over": 0,
+   "under": 0,
+   "demoted": 0
+  },
+  "gap": {
+   "n": 9,
+   "correct": 8,
+   "over": 0,
+   "under": 1,
+   "demoted": 0
+  }
+ },
+ "by_class_after": {
+  "absent": {
+   "n": 4,
+   "correct": 4,
+   "over": 0,
+   "under": 0,
+   "demoted": 0
+  },
+  "control": {
+   "n": 5,
+   "correct": 5,
+   "over": 0,
+   "under": 0,
+   "demoted": 0
+  },
+  "gap": {
+   "n": 9,
+   "correct": 9,
+   "over": 0,
+   "under": 0,
+   "demoted": 0
+  }
+ },
+ "new_probes": {
+  "Chronic kidney disease stage 3 or worse": {
+   "class": "absent",
+   "correct": true,
+   "status": "UNMAPPABLE",
+   "got_codes": [],
+   "got_broader": []
+  },
+  "Iron deficiency anaemia": {
+   "class": "broader",
+   "correct": true,
+   "status": "BROADER_ONLY",
+   "got_codes": [],
+   "got_broader": [
+    "271737000"
+   ]
+  },
+  "Type 1 diabetes mellitus": {
+   "class": "absent",
+   "correct": false,
+   "status": "BROADER_ONLY",
+   "got_codes": [],
+   "got_broader": [
+    "44054006"
+   ]
+  }
+ }
+}
