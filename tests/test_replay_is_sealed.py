@@ -110,3 +110,50 @@ def test_record_mode_is_the_only_mode_that_may_call(tmp_path, monkeypatch):
     assert src.index('if self.mode == "replay":') < src.index("_call_cli"), (
         "the replay guard is after the transport dispatch, so a miss would call "
         "first and refuse afterwards")
+
+
+def test_reproduce_replays_under_the_model_that_recorded():
+    """A replay must name the model the recording named, or it matches nothing.
+
+    The model is part of the request the cassette key hashes. `run_arms.py`
+    defaults `--provider` to ollama, the B2 arm was recorded on the shim, and
+    `run.py reproduce` passed neither flag, so it rebuilt all 400 prompts under
+    `granite3.1-dense:8b` and missed every cassette on the first call. The
+    reproduction stopped with a CassetteMiss that reads like corrupt recordings
+    rather than a wrong flag, and this repository's central claim is that its
+    numbers regenerate offline.
+
+    So this asserts the resolved model equals the one inside the cassettes,
+    rather than asserting a constant, which would drift the same way.
+    """
+    import json
+    import sys
+
+    sys.path.insert(0, str(ROOT))
+    import run as runner
+
+    cells = ROOT / "runs" / "tierA" / "cells"
+    metas = sorted(cells.glob("meta_B2_*.json"))
+    if not metas:
+        return  # a checkout without the sampled arm reproduces everything else
+
+    for meta_path in metas:
+        tag = meta_path.stem.split("_", 2)[-1]
+        resolved = runner._recorded_model("runs/tierA", "B2", tag)
+        assert resolved, f"no model resolves for the recorded arm in {meta_path.name}"
+
+        recorded = set()
+        for traj in (ROOT / "runs" / "tierA" / "trajectories" / "baseline-b2").glob(f"*{tag}.jsonl"):
+            for line in traj.read_text(encoding="utf-8").splitlines():
+                key = json.loads(line).get("cassette_key")
+                if not key:
+                    continue
+                cas = ROOT / "runs" / "tierA" / "cassettes" / f"{key[:16]}.json"
+                if cas.exists():
+                    recorded.add(json.loads(cas.read_text(encoding="utf-8"))["request"]["model"])
+
+        assert recorded, f"no cassette backs the {tag} trajectories"
+        assert recorded == {resolved}, (
+            f"reproduce would replay {tag} as {resolved!r} but it was recorded "
+            f"under {sorted(recorded)}. Every prompt would hash to a different "
+            f"key and the reproduction would stop on the first cell.")

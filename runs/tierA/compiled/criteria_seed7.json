@@ -17,9 +17,9 @@
   "prompt_tokens": 155324,
   "completion_tokens": 35939,
   "wall_s": 14860.25,
-  "cassette_hits": 112
+  "cassette_hits": 211
  },
- "wall_s": 6571.1,
+ "wall_s": 1.2,
  "criteria": [
   {
    "criterion_id": "NCT06983054-INC-01",

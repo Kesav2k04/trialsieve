@@ -1,0 +1,7178 @@
+{
+ "run": "runs\\tierA",
+ "groups": {
+  "b2_10p": {
+   "n_rows": 400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1",
+    "B2"
+   ],
+   "n_screens": 30,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 400,
+     "n_scoreable": 400,
+     "n_committed": 107,
+     "coverage": 0.2675,
+     "ser": 0.0325,
+     "n_silent": 13,
+     "n_false_fails": 13,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 7,
+     "resolved_correct_per_screen": 3.1333,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 22,
+       "INDETERMINATE": 3
+      },
+      "INDETERMINATE": {
+       "FAILS": 9,
+       "INDETERMINATE": 286
+      },
+      "MEETS": {
+       "MEETS": 72,
+       "FAILS": 4,
+       "INDETERMINATE": 4
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 400,
+     "n_scoreable": 400,
+     "n_committed": 400,
+     "coverage": 1.0,
+     "ser": 0.9375,
+     "n_silent": 375,
+     "n_false_fails": 375,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.8333,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "FAILS": 295
+      },
+      "MEETS": {
+       "FAILS": 80
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 400,
+     "n_scoreable": 400,
+     "n_committed": 30,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 75,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 295
+      },
+      "MEETS": {
+       "MEETS": 30,
+       "INDETERMINATE": 50
+      }
+     }
+    },
+    "B2": {
+     "arm": "B2",
+     "n_cells": 400,
+     "n_scoreable": 400,
+     "n_committed": 272,
+     "coverage": 0.68,
+     "ser": 0.4375,
+     "n_silent": 175,
+     "n_false_fails": 30,
+     "n_false_meets": 145,
+     "n_error": 0,
+     "unnecessary_abstention": 6,
+     "resolved_correct_per_screen": 3.2333,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 19,
+       "INDETERMINATE": 4,
+       "MEETS": 2
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 122,
+       "MEETS": 143,
+       "FAILS": 30
+      },
+      "MEETS": {
+       "MEETS": 78,
+       "INDETERMINATE": 2
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 30,
+     "n_ineligible": 18,
+     "reduction": 0.6,
+     "false_exclusions": 4,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0bbf4179-5526-b01d-b1b3-11a0f9742e3a",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0fc183b2-8b93-ec17-d2fc-e703b373c9d7",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "72b71d33-b242-8f86-7ce0-198b3dfd3bf1",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 9,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 30,
+     "n_ineligible": 30,
+     "reduction": 1.0,
+     "false_exclusions": 14,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0bbf4179-5526-b01d-b1b3-11a0f9742e3a",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0bbf4179-5526-b01d-b1b3-11a0f9742e3a",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0fc183b2-8b93-ec17-d2fc-e703b373c9d7",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0fc183b2-8b93-ec17-d2fc-e703b373c9d7",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0fc183b2-8b93-ec17-d2fc-e703b373c9d7",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "219ddc63-11fe-e940-aa69-0e1bdd131e08",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "319372b8-27b1-b827-5c89-ac991fc17407",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 30,
+     "n_ineligible": 0,
+     "reduction": 0.0,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 0,
+     "rule_of_three_upper": null,
+     "primary_outcome": 0.0
+    },
+    "B2": {
+     "arm": "B2",
+     "n_screens": 30,
+     "n_ineligible": 26,
+     "reduction": 0.8667,
+     "false_exclusions": 10,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0bbf4179-5526-b01d-b1b3-11a0f9742e3a",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0fc183b2-8b93-ec17-d2fc-e703b373c9d7",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0fc183b2-8b93-ec17-d2fc-e703b373c9d7",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "219ddc63-11fe-e940-aa69-0e1bdd131e08",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "72b71d33-b242-8f86-7ce0-198b3dfd3bf1",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "72b71d33-b242-8f86-7ce0-198b3dfd3bf1",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 14,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4333,
+     "n_ineligible": 13,
+     "false_exclusions": 0,
+     "criteria_used": 6,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4333,
+     "n_ineligible": 13,
+     "false_exclusions": 0,
+     "criteria_used": 6,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.5333,
+     "n_ineligible": 16,
+     "false_exclusions": 2,
+     "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-07",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.5333,
+     "n_ineligible": 16,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-01",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-07",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.5333,
+     "n_ineligible": 16,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-01",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-07",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.3333,
+     "n_ineligible": 10,
+     "false_exclusions": 0,
+     "criteria_used": 6,
+     "folds": 5,
+     "n_patients": 10
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.3333,
+     "n_ineligible": 10,
+     "false_exclusions": 0,
+     "criteria_used": 6,
+     "folds": 5,
+     "n_patients": 10
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4,
+     "n_ineligible": 12,
+     "false_exclusions": 2,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 10
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4333,
+     "n_ineligible": 13,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 10
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4333,
+     "n_ineligible": 13,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 10
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.905,
+     "ci_low": -0.965,
+     "ci_high": -0.8275,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.7325,
+     "ci_low": -0.8575,
+     "ci_high": -0.595,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.905,
+     "ci_low": -0.965,
+     "ci_high": -0.8275,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.0325,
+     "ci_low": 0.0,
+     "ci_high": 0.09,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": true,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.1925,
+     "ci_low": 0.0875,
+     "ci_high": 0.315,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.0325,
+     "ci_low": 0.0,
+     "ci_high": 0.09,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": true,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": -0.405,
+     "ci_low": -0.555,
+     "ci_high": -0.255,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": false,
+     "arms": "TS - B2",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.4125,
+     "ci_low": -0.5625,
+     "ci_high": -0.26,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": false,
+     "arms": "TS - B2",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.0425,
+     "ci_low": -0.1375,
+     "ci_high": 0.035,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 10,
+     "n_shared_cells": 400,
+     "crosses_zero": true,
+     "arms": "TS - B2",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "k0_seed7": {
+   "n_rows": 15400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 3715,
+     "coverage": 0.2412,
+     "ser": 0.0305,
+     "n_silent": 469,
+     "n_false_fails": 424,
+     "n_false_meets": 45,
+     "n_error": 0,
+     "unnecessary_abstention": 210,
+     "resolved_correct_per_screen": 2.8104,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 700,
+       "INDETERMINATE": 68,
+       "MEETS": 38
+      },
+      "INDETERMINATE": {
+       "FAILS": 362,
+       "INDETERMINATE": 11475,
+       "MEETS": 7
+      },
+      "MEETS": {
+       "MEETS": 2546,
+       "INDETERMINATE": 142,
+       "FAILS": 62
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 15400,
+     "coverage": 1.0,
+     "ser": 0.9477,
+     "n_silent": 14594,
+     "n_false_fails": 14594,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.6978,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 806
+      },
+      "INDETERMINATE": {
+       "FAILS": 11844
+      },
+      "MEETS": {
+       "FAILS": 2750
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 1155,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 2401,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 781,
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11844
+      },
+      "MEETS": {
+       "MEETS": 1130,
+       "INDETERMINATE": 1620
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 697,
+     "reduction": 0.6035,
+     "false_exclusions": 182,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 12,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 1155,
+     "n_ineligible": 1155,
+     "reduction": 1.0,
+     "false_exclusions": 592,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "02b1604a-1bad-bc6f-5b72-d219ecd8f7f4",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03a870d0-f88c-5cf7-538d-491923a3b57b",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 1155,
+     "n_ineligible": 25,
+     "reduction": 0.0216,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 2,
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4364,
+     "n_ineligible": 504,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4364,
+     "n_ineligible": 504,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4364,
+     "n_ineligible": 504,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4364,
+     "n_ineligible": 504,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.91721,
+     "ci_low": -0.96552,
+     "ci_high": -0.85558,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.75877,
+     "ci_low": -0.87344,
+     "ci_high": -0.63344,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.92013,
+     "ci_low": -0.96669,
+     "ci_high": -0.85994,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.03045,
+     "ci_low": 0.00208,
+     "ci_high": 0.0811,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.16623,
+     "ci_low": 0.0724,
+     "ci_high": 0.27416,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.02753,
+     "ci_low": 0.00019,
+     "ci_high": 0.07708,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "k0_seed8": {
+   "n_rows": 15400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 3725,
+     "coverage": 0.2419,
+     "ser": 0.0318,
+     "n_silent": 489,
+     "n_false_fails": 86,
+     "n_false_meets": 403,
+     "n_error": 0,
+     "unnecessary_abstention": 220,
+     "resolved_correct_per_screen": 2.8017,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 708,
+       "INDETERMINATE": 60,
+       "MEETS": 38
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11455,
+       "MEETS": 365,
+       "FAILS": 24
+      },
+      "MEETS": {
+       "MEETS": 2528,
+       "INDETERMINATE": 160,
+       "FAILS": 62
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 15400,
+     "coverage": 1.0,
+     "ser": 0.9477,
+     "n_silent": 14594,
+     "n_false_fails": 14594,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.6978,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 806
+      },
+      "INDETERMINATE": {
+       "FAILS": 11844
+      },
+      "MEETS": {
+       "FAILS": 2750
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 1155,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 2401,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 781,
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11844
+      },
+      "MEETS": {
+       "MEETS": 1130,
+       "INDETERMINATE": 1620
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 537,
+     "reduction": 0.4649,
+     "false_exclusions": 20,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "1d3d0ba6-5475-07c2-0b40-562ad75fdf26",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "4c7bbf23-68f4-86e8-c61e-1a1b1e81c4ea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "509f9a77-2a22-f98b-c539-9a44057efb51",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 12,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 1155,
+     "n_ineligible": 1155,
+     "reduction": 1.0,
+     "false_exclusions": 592,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "02b1604a-1bad-bc6f-5b72-d219ecd8f7f4",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03a870d0-f88c-5cf7-538d-491923a3b57b",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 1155,
+     "n_ineligible": 25,
+     "reduction": 0.0216,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 2,
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.91591,
+     "ci_low": -0.9661,
+     "ci_high": -0.85201,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.75812,
+     "ci_low": -0.87331,
+     "ci_high": -0.63234,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.94208,
+     "ci_low": -0.97299,
+     "ci_high": -0.90526,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.03175,
+     "ci_low": 0.00214,
+     "ci_high": 0.08448,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.16688,
+     "ci_low": 0.07331,
+     "ci_high": 0.27403,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.00558,
+     "ci_low": 0.00032,
+     "ci_high": 0.01266,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "k0_seed9": {
+   "n_rows": 15400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 3710,
+     "coverage": 0.2409,
+     "ser": 0.0318,
+     "n_silent": 489,
+     "n_false_fails": 86,
+     "n_false_meets": 403,
+     "n_error": 0,
+     "unnecessary_abstention": 235,
+     "resolved_correct_per_screen": 2.7887,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 708,
+       "INDETERMINATE": 60,
+       "MEETS": 38
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11455,
+       "MEETS": 365,
+       "FAILS": 24
+      },
+      "MEETS": {
+       "MEETS": 2513,
+       "INDETERMINATE": 175,
+       "FAILS": 62
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 15400,
+     "coverage": 1.0,
+     "ser": 0.9477,
+     "n_silent": 14594,
+     "n_false_fails": 14594,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.6978,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 806
+      },
+      "INDETERMINATE": {
+       "FAILS": 11844
+      },
+      "MEETS": {
+       "FAILS": 2750
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 1155,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 2401,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 781,
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11844
+      },
+      "MEETS": {
+       "MEETS": 1130,
+       "INDETERMINATE": 1620
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 537,
+     "reduction": 0.4649,
+     "false_exclusions": 20,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "1d3d0ba6-5475-07c2-0b40-562ad75fdf26",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "4c7bbf23-68f4-86e8-c61e-1a1b1e81c4ea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "509f9a77-2a22-f98b-c539-9a44057efb51",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 12,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 1155,
+     "n_ineligible": 1155,
+     "reduction": 1.0,
+     "false_exclusions": 592,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "02b1604a-1bad-bc6f-5b72-d219ecd8f7f4",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03a870d0-f88c-5cf7-538d-491923a3b57b",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 1155,
+     "n_ineligible": 25,
+     "reduction": 0.0216,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 2,
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.4346,
+     "n_ineligible": 502,
+     "false_exclusions": 0,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4372,
+     "n_ineligible": 505,
+     "false_exclusions": 1,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.91591,
+     "ci_low": -0.9661,
+     "ci_high": -0.85201,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.75909,
+     "ci_low": -0.87357,
+     "ci_high": -0.63396,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.94208,
+     "ci_low": -0.97299,
+     "ci_high": -0.90526,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.03175,
+     "ci_low": 0.00214,
+     "ci_high": 0.08448,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.16591,
+     "ci_low": 0.07286,
+     "ci_high": 0.27208,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.00558,
+     "ci_low": 0.00032,
+     "ci_high": 0.01266,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "k10_seed7": {
+   "n_rows": 15400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 3663,
+     "coverage": 0.2379,
+     "ser": 0.0308,
+     "n_silent": 475,
+     "n_false_fails": 423,
+     "n_false_meets": 52,
+     "n_error": 0,
+     "unnecessary_abstention": 228,
+     "resolved_correct_per_screen": 2.7602,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 658,
+       "INDETERMINATE": 79,
+       "MEETS": 40
+      },
+      "INDETERMINATE": {
+       "FAILS": 367,
+       "INDETERMINATE": 11509,
+       "MEETS": 12
+      },
+      "MEETS": {
+       "MEETS": 2530,
+       "INDETERMINATE": 149,
+       "FAILS": 56
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 15400,
+     "coverage": 1.0,
+     "ser": 0.9495,
+     "n_silent": 14623,
+     "n_false_fails": 14623,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.6727,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 777
+      },
+      "INDETERMINATE": {
+       "FAILS": 11888
+      },
+      "MEETS": {
+       "FAILS": 2735
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 1155,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 2357,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 752,
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11888
+      },
+      "MEETS": {
+       "MEETS": 1130,
+       "INDETERMINATE": 1605
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 683,
+     "reduction": 0.5913,
+     "false_exclusions": 189,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 12,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 1155,
+     "n_ineligible": 1155,
+     "reduction": 1.0,
+     "false_exclusions": 608,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "02b1604a-1bad-bc6f-5b72-d219ecd8f7f4",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03a870d0-f88c-5cf7-538d-491923a3b57b",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 1155,
+     "n_ineligible": 25,
+     "reduction": 0.0216,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 2,
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.161,
+     "n_ineligible": 186,
+     "false_exclusions": 0,
+     "criteria_used": 5,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.2727,
+     "n_ineligible": 315,
+     "false_exclusions": 1,
+     "criteria_used": 6,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.3706,
+     "n_ineligible": 428,
+     "false_exclusions": 1,
+     "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4173,
+     "n_ineligible": 482,
+     "false_exclusions": 3,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4182,
+     "n_ineligible": 483,
+     "false_exclusions": 4,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.2052,
+     "n_ineligible": 237,
+     "false_exclusions": 1,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.2052,
+     "n_ineligible": 237,
+     "false_exclusions": 1,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.2935,
+     "n_ineligible": 339,
+     "false_exclusions": 1,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.4009,
+     "n_ineligible": 463,
+     "false_exclusions": 3,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4182,
+     "n_ineligible": 483,
+     "false_exclusions": 4,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.9187,
+     "ci_low": -0.96669,
+     "ci_high": -0.85753,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.76214,
+     "ci_low": -0.87571,
+     "ci_high": -0.63773,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.92208,
+     "ci_low": -0.96812,
+     "ci_high": -0.86208,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.03084,
+     "ci_low": 0.00234,
+     "ci_high": 0.08143,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.16286,
+     "ci_low": 0.07091,
+     "ci_high": 0.2689,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.02747,
+     "ci_low": 0.00058,
+     "ci_high": 0.07662,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "k20_seed7": {
+   "n_rows": 15400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 3608,
+     "coverage": 0.2343,
+     "ser": 0.0303,
+     "n_silent": 467,
+     "n_false_fails": 422,
+     "n_false_meets": 45,
+     "n_error": 0,
+     "unnecessary_abstention": 258,
+     "resolved_correct_per_screen": 2.7195,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 647,
+       "INDETERMINATE": 102,
+       "MEETS": 26
+      },
+      "INDETERMINATE": {
+       "FAILS": 372,
+       "INDETERMINATE": 11534,
+       "MEETS": 19
+      },
+      "MEETS": {
+       "MEETS": 2494,
+       "INDETERMINATE": 156,
+       "FAILS": 50
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 15400,
+     "coverage": 1.0,
+     "ser": 0.9497,
+     "n_silent": 14625,
+     "n_false_fails": 14625,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.671,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 775
+      },
+      "INDETERMINATE": {
+       "FAILS": 11925
+      },
+      "MEETS": {
+       "FAILS": 2700
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 1155,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 2320,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 750,
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11925
+      },
+      "MEETS": {
+       "MEETS": 1130,
+       "INDETERMINATE": 1570
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 679,
+     "reduction": 0.5879,
+     "false_exclusions": 188,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 12,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 1155,
+     "n_ineligible": 1155,
+     "reduction": 1.0,
+     "false_exclusions": 611,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "02b1604a-1bad-bc6f-5b72-d219ecd8f7f4",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03a870d0-f88c-5cf7-538d-491923a3b57b",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 1155,
+     "n_ineligible": 25,
+     "reduction": 0.0216,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 2,
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.1411,
+     "n_ineligible": 163,
+     "false_exclusions": 0,
+     "criteria_used": 4,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.2468,
+     "n_ineligible": 285,
+     "false_exclusions": 1,
+     "criteria_used": 5,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.3394,
+     "n_ineligible": 392,
+     "false_exclusions": 2,
+     "criteria_used": 6,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.3576,
+     "n_ineligible": 413,
+     "false_exclusions": 2,
+     "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4087,
+     "n_ineligible": 472,
+     "false_exclusions": 3,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02",
+      "NCT06989723-INC-05"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.2017,
+     "n_ineligible": 233,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.2017,
+     "n_ineligible": 233,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.2866,
+     "n_ineligible": 331,
+     "false_exclusions": 2,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.3706,
+     "n_ineligible": 428,
+     "false_exclusions": 3,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.4087,
+     "n_ineligible": 472,
+     "false_exclusions": 3,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.91935,
+     "ci_low": -0.96701,
+     "ci_high": -0.85831,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.76571,
+     "ci_low": -0.87792,
+     "ci_high": -0.6426,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.92227,
+     "ci_low": -0.96825,
+     "ci_high": -0.86227,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.03032,
+     "ci_low": 0.00221,
+     "ci_high": 0.08123,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.15929,
+     "ci_low": 0.0687,
+     "ci_high": 0.2637,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.0274,
+     "ci_low": 0.00065,
+     "ci_high": 0.07675,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "k40_seed7": {
+   "n_rows": 15400,
+   "arms": [
+    "TS",
+    "B0",
+    "B1"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 3458,
+     "coverage": 0.2245,
+     "ser": 0.0327,
+     "n_silent": 503,
+     "n_false_fails": 442,
+     "n_false_meets": 61,
+     "n_error": 0,
+     "unnecessary_abstention": 309,
+     "resolved_correct_per_screen": 2.5584,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 543,
+       "INDETERMINATE": 162,
+       "MEETS": 18
+      },
+      "INDETERMINATE": {
+       "FAILS": 386,
+       "INDETERMINATE": 11633,
+       "MEETS": 43
+      },
+      "MEETS": {
+       "MEETS": 2412,
+       "INDETERMINATE": 147,
+       "FAILS": 56
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 15400,
+     "coverage": 1.0,
+     "ser": 0.9531,
+     "n_silent": 14677,
+     "n_false_fails": 14677,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.626,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 723
+      },
+      "INDETERMINATE": {
+       "FAILS": 12062
+      },
+      "MEETS": {
+       "FAILS": 2615
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 1155,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 2183,
+     "resolved_correct_per_screen": 1.0,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 698,
+       "FAILS": 25
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 12062
+      },
+      "MEETS": {
+       "MEETS": 1130,
+       "INDETERMINATE": 1485
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 652,
+     "reduction": 0.5645,
+     "false_exclusions": 206,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 14,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B0": {
+     "arm": "B0",
+     "n_screens": 1155,
+     "n_ineligible": 1155,
+     "reduction": 1.0,
+     "false_exclusions": 650,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "01d78eb5-7f50-45e9-f524-921196a3dffe",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "02b1604a-1bad-bc6f-5b72-d219ecd8f7f4",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-04",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-08",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-09",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-INC-10",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-INC-05",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06989723-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "03a870d0-f88c-5cf7-538d-491923a3b57b",
+       "trial": "NCT06717698",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06717698-INC-01",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-03",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-01",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-02",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-03",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-04",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-05",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-06",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-07",
+         "gold": "INDETERMINATE"
+        },
+        {
+         "criterion_id": "NCT06717698-EXC-08",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 40,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    },
+    "B1": {
+     "arm": "B1",
+     "n_screens": 1155,
+     "n_ineligible": 25,
+     "reduction": 0.0216,
+     "false_exclusions": 0,
+     "false_exclusion_examples": [],
+     "n_eff_excluding_criteria": 2,
+     "rule_of_three_upper": 1.5,
+     "primary_outcome": 0.0216
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.3195,
+     "n_ineligible": 369,
+     "false_exclusions": 0,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.3195,
+     "n_ineligible": 369,
+     "false_exclusions": 0,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.3195,
+     "n_ineligible": 369,
+     "false_exclusions": 0,
+     "criteria_used": 9,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.3203,
+     "n_ineligible": 370,
+     "false_exclusions": 1,
+     "criteria_used": 10,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.3203,
+     "n_ineligible": 370,
+     "false_exclusions": 1,
+     "criteria_used": 10,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-02",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06983054-INC-09",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.3195,
+     "n_ineligible": 369,
+     "false_exclusions": 0,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.3195,
+     "n_ineligible": 369,
+     "false_exclusions": 0,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.3195,
+     "n_ineligible": 369,
+     "false_exclusions": 0,
+     "criteria_used": 9,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.3203,
+     "n_ineligible": 370,
+     "false_exclusions": 1,
+     "criteria_used": 10,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.3203,
+     "n_ineligible": 370,
+     "false_exclusions": 1,
+     "criteria_used": 10,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ],
+   "paired_bootstrap": [
+    {
+     "metric": "ser",
+     "observed_difference": -0.92039,
+     "ci_low": -0.9676,
+     "ci_high": -0.85948,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": -0.77545,
+     "ci_low": -0.88312,
+     "ci_high": -0.65558,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": -0.92435,
+     "ci_low": -0.96974,
+     "ci_high": -0.86481,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B0",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "ser",
+     "observed_difference": 0.03266,
+     "ci_low": 0.00234,
+     "ci_high": 0.08494,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    },
+    {
+     "metric": "coverage",
+     "observed_difference": 0.14955,
+     "ci_low": 0.06416,
+     "ci_high": 0.24955,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "above"
+    },
+    {
+     "metric": "false_fails",
+     "observed_difference": 0.0287,
+     "ci_low": 0.00136,
+     "ci_high": 0.07877,
+     "b": 10000,
+     "n_unique_criteria": 40,
+     "n_patients": 385,
+     "n_shared_cells": 15400,
+     "crosses_zero": false,
+     "arms": "TS - B1",
+     "vs_label_floor": "below, uninterpretable"
+    }
+   ]
+  },
+  "ow": {
+   "n_rows": 15400,
+   "arms": [
+    "TS"
+   ],
+   "n_screens": 1155,
+   "cell_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 15400,
+     "n_scoreable": 15400,
+     "n_committed": 2863,
+     "coverage": 0.1859,
+     "ser": 0.0072,
+     "n_silent": 111,
+     "n_false_fails": 66,
+     "n_false_meets": 45,
+     "n_error": 0,
+     "unnecessary_abstention": 704,
+     "resolved_correct_per_screen": 2.3827,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 591,
+       "INDETERMINATE": 177,
+       "MEETS": 38
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 11833,
+       "MEETS": 7,
+       "FAILS": 4
+      },
+      "MEETS": {
+       "MEETS": 2161,
+       "INDETERMINATE": 527,
+       "FAILS": 62
+      }
+     }
+    }
+   },
+   "panel_scores": {
+    "TS": {
+     "arm": "TS",
+     "n_screens": 1155,
+     "n_ineligible": 475,
+     "reduction": 0.4113,
+     "false_exclusions": 18,
+     "false_exclusion_examples": [
+      {
+       "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "1d3d0ba6-5475-07c2-0b40-562ad75fdf26",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "4c7bbf23-68f4-86e8-c61e-1a1b1e81c4ea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-EXC-05",
+         "gold": "INDETERMINATE"
+        }
+       ]
+      },
+      {
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "63d20fbe-d046-cc9f-59b7-c51c073583c1",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      }
+     ],
+     "n_eff_excluding_criteria": 10,
+     "rule_of_three_upper": null,
+     "primary_outcome": "VOID"
+    }
+   },
+   "operating_curve_TS": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.3844,
+     "n_ineligible": 444,
+     "false_exclusions": 0,
+     "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.3844,
+     "n_ineligible": 444,
+     "false_exclusions": 0,
+     "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.3844,
+     "n_ineligible": 444,
+     "false_exclusions": 0,
+     "criteria_used": 7,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.3861,
+     "n_ineligible": 446,
+     "false_exclusions": 1,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.3861,
+     "n_ineligible": 446,
+     "false_exclusions": 1,
+     "criteria_used": 8,
+     "criteria": [
+      "NCT06717698-INC-03",
+      "NCT06717698-INC-05",
+      "NCT06983054-EXC-05",
+      "NCT06983054-INC-02",
+      "NCT06983054-INC-03",
+      "NCT06983054-INC-04",
+      "NCT06989723-INC-01",
+      "NCT06989723-INC-02"
+     ],
+     "in_sample": true
+    }
+   ],
+   "operating_curve_TS_crossfitted": [
+    {
+     "false_exclusion_budget": 0,
+     "reduction": 0.3844,
+     "n_ineligible": 444,
+     "false_exclusions": 0,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 1,
+     "reduction": 0.3844,
+     "n_ineligible": 444,
+     "false_exclusions": 0,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 2,
+     "reduction": 0.3844,
+     "n_ineligible": 444,
+     "false_exclusions": 0,
+     "criteria_used": 7,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 5,
+     "reduction": 0.3861,
+     "n_ineligible": 446,
+     "false_exclusions": 1,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    },
+    {
+     "false_exclusion_budget": 10,
+     "reduction": 0.3861,
+     "n_ineligible": 446,
+     "false_exclusions": 1,
+     "criteria_used": 8,
+     "folds": 5,
+     "n_patients": 385
+    }
+   ]
+  }
+ },
+ "label_noise_floor": {
+  "n": 180,
+  "percent_agreement": 0.7667,
+  "cohen_kappa": 0.65,
+  "gwet_ac1": 0.6507,
+  "marginals_a": {
+   "FAILS": 60,
+   "MEETS": 60,
+   "INDETERMINATE": 60
+  },
+  "marginals_b": {
+   "FAILS": 46,
+   "MEETS": 63,
+   "INDETERMINATE": 71
+  },
+  "n_contradictions": 19,
+  "n_confidence_splits": 23,
+  "hard": 0.10555555555555556,
+  "soft": 0.12777777777777777
+ },
+ "crossfit": {
+  "optimism_rows": 0,
+  "excluding_criteria": 10,
+  "clean_criteria": 7,
+  "dirty_false_exclusion_counts": [
+   31,
+   31,
+   4
+  ]
+ },
+ "seed_predicates_identical": false,
+ "noise_floor_ser_across_seeds": {
+  "mean": 0.03137,
+  "sd": 0.00075,
+  "min": 0.0305,
+  "max": 0.0318,
+  "range": 0.0013,
+  "n_seeds": 3
+ },
+ "noise_floor_primary_across_seeds": {
+  "panel_reduction": {
+   "mean": 0.5111,
+   "sd": 0.08002,
+   "min": 0.4649,
+   "max": 0.6035,
+   "range": 0.1386,
+   "n_seeds": 3
+  },
+  "false_exclusions": {
+   "mean": 74.0,
+   "sd": 93.53074,
+   "min": 20.0,
+   "max": 182.0,
+   "range": 162.0,
+   "n_seeds": 3
+  }
+ },
+ "degradation_curve": [
+  {
+   "k_percent": 0,
+   "coverage": 0.2412,
+   "ser": 0.0305,
+   "false_fails": 424,
+   "reduction": 0.6035,
+   "false_exclusions": 182
+  },
+  {
+   "k_percent": 10,
+   "coverage": 0.2379,
+   "ser": 0.0308,
+   "false_fails": 423,
+   "reduction": 0.5913,
+   "false_exclusions": 189
+  },
+  {
+   "k_percent": 20,
+   "coverage": 0.2343,
+   "ser": 0.0303,
+   "false_fails": 422,
+   "reduction": 0.5879,
+   "false_exclusions": 188
+  },
+  {
+   "k_percent": 40,
+   "coverage": 0.2245,
+   "ser": 0.0327,
+   "false_fails": 442,
+   "reduction": 0.5645,
+   "false_exclusions": 206
+  }
+ ],
+ "criterion_coverage": {
+  "n_segmented": 65,
+  "n_gold": 40,
+  "n_checkable": 24,
+  "coverage_of_segmented": 0.3692,
+  "coverage_of_gold": 0.6,
+  "registered_band": [
+   0.3,
+   0.4
+  ],
+  "per_trial": [
+   {
+    "nct_id": "NCT06717698",
+    "segmented": 17,
+    "gold": 15
+   },
+   {
+    "nct_id": "NCT06983054",
+    "segmented": 29,
+    "gold": 15
+   },
+   {
+    "nct_id": "NCT06989723",
+    "segmented": 19,
+    "gold": 10
+   }
+  ]
+ },
+ "prompt_files_last_commit": {
+  "compiler.py": "7128be0d7dedd30481b7751b7d7bfc595929878c 2026-08-29T05:12:12+05:30",
+  "critic.py": "bd4322a1fa95e3b8642331616557d7c58b7c15ba 2026-08-29T02:08:48+05:30",
+  "grounder.py": "7128be0d7dedd30481b7751b7d7bfc595929878c 2026-08-29T05:12:12+05:30",
+  "segmenter.py": "bd4322a1fa95e3b8642331616557d7c58b7c15ba 2026-08-29T02:08:48+05:30"
+ }
+}

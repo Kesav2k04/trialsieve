@@ -202,6 +202,11 @@ def main() -> int:
 
     meta = {"arms": arms, "seed": a.seed, "k": a.k, "degrade_seed": a.degrade_seed,
             "b2_max_chars": B2_MAX_CHARS if client else None,
+            # The model name is part of the request the cassette key hashes, so a
+            # replay that guesses it rebuilds every prompt and matches nothing.
+            # Recorded here so the replay reads it back instead of restating it.
+            "provider": a.provider if client else None,
+            "model": (a.model or PROVIDERS[a.provider][1]) if client else None,
             "cells_with_trimmed_record": sum(1 for r in rows if r.get("record_trimmed")),
             "n_patients": len(panel), "n_criteria": len(CRITERIA), "n_cells": len(rows),
             "patient_sample": a.patients or "full panel", "patient_seed": a.patient_seed,

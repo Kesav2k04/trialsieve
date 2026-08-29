@@ -99,6 +99,33 @@ def t_environment() -> None:
     print(json.dumps(info, indent=1))
 
 
+def _recorded_model(run: str, arm: str, tag: str) -> str | None:
+    """Which model an arm was recorded under, read back from the recording.
+
+    The model name sits inside the request that the cassette key hashes, so a
+    replay naming a different one rebuilds every prompt and misses every
+    cassette. `--provider` defaults to ollama, B2 was recorded on the shim, and
+    `reproduce` passed neither: the published pipeline could not regenerate its
+    own baseline arm. Taken from the recording rather than repeated as a
+    constant here, because a constant is one more thing that can drift from what
+    actually ran.
+    """
+    meta = ROOT / run / "cells" / f"meta_{arm}_{tag}.json"
+    if meta.exists():
+        named = json.loads(meta.read_text(encoding="utf-8")).get("model")
+        if named:
+            return named
+    # Recorded before the meta carried it. The cassette a trajectory points at is
+    # the recorded request itself, so the name in it is the one that ran.
+    for traj in sorted((ROOT / run / "trajectories" / "baseline-b2").glob(f"*{tag}.jsonl")):
+        for line in traj.read_text(encoding="utf-8").splitlines():
+            key = json.loads(line).get("cassette_key")
+            cas = ROOT / run / "cassettes" / f"{(key or '')[:16]}.json"
+            if key and cas.exists():
+                return json.loads(cas.read_text(encoding="utf-8"))["request"]["model"]
+    return None
+
+
 def t_verify(run: str = RUN) -> None:
     banner("verification")
     sh(PY, "scripts/verify.py", "all", "--run", run)
@@ -137,8 +164,13 @@ def t_reproduce(run: str = RUN) -> None:
     if (ROOT / run / "cells").is_dir() and any(
             (ROOT / run / "cells").glob("cells_B2_*.jsonl")):
         banner("replay the per-cell baseline over its sample")
-        sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "B2",
-           "--patients", str(B2_PATIENTS), "--tag", f"b2_{B2_PATIENTS}p")
+        tag = f"b2_{B2_PATIENTS}p"
+        cmd = [PY, "scripts/run_arms.py", "--run", run, "--mode", "replay",
+               "--arms", "B2", "--patients", str(B2_PATIENTS), "--tag", tag]
+        model = _recorded_model(run, "B2", tag)
+        if model:
+            cmd += ["--model", model]
+        sh(*cmd)
 
     banner("audit for recall")
     # Replay, not the record default. A reproduce step that can reach the network
