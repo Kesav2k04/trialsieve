@@ -1,7 +1,8 @@
 # The agents, and what each one is not allowed to do
 
-Six agents. One of them calls no model. Each has a contract narrow enough that a
-failure has somewhere to show up rather than being absorbed by the next stage.
+Six agents. Two of them call no model, and those two are where the design pays.
+Each has a contract narrow enough that a failure has somewhere to show up rather
+than being absorbed by the next stage.
 
 The rule the whole design follows: **an agent that cannot do its job must fail
 loudly at its own stage, never approximately at the next one.** Approximate
