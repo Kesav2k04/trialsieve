@@ -169,6 +169,17 @@ def criterion(rec: dict) -> str:
                  "will come back the same way, and it will look like a result:")
         for code in empty:
             L.append(f"  - {code_label(code)}")
+
+    unknown = unknown_panel_codes(rec["expr"])
+    if unknown:
+        L.append("")
+        L.append("NOT MEASURED. The panel count table has no row for these codes, so "
+                 "how much of the panel carries them is unknown here. That is a "
+                 "defect in this checkout rather than a fact about the cohort. "
+                 "Regenerate with `python scripts/build_panel_counts.py` before "
+                 "reading anything into it:")
+        for code in unknown:
+            L.append(f"  - {code_label(code)}")
     return "\n".join(L)
 
 
@@ -180,12 +191,39 @@ def empty_closed_world_codes(e: dict) -> list[str]:
     code exists in the vocabulary and on nobody's chart, because from the
     grounder's side that looks like success: the criterion compiles, runs, returns
     nothing for everyone, and clears the panel.
+
+    A code with no entry in the counts table is NOT reported here. It used to be,
+    and that was a bug with a name: `8331-1`, oral temperature, is carried by 214
+    of the 385 panel patients and was missing from a counts file that had no
+    generator, so a reviewer was warned that most of the panel's own temperature
+    readings were on no chart. A warning that fires on a common code teaches a
+    reviewer to click past it, which switches off the check for the case it was
+    built for. Missing means unmeasured and comes back from
+    `unknown_panel_codes` instead, where it reads as the data problem it is.
     """
     out: list[str] = []
     for q in _closed_world_leaves(e):
         for code in q.get("codes", []):
             pc = terminology.panel_count(code)
-            if (pc is None or pc.get("patients", 0) == 0) and code not in out:
+            if pc is not None and pc.get("patients", 0) == 0 and code not in out:
+                out.append(code)
+    return out
+
+
+def unknown_panel_codes(e: dict) -> list[str]:
+    """Closed-world codes the panel count table says nothing about.
+
+    Separate from `empty_closed_world_codes` because the two call for different
+    actions. "No patient carries this" is a finding about the cohort and the
+    reviewer decides what it means. "The table has no row for this" is a defect in
+    this repository, and the fix is `python scripts/build_panel_counts.py`, not a
+    clinical judgement. Folding the second into the first made a build error look
+    like a cohort property.
+    """
+    out: list[str] = []
+    for q in _closed_world_leaves(e):
+        for code in q.get("codes", []):
+            if terminology.panel_count(code) is None and code not in out:
                 out.append(code)
     return out
 

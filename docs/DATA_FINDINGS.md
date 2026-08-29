@@ -67,7 +67,21 @@ rather than as illustrations.
 
 NCT06983054 (ertugliflozin / dietary sodium, T2DM) is an unusually good fit: its
 inclusion criteria reference HbA1c 6.5-10%, age 18-85, BMI > 25, eGFR 60-90
-mL/min/1.73m2, UACR < 30 mg/mmol, and stable metformin / sulfonylurea / DPP-4 /
-insulin, all of which exist in the corpus vocabulary. Its exclusions reference drug
-classes (SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, NSAIDs) and temporal windows
-(DKA within 1 month, cardiovascular disease within 6 months).
+mL/min/1.73m2, UACR < 30 mg/mmol, and stable background therapy. Its exclusions
+reference drug classes (SGLT2 inhibitors, TZD, GLP-1RA, glucocorticoids, NSAIDs) and
+temporal windows (DKA within 1 month, cardiovascular disease within 6 months).
+
+**The background therapy list is where the fit stops, and that is the useful part.**
+The criterion names metformin, sulfonylurea, DPP-4 inhibitor and insulin. Counting
+ingredient names across all 140 `Medication` entries in
+`data/vendor/terminology_catalog.json`: metformin 1, insulin 1, sulfonylurea 0,
+DPP-4 0. The same count is 0 for every excluded class as well, SGLT2 0, GLP-1 0,
+TZD 0. An earlier version of this paragraph said all four background drugs existed
+in the corpus vocabulary. Two of them do not, and this document is the one a reader
+consults to check the UNMAPPABLE claim, so the wrong sentence was in the worst
+possible place. `python scripts/describe_corpus.py` prints the counts.
+
+That absence is the evaluation case rather than a problem with it. A criterion
+naming a drug class this site cannot code has to stop, because a closed-world
+query over a class with no codes returns nothing for everyone and clears the whole
+panel while looking like a result.
