@@ -28,6 +28,7 @@ same data. Neither is an estimate.
 | critic catch rate, every other class | 9 of 9 | **15 of 15** | same file |
 | the B2 comparison, the arm the protocol calls the one that matters | run, never compared | **-0.4050 SER, CI [-0.5550, -0.2550]** | the B2 group in `results/RESULTS.md` |
 | criteria that did not compile | 22, as one number | **21 refusals and 1 lost to the validator** | "What did not compile, and why", `results/RESULTS.md` |
+| coverage against the registered denominator | 37% | **27.7%**, below the registered 30 to 40% band | `criterion_coverage` in `results/results.json`; the numerator was the gold set's `checkable` count, not the compiler's output |
 | broader-only codes used as exact codes | not checked | **2, both named** | `python scripts/grounding_audit.py --run runs/tierA` |
 | narration lines that reached a frame | 24 of every 30 | **30 of 30** | `tests/test_video_geometry.py`, measured in a browser |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
@@ -40,10 +41,11 @@ would have read as a fix that never happened.
 
 Read the first column, not the third. Every "before" in this table was a number
 this repository published, in a document that passed its own gates, with a test
-suite green. The improvement is not that the numbers got better. Two of them got
+suite green. The improvement is not that the numbers got better. Three of them got
 worse: the label floor dropped, which turned two comparisons TrialSieve loses from
-uninterpretable into measured losses, and the critic's absence rate fell from an
-implied 100% to 1 in 3. The improvement is that they became capable of being wrong.
+uninterpretable into measured losses; the critic's absence rate fell from an
+implied 100% to 1 in 3; and coverage went from inside the band this project
+registered in advance to below it. The improvement is that they became capable of being wrong.
 
 ---
 

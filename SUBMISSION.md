@@ -19,8 +19,10 @@ Every required deliverable, and the file that satisfies it.
 **If you read one thing, read the changelog's opening table.** It lists what this
 repository reported before each measurement was fixed and what it reports now,
 both measured on the same data. Two of those numbers got worse, which is the
-point: they became capable of being wrong. Entries 25, 26 and 27 are the three
-found last, and they are the three that cost the most.
+point: they became capable of being wrong. Entries 25 to 28 were found last and
+cost the most, and 28 is the one that moved a headline: coverage against the
+pre-registered denominator was published at 37% and the system's own figure is
+27.7%, which is below the band the protocol registered before the run.
 
 ## Tools used, and what existed before the competition
 
