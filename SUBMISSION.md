@@ -16,6 +16,12 @@ Every required deliverable, and the file that satisfies it.
 | Agent trajectories, every agent | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md) |
 | Coding agents disclosed, and what pre-existed | [Tools used, and what existed before the competition](#tools-used-and-what-existed-before-the-competition) |
 
+**If you read one thing, read the changelog's opening table.** It lists what this
+repository reported before each measurement was fixed and what it reports now,
+both measured on the same data. Two of those numbers got worse, which is the
+point: they became capable of being wrong. Entries 25, 26 and 27 are the three
+found last, and they are the three that cost the most.
+
 ## Tools used, and what existed before the competition
 
 The rules require both of these to be stated, so they are stated here rather than
@@ -190,7 +196,12 @@ shown, so the trajectory is checkable rather than narrated.
   registry summaries rather than site protocols.
 - **No claim that a coarse code can be read as a fine one.** Where the vocabulary
   cannot draw the distinction a criterion needs, the answer is undetermined and
-  the reason says why.
+  the reason says why. That is the design, and this run breaks it twice:
+  `python scripts/grounding_audit.py --run runs/tierA` names both criteria and
+  exits 3. The IR requires every query to carry an exact code, so on a concept
+  that has none the careful answer does not validate and the coarse-code-as-exact
+  answer does. Entries 25 and 27 of the changelog have the mechanism, the cost,
+  and why the compiler was not changed after the numbers were published.
 - **No accuracy figure without a coverage figure beside it.** Abstaining
   everywhere is a way to score perfectly on accuracy alone, so the two are
   reported as a pair throughout.
