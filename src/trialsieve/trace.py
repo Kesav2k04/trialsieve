@@ -98,6 +98,26 @@ class Trajectory:
                   rationale=rationale, artifact_sha256=artifact_sha256,
                   reviewer_role=reviewer_role)
 
+    def final(self, **payload: Any) -> None:
+        self._add("final", **payload)
+
+    # -- persistence --------------------------------------------------------
+    def write(self, root: str | Path) -> Path:
+        d = Path(root) / self.agent
+        d.mkdir(parents=True, exist_ok=True)
+        p = d / f"{_safe(self.subject)}.jsonl"
+        with open(p, "w", encoding="utf-8", newline="\n") as fh:
+            for e in self.events:
+                fh.write(json.dumps(e, ensure_ascii=False, sort_keys=True) + "\n")
+        return p
+
+    def summary(self) -> dict[str, Any]:
+        kinds: dict[str, int] = {}
+        for e in self.events:
+            kinds[e["event"]] = kinds.get(e["event"], 0) + 1
+        return {"agent": self.agent, "subject": self.subject, "events": len(self.events),
+                "by_kind": kinds}
+
 
 def append_human_checkpoint(root: str | Path, agent: str, subject: str,
                             **payload: Any) -> Path | None:
@@ -128,26 +148,6 @@ def append_human_checkpoint(root: str | Path, agent: str, subject: str,
     with open(p, "a", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
     return p
-
-    def final(self, **payload: Any) -> None:
-        self._add("final", **payload)
-
-    # -- persistence --------------------------------------------------------
-    def write(self, root: str | Path) -> Path:
-        d = Path(root) / self.agent
-        d.mkdir(parents=True, exist_ok=True)
-        p = d / f"{_safe(self.subject)}.jsonl"
-        with open(p, "w", encoding="utf-8", newline="\n") as fh:
-            for e in self.events:
-                fh.write(json.dumps(e, ensure_ascii=False, sort_keys=True) + "\n")
-        return p
-
-    def summary(self) -> dict[str, Any]:
-        kinds: dict[str, int] = {}
-        for e in self.events:
-            kinds[e["event"]] = kinds.get(e["event"], 0) + 1
-        return {"agent": self.agent, "subject": self.subject, "events": len(self.events),
-                "by_kind": kinds}
 
 
 def _safe(s: str) -> str:
