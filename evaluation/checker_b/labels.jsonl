@@ -57,3 +57,4 @@
 {"criterion_id": "NCT06983054-EXC-01", "label": "INDETERMINATE", "model": "gpt-oss-120b-medium", "patient_id": "c628b9c2-31de-fd80-f913-2e9ad36393a9", "prompt_version": "checker-b-v1", "reason": "eGFR not recorded in the patient record"}
 {"criterion_id": "NCT06983054-INC-04", "label": "MEETS", "model": "gpt-oss-120b-medium", "patient_id": "f665d685-1e8b-dc83-a1e4-7ca3f26d5a8c", "prompt_version": "checker-b-v1", "reason": "BMI 29.62 kg/m2 on 2021-06-27 exceeds the >25 kg/m2 threshold"}
 {"criterion_id": "NCT06717698-INC-01", "label": "MEETS", "model": "gpt-oss-120b-medium", "patient_id": "c6861ca8-bf6b-8912-57d6-68df88cbe481", "prompt_version": "checker-b-v1", "reason": "age 26"}
+{"criterion_id": "NCT06717698-EXC-07", "label": "FAILS", "model": "gpt-oss-120b-medium", "patient_id": "5ec53533-38d5-fd93-159b-7389ffd95940", "prompt_version": "checker-b-v1", "reason": "No malignant neoplasm or in situ carcinoma documented within 5 years before 2021‑03‑29"}

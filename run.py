@@ -116,7 +116,7 @@ def t_reproduce(run: str = RUN) -> None:
 
     banner("regenerate the documents that quote numbers")
     sh(PY, "scripts/counterexample.py", "--run", run, "--mode", "replay")
-    sh(PY, "scripts/worklist.py", "--run", run, "--out", "docs/sample_worklist.md")
+    sh(PY, "scripts/gate_demo.py", "--run", run)
     sh(PY, "scripts/trajectories.py", "--run", run)
 
     banner("check every path a document points at")
