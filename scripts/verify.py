@@ -128,7 +128,13 @@ def cmd_prove_sensitivity(run: Path) -> int:
     src = run / "compiled"
     files = sorted(src.glob("criteria_seed*.json"))
     if not files:
-        print("compile first", file=sys.stderr)
+        # Named the same way the blind check names its own empty case. A reader
+        # running `verify.py all` needs to be able to tell a check that passed
+        # from a check that never ran, and two words on stderr does not do that.
+        print(f"NOT VERIFIED: no compiled predicates under {src}, so there is "
+              f"nothing to perturb and this check did not run. Compile a run "
+              f"first. This is reported as a failure rather than a pass.",
+              file=sys.stderr)
         return 2
     blob = json.loads(files[0].read_text(encoding="utf-8"))
     compilable = [c for c in blob["criteria"] if c.get("compilable")]
