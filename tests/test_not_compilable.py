@@ -1,0 +1,68 @@
+"""A criterion lost to a validator is not a criterion the system refused.
+
+`reason_not_compilable` holds both. Twenty-one entries in the scored run name a
+blocker a person would agree with. One reads `compiler failed: AgentError`, and
+it is `NCT06989723-EXC-01`, whose second concept grounds to a broader-only code
+with no exact code at all. The IR has no shape for that: `ir.py:103` demands a
+non-empty `codes` list, so the answer the README asks for cannot be written down.
+
+The distinction is load-bearing because every claim about how much of the
+non-coverage is deliberate rests on it. These tests hold the split, and hold the
+name, so a second crash cannot be absorbed into the refusal count.
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+COMPILED = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
+
+#: The one criterion in the scored run that ran out of retries, by name.
+EXHAUSTED = {"NCT06989723-EXC-01"}
+
+CRASH_PREFIX = "compiler failed:"
+
+
+def _criteria() -> list[dict]:
+    return json.loads(COMPILED.read_text(encoding="utf-8"))["criteria"]
+
+
+def test_the_split_between_refusal_and_exhaustion_is_what_the_report_says():
+    if not COMPILED.exists():
+        return
+    nope = [c for c in _criteria() if not c.get("compilable")]
+    crashed = {c["criterion_id"] for c in nope
+               if str(c.get("reason_not_compilable", "")).startswith(CRASH_PREFIX)}
+    assert crashed == EXHAUSTED, (
+        f"the criteria that ran out of retries are {sorted(crashed)}, and this "
+        f"test records {sorted(EXHAUSTED)}. A new one is a criterion lost to the "
+        f"validator and it has to be named in results/RESULTS.md, not counted "
+        f"beside the refusals.")
+    assert len(nope) - len(crashed) == 21
+
+
+def test_every_principled_refusal_says_something_a_person_can_check():
+    """A refusal with no reason is indistinguishable from a crash with a label."""
+    if not COMPILED.exists():
+        return
+    for c in _criteria():
+        if c.get("compilable") or c["criterion_id"] in EXHAUSTED:
+            continue
+        reason = str(c.get("reason_not_compilable", "")).strip()
+        assert len(reason) > 30, f"{c['criterion_id']} refuses with {reason!r}"
+        assert not reason.startswith(CRASH_PREFIX)
+
+
+def test_the_lost_criterion_is_disclosed_by_name_in_the_report():
+    """The report is the artifact a reader sees. The name has to be in it."""
+    md = (ROOT / "results" / "RESULTS.md")
+    if not md.exists():
+        return
+    text = md.read_text(encoding="utf-8")
+    assert "What did not compile, and why" in text
+    for cid in EXHAUSTED:
+        assert cid in text, f"{cid} was lost to the validator and the report never names it"
+    assert "ir.py:103" in text, (
+        "the report gives the rejection counts without the rule that caused them, "
+        "which leaves the reader thinking the model failed")

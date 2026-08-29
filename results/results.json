@@ -7375,6 +7375,13 @@
   ]
  },
  "seed_predicates_identical": false,
+ "not_compilable": {
+  "total": 22,
+  "principled_refusals": 21,
+  "exhausted_retries": [
+   "NCT06989723-EXC-01"
+  ]
+ },
  "noise_floor_ser_across_seeds": {
   "mean": 0.03137,
   "sd": 0.00075,

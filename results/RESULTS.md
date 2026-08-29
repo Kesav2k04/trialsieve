@@ -536,6 +536,24 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 10 criteria that ever exclude a patient, 7 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 4. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
 
 
+## What did not compile, and why
+
+40 criteria were put to the compiler and 18 produced predicates. Of the 22 that did not, **21 are refusals with a named blocker** and **1 ran out of retries**. Those two are not the same event and this report does not report them as one number.
+
+`NCT06989723-EXC-01` is the second kind. Its `reason_not_compilable` reads `compiler failed: AgentError`, which reads like a crash and is not one. The grounder returned this criterion's second concept as broader-only: no exact code at all, and the coarse code 44054006 in `broader_codes`. The compiler then made 3 attempts to express that, and the IR validator rejected every one:
+
+| attempt | `codes`        | `broader_codes` | rejected because                                                                    |
+|---------|----------------|-----------------|-------------------------------------------------------------------------------------|
+| 1       | `[]`           | `['44054006']`  | query needs a non-empty list of string codes                                        |
+| 2       | `['44054006']` | `['44054006']`  | a code cannot be both exact and broader than the concept; overlapping: ['44054006'] |
+| 3       | `None`         | `['44054006']`  | query needs a non-empty list of string codes                                        |
+
+Attempt 1 is the answer this design asks for. `README.md` says a code the site records more coarsely than the criterion needs goes in `broader_codes` so that presence cannot settle the verdict and absence still can. That is exactly what the model sent, and `src/trialsieve/ir.py:103` rejected it, because every query must carry at least one exact code. Attempt 2 hedged by declaring the code both ways and hit `src/trialsieve/ir.py:108`. Attempt 3 dropped `codes` entirely and hit line 103 again. There was no legal move.
+
+The shape the validator does accept is `codes: ['44054006']` with `broader_codes` empty, which is the shape two other criteria in this run emitted and which turns an UNKNOWN into a MEETS. So on this concept the schema rejects the careful answer and accepts the dangerous one. 44054006 is the code behind those two promotions and behind 358 of the 424 wrong exclusions above: one coarse code, three failures, one root cause.
+
+The criterion reads *Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.*, and insulin is in this vocabulary, so this is not a concept the corpus cannot express. It sits in the same bucket as 21 criteria that were correctly refused, and counting it with them overstates how much of the non-coverage is principled. Entry 27 of the improvement changelog has the rest, including why the IR was not changed.
+
 ## Noise floor
 
 TrialSieve SER across 3 compilation seeds: `{"mean": 0.03137, "sd": 0.00075, "min": 0.0305, "max": 0.0318, "range": 0.0013, "n_seeds": 3}`.

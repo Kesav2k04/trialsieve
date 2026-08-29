@@ -1201,6 +1201,14 @@ in. A broader-only code emitted into `codes` is inside the allow-list, so it
 validates, and the engine then reads it as an exact match and lets presence settle
 the verdict. The rule was enforced by asking politely and checking nothing.
 
+One rule nearby does fire, and its shape is the tell. `src/trialsieve/ir.py:108`
+rejects a code listed in `codes` and `broader_codes` of the *same query*. That
+catches a model hedging out loud and cannot catch a model that simply moves the
+code, because the intersection is then empty. Both violations below have
+`broader_codes: []`. Entry 27 is the same code again, and it shows the schema
+does not merely permit the promotion: on a concept with no exact code it makes
+the promotion the only shape that validates at all.
+
 **What the run actually contains.** Eight of the compilable criteria have grounding
 that produced a broader-only code. Two of them then used it as an exact one:
 
@@ -1284,3 +1292,72 @@ sampling variance either impossible or dishonest, and that constraint was in the
 design from the first commit without anybody writing it down. The reproducibility
 guarantee and the self-consistency arm were always mutually exclusive. Keeping
 both on the page for as long as I did was the error, not choosing between them.
+
+---
+
+## 27. The schema rejected the careful answer and accepted the dangerous one
+
+**Found by** counting what did not compile. Twenty-two of the forty scored
+criteria produced no predicate, and the run reported that as one number. Reading
+the reasons, twenty-one name a blocker a person would agree with: a concept the
+site has no code for, a criterion about willingness to consent, a Fibroscan
+parameter this corpus does not carry. The twenty-second reads
+`compiler failed: AgentError`.
+
+`AgentError` appeared in no document. It sat in the same bucket as the principled
+refusals, so every statement about how much of the non-coverage is deliberate was
+counting a criterion that was lost by accident.
+
+**What actually happened.** `NCT06989723-EXC-01` is *patients receiving insulin
+therapy or diagnosed with type 1 diabetes mellitus*. Insulin has a code here.
+Type 1 diabetes does not: the grounder returned it as BROADER_ONLY with no exact
+code and the coarse SNOMED code 44054006, unqualified diabetes mellitus, in
+`broader_codes`. The compiler made three attempts and the IR validator rejected
+all three.
+
+| attempt | `codes` | `broader_codes` | verdict |
+|---|---|---|---|
+| 1 | `[]` | `['44054006']` | rejected, `ir.py:103`: a query needs a non-empty list of codes |
+| 2 | `['44054006']` | `['44054006']` | rejected, `ir.py:108`: a code cannot be both exact and broader |
+| 3 | absent | `['44054006']` | rejected, `ir.py:103` again |
+
+**Attempt 1 is the answer the design asks for.** `README.md` promises that a code
+the site records more coarsely than the criterion needs goes in `broader_codes`,
+where presence cannot settle the verdict and absence still can. The model sent
+precisely that, and the schema refused it, because `ir.py:103` requires every
+query to carry at least one exact code. The case the documentation describes at
+length, a concept whose *only* evidence is a coarser code, is not representable
+in the IR that documentation describes.
+
+So the model was not failing to follow the schema. It followed it, then hedged,
+then gave up, and the harness recorded that as an agent error.
+
+**Why this is the same defect as entry 25.** The one shape the validator accepts
+here is `codes: ['44054006']` with `broader_codes` left empty. That shape passes
+`ir.py:103` because the list is non-empty, passes `ir.py:108` because the
+intersection is empty, and passes the emit allow-list because the code came from
+the grounder. It is also exactly the shape that turns an UNKNOWN into a MEETS,
+and it is what the two criteria in entry 25 emitted. One coarse code produced
+three failures: two criteria that use it as exact evidence and can never answer
+INDETERMINATE, and one criterion lost entirely. A validator that rejects the
+careful answer and accepts the dangerous one is not a weak validator. It is a
+validator pointed the wrong way.
+
+**The fix, and what was deliberately not fixed.** `results/RESULTS.md` now
+separates the two kinds of non-compilation, prints the three rejections from the
+trajectory, and says which criterion was lost and why.
+`tests/test_not_compilable.py` pins the split so a future crash cannot be
+absorbed into the refusal count.
+
+The IR was not changed. Allowing a broader-only query means `ir.py:103` stops
+requiring an exact code, which changes what every predicate in the corpus is
+allowed to be, recompiles all of them, and moves every published number. That is
+the same trade as entry 25 and it goes the same way: the defect is measured,
+bounded and left in the run it damaged, rather than repaired after seeing the
+score.
+
+**The general shape.** A schema is a claim about what can be said. This one was
+written from the cases that existed when it was written, all of which had an
+exact code, and the constraint it grew, "at least one exact code", quietly
+deleted the case the rest of the design was built around. Nothing failed loudly.
+One criterion went missing and the error message named the model.

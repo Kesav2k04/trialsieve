@@ -615,6 +615,93 @@ def main() -> int:
     identical = len(digests) >= 2 and len(set(digests.values())) == 1
     results["seed_predicates_identical"] = identical
 
+    # What did not compile, split by whether a person decided it or a retry
+    # budget ran out. Both land in the same field with the same shape, and the
+    # difference is the whole point: one is the system working as designed and
+    # the other is a criterion lost to a validator the model could not satisfy.
+    comp_src = Path(run) / "compiled" / "criteria_seed7.json"
+    if comp_src.exists():
+        crit = json.loads(comp_src.read_text(encoding="utf-8"))["criteria"]
+        nope = [c for c in crit if not c.get("compilable")]
+        crashed = [c for c in nope if str(
+            c.get("reason_not_compilable", "")).startswith("compiler failed:")]
+        principled = [c for c in nope if c not in crashed]
+        results["not_compilable"] = {
+            "total": len(nope),
+            "principled_refusals": len(principled),
+            "exhausted_retries": [c["criterion_id"] for c in crashed],
+        }
+        md.append(NL + "## What did not compile, and why" + NL)
+        md.append(f"{len(crit)} criteria were put to the compiler and "
+                  f"{len(crit) - len(nope)} produced predicates. Of the {len(nope)} "
+                  f"that did not, **{len(principled)} are refusals with a named "
+                  f"blocker** and **{len(crashed)} ran out of retries**. Those two "
+                  f"are not the same event and this report does not report them as "
+                  f"one number.")
+        for c in crashed:
+            cid = c["criterion_id"]
+            reason = c.get("reason_not_compilable")
+            text = str(c.get("text", "")).strip()
+            traj = (Path(run) / "trajectories" / "compiler" / f"{cid}-seed7.jsonl")
+            tried, rejects = [], []
+            if traj.exists():
+                for line in traj.read_text(encoding="utf-8").splitlines():
+                    ev = json.loads(line)
+                    if ev.get("event") == "validation_error":
+                        rejects.append(str(ev.get("message", "")).split(": ", 1)[-1])
+                    if ev.get("event") == "llm_response" and '"expr"' in (ev.get("text") or ""):
+                        raw = ev["text"]
+                        try:
+                            blob = json.loads(raw[raw.index("{"):raw.rindex("}") + 1])
+                        except ValueError:
+                            continue
+                        for arg in (blob.get("expr") or {}).get("args") or []:
+                            q = arg.get("query") or {}
+                            if q.get("broader_codes"):
+                                tried.append((q.get("codes"), q.get("broader_codes")))
+            md.append("")
+            md.append(f"`{cid}` is the second kind. Its `reason_not_compilable` reads "
+                      f"`{reason}`, which reads like a crash and is not one. The "
+                      f"grounder returned this criterion's second concept as "
+                      f"broader-only: no exact code at all, and the coarse code "
+                      f"44054006 in `broader_codes`. The compiler then made "
+                      f"{len(rejects)} attempts to express that, and the IR "
+                      f"validator rejected every one:")
+            md.append("")
+            md.append("| attempt | `codes` | `broader_codes` | rejected because |")
+            md.append("|---|---|---|---|")
+            for n, msg in enumerate(rejects):
+                got = tried[n] if n < len(tried) else (None, None)
+                short = msg.split(": ", 1)[-1] if ": " in msg else msg
+                md.append(f"| {n + 1} | `{got[0]}` | `{got[1]}` | {short} |")
+            md.append("")
+            md.append("Attempt 1 is the answer this design asks for. `README.md` says "
+                      "a code the site records more coarsely than the criterion needs "
+                      "goes in `broader_codes` so that presence cannot settle the "
+                      "verdict and absence still can. That is exactly what the model "
+                      "sent, and `src/trialsieve/ir.py:103` rejected it, because "
+                      "every query must carry at least one exact code. Attempt 2 "
+                      "hedged by declaring the code both ways and hit "
+                      "`src/trialsieve/ir.py:108`. Attempt 3 dropped `codes` "
+                      "entirely and hit line 103 again. There was no legal move.")
+            md.append("")
+            md.append(f"The shape the validator does accept is `codes: "
+                      f"['44054006']` with `broader_codes` empty, which is the "
+                      f"shape two other criteria in this run emitted and which "
+                      f"turns an UNKNOWN into a MEETS. So on this concept the "
+                      f"schema rejects the careful answer and accepts the "
+                      f"dangerous one. 44054006 is the code behind those two "
+                      f"promotions and behind 358 of the 424 wrong exclusions "
+                      f"above: one coarse code, three failures, one root cause.")
+            md.append("")
+            md.append(f"The criterion reads *{text}*, and insulin is in this "
+                      f"vocabulary, so this is not a concept the corpus cannot "
+                      f"express. It sits in the same bucket as {len(principled)} "
+                      f"criteria that were correctly refused, and counting it with "
+                      f"them overstates how much of the non-coverage is "
+                      f"principled. Entry 27 of the improvement changelog has the "
+                      f"rest, including why the IR was not changed.")
+
     if identical:
         md.append("\n## Noise floor\n")
         md.append(f"**NOT MEASURED.** The {len(digests)} compilation seeds produced "
