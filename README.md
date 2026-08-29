@@ -2,8 +2,11 @@
 
 **The model reads the protocol once. It never reads a patient.**
 
-Clinical trial prescreening, built so that a patient can never be ruled out by a
-fact that is missing from their record.
+Clinical trial prescreening, built so that ruling a patient out on a fact that is
+missing from their record is a decision somebody has to make on purpose, in
+writing, where a reviewer can see it. On this run one criterion made that
+decision and it cost 358 wrong exclusions. That is measured below rather than
+claimed away.
 
 ---
 
@@ -136,13 +139,21 @@ at all.
 
 Two rules the code enforces rather than requests:
 
-- **FAILS requires positive evidence.** A ruleout names a dated resource. Absence
-  never rules anyone out.
 - **Absence is a modelled decision, not a default.** Every query into the record
   declares `absent_means` as `false` (this domain is trusted complete for these
-  codes) or `unknown` (silence proves nothing). The reviewer sees the choice, and a
-  single flag flips every query at once so the ablation can measure what it is
-  worth.
+  codes) or `unknown` (silence proves nothing). Under `unknown` a missing
+  measurement returns INDETERMINATE and rules nobody out. Under `false` it
+  returns FAILS, and the evidence it cites is an absence marker rather than a
+  dated resource.
+- **So absence can rule someone out, and that is the sharp edge of this design.**
+  An earlier version of this file said absence never rules anyone out. The code
+  says otherwise (`src/trialsieve/evaluator.py:233`) and so does the run: one
+  criterion compiled with `absent_means: "false"` produced 358 of the 424 wrong
+  exclusions in the whole evaluation. The control that is supposed to catch it is
+  the human reading the predicate in English before any worklist exists, and on
+  this run it was not caught. A single flag flips every query at once, and the
+  sensitivity arm measures what that one field is worth: silent errors 469 down
+  to 111, false exclusions 182 down to 18.
 
 ### A code can contain a concept without establishing it
 
