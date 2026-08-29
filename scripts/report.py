@@ -25,6 +25,9 @@ sys.path.insert(0, str(ROOT / "evaluation"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _md_tables import align as align_tables
 
+#: A newline, named, so an f-string can carry one without a backslash.
+NL = chr(10)
+
 from score import (  # noqa: E402
     Cell, agreement, operating_curve, operating_curve_cv, paired_bootstrap, score_arm,
     score_panel, seed_spread,
@@ -348,6 +351,53 @@ def main() -> int:
             md.append(f"| {arm} | {s.coverage:.1%} | {s.ser:.1%} | {s.n_silent} | "
                       f"{s.n_false_fails} | {s.n_false_meets} | "
                       f"{s.unnecessary_abstention} | {s.n_error} | {s.n_unique_criteria} |")
+
+
+        # The per-cell baseline puts a whole chart in one prompt and 20% of these
+        # charts do not fit, so those cells ran against a record trimmed by age
+        # with the omission stated in the prompt. That is a difference in what the
+        # two arms were given, and the brief asks for it to be explained rather
+        # than assured away. `run_arms.py` has carried a flag on every affected
+        # cell since the first run so the comparison could be repeated without
+        # them, and nothing had ever repeated it.
+        n_trimmed = sum(1 for r in rows if r.get("record_trimmed"))
+        if n_trimmed:
+            full = [r for r in rows if not r.get("record_trimmed")]
+            block["n_cells_trimmed"] = n_trimmed
+            md.append(f"{NL}#### Fairness check: the {len(full)} cells where no "
+                      f"record was trimmed{NL}")
+            md.append(f"{n_trimmed} of {len(rows)} cells "
+                      f"({n_trimmed / len(rows):.0%}) put a chart in front of the "
+                      f"per-cell baseline that had been trimmed by age to fit the "
+                      f"prompt. TrialSieve reads the record through the engine and "
+                      f"is not subject to that limit, so the arms were not given "
+                      f"the same input on those cells. Rescored over only the "
+                      f"cells where nothing was cut:")
+            md.append("")
+            md.append("| arm | SER, all cells | SER, untrimmed only | difference |")
+            md.append("|---|---|---|---|")
+            moved = {}
+            for arm in present:
+                s_all = scores[arm]
+                s_full = score_arm(arm, to_cells(full, arm), n_screens)
+                moved[arm] = s_full.ser - s_all.ser
+                block.setdefault("cell_scores_untrimmed", {})[arm] = s_full.as_dict()
+                md.append(f"| {arm} | {s_all.ser:.1%} | {s_full.ser:.1%} | "
+                          f"{moved[arm]:+.1%} |")
+            md.append("")
+            worst = max(abs(v) for v in moved.values())
+            if "TS" in moved and "B2" in moved:
+                gap_all = scores["B2"].ser - scores["TS"].ser
+                gap_full = (block["cell_scores_untrimmed"]["B2"]["ser"]
+                            - block["cell_scores_untrimmed"]["TS"]["ser"])
+                md.append(
+                    f"The gap between the per-cell baseline and TrialSieve is "
+                    f"**{gap_all:.1%}** over all cells and **{gap_full:.1%}** over "
+                    f"the untrimmed ones, a change of {gap_full - gap_all:+.1%}. "
+                    f"No arm moves by more than {worst:.1%}. The trimming is "
+                    f"therefore not where the difference comes from, which is the "
+                    f"claim this table exists to let a reader reject rather than "
+                    f"the one it exists to assert.")
 
         md.append("\n### Primary outcome, as registered\n")
         md.append("`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel "

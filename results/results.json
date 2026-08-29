@@ -146,6 +146,123 @@
      }
     }
    },
+   "n_cells_trimmed": 80,
+   "cell_scores_untrimmed": {
+    "TS": {
+     "arm": "TS",
+     "n_cells": 320,
+     "n_scoreable": 320,
+     "n_committed": 87,
+     "coverage": 0.2719,
+     "ser": 0.0344,
+     "n_silent": 11,
+     "n_false_fails": 11,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 6,
+     "resolved_correct_per_screen": 2.5333,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 18,
+       "INDETERMINATE": 2
+      },
+      "INDETERMINATE": {
+       "FAILS": 7,
+       "INDETERMINATE": 227
+      },
+      "MEETS": {
+       "MEETS": 58,
+       "FAILS": 4,
+       "INDETERMINATE": 4
+      }
+     }
+    },
+    "B0": {
+     "arm": "B0",
+     "n_cells": 320,
+     "n_scoreable": 320,
+     "n_committed": 320,
+     "coverage": 1.0,
+     "ser": 0.9375,
+     "n_silent": 300,
+     "n_false_fails": 300,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 0,
+     "resolved_correct_per_screen": 0.6667,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 20
+      },
+      "INDETERMINATE": {
+       "FAILS": 234
+      },
+      "MEETS": {
+       "FAILS": 66
+      }
+     }
+    },
+    "B1": {
+     "arm": "B1",
+     "n_cells": 320,
+     "n_scoreable": 320,
+     "n_committed": 24,
+     "coverage": 0.075,
+     "ser": 0.0,
+     "n_silent": 0,
+     "n_false_fails": 0,
+     "n_false_meets": 0,
+     "n_error": 0,
+     "unnecessary_abstention": 62,
+     "resolved_correct_per_screen": 0.8,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "INDETERMINATE": 20
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 234
+      },
+      "MEETS": {
+       "MEETS": 24,
+       "INDETERMINATE": 42
+      }
+     }
+    },
+    "B2": {
+     "arm": "B2",
+     "n_cells": 320,
+     "n_scoreable": 320,
+     "n_committed": 224,
+     "coverage": 0.7,
+     "ser": 0.4469,
+     "n_silent": 143,
+     "n_false_fails": 26,
+     "n_false_meets": 117,
+     "n_error": 0,
+     "unnecessary_abstention": 4,
+     "resolved_correct_per_screen": 2.7,
+     "n_unique_criteria": 40,
+     "confusion": {
+      "FAILS": {
+       "FAILS": 17,
+       "INDETERMINATE": 2,
+       "MEETS": 1
+      },
+      "INDETERMINATE": {
+       "INDETERMINATE": 92,
+       "MEETS": 116,
+       "FAILS": 26
+      },
+      "MEETS": {
+       "MEETS": 64,
+       "INDETERMINATE": 2
+      }
+     }
+    }
+   },
    "panel_scores": {
     "TS": {
      "arm": "TS",
