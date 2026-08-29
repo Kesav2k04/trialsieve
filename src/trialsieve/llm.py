@@ -226,8 +226,17 @@ class Client:
                 "latency_s": round(resp.latency_s, 3),
             },
         }
+        # The newline is pinned. On Windows the default translates a line feed
+        # into a carriage return plus line feed, so the file on disk differs from
+        # the file git stores under this repository's eol=lf rule, and every
+        # recorded cassette shows up as modified forever. The stored key hashes
+        # the parsed request rather than the bytes, so this cannot change a
+        # verification result. What it changes is whether the tree is clean, and a
+        # permanently dirty tree is a provenance field that has stopped meaning
+        # anything.
         self._path(req.key()).write_text(
-            json.dumps(rec, indent=1, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+            json.dumps(rec, indent=1, ensure_ascii=False, sort_keys=True),
+            encoding="utf-8", newline=chr(10))
 
     # -- providers ----------------------------------------------------------
     def _call_openai(self, req: Request) -> Response:
@@ -312,7 +321,8 @@ class Client:
         self.trajectory_dir.mkdir(parents=True, exist_ok=True)
         p = self.trajectory_dir / f"{name}.json"
         p.write_text(json.dumps({"agent": name, "steps": self._steps},
-                                indent=1, ensure_ascii=False), encoding="utf-8")
+                                indent=1, ensure_ascii=False),
+                     encoding="utf-8", newline=chr(10))
         return p
 
 
