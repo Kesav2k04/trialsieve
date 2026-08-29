@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "f9e4d91eb7aae41e01b4ce6d7ae48170189a9eb3b94a594f77096886bccade1c",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Acute coronary syndrome\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 164,
+  "latency_s": 56.115,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Acute coronary syndrome\",\n    \"ST elevation myocardial infarction\",\n    \"Non-ST elevation myocardial infarction\",\n    \"Unstable angina\",\n    \"Acute myocardial infarction\",\n    \"Acute subendocardial infarction\",\n    \"Acute transmural myocardial infarction of anterior wall\",\n    \"Acute transmural myocardial infarction of inferior wall\",\n    \"Acute transmural myocardial infarction of lateral wall\",\n    \"Acute transmural myocardial infarction of posterior wall\",\n    \"Non-Q wave myocardial infarction\"\n  ],\n  \"note\": \"Includes primary ACS presentations: STEMI, NSTEMI, unstable angina, and common anatomic MI subtypes.\"\n}\n```"
+ }
+}

@@ -119,6 +119,9 @@ def t_reproduce(run: str = RUN) -> None:
     sh(PY, "scripts/worklist.py", "--run", run, "--out", "docs/sample_worklist.md")
     sh(PY, "scripts/trajectories.py", "--run", run)
 
+    banner("cost and runtime")
+    sh(PY, "scripts/costs.py")
+
     banner("score and report")
     sh(PY, "scripts/report.py", "--run", run, "--out", "results")
 
