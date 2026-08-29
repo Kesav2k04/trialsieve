@@ -62,7 +62,15 @@ so beating it says almost nothing. B1 answers only the criteria that age and sex
 settle and abstains on the rest, which is the cheapest defensible system somebody
 could actually build. It is not part of the registered primary comparison and
 `results/RESULTS.md` reports it beside the registered arms rather than in place of
-them. B3 was not run.
+them. **B3 was not run, and the reason is a property of this harness rather than
+a budget.** B3 is B2 sampled three times at temperature 0.7 with a majority vote.
+The cassette key is a hash of the full request including the temperature, and the
+store holds one response per key (`src/trialsieve/llm.py:213`). Three samples of
+one request therefore hash to one key, and on replay the vote would be unanimous
+by construction: the same recorded answer counted three times. Running it live
+would produce a number nobody else could reproduce, which is the one property
+this evaluation is built to have. So the arm stays registered and unrun, and
+entry 26 of the improvement changelog carries the full account.
 
 ---
 

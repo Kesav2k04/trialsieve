@@ -87,6 +87,8 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.7%** (95% CI 1.5% to 4.2%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 400 cells are 6.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
+**What B2 is, and what it is not.** B2 is one model call per cell at temperature 0, sampled once. The protocol also registers B3, the same baseline sampled three times with a majority vote, and B3 was not run: the cassette key is a hash of the full request including temperature and the store keeps one response per key, so three draws of one request replay as one answer counted three times (`docs/EVAL_PROTOCOL.md:65`, entry 26 of the improvement changelog). So the gap measured here is against a single-sample per-cell baseline, not against the best per-cell baseline money can buy. Self-consistency would plausibly close some of it, and this evaluation cannot say how much.
+
 ## k0_seed7  (the scored run)
 
 15400 cells, 1155 screens, arms TS, B0, B1.

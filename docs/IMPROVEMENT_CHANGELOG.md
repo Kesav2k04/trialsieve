@@ -1238,3 +1238,49 @@ to answer and silent on the question it appears to answer. This one asked "is th
 code real?" and every reader, including the documentation and the prompt, read it
 as "is this code allowed here?". Nothing in a passing test suite distinguishes
 those two, because the union answers both with yes.
+
+---
+
+## 26. The experiment I registered and then could not honestly run
+
+**Found by** a reviewer counting how many entries in this changelog describe an
+experiment that was removed. The answer was zero. Twenty-five entries, every one
+of them a thing that was found and fixed, which is the shape a changelog takes
+when it is written by whoever wanted the result.
+
+**What was registered.** `docs/EVAL_PROTOCOL.md:142` lists four arms. B3 is B2
+sampled three times at temperature 0.7 with a majority vote, any disagreement
+resolved to INDETERMINATE. It is the standard self-consistency baseline and it
+is the arm a reader would expect to be the strongest, because it is the one that
+spends the most inference on each cell.
+
+`docs/EVAL_PROTOCOL.md:65` said "B3 was not run" and stopped there. A registered
+arm dropped with no reason is indistinguishable from an arm that was run and did
+not say what its author wanted.
+
+**Why it was dropped.** Not cost. The cassette key is a SHA-256 of the full
+request, temperature included, and the store keeps exactly one response per key
+in one file (`src/trialsieve/llm.py:213`). Three samples of an identical request
+hash to an identical key. On replay all three draws return the same recorded
+response, so the majority vote is unanimous every time, by construction, and B3
+collapses into B2 wearing a hat. The number it produced would be an artifact of
+the storage layout.
+
+The alternatives were both worse. Keying on a per-draw counter makes the key
+depend on call order, so a reordered loop replays the wrong response into the
+wrong cell and nothing detects it. Running B3 live and nothing else live means
+publishing one arm nobody outside this machine can reproduce, next to three that
+anybody can, and letting the comparison table imply they were measured the same
+way.
+
+**What it cost.** The published comparison has no self-consistency arm, and the
+claim "TrialSieve beats a per-cell model baseline" is therefore a claim about
+single-sample B2 and not about the best baseline available at any price. That is
+a real limit on the result and `results/RESULTS.md` states it as one.
+
+**The general shape.** A record-replay harness is not neutral about what can be
+measured. It makes anything deterministic cheap and anything that depends on
+sampling variance either impossible or dishonest, and that constraint was in the
+design from the first commit without anybody writing it down. The reproducibility
+guarantee and the self-consistency arm were always mutually exclusive. Keeping
+both on the page for as long as I did was the error, not choosing between them.

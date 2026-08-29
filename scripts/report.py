@@ -559,6 +559,23 @@ def main() -> int:
                           f"says nothing about whether the labels themselves could "
                           f"support a difference that small.")
 
+            if any(r["arms"] == "TS - B2" for r in block["paired_bootstrap"]):
+                md.append("")
+                md.append(
+                    "**What B2 is, and what it is not.** B2 is one model call per "
+                    "cell at temperature 0, sampled once. The protocol also "
+                    "registers B3, the same baseline sampled three times with a "
+                    "majority vote, and B3 was not run: the cassette key is a hash "
+                    "of the full request including temperature and the store keeps "
+                    "one response per key, so three draws of one request replay as "
+                    "one answer counted three times "
+                    "(`docs/EVAL_PROTOCOL.md:65`, entry 26 of the improvement "
+                    "changelog). So the gap measured here is against a "
+                    "single-sample per-cell baseline, not against the best "
+                    "per-cell baseline money can buy. Self-consistency would "
+                    "plausibly close some of it, and this evaluation cannot say "
+                    "how much.")
+
         results["groups"][tag] = block
 
     # noise floor across compilation seeds
