@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "b4d83b946d32b30c6e0bf624c2ea4e4eaa87ced1430b00a8f4327b1cdc5e9ef3",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Heart failure\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 160,
+  "latency_s": 28.886,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 208,
+  "text": "```json\n{\n  \"names\": [\n    \"Heart failure\",\n    \"Congestive heart failure\",\n    \"Acute heart failure\",\n    \"Chronic heart failure\",\n    \"Acute decompensated heart failure\",\n    \"Acute on chronic heart failure\",\n    \"Heart failure with reduced ejection fraction\",\n    \"Heart failure with preserved ejection fraction\",\n    \"Heart failure with mildly reduced ejection fraction\",\n    \"Systolic heart failure\",\n    \"Diastolic heart failure\",\n    \"Left ventricular failure\",\n    \"Right ventricular failure\",\n    \"Biventricular heart failure\"\n  ],\n  \"note\": \"Includes acuity variants, ejection fraction phenotypes, and anatomical subtypes.\"\n}\n```"
+ }
+}
