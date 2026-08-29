@@ -4,10 +4,10 @@
  "platform": "Windows-11-10.0.26200-SP0",
  "machine": "AMD64",
  "cwd": "D:\\trialsieve",
- "utc": "2026-08-29T17:29:31Z",
+ "utc": "2026-08-29T17:32:15Z",
  "locked_packages": 23,
  "lock_drift": {},
- "git_commit": "6f51296ba35b54540d2e55dc84c6286b1e606be1",
+ "git_commit": "14a88026cb390b6bb01ff70b70774e9241a9c0b2",
  "git_dirty": false,
  "git_dirty_excludes": "results/"
 }
