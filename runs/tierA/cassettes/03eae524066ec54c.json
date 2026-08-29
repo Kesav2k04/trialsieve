@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "03eae524066ec54c84347355d584ea1b2e80259738b17291084e8f4a59981fa0",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Serum creatinine\nRecord domain: observation\nMeaning required: most recent serum creatinine measurement >= 2.0 mg/dL\n\nCandidate entries from this site's vocabulary:\n           38483-4  Creatinine   (in 2521 resources)\n            2160-0  Creatinine [Mass/volume] in Serum or Plasma   (in 181 resources)\n           14959-1  Microalbumin Creatinine Ratio   (in 695 resources)\n           32624-9  Which race(s) are you?   (in 3835 resources)\n           59461-4  Fall risk level [Morse Fall Scale]   (in 719 resources)\n           82589-3  What is the highest level of school that you have finished?   (in 3835 resources)\n           93035-4  At any point in the past 2 years, has season or migrant farm work been   (in 3835 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 195,
+  "latency_s": 32.919,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 837,
+  "text": "```json\n{\n  \"codes\": [\n    \"2160-0\"\n  ],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"38483-4\",\n      \"why\": \"measures creatinine in whole blood rather than serum or plasma\"\n    },\n    {\n      \"code\": \"14959-1\",\n      \"why\": \"urine microalbumin to creatinine ratio rather than serum creatinine concentration\"\n    },\n    {\n      \"code\": \"32624-9\",\n      \"why\": \"demographic question regarding race\"\n    },\n    {\n      \"code\": \"59461-4\",\n      \"why\": \"fall risk assessment scale, not a laboratory measurement\"\n    },\n    {\n      \"code\": \"82589-3\",\n      \"why\": \"demographic question regarding education level\"\n    },\n    {\n      \"code\": \"93035-4\",\n      \"why\": \"social history question regarding seasonal or migrant farm work\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}

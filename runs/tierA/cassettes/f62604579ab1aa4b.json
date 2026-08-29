@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "f62604579ab1aa4b4e7902a93f0ac25aed94dc51e81ed74d6dab4052cbe8e538",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: GLP-1 receptor agonist\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 61,
+  "latency_s": 32.886,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "{\n  \"names\": [\n    \"semaglutide\",\n    \"liraglutide\",\n    \"dulaglutide\",\n    \"exenatide\",\n    \"lixisenatide\",\n    \"albiglutide\",\n    \"tirzepatide\"\n  ],\n  \"note\": \"Generic active ingredient names for GLP-1 and dual GIP/GLP-1 receptor agonists\"\n}"
+ }
+}

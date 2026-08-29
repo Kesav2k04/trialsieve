@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "71ad4b035bc573de6018c8c51aa7abaf8a67196a480220c73ccc1d6e1f247822",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Ursodeoxycholic acid\nRecord domain: medication\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 79,
+  "latency_s": 33.688,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"ursodiol\",\n    \"ursodeoxycholic acid\",\n    \"Actigall\",\n    \"Urso\",\n    \"Urso 250\",\n    \"Urso Forte\",\n    \"Ursofalk\",\n    \"Ursogal\",\n    \"Destolit\",\n    \"Urdox\"\n  ],\n  \"note\": \"Naturally occurring bile acid commonly documented as ursodiol or by brand names like Actigall and Urso.\"\n}\n```"
+ }
+}

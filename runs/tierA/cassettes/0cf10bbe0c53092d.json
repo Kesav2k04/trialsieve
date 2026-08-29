@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "0cf10bbe0c53092dddfa545f8473732f978daab0b14fc1f165243c4146714e98",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: End-stage renal disease\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 173,
+  "latency_s": 35.331,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"End stage renal disease\",\n    \"End-stage renal disease\",\n    \"ESRD\",\n    \"End stage kidney disease\",\n    \"ESKD\",\n    \"Chronic kidney disease, stage 5\",\n    \"Chronic kidney disease stage 5 on dialysis\",\n    \"Chronic kidney disease, stage 5 requiring chronic dialysis\",\n    \"Hypertensive chronic kidney disease, stage 5\",\n    \"Hypertensive end stage renal disease\",\n    \"Diabetic chronic kidney disease stage 5\",\n    \"Type 2 diabetes mellitus with end stage renal disease\",\n    \"Type 1 diabetes mellitus with end stage renal disease\"\n  ],\n  \"note\": \"Includes standard diagnostic labels, acronyms, CKD Stage 5 designations, and etiology-specific ESRD codings.\"\n}\n```"
+ }
+}

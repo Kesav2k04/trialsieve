@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "17c6f82d7af56125da257ac63a82c63fb6739f3a1f133ff078e32a0708bc8c54",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You are a clinical terminologist. You expand a clinical concept into the\nspecific named things a medical record would actually store for it.",
+    "role": "system"
+   },
+   {
+    "content": "Expand this clinical concept into concrete searchable names.\n\nConcept: Type 1 diabetes mellitus\nRecord domain: condition\n\nFor a drug class, list the generic ingredient names that belong to the class.\nFor a diagnosis, list the specific condition names, including the common\nsub-types a record might code instead of the general term.\nFor a laboratory test, list the names and common synonyms of the measurement.\n\nList what belongs to the concept in general clinical practice. Do NOT try to\nguess what this particular site happens to record; that is looked up separately.\n\nReturn JSON only:\n{\"names\": [\"empagliflozin\", \"dapagliflozin\"], \"note\": \"one short line\"}\n\nGive between 1 and 15 names.",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 183,
+  "latency_s": 36.455,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 210,
+  "text": "```json\n{\n  \"names\": [\n    \"Type 1 diabetes mellitus\",\n    \"Insulin-dependent diabetes mellitus\",\n    \"Type 1 diabetes mellitus without complications\",\n    \"Type 1 diabetes mellitus with ketoacidosis\",\n    \"Type 1 diabetes mellitus with diabetic nephropathy\",\n    \"Type 1 diabetes mellitus with diabetic retinopathy\",\n    \"Type 1 diabetes mellitus with diabetic neuropathy\",\n    \"Type 1 diabetes mellitus with hypoglycemia\",\n    \"Latent autoimmune diabetes in adults\",\n    \"Juvenile onset diabetes mellitus\",\n    \"Brittle diabetes mellitus\",\n    \"Autoimmune diabetes mellitus\"\n  ],\n  \"note\": \"Includes primary diagnosis terms, historical synonyms (IDDM, juvenile diabetes), and common complication-specific coding sub-types.\"\n}\n```"
+ }
+}

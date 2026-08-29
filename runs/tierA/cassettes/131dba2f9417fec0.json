@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "131dba2f9417fec09fe4f76db1eef1c2e1303d99cdfc31838770ff3df7923763",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Antidiabetic agent\nRecord domain: medication\nMeaning required: currently prescribed antidiabetic drugs to evaluate monotherapy, dual therapy, or triple therapy\n\nCandidate entries from this site's vocabulary:\n            860975  24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet   (in 1030 resources)\n            106892  insulin human, isophane 70 UNT/ML / Regular Insulin, Human 30 UNT/ML I   (in 1343 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 8,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 28,
+  "latency_s": 34.037,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 762,
+  "text": "```json\n{\n  \"codes\": [\"860975\", \"106892\"],\n  \"broader_codes\": [],\n  \"rejected\": [],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}
