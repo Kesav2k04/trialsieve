@@ -1,0 +1,445 @@
+{
+ "model": "gemini-3.7-flash-medium",
+ "provider": "shim",
+ "n": 21,
+ "correct": 18,
+ "scoring_rule": "gap and control: a non-empty subset of the acceptable codes. broader: nothing in codes, a non-empty subset of the acceptable broader codes. absent: both lists empty.",
+ "by_class": {
+  "absent": {
+   "n": 5,
+   "correct": 4,
+   "over": 1,
+   "under": 0,
+   "demoted": 0
+  },
+  "broader": {
+   "n": 2,
+   "correct": 1,
+   "over": 0,
+   "under": 1,
+   "demoted": 0
+  },
+  "control": {
+   "n": 5,
+   "correct": 5,
+   "over": 0,
+   "under": 0,
+   "demoted": 0
+  },
+  "gap": {
+   "n": 9,
+   "correct": 8,
+   "over": 1,
+   "under": 0,
+   "demoted": 1
+  }
+ },
+ "usage": {
+  "calls": 42,
+  "prompt_tokens": 22981,
+  "completion_tokens": 8493,
+  "wall_s": 1854.87,
+  "cassette_hits": 38
+ },
+ "wall_s": 477.7,
+ "rows": [
+  {
+   "concept": "Essential hypertension",
+   "domain": "condition",
+   "class": "gap",
+   "codes": [
+    "59621000"
+   ],
+   "broader": [],
+   "why": "SNOMED 59621000 is Essential hypertension; displayed here as 'Hypertension'",
+   "got_codes": [
+    "59621000"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Obesity",
+   "domain": "condition",
+   "class": "gap",
+   "codes": [
+    "162864005",
+    "408512008"
+   ],
+   "broader": [],
+   "why": "displayed as 'Body mass index 30+ - obesity (finding)'",
+   "got_codes": [
+    "162864005",
+    "408512008"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Diabetic nephropathy",
+   "domain": "condition",
+   "class": "gap",
+   "codes": [
+    "127013003"
+   ],
+   "broader": [],
+   "why": "displayed as 'Diabetic renal disease (disorder)'",
+   "got_codes": [
+    "127013003"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Glycated haemoglobin",
+   "domain": "observation",
+   "class": "gap",
+   "codes": [
+    "4548-4"
+   ],
+   "broader": [],
+   "why": "British spelling against an American display and the full LOINC long name",
+   "got_codes": [
+    "4548-4"
+   ],
+   "got_broader": [],
+   "status": "MAPPED",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Estimated glomerular filtration rate",
+   "domain": "observation",
+   "class": "gap",
+   "codes": [
+    "33914-3"
+   ],
+   "broader": [],
+   "why": "displayed as 'Glomerular filtration rate/1.73 sq M.predicted'",
+   "got_codes": [
+    "33914-3"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Urine albumin to creatinine ratio",
+   "domain": "observation",
+   "class": "gap",
+   "codes": [
+    "14959-1"
+   ],
+   "broader": [],
+   "why": "displayed as 'Microalbumin Creatinine Ratio'",
+   "got_codes": [
+    "14959-1"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Haemodialysis",
+   "domain": "procedure",
+   "class": "gap",
+   "codes": [
+    "265764009",
+    "302497006"
+   ],
+   "broader": [],
+   "why": "two dialysis procedure codes here; either is a defensible answer",
+   "got_codes": [
+    "302497006"
+   ],
+   "got_broader": [
+    "265764009"
+   ],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": [
+    "265764009"
+   ]
+  },
+  {
+   "concept": "Metformin",
+   "domain": "medication",
+   "class": "gap",
+   "codes": [
+    "860975"
+   ],
+   "broader": [],
+   "why": "the display is a full product string with strength and release profile",
+   "got_codes": [
+    "860975"
+   ],
+   "got_broader": [],
+   "status": "MAPPED",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Prediabetes",
+   "domain": "condition",
+   "class": "control",
+   "codes": [
+    "15777000"
+   ],
+   "broader": [],
+   "why": "display matches",
+   "got_codes": [
+    "15777000"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Anaemia",
+   "domain": "condition",
+   "class": "control",
+   "codes": [
+    "271737000"
+   ],
+   "broader": [],
+   "why": "display matches but for the spelling",
+   "got_codes": [
+    "271737000"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Hydrochlorothiazide",
+   "domain": "medication",
+   "class": "control",
+   "codes": [
+    "310798"
+   ],
+   "broader": [],
+   "why": "the ingredient is in the display",
+   "got_codes": [
+    "310798"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Simvastatin",
+   "domain": "medication",
+   "class": "control",
+   "codes": [
+    "312961",
+    "314231"
+   ],
+   "broader": [],
+   "why": "two strengths of one ingredient; both are the drug",
+   "got_codes": [
+    "312961",
+    "314231"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Systolic blood pressure",
+   "domain": "observation",
+   "class": "control",
+   "codes": [
+    "8480-6"
+   ],
+   "broader": [],
+   "why": "display matches",
+   "got_codes": [
+    "8480-6"
+   ],
+   "got_broader": [
+    "55284-4",
+    "85354-9"
+   ],
+   "status": "PARTIAL",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Iron deficiency anaemia",
+   "domain": "condition",
+   "class": "broader",
+   "codes": [],
+   "broader": [
+    "271737000"
+   ],
+   "why": "the only anaemia code here is unqualified, so it contains iron deficiency anaemia without establishing it; absence still rules the patient out",
+   "got_codes": [],
+   "got_broader": [
+    "271737000"
+   ],
+   "status": "BROADER_ONLY",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Chronic kidney disease stage 3 or worse",
+   "domain": "condition",
+   "class": "broader",
+   "codes": [],
+   "broader": [
+    "431855005",
+    "431856006"
+   ],
+   "why": "this corpus codes stages 1 and 2 only. Neither establishes stage 3, and a patient coded stage 1 is not thereby stage 3 either, so the honest answer names them as related-but-not-sufficient rather than as a match",
+   "got_codes": [],
+   "got_broader": [],
+   "status": "UNMAPPABLE",
+   "correct": false,
+   "over_accepted": false,
+   "under_accepted": true,
+   "demoted": []
+  },
+  {
+   "concept": "Type 2 diabetes mellitus",
+   "domain": "condition",
+   "class": "gap",
+   "codes": [
+    "44054006"
+   ],
+   "broader": [],
+   "why": "SNOMED 44054006 is Diabetes mellitus type 2. This corpus displays it as the single word 'Diabetes', which reads as an unspecified parent concept and is not one. Judging the display rejects the one code that is right",
+   "got_codes": [
+    "1501000119109",
+    "1551000119108",
+    "368581000119106",
+    "422034002",
+    "44054006",
+    "90781000119102",
+    "97331000119101"
+   ],
+   "got_broader": [],
+   "status": "PARTIAL",
+   "correct": false,
+   "over_accepted": true,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Type 1 diabetes mellitus",
+   "domain": "condition",
+   "class": "absent",
+   "codes": [],
+   "broader": [],
+   "why": "44054006 is type 2 specifically, so it is a sibling of type 1 rather than a parent. Returning it here, in either list, is the over-acceptance this probe exists to catch",
+   "got_codes": [],
+   "got_broader": [
+    "44054006"
+   ],
+   "status": "BROADER_ONLY",
+   "correct": false,
+   "over_accepted": true,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Acute pancreatitis",
+   "domain": "condition",
+   "class": "absent",
+   "codes": [],
+   "broader": [],
+   "why": "no pancreatitis code appears anywhere in this corpus",
+   "got_codes": [],
+   "got_broader": [],
+   "status": "UNMAPPABLE",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Gastroparesis",
+   "domain": "condition",
+   "class": "absent",
+   "codes": [],
+   "broader": [],
+   "why": "no gastroparesis code in this corpus",
+   "got_codes": [],
+   "got_broader": [],
+   "status": "UNMAPPABLE",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Metoprolol",
+   "domain": "medication",
+   "class": "absent",
+   "codes": [],
+   "broader": [],
+   "why": "no metoprolol product in this corpus",
+   "got_codes": [],
+   "got_broader": [],
+   "status": "UNMAPPABLE",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  },
+  {
+   "concept": "Oral glucose tolerance test",
+   "domain": "observation",
+   "class": "absent",
+   "codes": [],
+   "broader": [],
+   "why": "no OGTT code; a plain serum glucose is a different measurement",
+   "got_codes": [],
+   "got_broader": [],
+   "status": "UNMAPPABLE",
+   "correct": true,
+   "over_accepted": false,
+   "under_accepted": false,
+   "demoted": []
+  }
+ ]
+}

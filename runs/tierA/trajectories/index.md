@@ -11,7 +11,7 @@
 | requests resent after the endpoint failed | 1 |
 | critic findings | 31 |
 | predicates revised after a confirmed counterexample | 5 |
-| malformed fields the harness repaired without a retry | 70 |
+| malformed fields the harness repaired without a retry | 72 |
 | human checkpoints | 0 |
 | completion tokens | 148878 |
 

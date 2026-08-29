@@ -84,3 +84,26 @@ def test_lock_records_the_interpreter():
     lock = (ROOT / "requirements-lock.txt").read_text(encoding="utf-8")
     assert lockfile._locked_python(), "the lock does not name the python it was written on"
     assert "cpython" in lock.lower()
+
+
+def test_the_changelog_states_the_module_count_it_can_be_checked_against():
+    """The count in the prose has to be the count the parser produces.
+
+    Entry 31 exists because a dependency claim was true and nothing parsed it.
+    Its own evidence line then went stale the same way: it said 51 modules while
+    the checker walked 53, because two scripts joined the reproduction path and
+    no gate compared the sentence to the number. A count written in prose beside
+    the command that computes it is worth exactly as much as the check that they
+    agree.
+    """
+    import re
+    actual = len(lockfile._module_files())
+    text = (ROOT / "docs" / "IMPROVEMENT_CHANGELOG.md").read_text(encoding="utf-8")
+    stated = [int(n) for n in re.findall(r"(\d+) modules(?:,)? parsed", text)]
+    stated += [int(n) for n in re.findall(r"0 of (\d+) modules", text)]
+    assert stated, ("the changelog no longer states a module count. It is allowed "
+                    "to stop, but delete this test deliberately rather than let it "
+                    "pass against a sentence that is gone.")
+    for n in stated:
+        assert n == actual, (f"the changelog says {n} modules on the reproduction "
+                             f"path and the checker walks {actual}")

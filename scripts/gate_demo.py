@@ -60,9 +60,14 @@ def main() -> int:
     if a.trial:
         base += ["--trial", a.trial]
 
-    rc_refuse, out_refuse = run(base + ["--out", str(tmp)])
-    rc_allow, out_allow = run(base + ["--allow-unsigned", "--out",
-                                      str(ROOT / "docs" / "sample_worklist.md")])
+    # Relative paths, and the same argument list is printed as was run. An
+    # absolute --out made the captured line read "wrote D:\...", which both
+    # published a local directory layout and did not match the command shown
+    # above it, so the transcript disagreed with itself.
+    refuse_cmd = base + ["--out", tmp.relative_to(ROOT).as_posix()]
+    allow_cmd = base + ["--allow-unsigned", "--out", "docs/sample_worklist.md"]
+    rc_refuse, out_refuse = run(refuse_cmd)
+    rc_allow, out_allow = run(allow_cmd)
 
     signoffs = load(run_dir / "signoffs.jsonl")
     banner = ""
@@ -78,14 +83,14 @@ def main() -> int:
          "coordinator opens. It cannot be produced from predicates a named human has not",
          "signed. That is enforced by exit code, and the refusal is tested.", "",
          "---", "", "## 1. Unsigned", "",
-         "```", "$ python " + " ".join(base) + "  ; echo $?",
+         "```", "$ python " + " ".join(refuse_cmd) + "  ; echo $?",
          out_refuse[:1400], str(rc_refuse), "```", "",
          "Exit code **" + str(rc_refuse) + "**. No document was written. The message names "
          "the command that clears the gate, and clearing it means reading one predicate at "
          "a time: `scripts/signoff.py` has no bulk approval and no `--approve-all`, because "
          "a gate you can clear without reading reports approval nobody gave.", "",
          "## 2. Unsigned, overridden on purpose", "",
-         "```", "$ python " + " ".join(base) + " --allow-unsigned  ; echo $?",
+         "```", "$ python " + " ".join(allow_cmd) + "  ; echo $?",
          out_allow[:1200], str(rc_allow), "```", ""]
     if banner:
         L += ["The document is produced and the first thing on it is this:", "",

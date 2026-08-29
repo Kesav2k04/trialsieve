@@ -1,0 +1,29 @@
+# Licence and permissions
+
+This repository is a submission to the micro1 Frontier Engineering Challenge
+2026 and is governed by the Hackathon Participation Agreement accepted at
+registration, under which micro1 may use the submission for evaluation and for
+AI model training. Nothing here is intended to narrow that.
+
+Beyond it, and so that a reader is not left guessing: micro1, its judges and
+anyone they ask to check the work are permitted to clone this repository, run
+every command in `REPRODUCE.md`, reproduce and inspect every artifact in it, and
+quote from it in their assessment.
+
+No open-source grant is claimed over the original code here, because the
+ownership terms above are the operative ones and a second, looser licence
+stapled beside them would only create a question about which applies.
+
+Third-party material carries its own terms and they are the ones that govern it:
+
+- The patient panel is derived from Synthea sample data, Apache License 2.0.
+  `data/vendor/NOTICE` carries the attribution the licence asks for, and
+  `data/vendor/panel_provenance.json` carries the source URL and the archive
+  sha256 so the derivation can be checked.
+- The trial protocols are ClinicalTrials.gov API v2 responses, a United States
+  Government work in the public domain.
+- `pytest`, `edge-tts` and `playwright` are used under their own permissive
+  licences. The last two are off the reproduction path and are pinned in
+  `requirements-lock.txt` for completeness.
+
+Author: Kesav2k04

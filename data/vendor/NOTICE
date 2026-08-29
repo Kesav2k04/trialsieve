@@ -1,0 +1,35 @@
+TrialSieve redistributes derived data. This file names what, from where, and
+under which terms.
+
+## Synthea sample data
+
+`panel.jsonl.gz` is derived from the Synthea sample FHIR R4 archive published by
+MITRE. The source URL, the archive sha256, the byte count and the selection rule
+are recorded in `panel_provenance.json` beside this file, so the derivation is
+checkable rather than described.
+
+    Synthea (TM) synthetic patient generator and sample data
+    Copyright 2017-2021 The MITRE Corporation
+    Licensed under the Apache License, Version 2.0
+    https://www.apache.org/licenses/LICENSE-2.0
+
+The data are synthetic. No real patient, and no real identifier, appears in
+them. The derivative in this repository is redistributed under the same Apache
+License, Version 2.0, and this notice is carried with it as that licence asks.
+The selection applied was: alive at the index date and aged 18 or over. Nothing
+else was filtered, and the counts of what that removed are in
+`panel_provenance.json`.
+
+## ClinicalTrials.gov
+
+`trials/` and `trials_index.json` are responses from ClinicalTrials.gov API v2,
+a United States Government work in the public domain. `trials_index.json`
+records the API version and the retrieval date. The three protocols are public
+registrations and are reproduced as returned.
+
+## Terminology catalogue
+
+`terminology_catalog.json` was derived from the same pinned Synthea archive
+before the panel was cut, and carries the same Apache-2.0 terms. `REPRODUCE.md`
+states plainly that nothing in this repository regenerates it, because the
+source bundles are not vendored.

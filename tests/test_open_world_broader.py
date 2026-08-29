@@ -63,10 +63,14 @@ def test_an_already_open_world_query_is_not_reported_as_repaired():
 
 
 def test_the_walk_reaches_every_nesting_the_grammar_allows():
-    """`not`, `and`/`or` and a `count` leaf each hold a query somewhere different.
+    """`not`, `and`/`or`, and a `count` under a `compare` each hold a query in a
+    different place.
 
-    A walker that handled only `args` would have missed the `not` arm, and
-    `NCT06717698-INC-07` is a `not` over exactly this shape.
+    This test used to assert that one query was repaired in the tree below, and
+    the tree holds two: the `or` arm and the count on the `compare`'s left. The
+    number it asserted was the number the walker produced rather than the number
+    the tree contains, so it passed against a walker that never descended into
+    `left` or `right`. `criteria_seed8.json` carried the shape it was missing.
     """
     tree = {"op": "not", "arg": {"op": "or", "args": [
         _q([], ["44054006"]),
@@ -76,8 +80,11 @@ def test_the_walk_reaches_every_nesting_the_grammar_allows():
          "right": {"val": "literal", "number": 1, "unit": ""}},
     ]}}
     changed = open_world_broader_only(tree)
-    assert len(changed) == 1, "the `or` arm under a `not` was not reached"
+    assert len(changed) == 2, ("the tree holds two broader-only closed-world "
+                               "queries and the walk reported a different number")
     assert tree["arg"]["args"][0]["query"]["absent_means"] == "unknown"
+    assert tree["arg"]["args"][1]["left"]["query"]["absent_means"] == "unknown", (
+        "the count under the compare's left operand was not reached")
 
 
 def test_the_repaired_query_still_validates():
@@ -86,9 +93,32 @@ def test_the_repaired_query_still_validates():
     validate_query(e["query"])
 
 
+def _closed_world_broader_only(node, found):
+    """Find the forbidden pairing by reading the JSON, not by calling the engine.
+
+    This audit used to run `open_world_broader_only` over a copy of each
+    committed predicate and report what it repaired. That makes the audit a
+    restatement of the function it is auditing: when the walker could not reach
+    a `compare` operand, neither could the audit, and both agreed the shipped
+    predicates were clean while `criteria_seed8.json` held two violations. So
+    this walks the parsed JSON itself and knows nothing about the repair.
+    """
+    if isinstance(node, dict):
+        if (not node.get("codes") and (node.get("broader_codes") or [])
+                and node.get("absent_means") == "false"):
+            found.append({"domain": node.get("domain"),
+                          "broader_codes": list(node["broader_codes"])})
+        for v in node.values():
+            _closed_world_broader_only(v, found)
+    elif isinstance(node, list):
+        for v in node:
+            _closed_world_broader_only(v, found)
+    return found
+
+
 def test_no_committed_predicate_pairs_an_empty_code_list_with_closed_world():
     """The invariant, over the predicates this submission actually ships."""
-    offenders = []
+    offenders, scanned = [], 0
     for path in sorted((ROOT / "runs" / "tierA" / "compiled").glob("criteria_seed*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
         items = data if isinstance(data, list) else data.get("criteria", data)
@@ -96,13 +126,28 @@ def test_no_committed_predicate_pairs_an_empty_code_list_with_closed_world():
             expr = rec.get("expr")
             if not expr:
                 continue
-            probe = json.loads(json.dumps(expr))
-            for repair in open_world_broader_only(probe):
+            scanned += 1
+            for hit in _closed_world_broader_only(expr, []):
                 offenders.append({"file": path.name, "criterion": rec["criterion_id"],
-                                  **repair})
+                                  **hit})
+    assert scanned >= 3, (f"only {scanned} compiled predicate(s) were scanned, so a "
+                          f"clean result here would mean nothing")
     assert offenders == [], (
         "a committed predicate reads silence as absence for a concept this "
         f"vocabulary has no code for: {offenders}")
+
+
+def test_the_independent_audit_can_see_a_violation():
+    """The positive control for the audit above, which otherwise passes just as
+    well against a scan that looks at nothing."""
+    planted = {"op": "compare", "cmp": ">", "left": {
+        "val": "count", "query": {"domain": "condition", "codes": [],
+                                  "broader_codes": ["44054006"],
+                                  "absent_means": "false"}},
+        "right": {"val": "literal", "number": 0, "unit": ""}}
+    assert _closed_world_broader_only(planted, []), (
+        "the audit cannot see a violation planted directly in a compare operand, "
+        "which is the exact shape it failed to see in a shipped predicate")
 
 
 def test_absence_of_the_parent_code_is_unknown_not_false():

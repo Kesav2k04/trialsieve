@@ -12,7 +12,7 @@ signed. That is enforced by exit code, and the refusal is tested.
 ## 1. Unsigned
 
 ```
-$ python scripts/worklist.py --run runs/tierA --operating-point 0  ; echo $?
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/video/shots/_gate_demo.md  ; echo $?
 REFUSED.
 
 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
@@ -24,7 +24,7 @@ Exit code **3**. No document was written. The message names the command that cle
 ## 2. Unsigned, overridden on purpose
 
 ```
-$ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsigned  ; echo $?
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsigned --out docs/sample_worklist.md  ; echo $?
 {
  "nct_id": "NCT06983054",
  "panel": 385,
@@ -33,7 +33,7 @@ $ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsign
  "eligible": 8,
  "reduction": 0.4857
 }
-wrote D:\trialsieve\docs\sample_worklist.md
+wrote docs\sample_worklist.md
 WARNING, running unsigned: 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
 0
 ```

@@ -17,9 +17,9 @@
   "prompt_tokens": 140245,
   "completion_tokens": 34522,
   "wall_s": 7041.73,
-  "cassette_hits": 193
+  "cassette_hits": 201
  },
- "wall_s": 192.6,
+ "wall_s": 1.1,
  "criteria": [
   {
    "criterion_id": "NCT06983054-INC-01",
@@ -1297,7 +1297,7 @@
         ],
         "within_days": null,
         "active_only": false,
-        "absent_means": "false"
+        "absent_means": "unknown"
        }
       },
       "right": {
@@ -1310,7 +1310,7 @@
         ],
         "within_days": 179,
         "active_only": false,
-        "absent_means": "false"
+        "absent_means": "unknown"
        }
       }
      },
@@ -1349,7 +1349,7 @@
    "compiler_prompt_version": "compiler-v3",
    "seed": 8,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "8acf93beb0fa69e88b3ead8a90506a0e114d1531dd5b78fb68201cdc003ae968"
+   "predicate_sha256": "4cba667a5e6d3bd5b0a0035f922ad69005c24d938950129dfbe62e658371e444"
   },
   {
    "criterion_id": "NCT06717698-EXC-01",

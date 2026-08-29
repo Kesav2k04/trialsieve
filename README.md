@@ -24,7 +24,7 @@ patient's chart. Over all 400 cells of that arm it **commits to a verdict on 272
 of them**, 68%, including cells where the record is silent. Nothing in the chart
 contradicts the threshold, so the threshold appears satisfied. The reasoning is
 fluent and the answer is confident, and on those same 400 cells it is wrong on
-43.8% of what it commits to against TrialSieve's 3.2%.
+43.8% of what it commits to against TrialSieve's 1.0%.
 
 TrialSieve answers:
 
@@ -177,9 +177,11 @@ Two rules the code enforces rather than requests:
   two columns.
 - **Every other closed-world decision is still the model's, and the sensitivity
   arm is how you check it.** `--absent-means-override unknown` discards all of
-  them at once. It used to remove 604 silent errors. It now removes **zero**: the
-  two arms report 111 each, so what is left has nothing to do with absence. A gap
-  re-opening there means a new closed-world assertion started committing.
+  them at once. It used to remove 358 silent errors, taking 469 down to 111. It
+  now removes **zero**: both arms report 111, so what is left has nothing to do
+  with absence. The targeted repair reached the same error floor as the blanket
+  override while answering more cells, 19.15% against 18.44%. A gap re-opening
+  there means a new closed-world assertion started committing.
 
 ### A code can contain a concept without establishing it
 
@@ -204,21 +206,24 @@ asymmetrically:
 
 Presence cannot settle it. Absence still can.
 
-That is what the design promises. In the scored run it is false twice, and the
-project found out by checking rather than by claiming. The compiler's emit
-validator accepts any code the grounder returned, from either slot, because it
-was written to catch invented codes and does that correctly. It cannot see a
-real code put in the wrong slot. Two criteria out of the eight with broader-only
-grounding promoted SNOMED 44054006 into `codes`, and both also carry
-`absent_means: false`, so presence settles them as MEETS and absence settles
-them as FAILS and neither can return INDETERMINATE. One of the two is the
-criterion behind the 358 wrong exclusions above.
+That is what the design promises, and the run this repository published first
+broke it twice. The project found out by checking rather than by claiming. The
+compiler's emit validator accepted any code the grounder returned, from either
+slot, because it was written to catch invented codes and does that correctly. It
+could not see a real code put in the wrong slot. Two criteria out of the eight
+with broader-only grounding promoted SNOMED 44054006 into `codes`, and both also
+carried `absent_means: false`, so presence settled them as MEETS and absence as
+FAILS, and neither could return INDETERMINATE. One of the two is the criterion
+behind the 358 wrong exclusions above.
 
-`python scripts/grounding_audit.py --run runs/tierA` reports it and exits 3.
-`tests/test_grounding_audit.py` pins both by name. The compiler was left alone
-on purpose: changing it recompiles the predicates and rescores the run, which is
-picking a new number after seeing the old one fail. Entry 25 of the improvement
-changelog has the reasoning and the cost.
+The validator is now slot-aware and the schema accepts the shape the design asks
+for, which it had been rejecting. `python scripts/grounding_audit.py --run
+runs/tierA` exits 0 and reports 9 criteria grounding a broader-only code with
+**0** used as an exact code. `tests/test_grounding_audit.py` holds that at zero
+and requires the audit to have scanned a non-empty set, so a clean result cannot
+come from reading nothing. Entries 25, 27 and 29 of the improvement changelog
+have the mechanism, the repair, and the intermediate state where fixing it made
+every headline number worse.
 
 ### UNMAPPABLE is load-bearing
 
@@ -318,6 +323,36 @@ scan subtracts every word sequence the system is legitimately given, because
 "chronic kidney disease" is in one of these titles and in half the criteria, and a
 check that fires on the disease name can only ever return positive.
 
+## Prior art
+
+Criteria2Query, TrialGPT, RECTIFIER, and the CHIP 2025 shared task all attack
+criteria-to-structured-query. HL7 CQL is the standards-track answer to executable
+clinical logic. What is different here is not the compilation step, which is well
+trodden, but that the executable form carries an explicit third truth value and an
+explicit per-query decision about what absence means, and that the evaluation is
+scored on a joint (coverage, silent error) pair so that abstaining everywhere cannot
+win.
+
+## Safety, scope and data
+
+- Public and synthetic data only. Synthea (Apache-2.0, sha256 pinned) and
+  ClinicalTrials.gov API v2 (US Government, public domain).
+- No credential appears in this repository. The local model shim copies an auth
+  token to a temporary directory outside the tree and deletes it at exit.
+- No consequential action is taken. The system produces a document. It enrols
+  nobody, contacts nobody, and writes to no clinical system.
+- The sign-off gate is a human action and it is left to a human. Whether it has been
+  cleared in this checkout is a fact in the repository rather than a claim in this
+  file: `python scripts/signoff.py --run runs/tierA --list` prints it. It reads
+  `runs/tierA/signoffs.jsonl`, which does not exist in this checkout, and that
+  absence is the answer rather than an oversight. Any signature here is the author's,
+  who is not a clinician, and the `reviewer_role` field records that rather than
+  leaving it to be assumed. A deployment puts a qualified clinical reviewer in
+  exactly that slot.
+- Until the gate is cleared, `scripts/worklist.py` refuses with exit code 3, and
+  that refusal is the demonstration. There is an `--allow-unsigned` flag for showing
+  the document anyway, and using it stamps **NOT FOR USE** across every page.
+
 ## How it fails
 
 The honest list, before anyone else writes it.
@@ -363,16 +398,6 @@ more specificity than this.
 Its terminology is a fraction of a real site's, its patients have no outside
 records, and its diabetes cohort is coded with a single unspecified code.
 
-## Prior art
-
-Criteria2Query, TrialGPT, RECTIFIER, and the CHIP 2025 shared task all attack
-criteria-to-structured-query. HL7 CQL is the standards-track answer to executable
-clinical logic. What is different here is not the compilation step, which is well
-trodden, but that the executable form carries an explicit third truth value and an
-explicit per-query decision about what absence means, and that the evaluation is
-scored on a joint (coverage, silent error) pair so that abstaining everywhere cannot
-win.
-
 ## Hot take
 
 Most agent evaluations report accuracy on the cases where the agent answered, and
@@ -393,22 +418,3 @@ errors are entirely on the side that costs a patient and entirely absent from th
 side that costs coverage, and that asymmetry is invisible in any single figure.
 [docs/WEAK_MODEL.md](docs/WEAK_MODEL.md) reports both columns for that reason, and
 the headline results report coverage and silent error as a pair for the same one.
-
-## Safety, scope and data
-
-- Public and synthetic data only. Synthea (Apache-2.0, sha256 pinned) and
-  ClinicalTrials.gov API v2 (US Government, public domain).
-- No credential appears in this repository. The local model shim copies an auth
-  token to a temporary directory outside the tree and deletes it at exit.
-- No consequential action is taken. The system produces a document. It enrols
-  nobody, contacts nobody, and writes to no clinical system.
-- The sign-off gate is a human action and it is left to a human. Whether it has been
-  cleared in this checkout is a fact in the repository rather than a claim in this
-  file: `python scripts/signoff.py --run runs/tierA --list` prints it, and
-  `runs/tierA/signoffs.jsonl` is where it lives. Any signature here is the author's,
-  who is not a clinician, and the `reviewer_role` field records that rather than
-  leaving it to be assumed. A deployment puts a qualified clinical reviewer in
-  exactly that slot.
-- Until the gate is cleared, `scripts/worklist.py` refuses with exit code 3, and
-  that refusal is the demonstration. There is an `--allow-unsigned` flag for showing
-  the document anyway, and using it stamps **NOT FOR USE** across every page.

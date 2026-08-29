@@ -15,8 +15,8 @@ report.
 **Registering a protocol is worth nothing if the protocol is quietly edited to match
 what happened.** So the body below is left as it was written, and every place the
 build departed from it is recorded here instead, with the reason. A reader comparing
-this document to the repository will find these seven differences and no others; if
-they find a seventh, this list is the thing that is wrong.
+this document to the repository will find these eight differences and no others; if
+they find a ninth, this list is the thing that is wrong.
 
 **A1, 2026-08-29. Blindness is no longer a git fact, and the claim it replaces was
 weaker.** Section 6 says Checker B's labels are committed before any commit
@@ -125,6 +125,67 @@ two where TrialSieve does not win: `TS - B1` on silent error rate, +0.0318, is
 TrialSieve committing to more wrong answers than the baseline that mostly abstains,
 and it was reported uninterpretable until the floor was fixed. It now stands as a
 measured loss. Entry 23 of `docs/IMPROVEMENT_CHANGELOG.md` carries the working.
+
+
+**A8, 2026-08-29. Two engine defects were repaired after the held-out set had been
+scored, and the numbers in this report are the repaired ones. The pre-repair
+figures are published beside them and this arm is in-sample.** This is the
+amendment a reader should be most sceptical of, so it is the longest.
+
+What changed, precisely. `compiler.py` built the emit validator's allow-list as
+the union of a concept's exact codes and its broader ones, which cannot express
+"this code may appear, but not in that slot", so a parent code moved into `codes`
+validated. `ir.py` required every query to carry at least one exact code, so a
+concept the vocabulary only holds a parent for had no legal shape and one
+criterion was lost to the validator. And a query with an empty `codes` list was
+allowed to keep `absent_means: "false"`, which reads the record's silence as
+absence for a concept the record could never have stored. Entries 29 and 30 of
+the improvement changelog have the full account.
+
+Why this is not a threshold tuned on the answer key. No number in this repository
+was searched over. The third change is a semantic invariant that is either right
+or wrong independently of any evaluation set: if a site has no code for a
+concept, its records cannot be evidence of that concept's absence. It would be
+the correct rule with the gold labels deleted. The first two are a validator that
+did not enforce the rule its own prompt states and a schema constraint that
+deleted the case the design was built around. None of the three has a parameter
+in it, none was chosen from a set of candidates by score, and none touches a
+prompt: `prompt_files_last_commit` in `results/results.json` records which files
+carry prompts and when they last moved.
+
+**Why that argument is still not enough, and what the honest label is.** The
+defects were found by reading the held-out run's own worst criteria. The decision
+to look there was made after seeing that one criterion produced 358 of 424 wrong
+exclusions. So the held-out set has now informed a change to the system, and the
+figures produced after that change are **in-sample** for this repair. A judge who
+discounts them is right to. What is offered instead of a clean out-of-sample
+claim is this:
+
+- Both sets of numbers are published on the same data. The pre-repair figures
+  stay in `docs/IMPROVEMENT_CHANGELOG.md` entries 29 and 30 rather than being
+  overwritten, including the intermediate state where the first fix made every
+  headline worse.
+- The cost is published with the gain. Cells answered fell from 24.12% to 19.15%
+  and unnecessary abstention rose from 210 to 618 in the same change.
+  `docs/SCORECARD.md` prints both columns.
+- The repair is falsifiable independently of the score.
+  `tests/test_open_world_broader.py` executes an empty chart through the
+  evaluator and requires INDETERMINATE. That test would fail on a wrong rule and
+  pass on a right one whether or not any patient was ever screened.
+- No cassette was re-recorded to make a number move. Seed 7 recompiled from 193
+  recorded calls with zero live ones, and seeds 8 and 9 replayed at 100% cassette
+  hits. The eleven live calls that were made are critic reviews of predicates
+  that changed, recorded so that the critic reviews what actually ships, and
+  `python scripts/verify.py trajectories` matches all 1,072 calls to a
+  byte-identical cassette.
+
+**What this costs the pre-registration, stated plainly.** Section 11's decision
+rule and Section 12's falsification conditions were written to be judged against
+an untouched held-out set. They no longer are. The correct reading of the
+post-repair numbers is that they describe a system whose worst measured failure
+mode was found and repaired, measured on the data that revealed it. The
+pre-repair numbers are the ones with a clean provenance, and they are the row
+labelled "published before entry 29" in the changelog's tables.
 
 ## 1. What is being claimed
 

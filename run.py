@@ -169,12 +169,29 @@ def t_reproduce(run: str = RUN) -> None:
     t_environment()
     t_check()
 
-    banner("replay the compile")
-    sh(PY, "scripts/compile_protocol.py", "--run", run, "--mode", "replay",
-       "--provider", "shim", "--seed", "7")
+    # Every seed the report publishes, not only the scored one. `runs/*/cells/`
+    # is 46 MB and is not committed, so a group this path does not regenerate is
+    # a group a clean clone cannot produce: the report then omits it, the diff
+    # against `results/published/` says DIFFERENT, and the reproduction claim is
+    # false for everyone except the machine that happened to have the files.
+    # That is what a clean clone did before these three lines existed.
+    banner("replay the compile, every published seed")
+    for seed in ("7", "8", "9"):
+        sh(PY, "scripts/compile_protocol.py", "--run", run, "--mode", "replay",
+           "--provider", "shim", "--seed", seed)
 
-    banner("run the free arms over the whole panel")
-    sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "TS,B0,B1")
+    banner("run the free arms over the whole panel, every published seed")
+    for seed in ("7", "8", "9"):
+        sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay",
+           "--arms", "TS,B0,B1", "--seed", seed)
+
+    # The degradation curve. The engine reads a chart that has been damaged in a
+    # seeded, reproducible way, so these arms cost nothing but are published and
+    # therefore have to be regenerable here.
+    banner("run the degradation curve")
+    for k in ("0.1", "0.2", "0.4"):
+        sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay",
+           "--arms", "TS,B0,B1", "--seed", "7", "--k", k, "--degrade-seed", "101")
 
     # The same compiled predicates again, with every closed-world decision the
     # compiler made discarded. It reports how much of the system's error is the

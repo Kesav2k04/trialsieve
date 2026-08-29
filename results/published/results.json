@@ -2203,15 +2203,15 @@
      "arm": "TS",
      "n_cells": 15400,
      "n_scoreable": 15400,
-     "n_committed": 3725,
-     "coverage": 0.2419,
-     "ser": 0.0318,
-     "n_silent": 489,
-     "n_false_fails": 86,
-     "n_false_meets": 403,
+     "n_committed": 2963,
+     "coverage": 0.1924,
+     "ser": 0.0073,
+     "n_silent": 112,
+     "n_false_fails": 67,
+     "n_false_meets": 45,
      "n_error": 0,
-     "unnecessary_abstention": 220,
-     "resolved_correct_per_screen": 2.8017,
+     "unnecessary_abstention": 605,
+     "resolved_correct_per_screen": 2.4684,
      "n_unique_criteria": 40,
      "confusion": {
       "FAILS": {
@@ -2220,13 +2220,13 @@
        "MEETS": 38
       },
       "INDETERMINATE": {
-       "INDETERMINATE": 11455,
-       "MEETS": 365,
-       "FAILS": 24
+       "INDETERMINATE": 11832,
+       "MEETS": 7,
+       "FAILS": 5
       },
       "MEETS": {
-       "MEETS": 2528,
-       "INDETERMINATE": 160,
+       "MEETS": 2143,
+       "INDETERMINATE": 545,
        "FAILS": 62
       }
      }
@@ -2290,9 +2290,9 @@
     "TS": {
      "arm": "TS",
      "n_screens": 1155,
-     "n_ineligible": 537,
-     "reduction": 0.4649,
-     "false_exclusions": 20,
+     "n_ineligible": 533,
+     "reduction": 0.4615,
+     "false_exclusions": 18,
      "false_exclusion_examples": [
       {
        "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
@@ -2381,18 +2381,22 @@
        ]
       },
       {
-       "patient_id": "509f9a77-2a22-f98b-c539-9a44057efb51",
-       "trial": "NCT06989723",
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06989723-EXC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       },
       {
-       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "patient_id": "63d20fbe-d046-cc9f-59b7-c51c073583c1",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
@@ -2937,13 +2941,14 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -2955,13 +2960,14 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -2973,13 +2979,14 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -2991,7 +2998,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -2999,6 +3006,7 @@
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -3010,7 +3018,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -3018,6 +3026,7 @@
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -3031,7 +3040,7 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -3040,7 +3049,7 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -3049,7 +3058,7 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -3058,7 +3067,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     },
@@ -3067,7 +3076,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     }
@@ -3075,9 +3084,9 @@
    "paired_bootstrap": [
     {
      "metric": "ser",
-     "observed_difference": -0.91591,
-     "ci_low": -0.9661,
-     "ci_high": -0.85201,
+     "observed_difference": -0.94039,
+     "ci_low": -0.97312,
+     "ci_high": -0.90117,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -3088,9 +3097,9 @@
     },
     {
      "metric": "coverage",
-     "observed_difference": -0.75812,
-     "ci_low": -0.87331,
-     "ci_high": -0.63234,
+     "observed_difference": -0.8076,
+     "ci_low": -0.90922,
+     "ci_high": -0.6913,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -3101,9 +3110,9 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": -0.94208,
-     "ci_low": -0.97299,
-     "ci_high": -0.90526,
+     "observed_difference": -0.94331,
+     "ci_low": -0.97403,
+     "ci_high": -0.90649,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -3114,22 +3123,22 @@
     },
     {
      "metric": "ser",
-     "observed_difference": 0.03175,
-     "ci_low": 0.00214,
-     "ci_high": 0.08448,
+     "observed_difference": 0.00727,
+     "ci_low": 0.00032,
+     "ci_high": 0.01643,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     },
     {
      "metric": "coverage",
-     "observed_difference": 0.16688,
-     "ci_low": 0.07331,
-     "ci_high": 0.27403,
+     "observed_difference": 0.1174,
+     "ci_low": 0.04357,
+     "ci_high": 0.20773,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -3140,14 +3149,14 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": 0.00558,
-     "ci_low": 0.00032,
-     "ci_high": 0.01266,
+     "observed_difference": 0.00435,
+     "ci_low": 0.0,
+     "ci_high": 0.0111,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
-     "crosses_zero": false,
+     "crosses_zero": true,
      "arms": "TS - B1",
      "vs_label_floor": "below, uninterpretable"
     }
@@ -3186,12 +3195,12 @@
      "arm": "TS",
      "n_cells": 15400,
      "n_scoreable": 15400,
-     "n_committed": 3710,
-     "coverage": 0.2409,
-     "ser": 0.0318,
-     "n_silent": 489,
-     "n_false_fails": 86,
-     "n_false_meets": 403,
+     "n_committed": 3333,
+     "coverage": 0.2164,
+     "ser": 0.0073,
+     "n_silent": 112,
+     "n_false_fails": 67,
+     "n_false_meets": 45,
      "n_error": 0,
      "unnecessary_abstention": 235,
      "resolved_correct_per_screen": 2.7887,
@@ -3203,9 +3212,9 @@
        "MEETS": 38
       },
       "INDETERMINATE": {
-       "INDETERMINATE": 11455,
-       "MEETS": 365,
-       "FAILS": 24
+       "INDETERMINATE": 11832,
+       "MEETS": 7,
+       "FAILS": 5
       },
       "MEETS": {
        "MEETS": 2513,
@@ -3273,9 +3282,9 @@
     "TS": {
      "arm": "TS",
      "n_screens": 1155,
-     "n_ineligible": 537,
-     "reduction": 0.4649,
-     "false_exclusions": 20,
+     "n_ineligible": 533,
+     "reduction": 0.4615,
+     "false_exclusions": 18,
      "false_exclusion_examples": [
       {
        "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
@@ -3364,18 +3373,22 @@
        ]
       },
       {
-       "patient_id": "509f9a77-2a22-f98b-c539-9a44057efb51",
-       "trial": "NCT06989723",
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06989723-EXC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       },
       {
-       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
+       "patient_id": "63d20fbe-d046-cc9f-59b7-c51c073583c1",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
@@ -3920,13 +3933,14 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -3938,13 +3952,14 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -3956,13 +3971,14 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -3974,7 +3990,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -3982,6 +3998,7 @@
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -3993,7 +4010,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -4001,6 +4018,7 @@
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -4014,7 +4032,7 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -4023,7 +4041,7 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -4032,7 +4050,7 @@
      "reduction": 0.4346,
      "n_ineligible": 502,
      "false_exclusions": 0,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -4041,7 +4059,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     },
@@ -4050,7 +4068,7 @@
      "reduction": 0.4372,
      "n_ineligible": 505,
      "false_exclusions": 1,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     }
@@ -4058,9 +4076,9 @@
    "paired_bootstrap": [
     {
      "metric": "ser",
-     "observed_difference": -0.91591,
-     "ci_low": -0.9661,
-     "ci_high": -0.85201,
+     "observed_difference": -0.94039,
+     "ci_low": -0.97312,
+     "ci_high": -0.90117,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -4071,9 +4089,9 @@
     },
     {
      "metric": "coverage",
-     "observed_difference": -0.75909,
-     "ci_low": -0.87357,
-     "ci_high": -0.63396,
+     "observed_difference": -0.78357,
+     "ci_low": -0.89208,
+     "ci_high": -0.66234,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -4084,9 +4102,9 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": -0.94208,
-     "ci_low": -0.97299,
-     "ci_high": -0.90526,
+     "observed_difference": -0.94331,
+     "ci_low": -0.97403,
+     "ci_high": -0.90649,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -4097,22 +4115,22 @@
     },
     {
      "metric": "ser",
-     "observed_difference": 0.03175,
-     "ci_low": 0.00214,
-     "ci_high": 0.08448,
+     "observed_difference": 0.00727,
+     "ci_low": 0.00032,
+     "ci_high": 0.01643,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     },
     {
      "metric": "coverage",
-     "observed_difference": 0.16591,
-     "ci_low": 0.07286,
-     "ci_high": 0.27208,
+     "observed_difference": 0.14143,
+     "ci_low": 0.05708,
+     "ci_high": 0.24123,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -4123,14 +4141,14 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": 0.00558,
-     "ci_low": 0.00032,
-     "ci_high": 0.01266,
+     "observed_difference": 0.00435,
+     "ci_low": 0.0,
+     "ci_high": 0.0111,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
-     "crosses_zero": false,
+     "crosses_zero": true,
      "arms": "TS - B1",
      "vs_label_floor": "below, uninterpretable"
     }
@@ -4169,30 +4187,30 @@
      "arm": "TS",
      "n_cells": 15400,
      "n_scoreable": 15400,
-     "n_committed": 3663,
-     "coverage": 0.2379,
-     "ser": 0.0308,
-     "n_silent": 475,
-     "n_false_fails": 423,
-     "n_false_meets": 52,
+     "n_committed": 2897,
+     "coverage": 0.1881,
+     "ser": 0.0075,
+     "n_silent": 116,
+     "n_false_fails": 65,
+     "n_false_meets": 51,
      "n_error": 0,
-     "unnecessary_abstention": 228,
-     "resolved_correct_per_screen": 2.7602,
+     "unnecessary_abstention": 635,
+     "resolved_correct_per_screen": 2.4078,
      "n_unique_criteria": 40,
      "confusion": {
       "FAILS": {
-       "FAILS": 658,
-       "INDETERMINATE": 79,
+       "FAILS": 666,
+       "INDETERMINATE": 71,
        "MEETS": 40
       },
       "INDETERMINATE": {
-       "FAILS": 367,
-       "INDETERMINATE": 11509,
-       "MEETS": 12
+       "INDETERMINATE": 11868,
+       "MEETS": 11,
+       "FAILS": 9
       },
       "MEETS": {
-       "MEETS": 2530,
-       "INDETERMINATE": 149,
+       "MEETS": 2115,
+       "INDETERMINATE": 564,
        "FAILS": 56
       }
      }
@@ -4256,95 +4274,119 @@
     "TS": {
      "arm": "TS",
      "n_screens": 1155,
-     "n_ineligible": 683,
-     "reduction": 0.5913,
-     "false_exclusions": 189,
+     "n_ineligible": 510,
+     "reduction": 0.4416,
+     "false_exclusions": 19,
      "false_exclusion_examples": [
       {
-       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "1d3d0ba6-5475-07c2-0b40-562ad75fdf26",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "2c622c62-af49-25e3-4f67-3ab19a455bb2",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "4c7bbf23-68f4-86e8-c61e-1a1b1e81c4ea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-EXC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       }
@@ -4876,15 +4918,16 @@
    "operating_curve_TS": [
     {
      "false_exclusion_budget": 0,
-     "reduction": 0.161,
-     "n_ineligible": 186,
+     "reduction": 0.168,
+     "n_ineligible": 194,
      "false_exclusions": 0,
-     "criteria_used": 5,
+     "criteria_used": 6,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01"
      ],
      "in_sample": true
@@ -4894,12 +4937,13 @@
      "reduction": 0.2727,
      "n_ineligible": 315,
      "false_exclusions": 1,
-     "criteria_used": 6,
+     "criteria_used": 7,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -4910,13 +4954,14 @@
      "reduction": 0.3706,
      "n_ineligible": 428,
      "false_exclusions": 1,
-     "criteria_used": 7,
+     "criteria_used": 8,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -4927,13 +4972,14 @@
      "reduction": 0.4173,
      "n_ineligible": 482,
      "false_exclusions": 3,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -4945,7 +4991,7 @@
      "reduction": 0.4182,
      "n_ineligible": 483,
      "false_exclusions": 4,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -4953,6 +4999,7 @@
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -4963,19 +5010,19 @@
    "operating_curve_TS_crossfitted": [
     {
      "false_exclusion_budget": 0,
-     "reduction": 0.2052,
-     "n_ineligible": 237,
+     "reduction": 0.2104,
+     "n_ineligible": 243,
      "false_exclusions": 1,
-     "criteria_used": 7,
+     "criteria_used": 8,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 1,
-     "reduction": 0.2052,
-     "n_ineligible": 237,
+     "reduction": 0.2104,
+     "n_ineligible": 243,
      "false_exclusions": 1,
-     "criteria_used": 7,
+     "criteria_used": 8,
      "folds": 5,
      "n_patients": 385
     },
@@ -4984,7 +5031,7 @@
      "reduction": 0.2935,
      "n_ineligible": 339,
      "false_exclusions": 1,
-     "criteria_used": 7,
+     "criteria_used": 8,
      "folds": 5,
      "n_patients": 385
     },
@@ -4993,7 +5040,7 @@
      "reduction": 0.4009,
      "n_ineligible": 463,
      "false_exclusions": 3,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
@@ -5002,7 +5049,7 @@
      "reduction": 0.4182,
      "n_ineligible": 483,
      "false_exclusions": 4,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     }
@@ -5010,9 +5057,9 @@
    "paired_bootstrap": [
     {
      "metric": "ser",
-     "observed_difference": -0.9187,
-     "ci_low": -0.96669,
-     "ci_high": -0.85753,
+     "observed_difference": -0.94201,
+     "ci_low": -0.97416,
+     "ci_high": -0.90344,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5023,9 +5070,9 @@
     },
     {
      "metric": "coverage",
-     "observed_difference": -0.76214,
-     "ci_low": -0.87571,
-     "ci_high": -0.63773,
+     "observed_difference": -0.81188,
+     "ci_low": -0.91208,
+     "ci_high": -0.69727,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5036,9 +5083,9 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": -0.92208,
-     "ci_low": -0.96812,
-     "ci_high": -0.86208,
+     "observed_difference": -0.94532,
+     "ci_low": -0.97532,
+     "ci_high": -0.90987,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5049,22 +5096,22 @@
     },
     {
      "metric": "ser",
-     "observed_difference": 0.03084,
-     "ci_low": 0.00234,
-     "ci_high": 0.08143,
+     "observed_difference": 0.00753,
+     "ci_low": 0.00039,
+     "ci_high": 0.01695,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     },
     {
      "metric": "coverage",
-     "observed_difference": 0.16286,
-     "ci_low": 0.07091,
-     "ci_high": 0.2689,
+     "observed_difference": 0.11312,
+     "ci_low": 0.04123,
+     "ci_high": 0.20091,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5075,16 +5122,16 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": 0.02747,
-     "ci_low": 0.00058,
-     "ci_high": 0.07662,
+     "observed_difference": 0.00422,
+     "ci_low": 0.00026,
+     "ci_high": 0.01045,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     }
    ]
   },
@@ -5121,30 +5168,30 @@
      "arm": "TS",
      "n_cells": 15400,
      "n_scoreable": 15400,
-     "n_committed": 3608,
-     "coverage": 0.2343,
-     "ser": 0.0303,
-     "n_silent": 467,
-     "n_false_fails": 422,
+     "n_committed": 2842,
+     "coverage": 0.1845,
+     "ser": 0.0068,
+     "n_silent": 105,
+     "n_false_fails": 60,
      "n_false_meets": 45,
      "n_error": 0,
-     "unnecessary_abstention": 258,
-     "resolved_correct_per_screen": 2.7195,
+     "unnecessary_abstention": 662,
+     "resolved_correct_per_screen": 2.3697,
      "n_unique_criteria": 40,
      "confusion": {
       "FAILS": {
-       "FAILS": 647,
-       "INDETERMINATE": 102,
+       "FAILS": 655,
+       "INDETERMINATE": 94,
        "MEETS": 26
       },
       "INDETERMINATE": {
-       "FAILS": 372,
-       "INDETERMINATE": 11534,
+       "INDETERMINATE": 11896,
+       "FAILS": 10,
        "MEETS": 19
       },
       "MEETS": {
-       "MEETS": 2494,
-       "INDETERMINATE": 156,
+       "MEETS": 2082,
+       "INDETERMINATE": 568,
        "FAILS": 50
       }
      }
@@ -5208,95 +5255,123 @@
     "TS": {
      "arm": "TS",
      "n_screens": 1155,
-     "n_ineligible": 679,
-     "reduction": 0.5879,
-     "false_exclusions": 188,
+     "n_ineligible": 505,
+     "reduction": 0.4372,
+     "false_exclusions": 17,
      "false_exclusion_examples": [
       {
-       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "patient_id": "1d3d0ba6-5475-07c2-0b40-562ad75fdf26",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "3a364909-94ec-e0c4-0156-8a2e15fa354e",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "418c6a4c-1615-cba9-80b3-ac2901f4c07f",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "4c7bbf23-68f4-86e8-c61e-1a1b1e81c4ea",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-EXC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
+       "patient_id": "60b0873c-9665-b3f0-61f4-d09ae9667a27",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       },
       {
-       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
+       "patient_id": "63d20fbe-d046-cc9f-59b7-c51c073583c1",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       },
       {
-       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
+       "patient_id": "67c6597f-c239-a595-beac-b2941e7b54ff",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       }
@@ -5828,28 +5903,30 @@
    "operating_curve_TS": [
     {
      "false_exclusion_budget": 0,
-     "reduction": 0.1411,
-     "n_ineligible": 163,
+     "reduction": 0.1481,
+     "n_ineligible": 171,
      "false_exclusions": 0,
-     "criteria_used": 4,
+     "criteria_used": 5,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01"
      ],
      "in_sample": true
     },
     {
      "false_exclusion_budget": 1,
-     "reduction": 0.2468,
-     "n_ineligible": 285,
+     "reduction": 0.2485,
+     "n_ineligible": 287,
      "false_exclusions": 1,
-     "criteria_used": 5,
+     "criteria_used": 6,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -5857,15 +5934,16 @@
     },
     {
      "false_exclusion_budget": 2,
-     "reduction": 0.3394,
-     "n_ineligible": 392,
+     "reduction": 0.3411,
+     "n_ineligible": 394,
      "false_exclusions": 2,
-     "criteria_used": 6,
+     "criteria_used": 7,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -5873,16 +5951,17 @@
     },
     {
      "false_exclusion_budget": 5,
-     "reduction": 0.3576,
-     "n_ineligible": 413,
+     "reduction": 0.3593,
+     "n_ineligible": 415,
      "false_exclusions": 2,
-     "criteria_used": 7,
+     "criteria_used": 8,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -5890,10 +5969,10 @@
     },
     {
      "false_exclusion_budget": 10,
-     "reduction": 0.4087,
-     "n_ineligible": 472,
+     "reduction": 0.4104,
+     "n_ineligible": 474,
      "false_exclusions": 3,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -5901,6 +5980,7 @@
       "NCT06983054-INC-02",
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02",
       "NCT06989723-INC-05"
@@ -5911,46 +5991,46 @@
    "operating_curve_TS_crossfitted": [
     {
      "false_exclusion_budget": 0,
-     "reduction": 0.2017,
-     "n_ineligible": 233,
+     "reduction": 0.2069,
+     "n_ineligible": 239,
      "false_exclusions": 2,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 1,
-     "reduction": 0.2017,
-     "n_ineligible": 233,
+     "reduction": 0.2069,
+     "n_ineligible": 239,
      "false_exclusions": 2,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 2,
-     "reduction": 0.2866,
-     "n_ineligible": 331,
+     "reduction": 0.2883,
+     "n_ineligible": 333,
      "false_exclusions": 2,
-     "criteria_used": 8,
+     "criteria_used": 9,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 5,
-     "reduction": 0.3706,
-     "n_ineligible": 428,
+     "reduction": 0.3723,
+     "n_ineligible": 430,
      "false_exclusions": 3,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 10,
-     "reduction": 0.4087,
-     "n_ineligible": 472,
+     "reduction": 0.4104,
+     "n_ineligible": 474,
      "false_exclusions": 3,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     }
@@ -5958,9 +6038,9 @@
    "paired_bootstrap": [
     {
      "metric": "ser",
-     "observed_difference": -0.91935,
-     "ci_low": -0.96701,
-     "ci_high": -0.85831,
+     "observed_difference": -0.94286,
+     "ci_low": -0.97429,
+     "ci_high": -0.90519,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5971,9 +6051,9 @@
     },
     {
      "metric": "coverage",
-     "observed_difference": -0.76571,
-     "ci_low": -0.87792,
-     "ci_high": -0.6426,
+     "observed_difference": -0.81545,
+     "ci_low": -0.91409,
+     "ci_high": -0.70201,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5984,9 +6064,9 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": -0.92227,
-     "ci_low": -0.96825,
-     "ci_high": -0.86227,
+     "observed_difference": -0.94578,
+     "ci_low": -0.97539,
+     "ci_high": -0.91019,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -5997,22 +6077,22 @@
     },
     {
      "metric": "ser",
-     "observed_difference": 0.03032,
-     "ci_low": 0.00221,
-     "ci_high": 0.08123,
+     "observed_difference": 0.00682,
+     "ci_low": 0.00065,
+     "ci_high": 0.015,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     },
     {
      "metric": "coverage",
-     "observed_difference": 0.15929,
-     "ci_low": 0.0687,
-     "ci_high": 0.2637,
+     "observed_difference": 0.10955,
+     "ci_low": 0.03974,
+     "ci_high": 0.19558,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -6023,16 +6103,16 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": 0.0274,
-     "ci_low": 0.00065,
-     "ci_high": 0.07675,
+     "observed_difference": 0.0039,
+     "ci_low": 0.00026,
+     "ci_high": 0.00948,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     }
    ]
   },
@@ -6069,30 +6149,30 @@
      "arm": "TS",
      "n_cells": 15400,
      "n_scoreable": 15400,
-     "n_committed": 3458,
-     "coverage": 0.2245,
-     "ser": 0.0327,
-     "n_silent": 503,
-     "n_false_fails": 442,
-     "n_false_meets": 61,
+     "n_committed": 2693,
+     "coverage": 0.1749,
+     "ser": 0.0088,
+     "n_silent": 135,
+     "n_false_fails": 81,
+     "n_false_meets": 54,
      "n_error": 0,
-     "unnecessary_abstention": 309,
-     "resolved_correct_per_screen": 2.5584,
+     "unnecessary_abstention": 706,
+     "resolved_correct_per_screen": 2.2147,
      "n_unique_criteria": 40,
      "confusion": {
       "FAILS": {
-       "FAILS": 543,
-       "INDETERMINATE": 162,
+       "FAILS": 551,
+       "INDETERMINATE": 154,
        "MEETS": 18
       },
       "INDETERMINATE": {
-       "FAILS": 386,
-       "INDETERMINATE": 11633,
-       "MEETS": 43
+       "INDETERMINATE": 12001,
+       "MEETS": 36,
+       "FAILS": 25
       },
       "MEETS": {
-       "MEETS": 2412,
-       "INDETERMINATE": 147,
+       "MEETS": 2007,
+       "INDETERMINATE": 552,
        "FAILS": 56
       }
      }
@@ -6156,95 +6236,107 @@
     "TS": {
      "arm": "TS",
      "n_screens": 1155,
-     "n_ineligible": 652,
-     "reduction": 0.5645,
-     "false_exclusions": 206,
+     "n_ineligible": 463,
+     "reduction": 0.4009,
+     "false_exclusions": 31,
      "false_exclusion_examples": [
       {
-       "patient_id": "0288c42c-43a1-9878-4a9d-6b96caa12c40",
+       "patient_id": "153c68e6-08e5-a751-1f6b-4439d279681d",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "1d3d0ba6-5475-07c2-0b40-562ad75fdf26",
+       "trial": "NCT06983054",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
+        {
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
+        }
+       ]
+      },
+      {
+       "patient_id": "1f06f787-61cd-dd2d-a6b2-347507100f10",
+       "trial": "NCT06989723",
+       "gold_decision": "NEEDS_REVIEW",
+       "criteria": [
+        {
+         "criterion_id": "NCT06989723-INC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "03777c32-ed98-50e2-f75d-cbcad532c610",
-       "trial": "NCT06983054",
+       "patient_id": "22e14c09-32f4-0b73-36e3-b38c967afd1b",
+       "trial": "NCT06989723",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06989723-INC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "03b291e7-6d3f-d687-eac7-cb46455f34e3",
-       "trial": "NCT06983054",
+       "patient_id": "29b21635-3f05-3634-1941-4122fb2471ce",
+       "trial": "NCT06989723",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06989723-INC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "03bb882e-730f-0d96-cd3d-3caee932fef6",
-       "trial": "NCT06983054",
+       "patient_id": "2c622c62-af49-25e3-4f67-3ab19a455bb2",
+       "trial": "NCT06989723",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06989723-INC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "055bcb42-de36-4673-6d1a-628d1817dcea",
-       "trial": "NCT06983054",
+       "patient_id": "30813a62-aa9f-3c7c-cc52-6c3957a3c1b1",
+       "trial": "NCT06989723",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
+         "criterion_id": "NCT06989723-INC-05",
          "gold": "INDETERMINATE"
         }
        ]
       },
       {
-       "patient_id": "05801c88-9f2e-536e-9068-4b7b4431d072",
+       "patient_id": "38f38890-b80f-6542-51d4-882c7b37b0bf",
        "trial": "NCT06983054",
        "gold_decision": "NEEDS_REVIEW",
        "criteria": [
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "065e8a3d-b782-c088-2a17-6498d7d190bc",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
+         "criterion_id": "NCT06983054-INC-07",
+         "gold": "MEETS"
+        },
         {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
-        }
-       ]
-      },
-      {
-       "patient_id": "0896b0af-df68-c103-5db4-018d0ca3256e",
-       "trial": "NCT06983054",
-       "gold_decision": "NEEDS_REVIEW",
-       "criteria": [
-        {
-         "criterion_id": "NCT06983054-INC-01",
-         "gold": "INDETERMINATE"
+         "criterion_id": "NCT06983054-EXC-01",
+         "gold": "MEETS"
         }
        ]
       }
@@ -6776,10 +6868,10 @@
    "operating_curve_TS": [
     {
      "false_exclusion_budget": 0,
-     "reduction": 0.3195,
-     "n_ineligible": 369,
+     "reduction": 0.3212,
+     "n_ineligible": 371,
      "false_exclusions": 0,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -6788,6 +6880,7 @@
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
       "NCT06983054-INC-09",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -6795,10 +6888,10 @@
     },
     {
      "false_exclusion_budget": 1,
-     "reduction": 0.3195,
-     "n_ineligible": 369,
+     "reduction": 0.3212,
+     "n_ineligible": 371,
      "false_exclusions": 0,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -6807,6 +6900,7 @@
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
       "NCT06983054-INC-09",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -6814,10 +6908,10 @@
     },
     {
      "false_exclusion_budget": 2,
-     "reduction": 0.3195,
-     "n_ineligible": 369,
+     "reduction": 0.3212,
+     "n_ineligible": 371,
      "false_exclusions": 0,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -6826,6 +6920,7 @@
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
       "NCT06983054-INC-09",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -6833,10 +6928,10 @@
     },
     {
      "false_exclusion_budget": 5,
-     "reduction": 0.3203,
-     "n_ineligible": 370,
+     "reduction": 0.3221,
+     "n_ineligible": 372,
      "false_exclusions": 1,
-     "criteria_used": 10,
+     "criteria_used": 11,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -6846,6 +6941,7 @@
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
       "NCT06983054-INC-09",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -6853,10 +6949,10 @@
     },
     {
      "false_exclusion_budget": 10,
-     "reduction": 0.3203,
-     "n_ineligible": 370,
+     "reduction": 0.3221,
+     "n_ineligible": 372,
      "false_exclusions": 1,
-     "criteria_used": 10,
+     "criteria_used": 11,
      "criteria": [
       "NCT06717698-INC-03",
       "NCT06717698-INC-05",
@@ -6866,6 +6962,7 @@
       "NCT06983054-INC-03",
       "NCT06983054-INC-04",
       "NCT06983054-INC-09",
+      "NCT06989723-EXC-01",
       "NCT06989723-INC-01",
       "NCT06989723-INC-02"
      ],
@@ -6875,46 +6972,46 @@
    "operating_curve_TS_crossfitted": [
     {
      "false_exclusion_budget": 0,
-     "reduction": 0.3195,
-     "n_ineligible": 369,
+     "reduction": 0.3212,
+     "n_ineligible": 371,
      "false_exclusions": 0,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 1,
-     "reduction": 0.3195,
-     "n_ineligible": 369,
+     "reduction": 0.3212,
+     "n_ineligible": 371,
      "false_exclusions": 0,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 2,
-     "reduction": 0.3195,
-     "n_ineligible": 369,
+     "reduction": 0.3212,
+     "n_ineligible": 371,
      "false_exclusions": 0,
-     "criteria_used": 9,
+     "criteria_used": 10,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 5,
-     "reduction": 0.3203,
-     "n_ineligible": 370,
+     "reduction": 0.3221,
+     "n_ineligible": 372,
      "false_exclusions": 1,
-     "criteria_used": 10,
+     "criteria_used": 11,
      "folds": 5,
      "n_patients": 385
     },
     {
      "false_exclusion_budget": 10,
-     "reduction": 0.3203,
-     "n_ineligible": 370,
+     "reduction": 0.3221,
+     "n_ineligible": 372,
      "false_exclusions": 1,
-     "criteria_used": 10,
+     "criteria_used": 11,
      "folds": 5,
      "n_patients": 385
     }
@@ -6922,9 +7019,9 @@
    "paired_bootstrap": [
     {
      "metric": "ser",
-     "observed_difference": -0.92039,
-     "ci_low": -0.9676,
-     "ci_high": -0.85948,
+     "observed_difference": -0.94429,
+     "ci_low": -0.97545,
+     "ci_high": -0.90682,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -6935,9 +7032,9 @@
     },
     {
      "metric": "coverage",
-     "observed_difference": -0.77545,
-     "ci_low": -0.88312,
-     "ci_high": -0.65558,
+     "observed_difference": -0.82513,
+     "ci_low": -0.91968,
+     "ci_high": -0.71617,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -6948,9 +7045,9 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": -0.92435,
-     "ci_low": -0.96974,
-     "ci_high": -0.86481,
+     "observed_difference": -0.94779,
+     "ci_low": -0.97656,
+     "ci_high": -0.91325,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -6961,22 +7058,22 @@
     },
     {
      "metric": "ser",
-     "observed_difference": 0.03266,
-     "ci_low": 0.00234,
-     "ci_high": 0.08494,
+     "observed_difference": 0.00877,
+     "ci_low": 0.00019,
+     "ci_high": 0.02097,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     },
     {
      "metric": "coverage",
-     "observed_difference": 0.14955,
-     "ci_low": 0.06416,
-     "ci_high": 0.24955,
+     "observed_difference": 0.09987,
+     "ci_low": 0.0361,
+     "ci_high": 0.1789,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
@@ -6987,16 +7084,16 @@
     },
     {
      "metric": "false_fails",
-     "observed_difference": 0.0287,
-     "ci_low": 0.00136,
-     "ci_high": 0.07877,
+     "observed_difference": 0.00526,
+     "ci_low": 0.00019,
+     "ci_high": 0.01221,
      "b": 10000,
      "n_unique_criteria": 40,
      "n_patients": 385,
      "n_shared_cells": 15400,
      "crosses_zero": false,
      "arms": "TS - B1",
-     "vs_label_floor": "above"
+     "vs_label_floor": "below, uninterpretable"
     }
    ]
   },
@@ -7387,28 +7484,28 @@
   "exhausted_retries": []
  },
  "noise_floor_ser_across_seeds": {
-  "mean": 0.0236,
-  "sd": 0.0142,
+  "mean": 0.00727,
+  "sd": 6e-05,
   "min": 0.0072,
-  "max": 0.0318,
-  "range": 0.0246,
+  "max": 0.0073,
+  "range": 0.0001,
   "n_seeds": 3
  },
  "noise_floor_primary_across_seeds": {
   "panel_reduction": {
-   "mean": 0.46377,
-   "sd": 0.00196,
+   "mean": 0.4615,
+   "sd": 0.0,
    "min": 0.4615,
-   "max": 0.4649,
-   "range": 0.0034,
+   "max": 0.4615,
+   "range": 0.0,
    "n_seeds": 3
   },
   "false_exclusions": {
-   "mean": 19.33333,
-   "sd": 1.1547,
+   "mean": 18.0,
+   "sd": 0.0,
    "min": 18.0,
-   "max": 20.0,
-   "range": 2.0,
+   "max": 18.0,
+   "range": 0.0,
    "n_seeds": 3
   }
  },
@@ -7423,27 +7520,27 @@
   },
   {
    "k_percent": 10,
-   "coverage": 0.2379,
-   "ser": 0.0308,
-   "false_fails": 423,
-   "reduction": 0.5913,
-   "false_exclusions": 189
+   "coverage": 0.1881,
+   "ser": 0.0075,
+   "false_fails": 65,
+   "reduction": 0.4416,
+   "false_exclusions": 19
   },
   {
    "k_percent": 20,
-   "coverage": 0.2343,
-   "ser": 0.0303,
-   "false_fails": 422,
-   "reduction": 0.5879,
-   "false_exclusions": 188
+   "coverage": 0.1845,
+   "ser": 0.0068,
+   "false_fails": 60,
+   "reduction": 0.4372,
+   "false_exclusions": 17
   },
   {
    "k_percent": 40,
-   "coverage": 0.2245,
-   "ser": 0.0327,
-   "false_fails": 442,
-   "reduction": 0.5645,
-   "false_exclusions": 206
+   "coverage": 0.1749,
+   "ser": 0.0088,
+   "false_fails": 81,
+   "reduction": 0.4009,
+   "false_exclusions": 31
   }
  ],
  "criterion_coverage": {

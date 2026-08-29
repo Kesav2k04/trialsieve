@@ -131,11 +131,12 @@ def main() -> int:
             "Two things a reader should hold against this. The subset was chosen by "
             "counting each criterion's false exclusions on the same patients it is then "
             "applied to, so it reports that a clean subset existed rather than that it "
-            "could have been picked in advance; `operating_curve_cv` in "
-            "`results/RESULTS.md` is the cross-fitted answer to that. And running every "
-            "compiled criterion instead removes almost the whole panel, because one of "
-            "them treats a silent record as a negative. That configuration is measured "
-            "in the report and is not what a deployment would run.",
+            "could have been picked in advance; the cross-fitted curve in "
+            "`results/RESULTS.md`, headed *TrialSieve operating curve, cross-fitted*, "
+            "is the answer to that and agrees with this row. And running every compiled "
+            "criterion instead rules out more of the panel and wrongly removes patients "
+            "the labels do not rule out, which is why the registered outcome for that "
+            "configuration reads VOID. Both are in the report.",
             "",
         ]
         marker = "## What removed people"

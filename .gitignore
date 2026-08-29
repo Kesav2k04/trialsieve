@@ -50,14 +50,17 @@ runs/checker_b/*
 runs/probe-weak/*
 !runs/probe-weak/cassettes/
 !runs/probe-weak/trajectories/
+!runs/probe-weak/probe.json
 !runs/probe-before/
 runs/probe-before/*
 !runs/probe-before/cassettes/
 !runs/probe-before/trajectories/
+!runs/probe-before/probe.json
 !runs/probe-after/
 runs/probe-after/*
 !runs/probe-after/cassettes/
 !runs/probe-after/trajectories/
+!runs/probe-after/probe.json
 
 # Cells are one row per patient-criterion pair. Replay regenerates them from the
 # cassettes in seconds, and shipping several hundred thousand rows would bury
@@ -81,10 +84,10 @@ profile-claim.lock
 # `python scripts/make_video.py shots` recaptures, `assemble` re-renders.
 docs/video/frames/
 docs/video/shots/
-# The rendered file itself is tens of megabytes and is hosted, not committed.
-# The link is in docs/VIDEO.md. What is tracked is everything needed to rebuild
-# it: the script, the narration audio, its cue timings, and the shot spec.
-docs/video/*.mp4
+# The rendered file is committed. It is 9.9 MB, which a clone can carry, and a
+# judge who cannot reach the hosted copy can still watch the deliverable. What is
+# tracked beside it is everything needed to rebuild it from scratch: the script,
+# the narration audio, its cue timings, and the shot spec.
 
 # Internal planning and the internal review passes. These carry internal
 # notes and working notes, which is

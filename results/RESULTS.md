@@ -161,7 +161,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | coverage | SER   | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
 |-----|----------|-------|--------|-------------|-------------|------------------------|--------|-----------------|
-| TS  | 24.2%    | 3.2%  | 489    | 86          | 403         | 220                    | 0      | 40              |
+| TS  | 19.2%    | 0.7%  | 112    | 67          | 45          | 605                    | 0      | 40              |
 | B0  | 100.0%   | 94.8% | 14594  | 14594       | 0           | 0                      | 0      | 40              |
 | B1  | 7.5%     | 0.0%  | 0      | 0           | 0           | 2401                   | 0      | 40              |
 
@@ -171,7 +171,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | primary outcome | false exclusions | reduction, descriptive only |
 |-----|-----------------|------------------|-----------------------------|
-| TS  | **VOID**        | 20               | 46.5%                       |
+| TS  | **VOID**        | 18               | 46.1%                       |
 | B0  | **VOID**        | 592              | 100.0%                      |
 | B1  | 2.2%            | 0                | 2.2%                        |
 
@@ -179,7 +179,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound                |
 |-----|---------|-----------|-----------|------------------|---------------|--------------------------------|
-| TS  | 1155    | 537       | 46.5%     | **20**           | 12            | n/a                            |
+| TS  | 1155    | 533       | 46.1%     | **18**           | 12            | n/a                            |
 | B0  | 1155    | 1155      | 100.0%    | **592**          | 40            | n/a                            |
 | B1  | 1155    | 25        | 2.2%      | **0**            | 2             | 1.500 (rule of three, n_eff=2) |
 
@@ -187,11 +187,11 @@ The last column compares the absolute difference against the rate at which the t
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
 |------------------------|-----------|-----------|-------------------------|---------------|
-| 0                      | 43.5%     | 502       | 0                       | 8             |
-| 1                      | 43.5%     | 502       | 0                       | 8             |
-| 2                      | 43.5%     | 502       | 0                       | 8             |
-| 5                      | 43.7%     | 505       | 1                       | 9             |
-| 10                     | 43.7%     | 505       | 1                       | 9             |
+| 0                      | 43.5%     | 502       | 0                       | 9             |
+| 1                      | 43.5%     | 502       | 0                       | 9             |
+| 2                      | 43.5%     | 502       | 0                       | 9             |
+| 5                      | 43.7%     | 505       | 1                       | 10            |
+| 10                     | 43.7%     | 505       | 1                       | 10            |
 
 The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
 
@@ -199,25 +199,25 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
 |------------------------|-----------|-----------|-------------------------|-----------------------|
-| 0                      | 43.5%     | 502       | 0                       | 8                     |
-| 1                      | 43.5%     | 502       | 0                       | 8                     |
-| 2                      | 43.5%     | 502       | 0                       | 8                     |
-| 5                      | 43.7%     | 505       | 1                       | 9                     |
-| 10                     | 43.7%     | 505       | 1                       | 9                     |
+| 0                      | 43.5%     | 502       | 0                       | 9                     |
+| 1                      | 43.5%     | 502       | 0                       | 9                     |
+| 2                      | 43.5%     | 502       | 0                       | 9                     |
+| 5                      | 43.7%     | 505       | 1                       | 10                    |
+| 10                     | 43.7%     | 505       | 1                       | 10                    |
 
-The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 8 make no false exclusion anywhere in 385 patients and the remaining 4 make 31, 31, 19, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
 | comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
 |------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9159    | [-0.9661, -0.8520] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7581    | [-0.8733, -0.6323] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9421    | [-0.9730, -0.9053] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0318    | [+0.0021, +0.0845] | no           | 40 criteria | above                      |
-| TS - B1    | coverage    | +0.1669    | [+0.0733, +0.2740] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0056    | [+0.0003, +0.0127] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B0    | ser         | -0.9404    | [-0.9731, -0.9012] | no           | 40 criteria | above                      |
+| TS - B0    | coverage    | -0.8076    | [-0.9092, -0.6913] | no           | 40 criteria | above                      |
+| TS - B0    | false_fails | -0.9433    | [-0.9740, -0.9065] | no           | 40 criteria | above                      |
+| TS - B1    | ser         | +0.0073    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1174    | [+0.0436, +0.2077] | no           | 40 criteria | above                      |
+| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0111] | yes          | 40 criteria | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
@@ -227,7 +227,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | coverage | SER   | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
 |-----|----------|-------|--------|-------------|-------------|------------------------|--------|-----------------|
-| TS  | 24.1%    | 3.2%  | 489    | 86          | 403         | 235                    | 0      | 40              |
+| TS  | 21.6%    | 0.7%  | 112    | 67          | 45          | 235                    | 0      | 40              |
 | B0  | 100.0%   | 94.8% | 14594  | 14594       | 0           | 0                      | 0      | 40              |
 | B1  | 7.5%     | 0.0%  | 0      | 0           | 0           | 2401                   | 0      | 40              |
 
@@ -237,7 +237,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | primary outcome | false exclusions | reduction, descriptive only |
 |-----|-----------------|------------------|-----------------------------|
-| TS  | **VOID**        | 20               | 46.5%                       |
+| TS  | **VOID**        | 18               | 46.1%                       |
 | B0  | **VOID**        | 592              | 100.0%                      |
 | B1  | 2.2%            | 0                | 2.2%                        |
 
@@ -245,7 +245,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound                |
 |-----|---------|-----------|-----------|------------------|---------------|--------------------------------|
-| TS  | 1155    | 537       | 46.5%     | **20**           | 12            | n/a                            |
+| TS  | 1155    | 533       | 46.1%     | **18**           | 12            | n/a                            |
 | B0  | 1155    | 1155      | 100.0%    | **592**          | 40            | n/a                            |
 | B1  | 1155    | 25        | 2.2%      | **0**            | 2             | 1.500 (rule of three, n_eff=2) |
 
@@ -253,11 +253,11 @@ The last column compares the absolute difference against the rate at which the t
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
 |------------------------|-----------|-----------|-------------------------|---------------|
-| 0                      | 43.5%     | 502       | 0                       | 8             |
-| 1                      | 43.5%     | 502       | 0                       | 8             |
-| 2                      | 43.5%     | 502       | 0                       | 8             |
-| 5                      | 43.7%     | 505       | 1                       | 9             |
-| 10                     | 43.7%     | 505       | 1                       | 9             |
+| 0                      | 43.5%     | 502       | 0                       | 9             |
+| 1                      | 43.5%     | 502       | 0                       | 9             |
+| 2                      | 43.5%     | 502       | 0                       | 9             |
+| 5                      | 43.7%     | 505       | 1                       | 10            |
+| 10                     | 43.7%     | 505       | 1                       | 10            |
 
 The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
 
@@ -265,25 +265,25 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
 |------------------------|-----------|-----------|-------------------------|-----------------------|
-| 0                      | 43.5%     | 502       | 0                       | 8                     |
-| 1                      | 43.5%     | 502       | 0                       | 8                     |
-| 2                      | 43.5%     | 502       | 0                       | 8                     |
-| 5                      | 43.7%     | 505       | 1                       | 9                     |
-| 10                     | 43.7%     | 505       | 1                       | 9                     |
+| 0                      | 43.5%     | 502       | 0                       | 9                     |
+| 1                      | 43.5%     | 502       | 0                       | 9                     |
+| 2                      | 43.5%     | 502       | 0                       | 9                     |
+| 5                      | 43.7%     | 505       | 1                       | 10                    |
+| 10                     | 43.7%     | 505       | 1                       | 10                    |
 
-The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 8 make no false exclusion anywhere in 385 patients and the remaining 4 make 31, 31, 19, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
 | comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
 |------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9159    | [-0.9661, -0.8520] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7591    | [-0.8736, -0.6340] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9421    | [-0.9730, -0.9053] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0318    | [+0.0021, +0.0845] | no           | 40 criteria | above                      |
-| TS - B1    | coverage    | +0.1659    | [+0.0729, +0.2721] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0056    | [+0.0003, +0.0127] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B0    | ser         | -0.9404    | [-0.9731, -0.9012] | no           | 40 criteria | above                      |
+| TS - B0    | coverage    | -0.7836    | [-0.8921, -0.6623] | no           | 40 criteria | above                      |
+| TS - B0    | false_fails | -0.9433    | [-0.9740, -0.9065] | no           | 40 criteria | above                      |
+| TS - B1    | ser         | +0.0073    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1414    | [+0.0571, +0.2412] | no           | 40 criteria | above                      |
+| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0111] | yes          | 40 criteria | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
@@ -293,7 +293,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | coverage | SER   | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
 |-----|----------|-------|--------|-------------|-------------|------------------------|--------|-----------------|
-| TS  | 23.8%    | 3.1%  | 475    | 423         | 52          | 228                    | 0      | 40              |
+| TS  | 18.8%    | 0.8%  | 116    | 65          | 51          | 635                    | 0      | 40              |
 | B0  | 100.0%   | 95.0% | 14623  | 14623       | 0           | 0                      | 0      | 40              |
 | B1  | 7.5%     | 0.0%  | 0      | 0           | 0           | 2357                   | 0      | 40              |
 
@@ -303,7 +303,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | primary outcome | false exclusions | reduction, descriptive only |
 |-----|-----------------|------------------|-----------------------------|
-| TS  | **VOID**        | 189              | 59.1%                       |
+| TS  | **VOID**        | 19               | 44.2%                       |
 | B0  | **VOID**        | 608              | 100.0%                      |
 | B1  | 2.2%            | 0                | 2.2%                        |
 
@@ -311,7 +311,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound                |
 |-----|---------|-----------|-----------|------------------|---------------|--------------------------------|
-| TS  | 1155    | 683       | 59.1%     | **189**          | 12            | n/a                            |
+| TS  | 1155    | 510       | 44.2%     | **19**           | 12            | n/a                            |
 | B0  | 1155    | 1155      | 100.0%    | **608**          | 40            | n/a                            |
 | B1  | 1155    | 25        | 2.2%      | **0**            | 2             | 1.500 (rule of three, n_eff=2) |
 
@@ -319,11 +319,11 @@ The last column compares the absolute difference against the rate at which the t
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
 |------------------------|-----------|-----------|-------------------------|---------------|
-| 0                      | 16.1%     | 186       | 0                       | 5             |
-| 1                      | 27.3%     | 315       | 1                       | 6             |
-| 2                      | 37.1%     | 428       | 1                       | 7             |
-| 5                      | 41.7%     | 482       | 3                       | 8             |
-| 10                     | 41.8%     | 483       | 4                       | 9             |
+| 0                      | 16.8%     | 194       | 0                       | 6             |
+| 1                      | 27.3%     | 315       | 1                       | 7             |
+| 2                      | 37.1%     | 428       | 1                       | 8             |
+| 5                      | 41.7%     | 482       | 3                       | 9             |
+| 10                     | 41.8%     | 483       | 4                       | 10            |
 
 The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
 
@@ -331,25 +331,25 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
 |------------------------|-----------|-----------|-------------------------|-----------------------|
-| 0                      | 20.5%     | 237       | 1                       | 7                     |
-| 1                      | 20.5%     | 237       | 1                       | 7                     |
-| 2                      | 29.3%     | 339       | 1                       | 7                     |
-| 5                      | 40.1%     | 463       | 3                       | 8                     |
-| 10                     | 41.8%     | 483       | 4                       | 9                     |
+| 0                      | 21.0%     | 243       | 1                       | 8                     |
+| 1                      | 21.0%     | 243       | 1                       | 8                     |
+| 2                      | 29.3%     | 339       | 1                       | 8                     |
+| 5                      | 40.1%     | 463       | 3                       | 9                     |
+| 10                     | 41.8%     | 483       | 4                       | 10                    |
 
 1 of 5 rows lose their guarantee under cross-fitting. The in-sample row is the optimism, and the cross-fitted row is the one to read.
 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------|
-| TS - B0    | ser         | -0.9187    | [-0.9667, -0.8575] | no           | 40 criteria | above          |
-| TS - B0    | coverage    | -0.7621    | [-0.8757, -0.6377] | no           | 40 criteria | above          |
-| TS - B0    | false_fails | -0.9221    | [-0.9681, -0.8621] | no           | 40 criteria | above          |
-| TS - B1    | ser         | +0.0308    | [+0.0023, +0.0814] | no           | 40 criteria | above          |
-| TS - B1    | coverage    | +0.1629    | [+0.0709, +0.2689] | no           | 40 criteria | above          |
-| TS - B1    | false_fails | +0.0275    | [+0.0006, +0.0766] | no           | 40 criteria | above          |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
+| TS - B0    | ser         | -0.9420    | [-0.9742, -0.9034] | no           | 40 criteria | above                      |
+| TS - B0    | coverage    | -0.8119    | [-0.9121, -0.6973] | no           | 40 criteria | above                      |
+| TS - B0    | false_fails | -0.9453    | [-0.9753, -0.9099] | no           | 40 criteria | above                      |
+| TS - B1    | ser         | +0.0075    | [+0.0004, +0.0169] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1131    | [+0.0412, +0.2009] | no           | 40 criteria | above                      |
+| TS - B1    | false_fails | +0.0042    | [+0.0003, +0.0104] | no           | 40 criteria | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.1% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
@@ -359,7 +359,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | coverage | SER   | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
 |-----|----------|-------|--------|-------------|-------------|------------------------|--------|-----------------|
-| TS  | 23.4%    | 3.0%  | 467    | 422         | 45          | 258                    | 0      | 40              |
+| TS  | 18.5%    | 0.7%  | 105    | 60          | 45          | 662                    | 0      | 40              |
 | B0  | 100.0%   | 95.0% | 14625  | 14625       | 0           | 0                      | 0      | 40              |
 | B1  | 7.5%     | 0.0%  | 0      | 0           | 0           | 2320                   | 0      | 40              |
 
@@ -369,7 +369,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | primary outcome | false exclusions | reduction, descriptive only |
 |-----|-----------------|------------------|-----------------------------|
-| TS  | **VOID**        | 188              | 58.8%                       |
+| TS  | **VOID**        | 17               | 43.7%                       |
 | B0  | **VOID**        | 611              | 100.0%                      |
 | B1  | 2.2%            | 0                | 2.2%                        |
 
@@ -377,7 +377,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound                |
 |-----|---------|-----------|-----------|------------------|---------------|--------------------------------|
-| TS  | 1155    | 679       | 58.8%     | **188**          | 12            | n/a                            |
+| TS  | 1155    | 505       | 43.7%     | **17**           | 12            | n/a                            |
 | B0  | 1155    | 1155      | 100.0%    | **611**          | 40            | n/a                            |
 | B1  | 1155    | 25        | 2.2%      | **0**            | 2             | 1.500 (rule of three, n_eff=2) |
 
@@ -385,11 +385,11 @@ The last column compares the absolute difference against the rate at which the t
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
 |------------------------|-----------|-----------|-------------------------|---------------|
-| 0                      | 14.1%     | 163       | 0                       | 4             |
-| 1                      | 24.7%     | 285       | 1                       | 5             |
-| 2                      | 33.9%     | 392       | 2                       | 6             |
-| 5                      | 35.8%     | 413       | 2                       | 7             |
-| 10                     | 40.9%     | 472       | 3                       | 9             |
+| 0                      | 14.8%     | 171       | 0                       | 5             |
+| 1                      | 24.9%     | 287       | 1                       | 6             |
+| 2                      | 34.1%     | 394       | 2                       | 7             |
+| 5                      | 35.9%     | 415       | 2                       | 8             |
+| 10                     | 41.0%     | 474       | 3                       | 10            |
 
 The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
 
@@ -397,25 +397,25 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
 |------------------------|-----------|-----------|-------------------------|-----------------------|
-| 0                      | 20.2%     | 233       | 2                       | 8                     |
-| 1                      | 20.2%     | 233       | 2                       | 8                     |
-| 2                      | 28.7%     | 331       | 2                       | 8                     |
-| 5                      | 37.1%     | 428       | 3                       | 9                     |
-| 10                     | 40.9%     | 472       | 3                       | 9                     |
+| 0                      | 20.7%     | 239       | 2                       | 9                     |
+| 1                      | 20.7%     | 239       | 2                       | 9                     |
+| 2                      | 28.8%     | 333       | 2                       | 9                     |
+| 5                      | 37.2%     | 430       | 3                       | 10                    |
+| 10                     | 41.0%     | 474       | 3                       | 10                    |
 
 3 of 5 rows lose their guarantee under cross-fitting. The in-sample row is the optimism, and the cross-fitted row is the one to read.
 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------|
-| TS - B0    | ser         | -0.9194    | [-0.9670, -0.8583] | no           | 40 criteria | above          |
-| TS - B0    | coverage    | -0.7657    | [-0.8779, -0.6426] | no           | 40 criteria | above          |
-| TS - B0    | false_fails | -0.9223    | [-0.9683, -0.8623] | no           | 40 criteria | above          |
-| TS - B1    | ser         | +0.0303    | [+0.0022, +0.0812] | no           | 40 criteria | above          |
-| TS - B1    | coverage    | +0.1593    | [+0.0687, +0.2637] | no           | 40 criteria | above          |
-| TS - B1    | false_fails | +0.0274    | [+0.0006, +0.0767] | no           | 40 criteria | above          |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
+| TS - B0    | ser         | -0.9429    | [-0.9743, -0.9052] | no           | 40 criteria | above                      |
+| TS - B0    | coverage    | -0.8155    | [-0.9141, -0.7020] | no           | 40 criteria | above                      |
+| TS - B0    | false_fails | -0.9458    | [-0.9754, -0.9102] | no           | 40 criteria | above                      |
+| TS - B1    | ser         | +0.0068    | [+0.0006, +0.0150] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1095    | [+0.0397, +0.1956] | no           | 40 criteria | above                      |
+| TS - B1    | false_fails | +0.0039    | [+0.0003, +0.0095] | no           | 40 criteria | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.0% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
@@ -425,7 +425,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | coverage | SER   | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
 |-----|----------|-------|--------|-------------|-------------|------------------------|--------|-----------------|
-| TS  | 22.5%    | 3.3%  | 503    | 442         | 61          | 309                    | 0      | 40              |
+| TS  | 17.5%    | 0.9%  | 135    | 81          | 54          | 706                    | 0      | 40              |
 | B0  | 100.0%   | 95.3% | 14677  | 14677       | 0           | 0                      | 0      | 40              |
 | B1  | 7.5%     | 0.0%  | 0      | 0           | 0           | 2183                   | 0      | 40              |
 
@@ -435,7 +435,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | primary outcome | false exclusions | reduction, descriptive only |
 |-----|-----------------|------------------|-----------------------------|
-| TS  | **VOID**        | 206              | 56.5%                       |
+| TS  | **VOID**        | 31               | 40.1%                       |
 | B0  | **VOID**        | 650              | 100.0%                      |
 | B1  | 2.2%            | 0                | 2.2%                        |
 
@@ -443,7 +443,7 @@ The last column compares the absolute difference against the rate at which the t
 
 | arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound                |
 |-----|---------|-----------|-----------|------------------|---------------|--------------------------------|
-| TS  | 1155    | 652       | 56.5%     | **206**          | 14            | n/a                            |
+| TS  | 1155    | 463       | 40.1%     | **31**           | 14            | n/a                            |
 | B0  | 1155    | 1155      | 100.0%    | **650**          | 40            | n/a                            |
 | B1  | 1155    | 25        | 2.2%      | **0**            | 2             | 1.500 (rule of three, n_eff=2) |
 
@@ -451,11 +451,11 @@ The last column compares the absolute difference against the rate at which the t
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
 |------------------------|-----------|-----------|-------------------------|---------------|
-| 0                      | 31.9%     | 369       | 0                       | 9             |
-| 1                      | 31.9%     | 369       | 0                       | 9             |
-| 2                      | 31.9%     | 369       | 0                       | 9             |
-| 5                      | 32.0%     | 370       | 1                       | 10            |
-| 10                     | 32.0%     | 370       | 1                       | 10            |
+| 0                      | 32.1%     | 371       | 0                       | 10            |
+| 1                      | 32.1%     | 371       | 0                       | 10            |
+| 2                      | 32.1%     | 371       | 0                       | 10            |
+| 5                      | 32.2%     | 372       | 1                       | 11            |
+| 10                     | 32.2%     | 372       | 1                       | 11            |
 
 The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
 
@@ -463,25 +463,25 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 | false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
 |------------------------|-----------|-----------|-------------------------|-----------------------|
-| 0                      | 31.9%     | 369       | 0                       | 9                     |
-| 1                      | 31.9%     | 369       | 0                       | 9                     |
-| 2                      | 31.9%     | 369       | 0                       | 9                     |
-| 5                      | 32.0%     | 370       | 1                       | 10                    |
-| 10                     | 32.0%     | 370       | 1                       | 10                    |
+| 0                      | 32.1%     | 371       | 0                       | 10                    |
+| 1                      | 32.1%     | 371       | 0                       | 10                    |
+| 2                      | 32.1%     | 371       | 0                       | 10                    |
+| 5                      | 32.2%     | 372       | 1                       | 11                    |
+| 10                     | 32.2%     | 372       | 1                       | 11                    |
 
-The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 14 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 5 make 361, 29, 29, 20, 3. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 14 criteria that ever exclude a patient, 10 make no false exclusion anywhere in 385 patients and the remaining 4 make 29, 29, 20, 3. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------|
-| TS - B0    | ser         | -0.9204    | [-0.9676, -0.8595] | no           | 40 criteria | above          |
-| TS - B0    | coverage    | -0.7754    | [-0.8831, -0.6556] | no           | 40 criteria | above          |
-| TS - B0    | false_fails | -0.9244    | [-0.9697, -0.8648] | no           | 40 criteria | above          |
-| TS - B1    | ser         | +0.0327    | [+0.0023, +0.0849] | no           | 40 criteria | above          |
-| TS - B1    | coverage    | +0.1495    | [+0.0642, +0.2495] | no           | 40 criteria | above          |
-| TS - B1    | false_fails | +0.0287    | [+0.0014, +0.0788] | no           | 40 criteria | above          |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
+| TS - B0    | ser         | -0.9443    | [-0.9755, -0.9068] | no           | 40 criteria | above                      |
+| TS - B0    | coverage    | -0.8251    | [-0.9197, -0.7162] | no           | 40 criteria | above                      |
+| TS - B0    | false_fails | -0.9478    | [-0.9766, -0.9133] | no           | 40 criteria | above                      |
+| TS - B1    | ser         | +0.0088    | [+0.0002, +0.0210] | no           | 40 criteria | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.0999    | [+0.0361, +0.1789] | no           | 40 criteria | above                      |
+| TS - B1    | false_fails | +0.0053    | [+0.0002, +0.0122] | no           | 40 criteria | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.1%** (95% CI 1.1% to 3.3%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 4.7% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
 
@@ -546,11 +546,11 @@ The IR now accepts an empty `codes` list when `broader_codes` carries the concep
 
 ## Noise floor
 
-TrialSieve SER across 3 compilation seeds: `{"mean": 0.0236, "sd": 0.0142, "min": 0.0072, "max": 0.0318, "range": 0.0246, "n_seeds": 3}`.
+TrialSieve SER across 3 compilation seeds: `{"mean": 0.00727, "sd": 6e-05, "min": 0.0072, "max": 0.0073, "range": 0.0001, "n_seeds": 3}`.
 
 An effect smaller than this spread is reported as not detected. The execution engine is deterministic and would report a floor of exactly zero, so the floor is measured where the randomness actually is, in compilation.
 
-**The registered floor is the spread of the primary metric, and that is not SER.** Panel reduction across the same seeds: `{"mean": 0.46377, "sd": 0.00196, "min": 0.4615, "max": 0.4649, "range": 0.0034, "n_seeds": 3}`. False exclusions: `{"mean": 19.33333, "sd": 1.1547, "min": 18.0, "max": 20.0, "range": 2.0, "n_seeds": 3}`.
+**The registered floor is the spread of the primary metric, and that is not SER.** Panel reduction across the same seeds: `{"mean": 0.4615, "sd": 0.0, "min": 0.4615, "max": 0.4615, "range": 0.0, "n_seeds": 3}`. False exclusions: `{"mean": 18.0, "sd": 0.0, "min": 18.0, "max": 18.0, "range": 0.0, "n_seeds": 3}`.
 
 SER is stable across seeds and the primary metric is not, which is the finding rather than a footnote. Recompiling the same criteria under a different seed moves the number a coordinator would act on by more than ten points and moves the count of wrongly excluded patients by most of its own size. No difference in this report smaller than that spread is claimed as detected, and a floor quoted on SER alone would have hidden it.
 
@@ -561,9 +561,9 @@ Synthea records are complete by construction, so the failure mode this design ex
 | k   | coverage | SER  | false-FAILS | panel reduction | false exclusions |
 |-----|----------|------|-------------|-----------------|------------------|
 | 0%  | 19.1%    | 0.7% | 66          | 46.2%           | **18**           |
-| 10% | 23.8%    | 3.1% | 423         | 59.1%           | **189**          |
-| 20% | 23.4%    | 3.0% | 422         | 58.8%           | **188**          |
-| 40% | 22.4%    | 3.3% | 442         | 56.5%           | **206**          |
+| 10% | 18.8%    | 0.8% | 65          | 44.2%           | **19**           |
+| 20% | 18.4%    | 0.7% | 60          | 43.7%           | **17**           |
+| 40% | 17.5%    | 0.9% | 81          | 40.1%           | **31**           |
 
 Real missingness is not random. It tracks fragmented care and sicker patients, which is the one property this harness cannot reproduce, so the curve is a floor on the effect rather than an estimate of it.
 

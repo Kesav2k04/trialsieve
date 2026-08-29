@@ -32,10 +32,13 @@ same data. Neither is an estimate.
 | broader-only codes used as exact codes | not checked, then 2 | **0** | `python scripts/grounding_audit.py --run runs/tierA` |
 | patients wrongly ruled out, 385-patient panel | 182 | **18** | `groups.k0_seed7.panel_scores.TS.false_exclusions` |
 | silent error rate per cell | 3.05% | **0.72%** | `groups.k0_seed7.cell_scores.TS.ser` |
-| silent errors the open-world arm would still remove | 604 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
-| third-party imports on the reproduction path | never checked | **0 of 51 modules, parsed** | `python scripts/lockfile.py --imports` |
+| silent errors the open-world arm would still remove | 358 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
+| third-party imports on the reproduction path | never checked | **0 of 53 modules, parsed** | `python scripts/lockfile.py --imports` |
 | narration lines that reached a frame | 24 of every 30 | **30 of 30** | `tests/test_video_geometry.py`, measured in a browser |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
+| silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
+| false exclusions at 40% record damage | 206 | **31** | `degradation_curve` in `results/results.json` |
+| `python run.py reproduce` on a clean clone | fails, then DIFFERENT | **IDENTICAL** | clone into an empty directory and run it; entry 34 |
 
 One row that is **not** in this table: `runs/probe-weak/probe.json` scores 1 of 6
 on broader-only concepts against 6 of 6 for `runs/probe-before/probe.json`. That
@@ -1217,8 +1220,8 @@ avoided the question.
 
 ## 25. The one invariant the design calls its own sharp edge was never checked
 
-**Found by** a reviewer reading `README.md:181` against the code that is supposed
-to hold it up. The line is a promise: a code the site records more coarsely than
+**Found by** a reviewer reading the README's promise, *"Presence cannot settle
+it. Absence still can."*, against the code that is supposed to hold it up. The line is a promise: a code the site records more coarsely than
 the criterion needs goes into `broader_codes`, and then "presence cannot settle
 it. Absence still can." `docs/AGENT_DESIGN.md:71-77` restates it as a contract on
 the compiler. The emit prompt spells it out to the model in full.
@@ -1226,8 +1229,9 @@ the compiler. The emit prompt spells it out to the model in full.
 Nothing verified it. The reviewer's question was one sentence: what happens if the
 model puts a broader-only code in `codes` anyway?
 
-**What was wrong.** `src/trialsieve/agents/compiler.py:342-343` builds the emit
-validator's allow-list of legal codes:
+**What was wrong.** The emit validator in `src/trialsieve/agents/compiler.py`
+built its allow-list of legal codes as one set (entry 29 is where those lines
+changed, so they no longer read this way):
 
 ```python
 allowed = {c for g in grounded for c in g["codes"]}
@@ -1576,12 +1580,14 @@ rather than quoting the half that flatters.
 
 **The sensitivity arm stopped moving, which is the interesting part.**
 `run_arms --absent-means-override unknown` discards every closed-world decision
-the compiler made. It used to remove 604 silent errors, and that gap was the
-headline of the sensitivity section: most of the system's error was the model
-asserting a closed world it was not entitled to. The two arms now report
-**111 silent errors each**. The targeted repair took all of it. What they still
-share is the error that has nothing to do with absence, and a gap re-opening in
-future means a new closed-world assertion started committing.
+the compiler made. It used to remove 358 silent errors, taking 469 down to 111,
+and that gap was the headline of the sensitivity section: most of the system's
+error was the model asserting a closed world it was not entitled to. The two arms
+now report **111 silent errors each**. The targeted repair took all of it, and it
+did so while answering more cells than the blanket override does: 19.15% against
+18.44%. What they still share is the error that has nothing to do with absence,
+and a gap re-opening in future means a new closed-world assertion started
+committing.
 
 **Evidence.** `tests/test_open_world_broader.py` holds eight assertions,
 including one that walks every committed predicate across all three seeds and
@@ -1623,10 +1629,19 @@ imported bare because their directory is placed on `sys.path` at runtime.
 alongside a positive one that plants `import numpy` and requires the check to
 find it.
 
-**Evidence.** `python scripts/lockfile.py --imports` reports 51 modules parsed
+**Then this entry's own evidence line went stale.** It said 51 modules while the
+checker walked 53, because two scripts joined the reproduction path afterwards
+and nothing compared the sentence to the number. The defect this entry is about
+is a claim that no gate parses, and the entry describing it had become one.
+`tests/test_dependency_surface.py` now reads every module count stated in this
+file and fails if any of them disagrees with what the checker walks, so the
+prose and the command cannot drift apart again.
+
+**Evidence.** `python scripts/lockfile.py --imports` reports 53 modules parsed
 and zero third-party imports. `requirements-lock.txt` carries 23 pins under
-`python 3.14.2 (cpython)`, and six tests hold the lock exact, complete against
-what pyproject declares, and interpreter-stamped.
+`python 3.14.2 (cpython)`, and seven tests hold the lock exact, complete against
+what pyproject declares, interpreter-stamped, and matched to the count this file
+states.
 
 ## 32. A failure report that named a file two directories share
 
@@ -1654,3 +1669,104 @@ not usable.
 paths with their agent directory. It currently reports 1,072 model calls all
 resolving to a byte-identical cassette, so the fix shows in the format of a
 passing run rather than only under failure.
+
+## 33. The repair that could not reach half the grammar, and the test that agreed with it
+
+**Found by** an independent audit of the code changed in entries 29 to 32, asked
+only to look for a check that cannot fail.
+
+**What was wrong.** `open_world_broader_only()` walked the emitted expression by
+enumerating the keys it expected to find a query under: `args`, `arg`, and a
+`value` holding a `count`. That is the grammar as far as `exists` goes. It is not
+the grammar. A `compare` holds its operands at `left` and `right`, and neither
+was ever visited, so a count taken over a broader-only query kept
+`absent_means: "false"` straight through the repair.
+
+`runs/tierA/compiled/criteria_seed8.json` carried exactly that. Its
+`NCT06717698-INC-07` is an `or` over a `compare` between two counts, both over
+`{"codes": [], "broader_codes": ["44054006"], "absent_means": "false"}`. With no
+exact code the count matches nothing on any chart, and closed-world absence turns
+that into a definite `0.0` rather than "the record does not say", so the
+comparison was a settled `False` for all 385 patients on a question the record
+cannot answer.
+
+**And the test that was supposed to catch it was written from the walker's
+output.** `test_the_walk_reaches_every_nesting_the_grammar_allows` builds a tree
+holding two broader-only closed-world queries and asserted that **one** was
+repaired. One is what the broken walker produced. The invariant test over the
+shipped predicates was worse: it ran the same `open_world_broader_only` over a
+copy of each committed predicate and reported what came back, so the audit
+inherited the blind spot of the thing it audited and reported clean while two
+violations sat in a committed file.
+
+**What changed.** The walk no longer enumerates keys. It descends into every
+value of every dict and list and repairs anything shaped like a query, which
+cannot be defeated by a node shape nobody thought of. The nesting test now
+asserts two and names the operand it missed. The invariant test reads the parsed
+JSON itself and knows nothing about the repair function, it refuses to pass on an
+empty scan, and a positive control plants the violation directly in a `compare`
+operand and requires the audit to see it.
+
+**It needed no new model calls.** Seeds 8 and 9 recompiled from 201 and 210
+recorded calls at 100% cassette hits. One predicate changed: two `absent_means`
+fields in `NCT06717698-INC-07` on seed 8.
+
+**Evidence.** `python -m pytest tests/test_open_world_broader.py` is 9 assertions
+including the positive control. `python run.py verify` still matches every one of
+the 1,072 model calls to a byte-identical cassette, because the repair happens
+after the model has spoken and changes no prompt.
+
+## 34. A reproduction that only reproduced on the machine that had the leftovers
+
+**Found by** cloning this repository into an empty directory and running the
+command the README gives a reader, which is the one thing the reproducibility
+claim rests on and the one thing that had never been done.
+
+**What happened.** `python run.py reproduce` **failed**, twice over.
+
+It stopped first at `scripts/linkcheck.py`: the changelog cites
+`runs/probe-weak/probe.json` and `runs/probe-before/probe.json` as the evidence
+for the weak-model comparison, and `.gitignore` excluded both. Locally the files
+exist, so the check passed on the machine where the claim was written and nowhere
+else.
+
+Past that, `python run.py diff` printed **DIFFERENT**. `runs/tierA/cells/` is 46
+MB and is not committed, and `reproduce` regenerated only the groups it happened
+to name: seed 7, the open-world arm, and the per-cell baseline. The report
+publishes eight. On a clean clone the other five simply did not exist, so the
+regenerated `results.json` was missing `k0_seed8`, `k0_seed9`, the whole
+degradation curve and its three groups, and the byte comparison against
+`results/published/` failed on the first read.
+
+**The second failure was hiding a third.** Because nothing regenerated those
+groups, the committed cells for them were whatever had last been written, and
+they had last been written before entry 30. The published report showed seed 8 at
+24.19% coverage and 3.18% silent error next to seed 7 at 19.15% and 0.72%, and a
+reader would have concluded the system is wildly seed-unstable. It is not. Those
+cells were computed from predicates the repository had already replaced. The
+degradation curve was the same story: it reported false exclusions climbing from
+18 to 206 as the record was damaged, which was an artefact of the same staleness.
+
+**What changed.** `run.py reproduce` now replays the compile for all three seeds,
+runs the free arms for all three, and runs the degradation curve at 10, 20 and 40
+percent, so every group the report publishes is regenerated by the command a
+judge runs. The two probe result files are tracked. The corrected numbers are
+published.
+
+**What the corrected numbers say.** All three seeds now agree: silent error
+0.72%, 0.73% and 0.73%, against 0.72%, 3.18% and 3.18% before. The degradation
+curve is flat where it should be, with false exclusions at 18, 19, 17 and 31
+across 0 to 40 percent damage rather than 18 to 206.
+
+| | published before | reports now |
+|---|---|---|
+| k0_seed8 silent error | 3.18% | **0.73%** |
+| k0_seed9 silent error | 3.18% | **0.73%** |
+| false exclusions at 40% record damage | 206 | **31** |
+| `run.py reproduce` on a clean clone | **fails at linkcheck, then DIFFERENT** | **IDENTICAL** |
+
+**Evidence.** `git clone` into an empty directory, then `python run.py reproduce`,
+which is what produced the failure and now prints IDENTICAL in about two minutes.
+The reproduction takes 131s rather than 99s because it now regenerates five more
+groups.
+

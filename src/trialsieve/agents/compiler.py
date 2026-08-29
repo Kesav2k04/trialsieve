@@ -433,27 +433,36 @@ def open_world_broader_only(expr: Any) -> list[dict]:
     """
     changed: list[dict] = []
 
-    def walk(e: Any) -> None:
-        if not isinstance(e, dict):
+    def repair(q: dict) -> None:
+        if q.get("codes") or not (q.get("broader_codes") or []):
             return
-        if e.get("op") == "exists":
-            q = e.get("query") or {}
-            if not q.get("codes") and (q.get("broader_codes") or []):
-                if q.get("absent_means") != "unknown":
-                    changed.append({"codes": [], "broader_codes": list(q["broader_codes"]),
-                                    "domain": q.get("domain"),
-                                    "before": q.get("absent_means"), "after": "unknown"})
-                    q["absent_means"] = "unknown"
-        for k in ("args", "arg"):
-            v = e.get(k)
-            if isinstance(v, list):
-                for x in v:
-                    walk(x)
-            elif isinstance(v, dict):
+        if q.get("absent_means") == "unknown":
+            return
+        changed.append({"codes": [], "broader_codes": list(q["broader_codes"]),
+                        "domain": q.get("domain"),
+                        "before": q.get("absent_means"), "after": "unknown"})
+        q["absent_means"] = "unknown"
+
+    def walk(node: Any) -> None:
+        """Every node, not an enumerated list of the ones that were remembered.
+
+        The first version of this walk descended `args`, `arg` and a `value` key
+        holding a count. That is the grammar as far as `exists` goes, and it
+        missed `compare`, whose operands hang off `left` and `right`. A `compare`
+        between two counts over a broader-only query therefore kept
+        `absent_means: false` through the repair, and `criteria_seed8.json`
+        carried exactly that. So the walk no longer enumerates keys. It descends
+        into every value and repairs anything shaped like a query, which cannot
+        be defeated by a node shape nobody thought of.
+        """
+        if isinstance(node, dict):
+            if "codes" in node and "absent_means" in node:
+                repair(node)
+            for v in node.values():
                 walk(v)
-        v = e.get("value")
-        if isinstance(v, dict) and v.get("val") == "count":
-            walk(v.get("query") or {})
+        elif isinstance(node, list):
+            for v in node:
+                walk(v)
 
     walk(expr)
     return changed

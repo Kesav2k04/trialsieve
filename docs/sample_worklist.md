@@ -2,7 +2,7 @@
 
 **DiEtary Sodium Intake Effects on Ertugliflozin-induced Changes in GFR, reNal Oxygenation and Systemic Hemodynamics: the DESIGN Study, a Randomized, Placebo-controlled, Cross-over Study With Ertugliflozin in People With Type 2 Diabetes**
 
-Panel of 385 patients screened on 2026-08-29.
+Panel of 385 patients screened on 2026-08-30.
 
 **NOT FOR USE.** No human has reviewed the compiled criteria behind this document. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
 
@@ -20,7 +20,7 @@ The coordinator's list is 198 patients rather than 385.
 
 This worklist runs 3 of the trial's compiled criteria, not all of them: `NCT06983054-INC-02`, `NCT06983054-INC-03`, `NCT06983054-INC-04`. They are the set the published operating curve keeps at a budget of 0 false exclusions.
 
-Two things a reader should hold against this. The subset was chosen by counting each criterion's false exclusions on the same patients it is then applied to, so it reports that a clean subset existed rather than that it could have been picked in advance; `operating_curve_cv` in `results/RESULTS.md` is the cross-fitted answer to that. And running every compiled criterion instead removes almost the whole panel, because one of them treats a silent record as a negative. That configuration is measured in the report and is not what a deployment would run.
+Two things a reader should hold against this. The subset was chosen by counting each criterion's false exclusions on the same patients it is then applied to, so it reports that a clean subset existed rather than that it could have been picked in advance; the cross-fitted curve in `results/RESULTS.md`, headed *TrialSieve operating curve, cross-fitted*, is the answer to that and agrees with this row. And running every compiled criterion instead rules out more of the panel and wrongly removes patients the labels do not rule out, which is why the registered outcome for that configuration reads VOID. Both are in the report.
 
 ## What removed people
 
