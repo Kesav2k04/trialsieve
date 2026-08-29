@@ -79,6 +79,16 @@ discard every ruleout the coarse code supports.
 **Hallucinated codes are dropped.** Anything the model returns that was not on the
 shortlist it was given is discarded before it reaches the IR.
 
+**And that is the whole of what the check does.** The allow-list it tests against
+is the union of `codes` and `broader_codes`, so it establishes that a code is
+real and says nothing about which of the two slots it belongs in. A broader-only
+code emitted into `codes` passes. The asymmetry described above, the one the
+README calls this design's sharp edge, was enforced by the prompt and by nothing
+else. `scripts/grounding_audit.py` now measures it: two criteria in the scored
+run promoted a broader-only code, and both carry `absent_means: false`, which
+leaves them no route to INDETERMINATE. Changelog entry 25 covers why the
+compiler was not changed to reject it.
+
 **Its known blind spot.** A code that is in the vocabulary but on no patient's
 chart looks like a successful mapping. That is caught downstream, in the review
 packet, not here. See entry 6 of the improvement changelog.

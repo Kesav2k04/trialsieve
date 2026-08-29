@@ -1173,3 +1173,68 @@ measured behaviour of the reviewer, and `docs/CRITIC_PROBE.md` states it as such
 
 A probe that cannot fail is not a probe. This one scored 100% for as long as it
 avoided the question.
+
+---
+
+## 25. The one invariant the design calls its own sharp edge was never checked
+
+**Found by** a reviewer reading `README.md:181` against the code that is supposed
+to hold it up. The line is a promise: a code the site records more coarsely than
+the criterion needs goes into `broader_codes`, and then "presence cannot settle
+it. Absence still can." `docs/AGENT_DESIGN.md:71-77` restates it as a contract on
+the compiler. The emit prompt spells it out to the model in full.
+
+Nothing verified it. The reviewer's question was one sentence: what happens if the
+model puts a broader-only code in `codes` anyway?
+
+**What was wrong.** `src/trialsieve/agents/compiler.py:342-343` builds the emit
+validator's allow-list of legal codes:
+
+```python
+allowed = {c for g in grounded for c in g["codes"]}
+allowed |= {c for g in grounded for c in (g.get("broader_codes") or [])}
+```
+
+The union is right for deciding whether a code was hallucinated, which is what the
+check was written to do. It is exactly wrong for deciding which slot a code belongs
+in. A broader-only code emitted into `codes` is inside the allow-list, so it
+validates, and the engine then reads it as an exact match and lets presence settle
+the verdict. The rule was enforced by asking politely and checking nothing.
+
+**What the run actually contains.** Eight of the compilable criteria have grounding
+that produced a broader-only code. Two of them then used it as an exact one:
+
+| criterion | code promoted | `absent_means` |
+|-------------------|-----------|-------|
+| `NCT06983054-INC-01` | 44054006 | false |
+| `NCT06717698-INC-07` | 44054006 | false |
+
+Both halves matter. The promotion means presence settles the criterion as MEETS.
+`absent_means: false` means absence settles it as FAILS. Together they close the
+last exit: the criterion has no path to INDETERMINATE at all, on any patient,
+which is the single outcome the design exists to preserve. SNOMED 44054006 is
+unqualified diabetes mellitus, and `NCT06983054-INC-01` is the criterion behind
+**358 of the 424 wrong exclusions** in the scored run.
+
+Entry 21 named `absent_means` as that failure's cause. It was half the cause. The
+other half was here, unmeasured, in the check that was meant to be the guardrail.
+
+**The fix, and what was deliberately not fixed.** `scripts/grounding_audit.py`
+audits any compiled run for the promotion and exits non-zero when it finds one.
+`tests/test_grounding_audit.py` pins the two known violations by name, so a third
+cannot appear quietly and neither can a silent repair.
+
+The compiler was not changed. Splitting that allow-list makes the emit validator
+reject a response that is already recorded in a cassette, which forces a retry
+that has no recording to serve it, which stops `python run.py reproduce` for
+every arm. More to the point, it would recompile the predicates, change
+`predicate_sha256`, and rescore. Choosing a new number after watching the old one
+fail is the thing this project refuses everywhere else, and an invariant is not
+worth breaking that for. The defect is measured, named, bounded to two criteria,
+and left in the run it damaged.
+
+**The general shape.** A validator can be correct for the question it was written
+to answer and silent on the question it appears to answer. This one asked "is this
+code real?" and every reader, including the documentation and the prompt, read it
+as "is this code allowed here?". Nothing in a passing test suite distinguishes
+those two, because the union answers both with yes.

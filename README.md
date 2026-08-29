@@ -179,6 +179,22 @@ asymmetrically:
 
 Presence cannot settle it. Absence still can.
 
+That is what the design promises. In the scored run it is false twice, and the
+project found out by checking rather than by claiming. The compiler's emit
+validator accepts any code the grounder returned, from either slot, because it
+was written to catch invented codes and does that correctly. It cannot see a
+real code put in the wrong slot. Two criteria out of the eight with broader-only
+grounding promoted SNOMED 44054006 into `codes`, and both also carry
+`absent_means: false`, so presence settles them as MEETS and absence settles
+them as FAILS and neither can return INDETERMINATE. One of the two is the
+criterion behind the 358 wrong exclusions above.
+
+`python scripts/grounding_audit.py --run runs/tierA` reports it and exits 3.
+`tests/test_grounding_audit.py` pins both by name. The compiler was left alone
+on purpose: changing it recompiles the predicates and rescores the run, which is
+picking a new number after seeing the old one fail. Entry 25 of the improvement
+changelog has the reasoning and the cost.
+
 ### UNMAPPABLE is load-bearing
 
 This corpus contains no SGLT2 inhibitor, GLP-1 receptor agonist, DPP-4 inhibitor,
