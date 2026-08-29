@@ -515,10 +515,19 @@ list rather than over the panel. Coverage is dense, so it is counted through its
 complement instead. An incomplete design falls back to the original loop rather
 than counting cells that do not exist.
 
-**The measurement.** On a forty by three hundred and eighty-five design, the
-paired comparison is **33 times faster** at 300 resamples. End to end, the scoring
-step at the same 10,000 resamples went from **over fifteen minutes without
-finishing** to **27 seconds**.
+**The measurement.** A multiplier with no conditions attached is not a measurement,
+so here are the conditions. Metric `ser`, a forty criteria by three hundred and
+eighty-five patient design, which is 15,400 cells, at 300 resamples, on Windows 11,
+AMD64, CPython 3.14.2: the paired comparison runs in **0.131s against 3.942s**, a
+ratio of **30.2**, with both implementations returning identical interval
+endpoints. The figure this entry first published was 33, measured the same way on
+the same machine on a different day, so treat the ratio as about thirty rather
+than a constant. It depends on the metric, because the speedup comes from the
+sparsity of the indicator, and a dense metric like coverage gains less.
+
+End to end, the scoring step at 10,000 resamples went from **over fifteen minutes
+without finishing** to **27 seconds**. That one is the original timing and has not
+been re-measured here.
 
 **What makes this safe to have done.** The random draws are the same calls in the
 same order on the same seeded generator. Only the arithmetic over each draw
