@@ -92,6 +92,72 @@ def load_label_floor() -> dict | None:
             "soft": (soft / n) if n else 0.0}
 
 
+#: A cell group whose tag is not self-describing is a table nobody can read six
+#: months later. `ow` in particular looks like a typo rather than the sensitivity
+#: analysis it is, and an unexplained arm that scores better than the headline is
+#: the kind of thing a reader is right to be suspicious of.
+GROUP_NOTES = {
+    "k0_seed7": "(the scored run)",
+    "ow": "(sensitivity: every absence forced to unknown)",
+}
+
+GROUP_BLURB = {
+    "ow": "**This is not a different system and it is not the headline.** It is the same compiled predicates from the same run, executed with `--absent-means-override unknown`, which ignores every `absent_means` decision the compiler made and treats a silent record as silent everywhere. The flag predates this run and exists to answer one question: how much of TrialSieve's error is the model asserting a closed world it was not entitled to? The section at the end of this document has the answer with the numbers attached.\n\nThe scored arm above remains the pre-registered result.",
+}
+
+
+def worst_closed_world_criterion(run: Path, groups: dict) -> tuple | None:
+    """The compiled criterion whose `absent_means: false` costs the most cells.
+
+    Returns (criterion_id, times it ruled a patient out, times that was wrong,
+    the code it checked) or None. Named rather than left as an aggregate,
+    because "most of the error comes from closed-world assertions" is a claim a
+    reader cannot check and "this criterion, this code, these 358 patients" is.
+    """
+    import gzip  # noqa: F401  (kept local; the loader below is plain json)
+    comp = run / "compiled" / "criteria_seed7.json"
+    if not comp.exists():
+        return None
+    closed = {}
+    for c in json.loads(comp.read_text(encoding="utf-8")).get("criteria", []):
+        if not c.get("compilable"):
+            continue
+        found = []
+
+        def walk(node):
+            if isinstance(node, dict):
+                q = node.get("query")
+                if isinstance(q, dict) and q.get("absent_means") == "false":
+                    found.extend(q.get("codes") or ["(no code)"])
+                for v in node.values():
+                    walk(v)
+            elif isinstance(node, list):
+                for v in node:
+                    walk(v)
+
+        walk(c.get("expr"))
+        if found:
+            closed[c["criterion_id"]] = (found[0], c.get("source_text", ""))
+    if not closed:
+        return None
+    best = None
+    for tag, rows in groups.items():
+        if tag != "k0_seed7":
+            continue
+        wrong, right = Counter(), Counter()
+        for r in rows:
+            cid = r["criterion_id"]
+            if cid not in closed:
+                continue
+            if r.get("TS") == "FAILS" and r.get("gold") != "FAILS":
+                wrong[cid] += 1
+            elif r.get("TS") in ("MEETS", "FAILS") and r.get("TS") == r.get("gold"):
+                right[cid] += 1
+        for cid, n in wrong.most_common(1):
+            best = (cid, right[cid], n, closed[cid][0], closed[cid][1])
+    return best
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
@@ -127,7 +193,12 @@ def main() -> int:
         n_screens = len({(r["patient_id"], r["criterion_id"].split("-")[0]) for r in rows})
         block: dict = {"n_rows": len(rows), "arms": present, "n_screens": n_screens}
 
-        md.append(f"\n## {tag}\n")
+        md.append("")
+        md.append(f"## {tag}  " + GROUP_NOTES.get(tag, ""))
+        md.append("")
+        if tag in GROUP_BLURB:
+            md.append(GROUP_BLURB[tag])
+            md.append("")
         md.append(f"{len(rows)} cells, {n_screens} screens, arms {', '.join(present)}.\n")
         md.append("| arm | coverage | SER | silent | false-FAILS | false-MEETS | "
                   "unnecessary abstention | errors | unique criteria |")
@@ -421,6 +492,78 @@ def main() -> int:
                   f"is the direction that matters: B was not simply noisier, it drew a "
                   f"stricter line. Kappa is printed beside AC1 because kappa collapses "
                   f"under skewed marginals and would understate agreement that is real.")
+        md.append("")
+
+    wc = worst_closed_world_criterion(run, groups)
+    worst_absence = wc[:4] if wc else None
+    worst_absence_text = (wc[4][:120] if wc else "")
+
+    # What the compiler's closed-world assertions cost, computed rather than
+    # asserted. Every number in the prose below is read back out of the two
+    # scored groups, because a paragraph that quotes a figure it did not compute
+    # goes stale the first time the run changes and nothing notices.
+    base = results["groups"].get("k0_seed7", {}).get("cell_scores", {}).get("TS")
+    ow = results["groups"].get("ow", {}).get("cell_scores", {}).get("TS")
+    bp = results["groups"].get("k0_seed7", {}).get("panel_scores", {}).get("TS")
+    op = results["groups"].get("ow", {}).get("panel_scores", {}).get("TS")
+    md.append("")
+    md.append("## Sensitivity: what the closed-world assertions cost")
+    md.append("")
+    if not (base and ow and bp and op):
+        md.append("**NOT MEASURED.** The open-world arm has not been run in this "
+                  "checkout, so there is no figure for how much of the error above "
+                  "comes from the compiler asserting a closed world. Produce it with "
+                  "`python scripts/run_arms.py --run runs/tierA --arms TS --seed 7 "
+                  "--mode replay --absent-means-override unknown --tag ow`. This "
+                  "section is printed empty rather than omitted.")
+    else:
+        rows = [("coverage", base["coverage"], ow["coverage"], "pct"),
+                ("silent error rate", base["ser"], ow["ser"], "pct"),
+                ("silent errors", base["n_silent"], ow["n_silent"], "int"),
+                ("false FAILS", base["n_false_fails"], ow["n_false_fails"], "int"),
+                ("false MEETS", base["n_false_meets"], ow["n_false_meets"], "int"),
+                ("panel reduction", bp["reduction"], op["reduction"], "pct"),
+                ("false exclusions", bp["false_exclusions"], op["false_exclusions"], "int")]
+        md.append("| | as compiled | absence forced to unknown | change |")
+        md.append("|---|---|---|---|")
+        for label, a_, b_, kind in rows:
+            if kind == "pct":
+                md.append(f"| {label} | {a_:.1%} | {b_:.1%} | "
+                          f"{(b_ - a_) * 100:+.1f} points |")
+            else:
+                pct = f", {(b_ - a_) / a_:+.0%}" if a_ else ""
+                md.append(f"| {label} | {a_} | {b_} | {b_ - a_:+d}{pct} |")
+        md.append("")
+        cut = base["n_silent"] - ow["n_silent"]
+        md.append(f"Ignoring every closed-world decision the compiler made removes "
+                  f"{cut} of {base['n_silent']} silent errors "
+                  f"({cut / base['n_silent']:.0%}) and "
+                  f"{bp['false_exclusions'] - op['false_exclusions']} of "
+                  f"{bp['false_exclusions']} false exclusions, and costs "
+                  f"{(base['coverage'] - ow['coverage']) * 100:.1f} points of "
+                  f"coverage. Almost all of the system's error is the model "
+                  f"deciding that a silent record is an answer.")
+        md.append("")
+        # the single worst offender, named, with its own cell counts
+        if worst_absence:
+            cid, right, wrong, code = worst_absence
+            md.append(f"One predicate accounts for most of it. `{cid}` compiles "
+                      f"*{worst_absence_text}* to an age bound and an existence check "
+                      f"on `{code}` with `absent_means` set to `false`. "
+                      f"{right} patients in the panel carry that code, and it is "
+                      f"right about every one of them. The other {wrong} do not carry "
+                      f"it, and rather than reporting that their record does not say, "
+                      f"it rules them out. That is {wrong} of the "
+                      f"{base['n_false_fails']} false FAILS in the scored run, from a "
+                      f"single field.")
+            md.append("")
+        md.append("The compiler prompt states that a wrong `false` rules a patient out "
+                  "on the strength of a gap in their record and to choose `unknown` "
+                  "when in doubt. The critic's fourth review rule is the same check. "
+                  "Both are model-side, both had the information in front of them, and "
+                  "both passed it. What stops it reaching a coordinator is the "
+                  "sign-off gate, where a human reads the predicate in English before "
+                  "any worklist exists: `docs/GATE.md`.")
         md.append("")
 
     # provenance: which commit last touched each prompt file

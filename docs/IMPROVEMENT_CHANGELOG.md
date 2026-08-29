@@ -932,3 +932,76 @@ where it cannot be scrolled past.
 below it; `results/results.json` under `label_noise_floor`; five tests in
 `tests/test_label_floor.py`, one of which asserts every published comparison row
 carries a verdict, so a future row cannot be added without one.
+
+## 21. The system's worst error is the error it was built to prevent
+
+**Found by** running `scripts/gate_demo.py` and reading the worklist it produces
+under `--allow-unsigned`:
+
+    {"nct_id": "NCT06983054", "panel": 385, "ruled_out": 385,
+     "needs_review": 0, "eligible": 0, "reduction": 1.0}
+
+A prescreening tool that rules out every patient in the panel is not a
+prescreening tool. The headline says 43.5% reduction at zero false exclusions and
+the flagship artifact says 100%, and both were true, because the headline runs at
+an operating point and the worklist runs every compiled predicate.
+
+**One field, 358 patients.** `NCT06983054-INC-01` is *"Adults with previously
+diagnosed T2DM according to American Diabetes Association (ADA) criteria"*. It
+compiles to an age bound and an existence check on SNOMED `44054006`, with
+`absent_means` set to `"false"`. 27 patients in the panel carry that code and the
+predicate is right about all 27. The other 358 do not carry it, and instead of
+reporting that the record does not say, it rules them out. Gold says
+INDETERMINATE for every one of those 358. That is **358 of the 424 false FAILS in
+the entire scored run, from a single JSON field.**
+
+This is the exact error the project exists to prevent. `absent_means` is the flag
+that exists so that silence is not mistaken for an answer, and the model set it
+the wrong way on the most consequential criterion in the set.
+
+**Two guardrails had the information and neither fired.** The compiler prompt says
+in as many words that a wrong `false` rules a patient out on the strength of a gap
+in their record, and to choose `unknown` when in doubt. The critic's fourth review
+rule is *"is any `absent_means` set to false for something that could easily have
+happened at another hospital"*. Both are model-side. Both passed it. The critic
+probe shows the critic catches 9 of 9 planted defects with 0 false alarms on 5
+controls, so it is not broken in general; it did not catch this one.
+
+**What was measured, and what was deliberately not done.** The predicate was not
+edited. Instead the same compiled output was executed a second time with
+`--absent-means-override unknown`, a flag that already existed, which discards
+every closed-world decision the compiler made:
+
+| | as compiled | absence forced to unknown | change |
+|---|---|---|---|
+| coverage | 24.1% | 18.6% | -5.5 points |
+| silent errors | 469 | 111 | **-358, -76%** |
+| false exclusions | 182 | 18 | **-164, -90%** |
+| panel reduction | 60.4% | 41.1% | -19.2 points |
+
+Three quarters of the system's silent errors and nine tenths of its false
+exclusions are the model deciding that a silent record is an answer, and the
+entire cost of not doing that is 5.5 points of coverage.
+
+**Why the scored arm was left alone.** The override was run after seeing the
+held-out failure. Retro-fitting the compiler and re-scoring would be tuning on the
+evaluation set, whatever the fix's merits, so the pre-registered arm stands
+unchanged, the sensitivity arm is published beside it, and the ordering is
+recorded as amendment **A6** in `docs/EVAL_PROTOCOL.md`. The compiled file is
+byte-identical to what it was before the arm existed and `predicate_sha256` shows
+it. No model call was added: executing a compiled predicate is free, which is the
+whole architecture, and it is why this cost nothing to measure.
+
+**What actually stops it.** Not the prompt and not the critic. The sign-off gate:
+no worklist exists until a named human has read each predicate rendered into
+English, and `docs/GATE.md` is that refusal captured by exit code. A reviewer
+reading *"the patient does NOT have type 2 diabetes, and the record is trusted to
+be complete for this"* against a criterion that says *previously diagnosed T2DM*
+rejects it in one line. The gate is not paperwork around a system that works. It
+is the control that catches the failure the two model-side checks missed.
+
+**Evidence.** `results/RESULTS.md`, the sensitivity section, every figure computed
+from the two scored groups rather than typed; `results/results.json` under
+`groups.ow`; `docs/GATE.md` for the refusal; `tests/test_sensitivity_section.py`,
+four tests, one of which fails if any of those figures is ever hand-written back
+into the prose.

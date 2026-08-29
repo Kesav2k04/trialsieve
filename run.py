@@ -114,6 +114,15 @@ def t_reproduce(run: str = RUN) -> None:
     banner("run the free arms over the whole panel")
     sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "TS,B0,B1")
 
+    # The same compiled predicates again, with every closed-world decision the
+    # compiler made discarded. It reports how much of the system's error is the
+    # model treating a silent record as an answer, and the answer is most of it.
+    # It runs here rather than being a step a reader has to know to take, because
+    # a sensitivity analysis nobody runs is a sensitivity analysis nobody has.
+    banner("run the open-world sensitivity arm")
+    sh(PY, "scripts/run_arms.py", "--run", run, "--mode", "replay", "--arms", "TS",
+       "--absent-means-override", "unknown", "--tag", "ow")
+
     # The per-cell baseline is the only arm that costs a model call per patient,
     # so it was recorded over a seeded sample rather than the panel. Replayed here
     # only if it was recorded: a checkout without those cassettes should reproduce

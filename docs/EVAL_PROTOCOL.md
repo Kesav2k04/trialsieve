@@ -15,8 +15,8 @@ report.
 **Registering a protocol is worth nothing if the protocol is quietly edited to match
 what happened.** So the body below is left as it was written, and every place the
 build departed from it is recorded here instead, with the reason. A reader comparing
-this document to the repository will find these five differences and no others; if
-they find a sixth, this list is the thing that is wrong.
+this document to the repository will find these six differences and no others; if
+they find a seventh, this list is the thing that is wrong.
 
 **A1, 2026-08-29. Blindness is no longer a git fact, and the claim it replaces was
 weaker.** Section 6 says Checker B's labels are committed before any commit
@@ -65,6 +65,25 @@ could actually build. It is not part of the registered primary comparison and
 them. B3 was not run.
 
 ---
+
+
+**A6, 2026-08-29. An open-world sensitivity arm was run after the first held-out
+scoring, and it is a sensitivity analysis rather than a result.** The scored arm is
+the pre-registered one and has not moved. What was added is a second execution of
+the same compiled predicates with `--absent-means-override unknown`, which discards
+every closed-world decision the compiler made. The flag itself predates the run and
+is in `scripts/run_arms.py` from the first commit that had arms at all, but nobody
+had run it on the held-out set, and running it was decided after seeing that the
+held-out sample worklist ruled out all 385 patients.
+
+That ordering matters and is why this is registered rather than folded in. The
+override is not a fix and no predicate was edited: the compiled output in
+`runs/tierA/compiled/criteria_seed7.json` is byte-identical to what it was before
+this arm existed, and `predicate_sha256` proves it. Both numbers are published, the
+scored arm remains the headline, and the open-world arm is reported as the answer to
+one question: how much of the error is the model asserting a closed world. No
+threshold, prompt or predicate was tuned on the held-out set, and the arm adds no
+model call, because executing a compiled predicate costs nothing.
 
 ## 1. What is being claimed
 
