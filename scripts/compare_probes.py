@@ -40,7 +40,8 @@ def rescored(path: Path) -> dict[str, dict]:
         out[r["concept"]] = {**probe, "got_codes": codes, "got_broader": broader,
                              "status": r.get("status", ""),
                              "correct": v["correct"], "over_accepted": v["over_accepted"],
-                             "under_accepted": v["under_accepted"], "mark": v["mark"]}
+                             "under_accepted": v["under_accepted"],
+                             "demoted": v.get("demoted", []), "mark": v["mark"]}
     return out
 
 

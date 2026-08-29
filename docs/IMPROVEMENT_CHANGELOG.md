@@ -430,9 +430,21 @@ correct answer on the eight panel patients who carry the stage 1 code.
 The grounder returned UNMAPPABLE. The probe was asking for the worse answer.
 
 **What changed.** The type 2 accept list was widened to the six entailing codes.
-The kidney probe was reclassified from `broader` to `absent`. On the eighteen
-probes both runs were given, the comparison moves from 17 and 17 to **17 before,
-18 after**.
+The kidney probe was reclassified from `broader` to `absent`. The earlier arm was
+then given the three probes it had never been shown, so the comparison runs over
+the whole set rather than over an intersection:
+
+| class | what it tests | before | after |
+|---|---|---|---|
+| `gap` | display worded differently, code exact or entailing | 8 / 9 | **9 / 9** |
+| `broader` | site codes it only at a coarser grain | 0 / 1 | **1 / 1** |
+| `control` | display and concept already agree | 5 / 5 | 5 / 5 |
+| `absent` | not in this vocabulary at any grain | **6 / 6** | 5 / 6 |
+| | | **19 / 21** | **20 / 21** |
+
+One net probe, bought with one regression. The controls did not move, which is
+the line worth checking: a change that traded one error for another would show up
+there and nowhere else.
 
 **The disclosure that matters.** Both corrections were made after seeing a result,
 and both moved the number in the new system's favour. That is exactly the shape of
