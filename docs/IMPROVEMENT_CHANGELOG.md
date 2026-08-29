@@ -685,3 +685,53 @@ build error read as a clinical finding.
 7%, appear in no panel patient. It is 47, 6.5%, and the observation domain is 4
 rather than 7. Entry 6 is corrected in place with a note. The defect entry 6
 describes was sitting inside entry 6's own fix.
+
+## 17. An event kind with a renderer, a counter, a column, and no call site
+
+**Found by** checking one sentence in the trajectory index against the code:
+"The signature is a `human_checkpoint` event, and it lives in the compiler
+trajectory of the predicate that was signed."
+
+**It was not.** `Trajectory.human_checkpoint()` existed in `trace.py`.
+`render_markdown` had a branch for drawing it. `scripts/trajectories.py` counted
+it, gave it a weight in the interest score, and printed a row for it in the
+summary table. `grep -rn human_checkpoint --include=*.py` found every one of those
+and no caller. `scripts/signoff.py` appended the decision to `signoffs.jsonl` and
+stopped there.
+
+So the index printed `| human checkpoints | 0 |`, which was true, and true for a
+reason nobody could see from the number. The brief names human checkpoints as a
+required element of the trajectories. This project would have shipped a zero in
+that column and an explanation that nothing had been signed yet, when the real
+state was that signing would not have produced one either.
+
+**Why it survived.** Every piece was individually correct. There is no test that
+fails when a function is never called, no linter that flags a method with no
+caller in another module, and the output was a plausible zero rather than a crash.
+It is the same shape as the blind check in entry 15: the failure mode is a
+truthful-looking number produced by a path that does not run.
+
+**What changed.** `trace.append_human_checkpoint()` adds the event to a trajectory
+that was written and closed in an earlier process, which is the actual situation:
+a sign-off happens hours after the compile, from a different script, with no live
+`Trajectory` object to call a method on. It continues the sequence numbering
+rather than starting again, so the log stays one ordered record of everything that
+happened to that criterion, including the part a human did. `scripts/signoff.py`
+now writes to both places. The ledger is what the gate reads and the trajectory is
+what a reader follows, and a decision belongs in both.
+
+**Evidence.** `tests/test_human_checkpoint.py`, five tests, driving the script
+over a temporary copy of a committed fixture with the answers on stdin. It asserts
+the decision reaches the ledger and the trajectory, that the appended event
+carries the reviewer's role and the digest it approved, that the sequence has no
+gap, that a rejection is recorded exactly like an approval, that a run whose
+trajectories were not kept still records the signature instead of losing it, and
+that the index then counts one where it counted zero.
+
+**It found a second defect on the way.** The fifth test builds a trajectory and
+renders it, and `render_markdown` raised `KeyError: 'prompt_version'` on an
+`instructions` event that did not carry one. That is a hard crash in the renderer
+that builds every trajectory document, triggered by one field missing from one
+event, in a function whose whole job is reading JSONL off disk that an earlier
+version of the recorder may have written. It now degrades one heading instead of
+stopping the build.
