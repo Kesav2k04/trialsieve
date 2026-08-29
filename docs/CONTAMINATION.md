@@ -23,3 +23,50 @@ None has a slot for a trial identifier or title.
 
 **PASS.**
 
+## 2. No identifier is in any recorded request
+
+A template audit cannot see a string joined on by hand, so this reads the
+requests that were actually sent. Every model call in this system is recorded
+in full. 317 recorded requests were searched for the
+identifiers and for 77 title-specific three-word sequences.
+
+Title-specific is doing work in that sentence. A registered title contains the
+disease name, and so does the criterion text the segmenter is given on purpose,
+so the 3016 sequences occurring anywhere in the
+vendored eligibility text are subtracted first. Without that subtraction the scan
+fires on 'chronic kidney disease' and returns positive on any corpus that mentions
+the disease, which is a check that cannot fail and therefore cannot pass.
+
+What is left is wording only the title uses, for example: '2 t1dm while', '888 digital medical', 'a randomized placebo-controlled', 'ai platform for'.
+
+**PASS.** 0 hits.
+
+
+## 3. The numbers move when the criterion moves
+
+The check worth arguing with. A threshold is changed to a value the real
+protocol does not contain, the criterion is recompiled, and the emitted
+predicate has to carry the changed number. A compiler that reproduces the
+original threshold is reciting rather than reading.
+
+The perturbation is the largest number in the criterion multiplied by 1.37
+and rounded. Largest, because criteria often carry an incidental small number
+beside the threshold that matters. Rounded rather than randomised, because a
+wildly implausible threshold would be rejected on its face and the check would
+pass for the wrong reason.
+
+8 criteria carried a perturbable number. 6 compiled.
+
+| criterion | protocol says | criterion was changed to | predicate carries | follows |
+|---|---|---|---|---|
+| `NCT06983054-INC-02` | 10.0 | 13.7 | [6.5, 13.7] | yes |
+| `NCT06983054-INC-03` | 85.0 | 116.5 | [18.0, 116.5] | yes |
+| `NCT06983054-INC-04` | 25.0 | 34.2 | [34.2] | yes |
+| `NCT06983054-INC-05` | 31.0 | 42.5 | refused | n/a |
+| `NCT06983054-INC-07` | 90.0 | 123.3 | [60.0, 123.3] | yes |
+| `NCT06983054-INC-08` | 200.0 | 274.0 | refused | n/a |
+| `NCT06983054-INC-09` | 30.0 | 41.1 | [41.1] | yes |
+| `NCT06983054-EXC-01` | 90.0 | 123.3 | [60.0, 123.3] | yes |
+
+**6 of 6 follow the perturbation. 0 of 6 reproduce the original number.**
+

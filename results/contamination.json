@@ -57,5 +57,129 @@
   ],
   "offending": [],
   "pass": true
+ },
+ "cassettes": {
+  "cassettes_scanned": 317,
+  "distinct_title_ngrams": 77,
+  "legitimate_ngrams_subtracted": 3016,
+  "example_ngrams": [
+   "2 t1dm while",
+   "888 digital medical",
+   "a randomized placebo-controlled",
+   "ai platform for",
+   "and cardio-renal-vascular diseases",
+   "and systemic hemodynamics",
+   "best strategy for",
+   "can reduce kidney"
+  ],
+  "hits": [],
+  "pass": true
+ },
+ "counterfactual": {
+  "n_attempted": 8,
+  "n_compiled": 6,
+  "n_follows": 6,
+  "n_recites": 0,
+  "usage": {
+   "calls": 24,
+   "prompt_tokens": 19479,
+   "completion_tokens": 3704,
+   "wall_s": 2434.34,
+   "cassette_hits": 10
+  },
+  "rows": [
+   {
+    "criterion_id": "NCT06983054-INC-02",
+    "original": 10.0,
+    "perturbed": 13.7,
+    "text": "HbA1c 6.5-13.7%",
+    "status": "compiled",
+    "literals": [
+     6.5,
+     13.7
+    ],
+    "follows": true,
+    "recites": false
+   },
+   {
+    "criterion_id": "NCT06983054-INC-03",
+    "original": 85.0,
+    "perturbed": 116.5,
+    "text": "Age 18 - 116.5 years of age",
+    "status": "compiled",
+    "literals": [
+     18.0,
+     116.5
+    ],
+    "follows": true,
+    "recites": false
+   },
+   {
+    "criterion_id": "NCT06983054-INC-04",
+    "original": 25.0,
+    "perturbed": 34.2,
+    "text": "Overweight or obese with BMI: >34.2 kg/m2",
+    "status": "compiled",
+    "literals": [
+     34.2
+    ],
+    "follows": true,
+    "recites": false
+   },
+   {
+    "criterion_id": "NCT06983054-INC-05",
+    "original": 31.0,
+    "perturbed": 42.5,
+    "text": "Both sexes (females must be post-menopausal; no menses >1 year; in case of doubt, Follicle-Stimulating Hormone (FSH) will be determined with cut-off defined as >42.5 U/L)",
+    "status": "refused",
+    "reason": "Menstrual history (no menses for over one year) is not standardly captured in structured records, and ordering an FSH test 'in case of doubt' requires prospective investigator judgment."
+   },
+   {
+    "criterion_id": "NCT06983054-INC-07",
+    "original": 90.0,
+    "perturbed": 123.3,
+    "text": "Estimated GFR 60-123.3 ml/min/1.73m2 by CKD-EPI matching the eGFR range of most participants in VERTIS-CV",
+    "status": "compiled",
+    "literals": [
+     60.0,
+     123.3
+    ],
+    "follows": true,
+    "recites": false
+   },
+   {
+    "criterion_id": "NCT06983054-INC-08",
+    "original": 200.0,
+    "perturbed": 274.0,
+    "text": "Sodium intake at baseline < 274 mmol/day",
+    "status": "refused",
+    "reason": "Daily dietary sodium intake is a lifestyle/nutritional measurement not normally captured as structured data in electronic medical records."
+   },
+   {
+    "criterion_id": "NCT06983054-INC-09",
+    "original": 30.0,
+    "perturbed": 41.1,
+    "text": "UACR < 41.1 mg/mmol",
+    "status": "compiled",
+    "literals": [
+     41.1
+    ],
+    "follows": true,
+    "recites": false
+   },
+   {
+    "criterion_id": "NCT06983054-EXC-01",
+    "original": 90.0,
+    "perturbed": 123.3,
+    "text": "Estimated GFR <60 mL/min/1.73m2 or eGFR > 123.3 mL/min/1.73m2 determined by CKD-EPI",
+    "status": "compiled",
+    "literals": [
+     60.0,
+     123.3
+    ],
+    "follows": true,
+    "recites": false
+   }
+  ]
  }
 }
