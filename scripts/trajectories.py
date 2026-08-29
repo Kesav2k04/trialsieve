@@ -41,6 +41,7 @@ def stats(events: list[dict]) -> dict:
         "tool_calls": kinds.get("tool_call", 0),
         "validation_errors": kinds.get("validation_error", 0),
         "retries": kinds.get("retry", 0),
+        "transport_retries": kinds.get("transport_retry", 0),
         "critic_findings": kinds.get("critic_finding", 0),
         "revisions": kinds.get("revision", 0),
         "normalisations": kinds.get("normalisation", 0),
@@ -72,6 +73,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
     ap.add_argument("--out", default="")
+    ap.add_argument("--show-worst", action="store_true",
+                    help="print the single most eventful trajectory to stdout and "
+                         "write nothing. Used by the video build, so what a viewer "
+                         "sees is a rendering of the log rather than a screenshot "
+                         "somebody chose.")
     a = ap.parse_args()
 
     run = Path(a.run)
@@ -104,10 +110,16 @@ def main() -> int:
         return 2
 
     rows.sort(key=lambda r: (-r["interest"], r["agent"], r["subject"]))
+
+    if a.show_worst:
+        worst = rows[0]
+        src_file = src / Path(worst["md"]).with_suffix(".jsonl")
+        print(render_markdown(src_file))
+        return 0
     tot = {k: sum(r[k] for r in rows) for k in
            ("events", "llm_calls", "tool_calls", "validation_errors", "retries",
-            "critic_findings", "revisions", "normalisations", "human_checkpoints",
-            "completion_tokens")}
+            "transport_retries", "critic_findings", "revisions", "normalisations",
+            "human_checkpoints", "completion_tokens")}
 
     L: list[str] = []
     L.append("# Agent trajectories")
@@ -123,7 +135,9 @@ def main() -> int:
     L.append(f"| model calls | {tot['llm_calls']} |")
     L.append(f"| tool calls | {tot['tool_calls']} |")
     L.append(f"| schema rejections fed back to the model | {tot['validation_errors']} |")
-    L.append(f"| retries | {tot['retries']} |")
+    L.append(f"| retries after a schema rejection | {tot['retries']} |")
+    L.append(f"| requests resent after the endpoint failed | "
+             f"{tot['transport_retries']} |")
     L.append(f"| critic findings | {tot['critic_findings']} |")
     L.append(f"| predicates revised after a confirmed counterexample | {tot['revisions']} |")
     L.append(f"| malformed fields the harness repaired without a retry | "

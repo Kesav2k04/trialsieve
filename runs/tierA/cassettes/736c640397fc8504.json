@@ -1,0 +1,29 @@
+{
+ "cassette_version": 1,
+ "key": "736c640397fc8504f9b5294d88b489b853c449edfeee976e42274a30a92f4d7b",
+ "provider": "openai",
+ "request": {
+  "max_tokens": 4096,
+  "messages": [
+   {
+    "content": "You match a clinical concept against a specific site's coded vocabulary.\n\nYou choose only from the candidates given. You never invent a code. If none of\nthe candidates genuinely represents the concept, you say so plainly, because a\nwrong match here is worse than no match.",
+    "role": "system"
+   },
+   {
+    "content": "Concept: Metformin\nRecord domain: medication\nMeaning required: active prescription of metformin with unchanged dose prior to index date\n\nCandidate entries from this site's vocabulary:\n            860975  24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet   (in 1030 resources)\n            897718  Verapamil Hydrochloride 40 MG   (in 702 resources)\n            835603  tramadol hydrochloride 50 MG Oral Tablet   (in 93 resources)\n           1094107  Phenazopyridine hydrochloride 100 MG Oral Tablet   (in 35 resources)\n            861467  Meperidine Hydrochloride 50 MG Oral Tablet   (in 24 resources)\n           1049630  diphenhydrAMINE Hydrochloride 25 MG Oral Tablet   (in 21 resources)\n           1014676  cetirizine hydrochloride 5 MG Oral Tablet   (in 12 resources)\n            997488  Fexofenadine hydrochloride 30 MG Oral Tablet   (in 12 resources)\n            997223  Donepezil hydrochloride 10 MG Oral Tablet   (in 3 resources)\n            997501  Fexofenadine hydrochloride 60 MG Oral Tablet   (in 3 resources)\n           1014678  cetirizine hydrochloride 10 MG Oral Tablet   (in 2 resources)\n           1091392  Methylphenidate Hydrochloride 20 MG Oral Tablet   (in 2 resources)\n\nSelect every candidate that genuinely represents the concept. Judge by what the\nentry means, not by whether the words look similar. A different measurement that\nshares a word is not a match: \"Respiratory rate\" is not a glomerular filtration\nrate, and \"Chronic sinusitis\" is not chronic kidney disease.\n\nThe display text beside each code is whatever the source system chose to store.\nIt is frequently abbreviated, locally worded, or vaguer than the code it labels,\nand it is not the code's definition. Judge the concept the code denotes. Where you\nrecognise a code and its display disagree about how specific the concept is, the\ncode decides, and name the code you relied on in `why` for the ones you rejected.\nThis does not license guessing: a code you do not recognise is judged on its\ndisplay like any other candidate, and a display that is vaguer than the concept is\nstill a reason to reject a code you have no independent knowledge of.\n\nFor a drug class, select the entries whose ingredient belongs to that class.\nDifferent strengths or formulations of the same ingredient are all matches.\n\nA candidate can also be BROADER than the concept: it contains what the criterion\nasks for and other things as well. A site that records every diabetes diagnosis\nunder one unspecified diabetes code has a code that is broader than \"type 2\ndiabetes mellitus\". A site whose only asthma code is \"chronic lower respiratory\ndisease\" has one that is broader than asthma.\n\nPut those in `broader_codes`, not in `codes`. The difference decides what happens\nto a patient. A code in `codes` proves the concept when it is present. A code in\n`broader_codes` cannot prove it, and the criterion comes back undetermined for\nthat patient rather than satisfied. Its absence still counts: a patient with no\ndiabetes code of any kind does not have type 2 diabetes either.\n\nDo not use `broader_codes` for a code that is merely related, or for a\ncomplication of the concept, or for a different thing that shares a word. Only\nfor a code whose meaning genuinely contains the concept.\n\nIf no candidate represents the concept and none contains it, return both lists\nempty. That is a normal and useful answer.\n\nReturn JSON only:\n{\"codes\": [\"4548-4\"], \"broader_codes\": [],\n  \"rejected\": [{\"code\": \"718-7\", \"why\": \"different analyte\"}],\n  \"confidence\": \"high\"}",
+    "role": "user"
+   }
+  ],
+  "model": "gemini-3.7-flash-medium",
+  "seed": 7,
+  "temperature": 0.0,
+  "v": 1
+ },
+ "response": {
+  "completion_tokens": 328,
+  "latency_s": 46.324,
+  "model": "gemini-3.7-flash-medium",
+  "prompt_tokens": 954,
+  "text": "```json\n{\n  \"codes\": [\n    \"860975\"\n  ],\n  \"broader_codes\": [],\n  \"rejected\": [\n    {\n      \"code\": \"897718\",\n      \"why\": \"different active ingredient (verapamil hydrochloride)\"\n    },\n    {\n      \"code\": \"835603\",\n      \"why\": \"different active ingredient (tramadol hydrochloride)\"\n    },\n    {\n      \"code\": \"1094107\",\n      \"why\": \"different active ingredient (phenazopyridine hydrochloride)\"\n    },\n    {\n      \"code\": \"861467\",\n      \"why\": \"different active ingredient (meperidine hydrochloride)\"\n    },\n    {\n      \"code\": \"1049630\",\n      \"why\": \"different active ingredient (diphenhydramine hydrochloride)\"\n    },\n    {\n      \"code\": \"1014676\",\n      \"why\": \"different active ingredient (cetirizine hydrochloride)\"\n    },\n    {\n      \"code\": \"997488\",\n      \"why\": \"different active ingredient (fexofenadine hydrochloride)\"\n    },\n    {\n      \"code\": \"997223\",\n      \"why\": \"different active ingredient (donepezil hydrochloride)\"\n    },\n    {\n      \"code\": \"997501\",\n      \"why\": \"different active ingredient (fexofenadine hydrochloride)\"\n    },\n    {\n      \"code\": \"1014678\",\n      \"why\": \"different active ingredient (cetirizine hydrochloride)\"\n    },\n    {\n      \"code\": \"1091392\",\n      \"why\": \"different active ingredient (methylphenidate hydrochloride)\"\n    }\n  ],\n  \"confidence\": \"high\"\n}\n```"
+ }
+}
