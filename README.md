@@ -294,6 +294,18 @@ how often a system is right, it is how often it is confidently wrong in a way no
 can see. Until an agent can say "the record does not say" as a first-class output,
 and be scored on it, its accuracy figure is a measure of its willingness to guess.
 
+This project can put a number on that rather than only assert it, and the number
+came out against the design. In the grounding probe, a local 8B model answered 21
+concepts and got 7 wrong. Every one of the 7 was an over-acceptance: a real code
+from the site's own vocabulary that means something adjacent to the concept asked
+for. Not one was a refusal. The stronger model got 6 of those 7 right and made the
+same mistake on the seventh. An accuracy score of 14 of 21 and 20 of 21 makes those
+two failures look like the same kind of thing at different rates. They are not: the
+errors are entirely on the side that costs a patient and entirely absent from the
+side that costs coverage, and that asymmetry is invisible in any single figure.
+[docs/WEAK_MODEL.md](docs/WEAK_MODEL.md) reports both columns for that reason, and
+the headline results report coverage and silent error as a pair for the same one.
+
 ## Safety, scope and data
 
 - Public and synthetic data only. Synthea (Apache-2.0, sha256 pinned) and
