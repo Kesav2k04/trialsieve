@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -161,17 +162,23 @@ def build(manifest: list[dict], timings: dict, frames_dir: Path, audio_dir: Path
         srt_parts.append((n, t, t + secs[n]["seconds"]))
         t += secs[n]["seconds"]
 
+    # ffmpeg's concat demuxer resolves every `file` line relative to the LIST's
+    # own directory, not to the process working directory. Repo-relative paths
+    # here produced `frames/docs/video/frames/01-scale_01.png`, and the error
+    # named the list rather than the entry, which is a confusing way to spend
+    # twenty minutes. Both lists are written relative to themselves.
     listing = frames_dir / "concat.txt"
     lines = []
     for path, span in concat:
-        lines.append(f"file '{path.as_posix()}'")
+        lines.append(f"file '{path.name}'")
         lines.append(f"duration {span:.3f}")
-    lines.append(f"file '{concat[-1][0].as_posix()}'")
+    lines.append(f"file '{concat[-1][0].name}'")
     listing.write_text("\n".join(lines) + "\n", encoding="utf-8", newline=chr(10))
 
     audio_list = frames_dir / "audio.txt"
+    rel = Path(os.path.relpath(audio_dir, frames_dir)).as_posix()
     audio_list.write_text(
-        "\n".join(f"file '{(audio_dir / s['file']).as_posix()}'"
+        "\n".join(f"file '{rel}/{s['file']}'"
                   for s in sorted(timings["sections"], key=lambda x: x["n"])) + "\n",
         encoding="utf-8", newline=chr(10))
 
