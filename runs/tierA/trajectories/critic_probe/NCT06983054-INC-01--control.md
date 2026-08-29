@@ -71,7 +71,7 @@ counterexample null. Do not invent a problem to look useful.
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `5d136a74f615c9f7`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `e49086bc72ffc69e`
 
 ```
 [system]
@@ -107,13 +107,13 @@ COMPILED PREDICATE:
    "op": "exists",
    "query": {
     "domain": "condition",
-    "codes": [
+    "codes": [],
+    "broader_codes": [
      "44054006"
     ],
-    "broader_codes": [],
     "within_days": null,
     "active_only": false,
-    "absent_means": "false"
+    "absent_means": "unknown"
    }
   }
  ]
@@ -165,7 +165,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 20 tok, 60.037s)
+### 4. llm_response (openai, 20 tok, 21.72845458984375s)
 
 ```
 ```json

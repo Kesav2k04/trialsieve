@@ -71,7 +71,7 @@ counterexample null. Do not invent a problem to look useful.
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `a0c5939239b00828`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `97d03356195f628f`
 
 ```
 [system]
@@ -107,13 +107,13 @@ COMPILED PREDICATE:
    "op": "exists",
    "query": {
     "domain": "condition",
-    "codes": [
+    "codes": [],
+    "broader_codes": [
      "44054006"
     ],
-    "broader_codes": [],
     "within_days": null,
     "active_only": false,
-    "absent_means": "false"
+    "absent_means": "unknown"
    }
   }
  ]
@@ -165,7 +165,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 167 tok, 59.793s)
+### 4. llm_response (openai, 161 tok, 22.73565125465393s)
 
 ```
 ```json
@@ -173,7 +173,7 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The age threshold is incorrectly set to >= 36 years instead of >= 18 years for adults.",
+      "issue": "The predicate restricts age to >= 36.0 years, excluding adults aged 18 to 35.",
       "kind": "boundary",
       "severity": "high"
     }
@@ -193,7 +193,7 @@ counterexample null. Do not invent a problem to look useful.
       "procedures": []
     },
     "expected_truth": "TRUE",
-    "why": "The patient is an adult (age 25 >= 18) with a documented diagnosis of Type 2 diabetes mellitus, satisfying the criterion text."
+    "why": "A 25-year-old is an adult and meets the requirement of having a previous diagnosis of type 2 diabetes mellitus."
   }
 }
 ```
@@ -250,9 +250,9 @@ counterexample null. Do not invent a problem to look useful.
    "procedures": [],
    "sex": "female"
   },
-  "why": "The patient is an adult (age 25 >= 18) with a documented diagnosis of Type 2 diabetes mellitus, satisfying the criterion text."
+  "why": "A 25-year-old is an adult and meets the requirement of having a previous diagnosis of type 2 diabetes mellitus."
  },
- "finding": "The age threshold is incorrectly set to >= 36 years instead of >= 18 years for adults.",
+ "finding": "The predicate restricts age to >= 36.0 years, excluding adults aged 18 to 35.",
  "verdict": "CONFIRMED"
 }
 ```

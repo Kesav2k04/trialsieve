@@ -122,7 +122,8 @@ def main() -> int:
     print("\nFAIL: the codes above settle a verdict the site's vocabulary cannot "
           "support. Where such a criterion also carries absent_means=false, both "
           "branches commit and the criterion can never answer INDETERMINATE, "
-          "which is how one criterion produced 358 of the 424 wrong exclusions.")
+          "which is how one criterion produced 358 of the 424 wrong exclusions "
+          "before entry 29 of the improvement changelog closed this hole.")
     return 3
 
 

@@ -161,13 +161,25 @@ Two rules the code enforces rather than requests:
   dated resource.
 - **So absence can rule someone out, and that is the sharp edge of this design.**
   An earlier version of this file said absence never rules anyone out. The code
-  says otherwise (`src/trialsieve/evaluator.py:233`) and so does the run: one
+  says otherwise (`src/trialsieve/evaluator.py:233`) and so did the run: one
   criterion compiled with `absent_means: "false"` produced 358 of the 424 wrong
-  exclusions in the whole evaluation. The control that is supposed to catch it is
-  the human reading the predicate in English before any worklist exists, and on
-  this run it was not caught. A single flag flips every query at once, and the
-  sensitivity arm measures what that one field is worth: silent errors 469 down
-  to 111, false exclusions 182 down to 18.
+  exclusions in the whole evaluation. The control that was supposed to catch it
+  is the human reading the predicate in English before any worklist exists, and
+  on that run it was not caught.
+- **One case is no longer the model's to decide.** A query with an empty `codes`
+  list is asking about a concept this site has no code for, so the record could
+  never have stored it and its silence carries no information. The compiler now
+  forces `absent_means` to `unknown` there and records the change on the
+  trajectory as a `normalisation`. Silent errors fell from 469 to **111** and
+  patients wrongly ruled out from 182 to **18**, at a cost of 5 points of
+  coverage. Entry 30 of the changelog has the full table, and
+  [docs/SCORECARD.md](docs/SCORECARD.md) puts the gain and the cost in the same
+  two columns.
+- **Every other closed-world decision is still the model's, and the sensitivity
+  arm is how you check it.** `--absent-means-override unknown` discards all of
+  them at once. It used to remove 604 silent errors. It now removes **zero**: the
+  two arms report 111 each, so what is left has nothing to do with absence. A gap
+  re-opening there means a new closed-world assertion started committing.
 
 ### A code can contain a concept without establishing it
 

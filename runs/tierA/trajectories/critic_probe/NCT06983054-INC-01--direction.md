@@ -71,7 +71,7 @@ counterexample null. Do not invent a problem to look useful.
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `821e1e0ecdbde18f`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `e4ff25fe7d807064`
 
 ```
 [system]
@@ -109,13 +109,13 @@ COMPILED PREDICATE:
     "op": "exists",
     "query": {
      "domain": "condition",
-     "codes": [
+     "codes": [],
+     "broader_codes": [
       "44054006"
      ],
-     "broader_codes": [],
      "within_days": null,
      "active_only": false,
-     "absent_means": "false"
+     "absent_means": "unknown"
     }
    }
   ]
@@ -168,7 +168,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 156 tok, 50.544s)
+### 4. llm_response (openai, 178 tok, 25.30667209625244s)
 
 ```
 ```json
@@ -176,7 +176,7 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The inclusion criterion is wrapped in an outer 'not' operator, causing eligible adult patients with T2DM to evaluate to false.",
+      "issue": "The inclusion predicate is inverted by a top-level 'not' operator, causing eligible adult patients with T2DM to evaluate to false.",
       "kind": "direction",
       "severity": "high"
     }
@@ -185,15 +185,18 @@ counterexample null. Do not invent a problem to look useful.
     "patient": {
       "age": 45,
       "sex": "female",
+      "observations": [],
       "conditions": [
         {
           "code": "44054006",
           "days_ago": 100
         }
-      ]
+      ],
+      "medications": [],
+      "procedures": []
     },
     "expected_truth": "TRUE",
-    "why": "The patient is an adult with a prior diagnosis of type 2 diabetes mellitus and satisfies the inclusion criterion."
+    "why": "The patient is an adult with a documented prior diagnosis of type 2 diabetes mellitus and satisfies the inclusion criterion."
   }
 }
 ```
@@ -212,6 +215,9 @@ counterexample null. Do not invent a problem to look useful.
     "days_ago": 100
    }
   ],
+  "medications": [],
+  "observations": [],
+  "procedures": [],
   "sex": "female"
  }
 }
@@ -221,9 +227,9 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "actual": "FALSE",
+ "actual": "UNKNOWN",
  "confirmed": true,
- "engine_reason": "negation of a TRUE sub-result",
+ "engine_reason": "negation of a UNKNOWN sub-result",
  "expected": "TRUE"
 }
 ```
@@ -242,11 +248,14 @@ counterexample null. Do not invent a problem to look useful.
      "days_ago": 100
     }
    ],
+   "medications": [],
+   "observations": [],
+   "procedures": [],
    "sex": "female"
   },
-  "why": "The patient is an adult with a prior diagnosis of type 2 diabetes mellitus and satisfies the inclusion criterion."
+  "why": "The patient is an adult with a documented prior diagnosis of type 2 diabetes mellitus and satisfies the inclusion criterion."
  },
- "finding": "The inclusion criterion is wrapped in an outer 'not' operator, causing eligible adult patients with T2DM to evaluate to false.",
+ "finding": "The inclusion predicate is inverted by a top-level 'not' operator, causing eligible adult patients with T2DM to evaluate to false.",
  "verdict": "CONFIRMED"
 }
 ```
@@ -256,9 +265,9 @@ counterexample null. Do not invent a problem to look useful.
 ```json
 {
  "executed": {
-  "actual": "FALSE",
+  "actual": "UNKNOWN",
   "confirmed": true,
-  "engine_reason": "negation of a TRUE sub-result",
+  "engine_reason": "negation of a UNKNOWN sub-result",
   "expected": "TRUE"
  },
  "n_findings": 1,

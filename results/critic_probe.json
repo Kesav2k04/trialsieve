@@ -1,9 +1,9 @@
 {
  "model": "gemini-3.7-flash-medium",
- "n_defects": 18,
- "n_caught": 16,
+ "n_defects": 19,
+ "n_caught": 18,
  "n_controls": 6,
- "n_false_alarms": 0,
+ "n_false_alarms": 1,
  "by_class": {
   "boundary": [
    3,
@@ -22,19 +22,19 @@
    6
   ],
   "absence": [
-   1,
-   3
+   3,
+   4
   ]
  },
  "classes_never_planted": [],
  "usage": {
-  "calls": 24,
-  "prompt_tokens": 18776,
-  "completion_tokens": 3222,
-  "wall_s": 756.86,
-  "cassette_hits": 24
+  "calls": 25,
+  "prompt_tokens": 19497,
+  "completion_tokens": 3710,
+  "wall_s": 682.57,
+  "cassette_hits": 12
  },
- "wall_s": 0.0,
+ "wall_s": 317.6,
  "rows": [
   {
    "criterion_id": "NCT06983054-EXC-05",
@@ -124,9 +124,10 @@
   {
    "criterion_id": "NCT06983054-INC-01",
    "defect": "absence",
-   "detail": "not applicable to this predicate",
-   "verdict": "n/a",
-   "correct": null
+   "detail": "absent_means unknown became false",
+   "verdict": "OK",
+   "correct": false,
+   "engine_confirmed": false
   },
   {
    "criterion_id": "NCT06983054-INC-04",
@@ -175,37 +176,37 @@
    "correct": null
   },
   {
-   "criterion_id": "NCT06717698-EXC-02",
+   "criterion_id": "NCT06717698-INC-07",
    "defect": "none (control)",
    "detail": "the predicate as compiled",
-   "verdict": "OK",
-   "confirmed": false,
-   "correct": true
+   "verdict": "REVISE",
+   "confirmed": true,
+   "correct": false
   },
   {
-   "criterion_id": "NCT06717698-EXC-02",
+   "criterion_id": "NCT06717698-INC-07",
    "defect": "boundary",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
   },
   {
-   "criterion_id": "NCT06717698-EXC-02",
+   "criterion_id": "NCT06717698-INC-07",
    "defect": "threshold",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
   },
   {
-   "criterion_id": "NCT06717698-EXC-02",
+   "criterion_id": "NCT06717698-INC-07",
    "defect": "window",
-   "detail": "window 90 days became 360",
+   "detail": "window 180 days became 720",
    "verdict": "REVISE",
    "correct": true,
    "engine_confirmed": true
   },
   {
-   "criterion_id": "NCT06717698-EXC-02",
+   "criterion_id": "NCT06717698-INC-07",
    "defect": "direction",
    "detail": "the whole predicate is negated",
    "verdict": "REVISE",
@@ -213,12 +214,12 @@
    "engine_confirmed": true
   },
   {
-   "criterion_id": "NCT06717698-EXC-02",
+   "criterion_id": "NCT06717698-INC-07",
    "defect": "absence",
    "detail": "absent_means unknown became false",
-   "verdict": "OK",
-   "correct": false,
-   "engine_confirmed": false
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
   },
   {
    "criterion_id": "NCT06983054-INC-09",
@@ -267,7 +268,7 @@
    "correct": null
   },
   {
-   "criterion_id": "NCT06717698-EXC-05",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "none (control)",
    "detail": "the predicate as compiled",
    "verdict": "OK",
@@ -275,29 +276,29 @@
    "correct": true
   },
   {
-   "criterion_id": "NCT06717698-EXC-05",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "boundary",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
   },
   {
-   "criterion_id": "NCT06717698-EXC-05",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "threshold",
    "detail": "not applicable to this predicate",
    "verdict": "n/a",
    "correct": null
   },
   {
-   "criterion_id": "NCT06717698-EXC-05",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "window",
-   "detail": "window 183 days became 732",
+   "detail": "window 90 days became 360",
    "verdict": "REVISE",
    "correct": true,
    "engine_confirmed": true
   },
   {
-   "criterion_id": "NCT06717698-EXC-05",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "direction",
    "detail": "the whole predicate is negated",
    "verdict": "REVISE",
@@ -305,12 +306,12 @@
    "engine_confirmed": true
   },
   {
-   "criterion_id": "NCT06717698-EXC-05",
+   "criterion_id": "NCT06717698-EXC-02",
    "defect": "absence",
    "detail": "absent_means unknown became false",
-   "verdict": "OK",
-   "correct": false,
-   "engine_confirmed": false
+   "verdict": "REVISE",
+   "correct": true,
+   "engine_confirmed": true
   }
  ]
 }

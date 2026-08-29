@@ -24,12 +24,16 @@ same data. Neither is an estimate.
 | label disagreement floor for this panel | 10.6% | **2.3%** (95% CI 1.2 to 3.6) | `results/results.json`, `label_noise_floor` against `groups.k0_seed7.label_floor_poststratified` |
 | published differences that floor called uninterpretable | 2 of 6 | **0 of 6** | the `vs label floor` column, `results/RESULTS.md` |
 | defect classes the critic probe ever planted | 3 of 5 | **5 of 5** | `by_class` in `results/critic_probe.json` |
-| critic catch rate, absence defects | never planted | **1 of 3** | same file |
+| critic catch rate, absence defects | never planted, then 1 of 3 | **3 of 4** on the repaired predicates | same file |
 | critic catch rate, every other class | 9 of 9 | **15 of 15** | same file |
 | the B2 comparison, the arm the protocol calls the one that matters | run, never compared | **-0.4050 SER, CI [-0.5550, -0.2550]** | the B2 group in `results/RESULTS.md` |
-| criteria that did not compile | 22, as one number | **21 refusals and 1 lost to the validator** | "What did not compile, and why", `results/RESULTS.md` |
-| coverage against the registered denominator | 37% | **27.7%**, below the registered 30 to 40% band | `criterion_coverage` in `results/results.json`; the numerator was the gold set's `checkable` count, not the compiler's output |
-| broader-only codes used as exact codes | not checked | **2, both named** | `python scripts/grounding_audit.py --run runs/tierA` |
+| criteria that did not compile | 22, as one number | **21 refusals and 0 lost to the validator** | "What did not compile, and why", `results/RESULTS.md` |
+| coverage against the registered denominator | 37% | **29.2%**, below the registered 30 to 40% band | `criterion_coverage` in `results/results.json`; the numerator was the gold set's `checkable` count, not the compiler's output |
+| broader-only codes used as exact codes | not checked, then 2 | **0** | `python scripts/grounding_audit.py --run runs/tierA` |
+| patients wrongly ruled out, 385-patient panel | 182 | **18** | `groups.k0_seed7.panel_scores.TS.false_exclusions` |
+| silent error rate per cell | 3.05% | **0.72%** | `groups.k0_seed7.cell_scores.TS.ser` |
+| silent errors the open-world arm would still remove | 604 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
+| third-party imports on the reproduction path | never checked | **0 of 51 modules, parsed** | `python scripts/lockfile.py --imports` |
 | narration lines that reached a frame | 24 of every 30 | **30 of 30** | `tests/test_video_geometry.py`, measured in a browser |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
 
@@ -1282,6 +1286,10 @@ code real?" and every reader, including the documentation and the prompt, read i
 as "is this code allowed here?". Nothing in a passing test suite distinguishes
 those two, because the union answers both with yes.
 
+**Repaired in entry 29**, which is also where the numbers this entry describes
+stop being the current ones. The paragraph above about leaving the defect in the
+run it damaged was written when this entry was, and it was overtaken.
+
 ---
 
 ## 26. The experiment I registered and then could not honestly run
@@ -1397,6 +1405,11 @@ exact code, and the constraint it grew, "at least one exact code", quietly
 deleted the case the rest of the design was built around. Nothing failed loudly.
 One criterion went missing and the error message named the model.
 
+**Repaired in entry 29.** The IR accepts an empty `codes` list when
+`broader_codes` carries the concept, `NCT06989723-EXC-01` compiles, and the count
+of criteria lost to the validator is 0. What that recovered criterion then did to
+the numbers is the reason entry 29 has the title it has.
+
 ---
 
 ## 28. The coverage headline was the answer key's number, not the system's
@@ -1449,3 +1462,195 @@ still never ask what the inputs mean.
 That is also why it was found by a narration gate rather than by the test suite.
 Speaking a number out loud forces you to say what it is a number *of*, and this
 one had no true sentence.
+
+## 29. The fix that made every headline number worse
+
+**Found by** entry 25, which is the entry above that names a defect and does not
+repair it. `compiler.py` built the emit validator's allow-list as
+`codes | broader_codes`. A set has no idea which slot a code arrived in, so a
+parent code moved into `codes` sat inside the allow-list and validated. Entry 27
+is the other half: `ir.py` required every query to carry at least one exact code,
+so a concept this vocabulary only has a parent for had no legal shape at all, and
+`NCT06989723-EXC-01` burned three retries discovering that.
+
+**What changed.** Two small edits. `compiler.py` now builds `exact_allowed` and
+`broader_allowed` separately, keeps `broader_only` as the difference, and rejects
+an emission that puts one of those in `codes`, telling the model where the code
+belongs and that leaving `codes` empty is allowed. `ir.py` now accepts an empty
+`codes` list when `broader_codes` carries the concept, and refuses only a query
+with no code in either slot.
+
+**It needed no new model calls.** The trajectory for `NCT06717698-INC-07` shows
+the model's first emission was `codes: []` with `broader_codes: ['44054006']`,
+the shape the design asks for, and the old validator rejected it. That request
+and its answer were already in the cassette store. With the validator fixed the
+first attempt validates, so seed 7 recompiled from 193 recorded calls with zero
+live ones. Seeds 8 and 9 replayed at 100% cassette hits as well.
+
+**Then the numbers got worse.** Every headline moved the wrong way:
+
+| | before | after entry 29 |
+|---|---|---|
+| silent error rate | 3.05% | 6.97% |
+| false FAILS | 424 | 670 |
+| false MEETS | 45 | 403 |
+| patients wrongly ruled out | 182 | 318 |
+| criteria compiled | 18 | 19 |
+
+**Why.** The recovered criterion was the cause. `NCT06989723-EXC-01` reads
+*Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus*,
+and once the validator stopped losing it, it compiled and committed 358 wrong
+MEETS. The criterion the validator had been rejecting was worse than the
+abstention that replaced it.
+
+**What that is worth knowing.** Coverage went up and the system got worse, in a
+project whose whole argument is that coverage is not the metric. The defect was
+real and the fix was right. The accident was that a validator bug had been doing
+the work of a correctness check, and removing it exposed what sat underneath. A
+coverage figure moving in the good direction is not evidence, which is the claim
+this repository makes about other people's systems and now has a measurement of
+its own to support.
+
+**Kept, not reverted.** Reverting would have restored the numbers by restoring a
+bug, and the next entry is what the exposed problem actually needed.
+
+**Evidence.** `python scripts/grounding_audit.py --run runs/tierA` exits 0 and
+reports 9 criteria grounding a broader-only code with 0 of them promoted.
+`tests/test_grounding_audit.py` holds the ledger at zero and requires the audit
+to have scanned a non-empty set, so a clean result cannot come from reading
+nothing. `tests/test_not_compilable.py` holds the refusal-versus-exhaustion split
+at 21 and 0.
+
+## 30. Closed-world absence on a concept this vocabulary cannot express
+
+**Found by** reading the three worst criteria in the run entry 29 produced, per
+criterion rather than in aggregate. Two of the three had the same shape:
+
+```json
+{"domain": "condition", "codes": [], "broader_codes": ["44054006"],
+ "absent_means": "false"}
+```
+
+`absent_means: "false"` says the record is trusted to be complete for this query,
+so silence settles it. That is a claim about the record, and it is only available
+when the query has a code for the concept in the first place. An empty `codes`
+list means this site has no code for the thing being asked about. The record
+could never have stored it. Its silence carries no information, and reading that
+silence as absence commits FALSE on every patient whose chart simply never
+mentions the parent.
+
+`NCT06983054-INC-01` did that 358 times. `NCT06989723-INC-02` did it 246 times.
+
+**What changed.** `open_world_broader_only()` in `compiler.py` walks the emitted
+expression and forces `absent_means` to `unknown` on any query with an empty
+`codes` list, before the critic sees the predicate and before anything executes
+it. Each repair is recorded on the trajectory as a `normalisation`, the event
+kind this harness already uses for a field the model got slightly wrong, so the
+difference between what the model emitted and what the engine ran is on the
+record rather than in the engine's head.
+
+It is a repair and not a rejection because the model has said something coherent
+and got one boolean wrong, and a retry loop over one boolean spends a model call
+to arrive at the only remaining answer.
+
+**Measured, on the same 15,400 cells:**
+
+| | published before entry 29 | after entry 29 | after this repair |
+|---|---|---|---|
+| silent error rate | 3.05% | 6.97% | **0.72%** |
+| false FAILS | 424 | 670 | **66** |
+| false MEETS | 45 | 403 | **45** |
+| patients wrongly ruled out | 182 | 318 | **18** |
+| cells answered | 24.12% | 27.72% | 19.15% |
+| panel reduction | 60.35% | 75.32% | 46.15% |
+
+Against the simple baseline, on the paired 400-cell sample the two arms share:
+B2 is wrong on 43.75% of cells and wrongly rules out 10 of 30 patients,
+TrialSieve is wrong on 1.00% and wrongly rules out 2.
+
+**The trade is real and is not hidden.** Cells answered fell from 24.12% to
+19.15%, and unnecessary abstention rose from 210 to 618. The system now declines
+to answer 618 cells a perfect system would have answered. It also stopped wrongly
+excluding 164 patients. `docs/SCORECARD.md` puts both columns next to each other
+rather than quoting the half that flatters.
+
+**The sensitivity arm stopped moving, which is the interesting part.**
+`run_arms --absent-means-override unknown` discards every closed-world decision
+the compiler made. It used to remove 604 silent errors, and that gap was the
+headline of the sensitivity section: most of the system's error was the model
+asserting a closed world it was not entitled to. The two arms now report
+**111 silent errors each**. The targeted repair took all of it. What they still
+share is the error that has nothing to do with absence, and a gap re-opening in
+future means a new closed-world assertion started committing.
+
+**Evidence.** `tests/test_open_world_broader.py` holds eight assertions,
+including one that walks every committed predicate across all three seeds and
+fails if any pairs an empty `codes` list with closed-world absence, and one that
+runs an empty chart through the evaluator rather than arguing about it.
+`tests/test_sensitivity_section.py` pins the 111-against-111 equality with the
+reason it now holds.
+
+## 31. A claim of zero dependencies that nothing parsed
+
+**Found by** reading the rules again rather than the code. The scoring row for
+reproducibility names an **exact dependency lock**. This repository had none.
+`pyproject.toml` said `dependencies = []`, the dev extra said `pytest>=7.4`,
+which is a range and not a pin, and `edge_tts` and `playwright` were imported by
+the video build while appearing in no manifest at all. Two third-party packages
+were in use and undeclared.
+
+**What was actually wrong.** `dependencies = []` is the load-bearing claim in
+`REPRODUCE.md`: a judge clones and runs `python run.py reproduce` with no install
+step. The claim was true and nothing checked it. One new import in one script
+would have ended it silently, and the failure would surface on a stranger's
+machine as an ImportError in the middle of a reproduction.
+
+**What changed.** `scripts/lockfile.py` does three things. `--write` walks the
+transitive closure of every declared group through installed package metadata and
+emits `requirements-lock.txt` with 23 exact pins and the interpreter version.
+`--check` reports drift and exits 4 rather than 1, so a version difference is
+distinguishable from a crash; a judge on another machine is expected to drift,
+and the point is that the difference is named rather than forbidden. `--imports`
+parses every module the reproduction path touches and fails on any import that is
+neither in `sys.stdlib_module_names` nor this project's own. It runs inside
+`python run.py check`, and `run.py environment` now records lock drift beside the
+run.
+
+**It caught its own first version.** The first walk reported `score`, `plainview`
+and `criteria_set` as third-party. All three are this project's own files,
+imported bare because their directory is placed on `sys.path` at runtime.
+`tests/test_dependency_surface.py` now carries that as a negative control
+alongside a positive one that plants `import numpy` and requires the check to
+find it.
+
+**Evidence.** `python scripts/lockfile.py --imports` reports 51 modules parsed
+and zero third-party imports. `requirements-lock.txt` carries 23 pins under
+`python 3.14.2 (cpython)`, and six tests hold the lock exact, complete against
+what pyproject declares, and interpreter-stamped.
+
+## 32. A failure report that named a file two directories share
+
+**Found by** spending an hour reading the wrong agent's log. `verify.py
+trajectories` reported `NCT06983054-INC-01-seed7.jsonl` as having no cassette. I
+opened `runs/tierA/trajectories/compiler/NCT06983054-INC-01-seed7.jsonl`, checked
+every cassette key in it by hand, found all five present in the store, and could
+not reconcile the report with the tree.
+
+The file it meant was
+`runs/tierA/trajectories/critic/NCT06983054-INC-01-seed7.jsonl`. The compiler and
+the critic each write one trajectory per criterion per seed, under identical
+filenames, into sibling directories. The check reported `p.name`.
+
+**What changed.** The report prints the path relative to the trajectory root, so
+every entry reads `critic/...` or `compiler/...`. Four call sites, one helper.
+
+**Why it is in here.** It is the smallest entry in this changelog and it cost
+more time than several larger ones. A check that finds a real defect and then
+describes it ambiguously spends its finding on a wild goose chase, and the person
+paying is the one who trusted the check. The failure was correct. The report was
+not usable.
+
+**Evidence.** `python scripts/verify.py trajectories --run runs/tierA` prints
+paths with their agent directory. It currently reports 1,072 model calls all
+resolving to a byte-identical cassette, so the fix shows in the format of a
+passing run rather than only under failure.

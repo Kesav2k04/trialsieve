@@ -153,8 +153,9 @@ def cover(compiled: list[dict], limit: int) -> list[dict]:
 
     The class that went untested is the one this system's worst measured failure
     came from: `absent_means` deciding a verdict on a fact the record does not
-    contain, which is 358 of 424 wrong exclusions in `README.md`. Three predicates
-    admit that mutation and none of them were in the first six.
+    contain. One criterion produced 358 of 424 wrong exclusions that way, and
+    entry 30 of the improvement changelog is the repair. Three predicates admit
+    that mutation and none of them were in the first six.
 
     Greedy set cover over the classes, rarest first, then file order to fill the
     remainder. Deterministic, and it states why each predicate is in the set.
@@ -333,7 +334,9 @@ def main() -> int:
                       f"That is not a rounding difference and it is not the class it "
                       f"would be convenient to be weak in: `absence` is silence in the "
                       f"record becoming proof of absence, which is the defect that "
-                      f"produced 358 of the 424 wrong exclusions in the scored run. "
+                      f"produced 358 of the 424 wrong exclusions in the run this probe "
+                      f"was first written against, and entry 30 of the "
+                      f"improvement changelog is the repair. "
                       f"The critic passed the real one, and planting it deliberately "
                       f"says the miss is a property of the reviewer rather than bad "
                       f"luck on one predicate."]

@@ -71,7 +71,7 @@ counterexample null. Do not invent a problem to look useful.
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `d6a63653d3d8b4b9`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `425dca6314ee9c63`
 
 ```
 [system]
@@ -89,18 +89,32 @@ CRITERION (exclusion):
 
 COMPILED PREDICATE:
 {
- "op": "exists",
- "query": {
-  "domain": "procedure",
-  "codes": [
-   "302497006"
-  ],
-  "broader_codes": [
-   "265764009"
-  ],
-  "within_days": 360,
-  "absent_means": "unknown"
- }
+ "op": "or",
+ "args": [
+  {
+   "op": "exists",
+   "query": {
+    "domain": "procedure",
+    "codes": [
+     "302497006"
+    ],
+    "within_days": 360,
+    "absent_means": "unknown"
+   }
+  },
+  {
+   "op": "exists",
+   "query": {
+    "domain": "procedure",
+    "codes": [],
+    "broader_codes": [
+     "265764009"
+    ],
+    "within_days": 90,
+    "absent_means": "unknown"
+   }
+  }
+ ]
 }
 
 CODES AVAILABLE (you may only use these):
@@ -149,7 +163,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 173 tok, 18.632s)
+### 4. llm_response (openai, 164 tok, 22.490434646606445s)
 
 ```
 ```json
@@ -157,14 +171,14 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The predicate specifies a 360-day lookback window (`within_days: 360`) instead of the 90 days required by the criterion text.",
+      "issue": "The first query uses a time window of 360 days instead of the 90 days specified in the criterion text.",
       "kind": "window",
       "severity": "high"
     }
   ],
   "counterexample": {
     "patient": {
-      "age": 55,
+      "age": 62,
       "sex": "female",
       "observations": [],
       "conditions": [],
@@ -177,7 +191,7 @@ counterexample null. Do not invent a problem to look useful.
       ]
     },
     "expected_truth": "FALSE",
-    "why": "The dialysis procedure occurred 180 days prior to screening, which falls outside the 90-day exclusion window."
+    "why": "The procedure occurred 180 days before screening, which falls outside the 90-day exclusion window."
   }
 }
 ```
@@ -189,7 +203,7 @@ counterexample null. Do not invent a problem to look useful.
 {
  "expected_truth": "FALSE",
  "patient": {
-  "age": 55,
+  "age": 62,
   "conditions": [],
   "medications": [],
   "observations": [],
@@ -210,7 +224,7 @@ counterexample null. Do not invent a problem to look useful.
 {
  "actual": "TRUE",
  "confirmed": true,
- "engine_reason": "1 matching procedure record(s) within 360 days of 2021-11-01",
+ "engine_reason": "disjunction holds: 1 matching procedure record(s) within 360 days of 2021-11-01",
  "expected": "FALSE"
 }
 ```
@@ -222,7 +236,7 @@ counterexample null. Do not invent a problem to look useful.
  "counterexample": {
   "expected_truth": "FALSE",
   "patient": {
-   "age": 55,
+   "age": 62,
    "conditions": [],
    "medications": [],
    "observations": [],
@@ -234,9 +248,9 @@ counterexample null. Do not invent a problem to look useful.
    ],
    "sex": "female"
   },
-  "why": "The dialysis procedure occurred 180 days prior to screening, which falls outside the 90-day exclusion window."
+  "why": "The procedure occurred 180 days before screening, which falls outside the 90-day exclusion window."
  },
- "finding": "The predicate specifies a 360-day lookback window (`within_days: 360`) instead of the 90 days required by the criterion text.",
+ "finding": "The first query uses a time window of 360 days instead of the 90 days specified in the criterion text.",
  "verdict": "CONFIRMED"
 }
 ```
@@ -248,7 +262,7 @@ counterexample null. Do not invent a problem to look useful.
  "executed": {
   "actual": "TRUE",
   "confirmed": true,
-  "engine_reason": "1 matching procedure record(s) within 360 days of 2021-11-01",
+  "engine_reason": "disjunction holds: 1 matching procedure record(s) within 360 days of 2021-11-01",
   "expected": "FALSE"
  },
  "n_findings": 1,

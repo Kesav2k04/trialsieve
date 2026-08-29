@@ -71,7 +71,7 @@ counterexample null. Do not invent a problem to look useful.
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `121f48ad16a8ec74`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `a1db172476b9e73c`
 
 ```
 [system]
@@ -89,18 +89,32 @@ CRITERION (exclusion):
 
 COMPILED PREDICATE:
 {
- "op": "exists",
- "query": {
-  "domain": "procedure",
-  "codes": [
-   "302497006"
-  ],
-  "broader_codes": [
-   "265764009"
-  ],
-  "within_days": 90,
-  "absent_means": "false"
- }
+ "op": "or",
+ "args": [
+  {
+   "op": "exists",
+   "query": {
+    "domain": "procedure",
+    "codes": [
+     "302497006"
+    ],
+    "within_days": 90,
+    "absent_means": "false"
+   }
+  },
+  {
+   "op": "exists",
+   "query": {
+    "domain": "procedure",
+    "codes": [],
+    "broader_codes": [
+     "265764009"
+    ],
+    "within_days": 90,
+    "absent_means": "unknown"
+   }
+  }
+ ]
 }
 
 CODES AVAILABLE (you may only use these):
@@ -149,25 +163,110 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 20 tok, 17.848s)
+### 4. llm_response (openai, 191 tok, 28.946593523025513s)
 
 ```
 ```json
 {
-  "verdict": "OK",
-  "findings": [],
-  "counterexample": null
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "issue": "The second query branch sets absent_means to unknown, causing the predicate to evaluate to UNKNOWN instead of FALSE when no qualifying dialysis procedure occurred within 90 days.",
+      "kind": "absence",
+      "severity": "high"
+    }
+  ],
+  "counterexample": {
+    "patient": {
+      "age": 62,
+      "sex": "female",
+      "observations": [],
+      "conditions": [],
+      "medications": [],
+      "procedures": [
+        {
+          "code": "302497006",
+          "days_ago": 120
+        }
+      ]
+    },
+    "expected_truth": "FALSE",
+    "why": "The patient's dialysis occurred 120 days ago, which is outside the 90-day window, so they do not meet the exclusion criterion."
+  }
 }
 ```
 ```
 
-### 5. final
+### 5. tool_call `execute_counterexample`
 
 ```json
 {
- "executed": null,
- "n_findings": 0,
- "verdict": "OK"
+ "expected_truth": "FALSE",
+ "patient": {
+  "age": 62,
+  "conditions": [],
+  "medications": [],
+  "observations": [],
+  "procedures": [
+   {
+    "code": "302497006",
+    "days_ago": 120
+   }
+  ],
+  "sex": "female"
+ }
+}
+```
+
+### 6. tool_result `execute_counterexample`
+
+```json
+{
+ "actual": "UNKNOWN",
+ "confirmed": true,
+ "engine_reason": "disjunction undetermined: no matching procedure record within 90 days of 2021-11-01; open-world, so undetermined",
+ "expected": "FALSE"
+}
+```
+
+### 7. critic_finding
+
+```json
+{
+ "counterexample": {
+  "expected_truth": "FALSE",
+  "patient": {
+   "age": 62,
+   "conditions": [],
+   "medications": [],
+   "observations": [],
+   "procedures": [
+    {
+     "code": "302497006",
+     "days_ago": 120
+    }
+   ],
+   "sex": "female"
+  },
+  "why": "The patient's dialysis occurred 120 days ago, which is outside the 90-day window, so they do not meet the exclusion criterion."
+ },
+ "finding": "The second query branch sets absent_means to unknown, causing the predicate to evaluate to UNKNOWN instead of FALSE when no qualifying dialysis procedure occurred within 90 days.",
+ "verdict": "CONFIRMED"
+}
+```
+
+### 8. final
+
+```json
+{
+ "executed": {
+  "actual": "UNKNOWN",
+  "confirmed": true,
+  "engine_reason": "disjunction undetermined: no matching procedure record within 90 days of 2021-11-01; open-world, so undetermined",
+  "expected": "FALSE"
+ },
+ "n_findings": 1,
+ "verdict": "REVISE"
 }
 ```
 

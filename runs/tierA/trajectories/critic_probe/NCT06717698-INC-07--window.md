@@ -65,13 +65,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "criterion_id": "NCT06717698-EXC-02",
- "kind": "exclusion",
- "source_text": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening."
+ "criterion_id": "NCT06717698-INC-07",
+ "kind": "inclusion",
+ "source_text": "Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus."
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `69da3e2ce0f286f4`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `c537e5a678c031ed`
 
 ```
 [system]
@@ -84,44 +84,29 @@ to break it, and a specific patient who breaks it is the only thing that counts.
 [user]
 Review this compiled criterion.
 
-CRITERION (exclusion):
-  Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.
+CRITERION (inclusion):
+  Diagnosed with type 2 diabetes mellitus greater than or equal to 180 days before screening, or not diagnosed with type 2 diabetes mellitus.
 
 COMPILED PREDICATE:
 {
  "op": "not",
  "arg": {
-  "op": "or",
-  "args": [
-   {
-    "op": "exists",
-    "query": {
-     "domain": "procedure",
-     "codes": [
-      "302497006"
-     ],
-     "within_days": 90,
-     "absent_means": "unknown"
-    }
-   },
-   {
-    "op": "exists",
-    "query": {
-     "domain": "procedure",
-     "codes": [],
-     "broader_codes": [
-      "265764009"
-     ],
-     "within_days": 90,
-     "absent_means": "unknown"
-    }
-   }
-  ]
+  "op": "exists",
+  "query": {
+   "domain": "condition",
+   "codes": [],
+   "broader_codes": [
+    "44054006"
+   ],
+   "within_days": 720,
+   "active_only": false,
+   "absent_means": "unknown"
+  }
  }
 }
 
 CODES AVAILABLE (you may only use these):
-302497006
+(age and sex only)
 
 Look specifically for:
   1. Window errors. Is `within_days` right, and does an event just inside or just
@@ -166,7 +151,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (openai, 154 tok, 20.542062997817993s)
+### 4. llm_response (openai, 200 tok, 25.61445689201355s)
 
 ```
 ```json
@@ -174,22 +159,27 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The predicate has an inverted direction due to a top-level 'not' operator, causing it to evaluate to FALSE instead of TRUE when an excluded dialysis procedure is present.",
-      "kind": "direction",
+      "issue": "The predicate uses a 720-day lookback window that excludes patients diagnosed with type 2 diabetes between 180 and 720 days ago, directly contradicting the criterion allowing diagnosis >= 180 days before screening.",
+      "kind": "window",
       "severity": "high"
     }
   ],
   "counterexample": {
     "patient": {
-      "procedures": [
+      "age": 55,
+      "sex": "female",
+      "observations": [],
+      "conditions": [
         {
-          "code": "302497006",
-          "days_ago": 30
+          "code": "44054006",
+          "days_ago": 200
         }
-      ]
+      ],
+      "medications": [],
+      "procedures": []
     },
     "expected_truth": "TRUE",
-    "why": "The patient underwent dialysis within 90 days before screening, so the exclusion criterion is satisfied."
+    "why": "The patient was diagnosed with type 2 diabetes mellitus 200 days ago, which is greater than or equal to 180 days before screening."
   }
 }
 ```
@@ -201,12 +191,17 @@ counterexample null. Do not invent a problem to look useful.
 {
  "expected_truth": "TRUE",
  "patient": {
-  "procedures": [
+  "age": 55,
+  "conditions": [
    {
-    "code": "302497006",
-    "days_ago": 30
+    "code": "44054006",
+    "days_ago": 200
    }
-  ]
+  ],
+  "medications": [],
+  "observations": [],
+  "procedures": [],
+  "sex": "female"
  }
 }
 ```
@@ -215,9 +210,9 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "actual": "FALSE",
+ "actual": "UNKNOWN",
  "confirmed": true,
- "engine_reason": "negation of a TRUE sub-result",
+ "engine_reason": "negation of a UNKNOWN sub-result",
  "expected": "TRUE"
 }
 ```
@@ -229,16 +224,21 @@ counterexample null. Do not invent a problem to look useful.
  "counterexample": {
   "expected_truth": "TRUE",
   "patient": {
-   "procedures": [
+   "age": 55,
+   "conditions": [
     {
-     "code": "302497006",
-     "days_ago": 30
+     "code": "44054006",
+     "days_ago": 200
     }
-   ]
+   ],
+   "medications": [],
+   "observations": [],
+   "procedures": [],
+   "sex": "female"
   },
-  "why": "The patient underwent dialysis within 90 days before screening, so the exclusion criterion is satisfied."
+  "why": "The patient was diagnosed with type 2 diabetes mellitus 200 days ago, which is greater than or equal to 180 days before screening."
  },
- "finding": "The predicate has an inverted direction due to a top-level 'not' operator, causing it to evaluate to FALSE instead of TRUE when an excluded dialysis procedure is present.",
+ "finding": "The predicate uses a 720-day lookback window that excludes patients diagnosed with type 2 diabetes between 180 and 720 days ago, directly contradicting the criterion allowing diagnosis >= 180 days before screening.",
  "verdict": "CONFIRMED"
 }
 ```
@@ -248,9 +248,9 @@ counterexample null. Do not invent a problem to look useful.
 ```json
 {
  "executed": {
-  "actual": "FALSE",
+  "actual": "UNKNOWN",
   "confirmed": true,
-  "engine_reason": "negation of a TRUE sub-result",
+  "engine_reason": "negation of a UNKNOWN sub-result",
   "expected": "TRUE"
  },
  "n_findings": 1,

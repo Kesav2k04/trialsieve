@@ -71,7 +71,7 @@ counterexample null. Do not invent a problem to look useful.
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `def662f3b54da3bb`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `90584b9236a20d5f`
 
 ```
 [system]
@@ -107,13 +107,13 @@ COMPILED PREDICATE:
    "op": "exists",
    "query": {
     "domain": "condition",
-    "codes": [
+    "codes": [],
+    "broader_codes": [
      "44054006"
     ],
-    "broader_codes": [],
     "within_days": null,
     "active_only": false,
-    "absent_means": "false"
+    "absent_means": "unknown"
    }
   }
  ]
@@ -165,7 +165,7 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (cassette, 180 tok, 59.879s)
+### 4. llm_response (openai, 189 tok, 21.45334529876709s)
 
 ```
 ```json
@@ -173,9 +173,9 @@ counterexample null. Do not invent a problem to look useful.
   "verdict": "REVISE",
   "findings": [
     {
-      "issue": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
+      "issue": "The age comparison uses strict inequality (> 18) instead of inclusive inequality (>= 18), excluding 18-year-old adults.",
       "kind": "boundary",
-      "severity": "high"
+      "severity": "medium"
     }
   ],
   "counterexample": {
@@ -186,14 +186,14 @@ counterexample null. Do not invent a problem to look useful.
       "conditions": [
         {
           "code": "44054006",
-          "days_ago": 100
+          "days_ago": 120
         }
       ],
       "medications": [],
       "procedures": []
     },
     "expected_truth": "TRUE",
-    "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+    "why": "An 18-year-old is an adult and has a recorded diagnosis of type 2 diabetes mellitus, satisfying the criterion text, but the predicate evaluates to FALSE because 18 > 18 is false."
   }
 }
 ```
@@ -209,7 +209,7 @@ counterexample null. Do not invent a problem to look useful.
   "conditions": [
    {
     "code": "44054006",
-    "days_ago": 100
+    "days_ago": 120
    }
   ],
   "medications": [],
@@ -242,7 +242,7 @@ counterexample null. Do not invent a problem to look useful.
    "conditions": [
     {
      "code": "44054006",
-     "days_ago": 100
+     "days_ago": 120
     }
    ],
    "medications": [],
@@ -250,9 +250,9 @@ counterexample null. Do not invent a problem to look useful.
    "procedures": [],
    "sex": "female"
   },
-  "why": "An 18-year-old is an adult with a prior T2DM diagnosis, satisfying the inclusion criterion, but the predicate requires age strictly greater than 18."
+  "why": "An 18-year-old is an adult and has a recorded diagnosis of type 2 diabetes mellitus, satisfying the criterion text, but the predicate evaluates to FALSE because 18 > 18 is false."
  },
- "finding": "The age comparison uses strict inequality (> 18) instead of inclusive (>= 18), which excludes 18-year-old adults.",
+ "finding": "The age comparison uses strict inequality (> 18) instead of inclusive inequality (>= 18), excluding 18-year-old adults.",
  "verdict": "CONFIRMED"
 }
 ```

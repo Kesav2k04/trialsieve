@@ -65,13 +65,13 @@ counterexample null. Do not invent a problem to look useful.
 
 ```json
 {
- "criterion_id": "NCT06717698-EXC-02",
- "kind": "exclusion",
- "source_text": "Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening."
+ "criterion_id": "NCT06983054-INC-01",
+ "kind": "inclusion",
+ "source_text": "Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria"
 }
 ```
 
-### 3. llm_request -> gemini-3.7-flash-medium  cassette `69da3e2ce0f286f4`
+### 3. llm_request -> gemini-3.7-flash-medium  cassette `2d9586a12517bbe5`
 
 ```
 [system]
@@ -84,44 +84,43 @@ to break it, and a specific patient who breaks it is the only thing that counts.
 [user]
 Review this compiled criterion.
 
-CRITERION (exclusion):
-  Chronic or intermittent haemodialysis or peritoneal dialysis within 90 days before screening.
+CRITERION (inclusion):
+  Adults with previously diagnosed T2DM according to American Diabetes Association (ADA) criteria
 
 COMPILED PREDICATE:
 {
- "op": "not",
- "arg": {
-  "op": "or",
-  "args": [
-   {
-    "op": "exists",
-    "query": {
-     "domain": "procedure",
-     "codes": [
-      "302497006"
-     ],
-     "within_days": 90,
-     "absent_means": "unknown"
-    }
+ "op": "and",
+ "args": [
+  {
+   "op": "compare",
+   "cmp": ">=",
+   "left": {
+    "val": "age"
    },
-   {
-    "op": "exists",
-    "query": {
-     "domain": "procedure",
-     "codes": [],
-     "broader_codes": [
-      "265764009"
-     ],
-     "within_days": 90,
-     "absent_means": "unknown"
-    }
+   "right": {
+    "val": "literal",
+    "number": 18,
+    "unit": "years"
    }
-  ]
- }
+  },
+  {
+   "op": "exists",
+   "query": {
+    "domain": "condition",
+    "codes": [],
+    "broader_codes": [
+     "44054006"
+    ],
+    "within_days": null,
+    "active_only": false,
+    "absent_means": "false"
+   }
+  }
+ ]
 }
 
 CODES AVAILABLE (you may only use these):
-302497006
+(age and sex only)
 
 Look specifically for:
   1. Window errors. Is `within_days` right, and does an event just inside or just
@@ -166,95 +165,25 @@ When the predicate is faithful, return verdict "OK", an empty findings list, and
 counterexample null. Do not invent a problem to look useful.
 ```
 
-### 4. llm_response (openai, 154 tok, 20.542062997817993s)
+### 4. llm_response (openai, 20 tok, 22.49096417427063s)
 
 ```
 ```json
 {
-  "verdict": "REVISE",
-  "findings": [
-    {
-      "issue": "The predicate has an inverted direction due to a top-level 'not' operator, causing it to evaluate to FALSE instead of TRUE when an excluded dialysis procedure is present.",
-      "kind": "direction",
-      "severity": "high"
-    }
-  ],
-  "counterexample": {
-    "patient": {
-      "procedures": [
-        {
-          "code": "302497006",
-          "days_ago": 30
-        }
-      ]
-    },
-    "expected_truth": "TRUE",
-    "why": "The patient underwent dialysis within 90 days before screening, so the exclusion criterion is satisfied."
-  }
+  "verdict": "OK",
+  "findings": [],
+  "counterexample": null
 }
 ```
 ```
 
-### 5. tool_call `execute_counterexample`
+### 5. final
 
 ```json
 {
- "expected_truth": "TRUE",
- "patient": {
-  "procedures": [
-   {
-    "code": "302497006",
-    "days_ago": 30
-   }
-  ]
- }
-}
-```
-
-### 6. tool_result `execute_counterexample`
-
-```json
-{
- "actual": "FALSE",
- "confirmed": true,
- "engine_reason": "negation of a TRUE sub-result",
- "expected": "TRUE"
-}
-```
-
-### 7. critic_finding
-
-```json
-{
- "counterexample": {
-  "expected_truth": "TRUE",
-  "patient": {
-   "procedures": [
-    {
-     "code": "302497006",
-     "days_ago": 30
-    }
-   ]
-  },
-  "why": "The patient underwent dialysis within 90 days before screening, so the exclusion criterion is satisfied."
- },
- "finding": "The predicate has an inverted direction due to a top-level 'not' operator, causing it to evaluate to FALSE instead of TRUE when an excluded dialysis procedure is present.",
- "verdict": "CONFIRMED"
-}
-```
-
-### 8. final
-
-```json
-{
- "executed": {
-  "actual": "FALSE",
-  "confirmed": true,
-  "engine_reason": "negation of a TRUE sub-result",
-  "expected": "TRUE"
- },
- "n_findings": 1,
- "verdict": "REVISE"
+ "executed": null,
+ "n_findings": 0,
+ "verdict": "OK"
 }
 ```
 
