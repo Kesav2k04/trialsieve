@@ -14,6 +14,76 @@ Every required deliverable, and the file that satisfies it.
 | Runtime and cost | the cost table in [REPRODUCE.md](REPRODUCE.md); recorded token counts in `results/results.json` |
 | Solution video, 5 minutes or less | `docs/VIDEO.md` for the link and the script |
 | Agent trajectories, every agent | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md) |
+| Coding agents disclosed, and what pre-existed | [Tools used, and what existed before the competition](#tools-used-and-what-existed-before-the-competition) |
+
+## Tools used, and what existed before the competition
+
+The rules require both of these to be stated, so they are stated here rather than
+left to be inferred from the code.
+
+### What existed before
+
+**Nothing in this repository.** The problem was released at 15:00 UTC on 28
+August 2026. The first commit here is `Add evaluation protocol and engine` at
+**20:03 UTC on 28 August**, five hours later, and every file was written after
+that. `git log --reverse` shows it.
+
+There are **zero runtime dependencies**. `pyproject.toml` declares
+`dependencies = []`, the engine and the evaluation run on the Python standard
+library alone, and `tests/test_dependencies.py` fails if any module outside an
+allow-list is imported. So there is no pre-existing framework doing the work and
+no library boundary where the interesting part could be hiding. The only
+third-party code involved at all is `pytest` for the test run, and `edge_tts` and
+`playwright` for building the video, which is not on the reproduction path.
+
+What did exist before, and was not written here, is the input data:
+
+| pre-existing input | source | licence |
+|---|---|---|
+| 385-patient synthetic panel | Synthea sample FHIR R4 | Apache-2.0, archive sha256 pinned in `data/vendor/panel_provenance.json` |
+| three trial protocols | ClinicalTrials.gov API v2 | US Government, public domain |
+| terminology catalog | codes observed in the panel itself | derived here from the above |
+
+No patient in this repository is a person. No credential is in the tree or in its
+history, which `tests/test_no_credentials.py` checks across every commit
+reachable from every ref.
+
+### Coding agents used to build it
+
+Coding-agent use is required by the rules and is disclosed here in full.
+
+| tool | model | what it did |
+|---|---|---|
+| Claude Code | Claude Opus 5 | the primary coding agent. Wrote the engine, the compiler, the evaluation harness, the tests and the documentation, and ran the recorded evaluations. |
+
+Delegated subagents run inside Claude Code were used for fan-out work that
+returns a digest: independent blind review seats scoring this submission against
+the published rubric, and read-only searches across the tree. They wrote no code
+that was kept without being verified here first.
+
+### Models the system calls at runtime
+
+A different question from the one above, and worth separating, because the models
+below are the subject of the evaluation rather than the authors of it. Every call
+is recorded, and these counts are the recorded cassettes rather than an
+account of intent:
+
+| model | recorded calls | used for |
+|---|---|---|
+| `gemini-3.7-flash-medium` | 1,167 | the scored run: segmenter, grounder, compiler, critic, and the per-cell B2 baseline |
+| `gpt-oss-120b-medium` | 181 | Checker B, the independent second labeller |
+| `granite3.1-dense:8b` | 42 | the weak-model probe in `docs/WEAK_MODEL.md` |
+
+Checker B runs on a **different model family from the system it labels**, which
+is what makes the label noise floor a measurement rather than a model agreeing
+with itself. `python scripts/verify.py blind` reads that independence out of
+Checker B's own recorded prompts.
+
+Calls reach these models through `cli_openai_shim.py`, a local
+OpenAI-compatible endpoint that forwards to a vendor CLI the author is
+authenticated to. That is why `docs/COST.md` reports the marginal cost of this
+run as zero and publishes a hosted-rate estimate beside it: reporting zero would
+be true and useless to anyone deciding whether to run it themselves.
 
 ## The trajectory requirement, point by point
 
@@ -90,6 +160,8 @@ shown, so the trajectory is checkable rather than narrated.
 
 | rule | how this submission satisfies it |
 |---|---|
+| What existed before the competition, and what was added | Everything in this repository was written after the problem was released: first commit 20:03 UTC on 28 August, five hours after the 15:00 UTC kickoff. `dependencies = []`, so no pre-existing framework is doing the work. The pre-existing inputs are the synthetic panel and the public trial protocols, each named with its licence above. |
+| Every tool and component used within its licence | Synthea sample data is Apache-2.0 and the archive sha256 is pinned; ClinicalTrials.gov API v2 output is US Government public domain. Runtime model calls go through a local shim to a vendor CLI the author is authenticated to, under that vendor's own terms, and no key is in the tree. `pytest`, `edge_tts` and `playwright` are the only third-party packages, all permissively licensed, and the last two are off the reproduction path. |
 | Public or synthetic data only | Synthea sample FHIR R4 (Apache-2.0, sha256 pinned) and ClinicalTrials.gov API v2 (US Government, public domain). No real patient data. |
 | Legal and ethical use case | Trial prescreening that produces a document for a coordinator. It enrols nobody and contacts nobody. |
 | Consequential actions sandboxed, with human approval before the action | There is no outward action at all. The only artifact that could affect a person is the worklist. From predicates nobody has signed, `scripts/worklist.py` exits 3 and writes no document. `tests/test_worklist_gate.py` runs the script and asserts the exit code, rather than testing the library call underneath it, because a library test passes even when the script ignores what the library returned. There is one way past: `--allow-unsigned` produces the document with NOT FOR USE stamped across it, so that the gate can be demonstrated and so that the override marks the artifact instead of only the shell history. `docs/GATE.md` is that demonstration, exit codes captured rather than transcribed. |
