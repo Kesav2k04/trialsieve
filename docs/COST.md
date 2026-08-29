@@ -13,10 +13,10 @@ call, and its wall clock is seconds.
 
 | step                                             | model calls | from cassette | prompt tokens | completion tokens | wall clock     | at published rates |
 |--------------------------------------------------|-------------|---------------|---------------|-------------------|----------------|--------------------|
-| compile the held-out protocols, 40 criteria      | 211         | 211           | 155,324       | 35,939            | 1 s            | $0.14              |
+| compile the held-out protocols, 40 criteria      | 202         | 202           | 136,765       | 34,225            | 1 s            | $0.13              |
 | segmenter, 3 trials                              | 3           | 0             | 3,362         | 3,929             | 4 min 15 s     | $0.01              |
-| recompile under seed 8, for the noise floor      | 200         | 136           | 146,310       | 34,729            | 33 min 54 s    | $0.13              |
-| recompile under seed 9, for the noise floor      | 206         | 32            | 142,250       | 35,422            | 62 min 47 s    | $0.13              |
+| recompile under seed 8, for the noise floor      | 201         | 193           | 140,245       | 34,522            | 3 min 13 s     | $0.13              |
+| recompile under seed 9, for the noise floor      | 210         | 205           | 142,845       | 36,038            | 2 min 00 s     | $0.13              |
 | vocabulary probe, before                         | 42          | 36            | 14,333        | 8,276             | 9 min 50 s     | $0.02              |
 | vocabulary probe, after                          | 42          | 38            | 22,981        | 8,493             | 7 min 58 s     | $0.03              |
 | vocabulary probe, weak model                     | 42          | 0             | 26,753        | 7,184             | 5 min 21 s     | $0.03              |
@@ -31,7 +31,7 @@ call, and its wall clock is seconds.
 | arms TS, B0, B1 over 385 patients                | 0           | 0             | 0             | 0                 | 11 s           | under a cent       |
 | arms TS over 385 patients                        | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | second blind labeller, Checker B                 | 100         | 0             | 444,910       | 2,680             | 1 h 55 min     | $0.14              |
-| **total**                                        | **1,294**   |               | **2,650,540** | **175,212**       | **4 h 12 min** | **$1.23**          |
+| **total**                                        | **1,290**   |               | **2,626,511** | **173,907**       | **2 h 41 min** | **$1.22**          |
 
 The right-hand column is an estimate at a mid-tier hosted model at $0.30 in / $2.50 out per million tokens. It is not what this
 run cost. This ran on a locally authenticated vendor CLI on a subscription, so
@@ -46,20 +46,20 @@ the report says which rather than averaging the distinction away.
 
 Both arms answer the same 40 questions about the same patient. They differ in what the model is asked to do, and that difference is a cost curve rather than a constant.
 
-Compiling the 40 criteria cost **$0.14** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **2 s**.
+Compiling the 40 criteria cost **$0.13** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **2 s**.
 
 The per-cell baseline pays per question per patient. Measured over its 400 recorded cells, that is **$0.0014** a cell, or **$0.06** to put one patient through 40 criteria.
 
 | patients screened    | compile once, then arithmetic | ask per cell |
 |----------------------|-------------------------------|--------------|
-| 1                    | $0.14                         | $0.06        |
-| 3                    | $0.14                         | $0.17        |
-| 385                  | $0.14                         | $22.19       |
+| 1                    | $0.13                         | $0.06        |
+| 3                    | $0.13                         | $0.17        |
+| 385                  | $0.13                         | $22.19       |
 | 385 again next month | $0.00                         | $22.19       |
 
-The two cross at **2.4 patients**. Past that the compiled path is cheaper, and the gap grows with every patient and every rescreen, because one side of it is flat.
+The two cross at **2.2 patients**. Past that the compiled path is cheaper, and the gap grows with every patient and every rescreen, because one side of it is flat.
 
-Cheaper is not the same as worse here, and the two arms are scored on the same 400 cells. Silent error rate: **3.2%** compiled against **43.8%** per cell. Patients wrongly ruled out: **4** against **10**. Both arms are VOID against the registered primary outcome, which requires zero.
+Cheaper is not the same as worse here, and the two arms are scored on the same 400 cells. Silent error rate: **1.0%** compiled against **43.8%** per cell. Patients wrongly ruled out: **2** against **10**. Both arms are VOID against the registered primary outcome, which requires zero.
 
 Three things this does not say. The dollar figures are the published list rate in the table above, not what this run was billed. The per-cell figure is measured on these 40 criteria against records of this size, and a longer record moves it. And it counts model spend only: the compiled predicates go to a human reviewer before deployment, which is the control `README.md` describes and the one that failed here, and that reviewer's time is a real cost this table does not carry.
 

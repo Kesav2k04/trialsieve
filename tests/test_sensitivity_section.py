@@ -75,12 +75,23 @@ def test_reported_sensitivity_matches_the_scored_groups():
         pytest.skip("the open-world arm has not been run")
     base = groups["k0_seed7"]["cell_scores"]["TS"]
     ow = groups["ow"]["cell_scores"]["TS"]
-    assert ow["n_silent"] < base["n_silent"], (
+    assert ow["n_silent"] <= base["n_silent"], (
         "forcing every absence to unknown must not increase silent errors; if it "
         "did, absence is not what the errors are made of")
+    # Equality is the interesting case and it is the case that holds now. While
+    # the compiler could pair an empty code list with closed-world absence, this
+    # arm removed 604 silent errors the engine was committing, and the gap was
+    # the headline of the sensitivity section. The targeted repair in
+    # `open_world_broader_only` took all of it: every absence-driven error the
+    # blanket override would remove is already gone, so what the two arms now
+    # share is the error that has nothing to do with absence at all. A future
+    # gap re-opening means a new closed-world assertion started committing.
     assert ow["coverage"] < base["coverage"], (
         "and it must cost coverage, or the closed-world assertions were doing "
         "nothing and the trade-off being reported is not real")
+    assert base["n_silent"] == base["n_false_fails"] + base["n_false_meets"], (
+        "the silent count has to be the two error kinds it is made of, or the "
+        "comparison above is between numbers that do not mean what they say")
     assert ow["n_false_meets"] == base["n_false_meets"], (
         "an absence can only ever turn a definite verdict into an abstention, so "
         "false MEETS cannot move; if it did, the override is changing something "

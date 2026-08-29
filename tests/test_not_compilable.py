@@ -1,14 +1,19 @@
 """A criterion lost to a validator is not a criterion the system refused.
 
-`reason_not_compilable` holds both. Twenty-one entries in the scored run name a
-blocker a person would agree with. One reads `compiler failed: AgentError`, and
-it is `NCT06989723-EXC-01`, whose second concept grounds to a broader-only code
-with no exact code at all. The IR has no shape for that: `ir.py:103` demands a
-non-empty `codes` list, so the answer the README asks for cannot be written down.
+`reason_not_compilable` holds both. Every entry in the scored run now names a
+blocker a person would agree with, and none reads `compiler failed`.
 
-The distinction is load-bearing because every claim about how much of the
-non-coverage is deliberate rests on it. These tests hold the split, and hold the
-name, so a second crash cannot be absorbed into the refusal count.
+For one run that was not true. `NCT06989723-EXC-01` had a second concept that
+grounds to a broader-only code with no exact code at all, and the IR had no shape
+for it: `ir.py` demanded a non-empty `codes` list, so the answer the README asks
+for could not be written down. The model sent the design-correct shape first, was
+rejected, hedged, was rejected again, and ran out of retries. It was counted as a
+refusal, which made a validator defect look like the system exercising judgment.
+
+The IR now accepts an empty `codes` list when `broader_codes` carries the
+concept, and the criterion compiles. `EXHAUSTED` is empty rather than deleted:
+these tests hold the split, so a future crash cannot be absorbed into the refusal
+count the way that one was.
 """
 from __future__ import annotations
 
@@ -18,8 +23,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 COMPILED = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
 
-#: The one criterion in the scored run that ran out of retries, by name.
-EXHAUSTED = {"NCT06989723-EXC-01"}
+#: Criteria in the scored run that ran out of retries, by name. Empty now.
+EXHAUSTED: set[str] = set()
 
 CRASH_PREFIX = "compiler failed:"
 
@@ -63,6 +68,13 @@ def test_the_lost_criterion_is_disclosed_by_name_in_the_report():
     assert "What did not compile, and why" in text
     for cid in EXHAUSTED:
         assert cid in text, f"{cid} was lost to the validator and the report never names it"
+    # With nothing lost, the report still has to say so rather than go quiet. A
+    # section that simply stops mentioning the split reads identically to one
+    # where the split was never computed.
+    if not EXHAUSTED:
+        assert "ran out of retries" in text or "exhausted" in text.lower(), (
+            "no criterion was lost to the validator and the report does not say "
+            "so, which is indistinguishable from the report not checking")
     assert "ir.py:103" in text, (
         "the report gives the rejection counts without the rule that caused them, "
         "which leaves the reader thinking the model failed")

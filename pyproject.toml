@@ -6,7 +6,12 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
+# The test gate. Nothing on the reproduction path imports it.
 dev = ["pytest>=7.4"]
+# The video build only. `scripts/make_video.py` is the sole consumer, it is not
+# reachable from `run.py reproduce`, and it was left undeclared until the lock
+# went in, which meant two third-party packages were in use and in no manifest.
+video = ["edge-tts>=7", "playwright>=1.40"]
 
 [build-system]
 requires = ["setuptools>=68"]

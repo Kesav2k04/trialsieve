@@ -339,8 +339,19 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
         return rec, traj
 
     # 3. emit the predicate, restricted to codes that exist
-    allowed = {c for g in grounded for c in g["codes"]}
-    allowed |= {c for g in grounded for c in (g.get("broader_codes") or [])}
+    #
+    # Two allow-lists, not one. `exact_allowed` holds what grounding found as the
+    # concept itself. `broader_allowed` holds what it found as a parent that
+    # contains the concept without establishing it. Their union is the set of
+    # codes the model may name at all, and that union alone used to be the whole
+    # check. A set cannot say which slot a code arrived in, so a parent code moved
+    # into `codes` read as legal, and the predicate then settled a verdict this
+    # vocabulary cannot support. `broader_only` is the difference that makes the
+    # slot visible.
+    exact_allowed = {c for g in grounded for c in g["codes"]}
+    broader_allowed = {c for g in grounded for c in (g.get("broader_codes") or [])}
+    broader_only = broader_allowed - exact_allowed
+    allowed = exact_allowed | broader_allowed
 
     def _v_emit_scoped(p: Any) -> None:
         _v_emit(p)
@@ -358,6 +369,14 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
         require(not stray, f"expr uses code(s) {sorted(stray)} that are not in the "
                            f"GROUNDED CONCEPTS block; use only "
                            f"{sorted(allowed) if allowed else 'age/sex only'}")
+        promoted = used & broader_only
+        require(not promoted,
+                f"code(s) {sorted(promoted)} are broader than the concept rather than "
+                f"the concept itself, so they belong in the query's broader_codes "
+                f"field and never in codes. A parent code in codes settles a verdict "
+                f"this site's vocabulary cannot support. If the parent is all there "
+                f"is, leave codes empty and put it in broader_codes: presence is then "
+                f"UNKNOWN, which is the honest answer.")
 
     emit = ask_json(client, traj,
                     [{"role": "system", "content": EMIT_SYSTEM},
@@ -365,6 +384,15 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
                          grammar=GRAMMAR, grounded=_render_grounded(grounded),
                          examples=EXAMPLES, **criterion)}],
                     _v_emit_scoped, tag=f"compile-emit:{cid}", prompt_version=PROMPT_VERSION)
+
+    # The one field the harness overrides, before the critic sees the predicate
+    # and before anything executes it, so the critic reviews what will actually
+    # run and the compiled record is the predicate the numbers came from.
+    for repair in open_world_broader_only(emit["expr"]):
+        traj.normalisation(
+            f"absent_means on a {repair['domain']} query with no exact code "
+            f"(broader: {', '.join(repair['broader_codes'])})",
+            repair["before"], repair["after"])
 
     rec = {**base, "compilable": True, "expr": emit["expr"],
            "grounded": [{"concept": g["concept"], "domain": g["domain"],
@@ -378,6 +406,57 @@ def compile_criterion(client: Client, criterion: dict, traj: Trajectory | None =
     validate_criterion(rec)
     traj.final(compilable=True, expr=rec["expr"], confidence=rec["confidence"])
     return rec, traj
+
+
+def open_world_broader_only(expr: Any) -> list[dict]:
+    """Force open-world absence on any query the vocabulary cannot express.
+
+    `absent_means: "false"` says the record is trusted to be complete for this
+    query, so silence settles it. That is a claim about the record, and it is
+    only available when the query has a code for the concept in the first place.
+    A query whose `codes` are empty is asking about something this site has no
+    code for. The record could never have stored it, so its silence carries no
+    information about the concept and cannot be read as absence.
+
+    Emitting one is legal and useful: presence of the parent code is real
+    evidence and is reported as UNKNOWN. What is not legal is the pairing of an
+    empty `codes` list with closed-world absence, which commits FALSE on every
+    patient whose chart simply never mentions the parent. Left alone it produced
+    358 wrong FAILS on one criterion and 246 on another.
+
+    This is a repair rather than a rejection because the model has said something
+    coherent and got one field wrong, and a retry loop over one boolean spends a
+    model call to arrive at the only remaining answer. Each repair is recorded on
+    the trajectory as a `normalisation`, so the difference between what the model
+    emitted and what the engine ran is on the record rather than in the engine's
+    head.
+    """
+    changed: list[dict] = []
+
+    def walk(e: Any) -> None:
+        if not isinstance(e, dict):
+            return
+        if e.get("op") == "exists":
+            q = e.get("query") or {}
+            if not q.get("codes") and (q.get("broader_codes") or []):
+                if q.get("absent_means") != "unknown":
+                    changed.append({"codes": [], "broader_codes": list(q["broader_codes"]),
+                                    "domain": q.get("domain"),
+                                    "before": q.get("absent_means"), "after": "unknown"})
+                    q["absent_means"] = "unknown"
+        for k in ("args", "arg"):
+            v = e.get(k)
+            if isinstance(v, list):
+                for x in v:
+                    walk(x)
+            elif isinstance(v, dict):
+                walk(v)
+        v = e.get("value")
+        if isinstance(v, dict) and v.get("val") == "count":
+            walk(v.get("query") or {})
+
+    walk(expr)
+    return changed
 
 
 def predicate_sha256(rec: dict) -> str:

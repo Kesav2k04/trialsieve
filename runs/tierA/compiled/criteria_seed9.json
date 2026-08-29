@@ -8,18 +8,18 @@
   "refused_plan": 8,
   "refused_grounding": 13,
   "errors": 0,
-  "critic_confirmed": 1,
+  "critic_confirmed": 2,
   "critic_dismissed": 1,
-  "revised": 1
+  "revised": 2
  },
  "usage": {
-  "calls": 206,
-  "prompt_tokens": 142250,
-  "completion_tokens": 35422,
-  "wall_s": 4927.98,
-  "cassette_hits": 32
+  "calls": 210,
+  "prompt_tokens": 142845,
+  "completion_tokens": 36038,
+  "wall_s": 5022.77,
+  "cassette_hits": 205
  },
- "wall_s": 3767.3,
+ "wall_s": 119.6,
  "criteria": [
   {
    "criterion_id": "NCT06983054-INC-01",
@@ -1002,8 +1002,6 @@
        "codes": [
         "106892"
        ],
-       "broader_codes": [],
-       "within_days": null,
        "active_only": true,
        "absent_means": "false"
       }
@@ -1012,20 +1010,18 @@
       "op": "exists",
       "query": {
        "domain": "condition",
-       "codes": [
+       "codes": [],
+       "broader_codes": [
         "44054006"
        ],
-       "broader_codes": [],
-       "within_days": null,
-       "active_only": false,
-       "absent_means": "false"
+       "absent_means": "unknown"
       }
      }
     ]
    },
    "grounded": [
     {
-     "concept": "Insulin",
+     "concept": "Insulin therapy",
      "domain": "medication",
      "status": "PARTIAL",
      "codes": [
@@ -1044,12 +1040,12 @@
     }
    ],
    "unit_note": "No units specified in the criterion.",
-   "absence_note": "Absent means false was selected for medication and condition domains assuming standard reconciled active medication and problem lists where absence of documentation indicates the patient is not on the therapy or diagnosed with the condition.",
-   "confidence": "medium",
+   "absence_note": "absent_means is set to 'false' for both queries because standard coded problem lists and medication records can be trusted for chronic conditions and active medications; an absence of records indicates the patient does not have the condition and is not on the medication.",
+   "confidence": "high",
    "compiler_prompt_version": "compiler-v3",
    "seed": 9,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "45b734098effdcc5e5af29948a60b1acab713702bb679528ad5962eb2157ece1"
+   "predicate_sha256": "994cc51d31447be10c29998d6b7e71ab04fdce0d20ad9a92b8f1fbe4acbd2d60"
   },
   {
    "criterion_id": "NCT06989723-EXC-02",

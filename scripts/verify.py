@@ -48,6 +48,20 @@ def cmd_cassettes(run: Path) -> int:
     return 0
 
 
+def _rel(p, run) -> str:
+    """A trajectory path a reader can follow to exactly one file.
+
+    `compiler/` and `critic/` hold one trajectory per criterion under the same
+    filename, so a report that prints the bare name points at two files and sends
+    a reader to whichever they open first. It cost an hour of reading the wrong
+    agent's log.
+    """
+    try:
+        return str(p.relative_to(run / "trajectories")).replace(chr(92), "/")
+    except ValueError:
+        return p.name
+
+
 def cmd_trajectories(run: Path) -> int:
     """Every recorded model call must point at a cassette that exists and matches, on
     both sides of the call.
@@ -84,7 +98,7 @@ def cmd_trajectories(run: Path) -> int:
         events = [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
         seqs = [e["seq"] for e in events]
         if seqs != list(range(1, len(seqs) + 1)):
-            seqbad.append(p.name)
+            seqbad.append(_rel(p, run))
         # Each request is paired with the response that follows it, in file order,
         # which is the order the recorder appends them in.
         replies = [e for e in events if e["event"] == "llm_response"]
@@ -93,16 +107,16 @@ def cmd_trajectories(run: Path) -> int:
             key = e["cassette_key"]
             f = cass[stores.get(p.parent.name, "cassettes")].get(key[:16])
             if f is None:
-                bad.append({"file": p.name, "seq": e["seq"], "reason": "no cassette"})
+                bad.append({"file": _rel(p, run), "seq": e["seq"], "reason": "no cassette"})
                 continue
             rec = json.loads(f.read_text(encoding="utf-8"))
             if rec["request"]["messages"] != e["messages"]:
-                bad.append({"file": p.name, "seq": e["seq"],
+                bad.append({"file": _rel(p, run), "seq": e["seq"],
                             "reason": "trajectory prompt differs from the recorded request"})
             if i < len(replies):
                 answers += 1
                 if rec["response"]["text"] != replies[i].get("text"):
-                    bad.append({"file": p.name, "seq": replies[i]["seq"],
+                    bad.append({"file": _rel(p, run), "seq": replies[i]["seq"],
                                 "reason": "cassette answer differs from the trajectory answer"})
     print(json.dumps({"trajectory_files": len(files), "llm_requests_checked": checked,
                       "llm_answers_checked": answers,

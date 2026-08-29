@@ -1,27 +1,27 @@
 # Agent trajectories
 
-229 trajectories from `runs\tierA`. Each markdown file below is a rendering of the JSONL beside it, and the JSONL is the source of truth. Every model call in every one of them is matched to a recorded cassette by `python scripts/verify.py trajectories`, so the prompt shown here is byte-identical to the prompt that was sent.
+230 trajectories from `runs\tierA`. Each markdown file below is a rendering of the JSONL beside it, and the JSONL is the source of truth. Every model call in every one of them is matched to a recorded cassette by `python scripts/verify.py trajectories`, so the prompt shown here is byte-identical to the prompt that was sent.
 
 | | |
 |---|---|
-| model calls | 1076 |
-| tool calls | 254 |
-| schema rejections fed back to the model | 21 |
-| retries after a schema rejection | 23 |
-| requests resent after the endpoint failed | 3 |
-| critic findings | 24 |
-| predicates revised after a confirmed counterexample | 3 |
-| malformed fields the harness repaired without a retry | 60 |
+| model calls | 1072 |
+| tool calls | 260 |
+| schema rejections fed back to the model | 3 |
+| retries after a schema rejection | 8 |
+| requests resent after the endpoint failed | 1 |
+| critic findings | 26 |
+| predicates revised after a confirmed counterexample | 5 |
+| malformed fields the harness repaired without a retry | 70 |
 | human checkpoints | 0 |
-| completion tokens | 149223 |
+| completion tokens | 147918 |
 
 ## The tools, and what calling one looks like in the log
 
 | tool | calls | what it does, and why it is a tool rather than a prompt |
 |---|---|---|
-| `terminology.search_any` | 193 | lexical search over the codes this site's own records use. Deliberately not an embedding search: a near miss on a drug class is indistinguishable from a hit right up until it clears a patient. |
+| `terminology.search_any` | 197 | lexical search over the codes this site's own records use. Deliberately not an embedding search: a near miss on a drug class is indistinguishable from a hit right up until it clears a patient. |
 | `ground_cache.hit` | 37 | a concept already grounded for an earlier criterion, returned without a model call. Content-addressed on concept and domain. |
-| `execute_counterexample` | 24 | the critic names a patient the predicate should get wrong; the harness builds that chart and **runs the predicate against it**. The finding is then confirmed or dismissed by execution, which is what stops a critic from being an opinion. |
+| `execute_counterexample` | 26 | the critic names a patient the predicate should get wrong; the harness builds that chart and **runs the predicate against it**. The finding is then confirmed or dismissed by execution, which is what stops a critic from being an opinion. |
 
 ## Which agent is where, and the two that have no trajectory
 
@@ -42,16 +42,13 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 
 | agent | subject | calls | rejections | retries | critic | revised | outcome |
 |---|---|---|---|---|---|---|---|
-| compiler | [NCT06717698-INC-07-seed7](compiler/NCT06717698-INC-07-seed7.md) | 10 | 4 | 5 | 0 | 1 | compiled |
-| compiler | [NCT06989723-EXC-01-seed7](compiler/NCT06989723-EXC-01-seed7.md) | 6 | 3 | 2 | 0 | 0 | error: AgentError: compile-emit:NCT06989723-EXC-01: no valid reply  |
-| compiler | [NCT06717698-INC-07-seed8](compiler/NCT06717698-INC-07-seed8.md) | 8 | 2 | 3 | 0 | 1 | compiled |
 | compiler | [NCT06717698-EXC-01-seed7](compiler/NCT06717698-EXC-01-seed7.md) | 8 | 1 | 1 | 0 | 0 | refused: cannot be represented in this site's vocabulary. Transient i |
 | compiler | [NCT06717698-EXC-01-seed9](compiler/NCT06717698-EXC-01-seed9.md) | 8 | 1 | 1 | 0 | 0 | refused: cannot be represented in this site's vocabulary. Transient i |
-| compiler | [NCT06983054-INC-01-seed7](compiler/NCT06983054-INC-01-seed7.md) | 6 | 2 | 2 | 0 | 0 | compiled |
-| compiler | [NCT06989723-EXC-01-seed8](compiler/NCT06989723-EXC-01-seed8.md) | 8 | 2 | 2 | 0 | 0 | compiled |
-| compiler | [NCT06989723-EXC-01-seed9](compiler/NCT06989723-EXC-01-seed9.md) | 6 | 2 | 2 | 0 | 0 | compiled |
+| compiler | [NCT06717698-INC-07-seed7](compiler/NCT06717698-INC-07-seed7.md) | 6 | 0 | 1 | 0 | 1 | compiled |
+| compiler | [NCT06717698-INC-07-seed8](compiler/NCT06717698-INC-07-seed8.md) | 6 | 0 | 1 | 0 | 1 | compiled |
 | compiler | [NCT06717698-INC-07-seed9](compiler/NCT06717698-INC-07-seed9.md) | 6 | 0 | 1 | 0 | 1 | compiled |
-| compiler | [NCT06983054-EXC-03-seed9](compiler/NCT06983054-EXC-03-seed9.md) | 12 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. SGLT2 inhib |
+| compiler | [NCT06989723-EXC-01-seed8](compiler/NCT06989723-EXC-01-seed8.md) | 12 | 0 | 1 | 0 | 1 | compiled |
+| compiler | [NCT06989723-EXC-01-seed9](compiler/NCT06989723-EXC-01-seed9.md) | 10 | 0 | 1 | 0 | 1 | compiled |
 | compiler | [NCT06717698-EXC-01-seed8](compiler/NCT06717698-EXC-01-seed8.md) | 5 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. Transient i |
 | compiler | [NCT06717698-EXC-03-seed7](compiler/NCT06717698-EXC-03-seed7.md) | 1 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. GLP-1 recep |
 | compiler | [NCT06717698-EXC-03-seed8](compiler/NCT06717698-EXC-03-seed8.md) | 1 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. GLP-1 recep |
@@ -79,6 +76,7 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | compiler | [NCT06717698-INC-06-seed9](compiler/NCT06717698-INC-06-seed9.md) | 1 | 0 | 0 | 0 | 0 | refused: The criterion relies on the investigator's opinion regarding |
 | compiler | [NCT06983054-EXC-03-seed7](compiler/NCT06983054-EXC-03-seed7.md) | 12 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. SGLT2 inhib |
 | compiler | [NCT06983054-EXC-03-seed8](compiler/NCT06983054-EXC-03-seed8.md) | 12 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. SGLT2 inhib |
+| compiler | [NCT06983054-EXC-03-seed9](compiler/NCT06983054-EXC-03-seed9.md) | 12 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. SGLT2 inhib |
 | compiler | [NCT06983054-EXC-04-seed7](compiler/NCT06983054-EXC-04-seed7.md) | 3 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. Diabetic ke |
 | compiler | [NCT06983054-EXC-04-seed8](compiler/NCT06983054-EXC-04-seed8.md) | 3 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. Diabetic ke |
 | compiler | [NCT06983054-EXC-04-seed9](compiler/NCT06983054-EXC-04-seed9.md) | 3 | 0 | 0 | 0 | 0 | refused: cannot be represented in this site's vocabulary. diabetic ke |
@@ -115,15 +113,14 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | contamination | [NCT06983054-INC-01-CF](contamination/NCT06983054-INC-01-CF.md) | 1 | 0 | 0 | 0 | 0 | refused: T2.7DM is not a standardized coded condition in electronic h |
 | contamination | [NCT06983054-INC-05-CF](contamination/NCT06983054-INC-05-CF.md) | 1 | 0 | 0 | 0 | 0 | refused: Menstrual history (no menses >1 year) is not available in st |
 | contamination | [NCT06983054-INC-08-CF](contamination/NCT06983054-INC-08-CF.md) | 1 | 0 | 0 | 0 | 0 | refused: Dietary sodium intake is a lifestyle and nutritional measure |
-| compiler | [NCT06717698-EXC-02-seed7](compiler/NCT06717698-EXC-02-seed7.md) | 7 | 1 | 1 | 0 | 0 | compiled |
-| compiler | [NCT06717698-EXC-02-seed8](compiler/NCT06717698-EXC-02-seed8.md) | 7 | 1 | 1 | 0 | 0 | compiled |
-| compiler | [NCT06989723-INC-02-seed7](compiler/NCT06989723-INC-02-seed7.md) | 5 | 1 | 1 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-05-seed8](compiler/NCT06989723-INC-05-seed8.md) | 15 | 1 | 1 | 0 | 0 | compiled |
 | critic | [NCT06717698-INC-03-seed7](critic/NCT06717698-INC-03-seed7.md) | 1 | 0 | 0 | 1 | 0 | OK |
 | critic | [NCT06717698-INC-03-seed9](critic/NCT06717698-INC-03-seed9.md) | 1 | 0 | 0 | 1 | 0 | OK |
 | critic | [NCT06717698-INC-07-seed7](critic/NCT06717698-INC-07-seed7.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic | [NCT06717698-INC-07-seed8](critic/NCT06717698-INC-07-seed8.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic | [NCT06717698-INC-07-seed9](critic/NCT06717698-INC-07-seed9.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic | [NCT06989723-EXC-01-seed8](critic/NCT06989723-EXC-01-seed8.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| critic | [NCT06989723-EXC-01-seed9](critic/NCT06989723-EXC-01-seed9.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06717698-EXC-02--direction](critic_probe/NCT06717698-EXC-02--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06717698-EXC-02--window](critic_probe/NCT06717698-EXC-02--window.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06717698-EXC-05--direction](critic_probe/NCT06717698-EXC-05--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
@@ -144,7 +141,6 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic_probe | [NCT06983054-INC-09--direction](critic_probe/NCT06983054-INC-09--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-09--threshold](critic_probe/NCT06983054-INC-09--threshold.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | counterexample | [NCT06983054-INC-09--03e502b6](counterexample/NCT06983054-INC-09--03e502b6.md) | 1 | 0 | 0 | 0 | 0 | INDETERMINATE |
-| critic | [NCT06717698-INC-01-seed8](critic/NCT06717698-INC-01-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | segmenter | [NCT06989723](segmenter/NCT06989723.md) | 1 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [0bbf4179-b2_10p](baseline-b2/0bbf4179-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [0fc183b2-b2_10p](baseline-b2/0fc183b2-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
@@ -156,6 +152,8 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | baseline-b2 | [aade3c61-b2_10p](baseline-b2/aade3c61-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [d19face0-b2_10p](baseline-b2/d19face0-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [d29560ea-b2_10p](baseline-b2/d29560ea-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
+| compiler | [NCT06717698-EXC-02-seed7](compiler/NCT06717698-EXC-02-seed7.md) | 6 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06717698-EXC-02-seed8](compiler/NCT06717698-EXC-02-seed8.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-02-seed9](compiler/NCT06717698-EXC-02-seed9.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-05-seed7](compiler/NCT06717698-EXC-05-seed7.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-05-seed8](compiler/NCT06717698-EXC-05-seed8.md) | 6 | 0 | 0 | 0 | 0 | compiled |
@@ -178,6 +176,7 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | compiler | [NCT06983054-EXC-05-seed7](compiler/NCT06983054-EXC-05-seed7.md) | 12 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-05-seed8](compiler/NCT06983054-EXC-05-seed8.md) | 12 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-05-seed9](compiler/NCT06983054-EXC-05-seed9.md) | 12 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-01-seed7](compiler/NCT06983054-INC-01-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-01-seed8](compiler/NCT06983054-INC-01-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-01-seed9](compiler/NCT06983054-INC-01-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-02-seed7](compiler/NCT06983054-INC-02-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
@@ -195,9 +194,11 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | compiler | [NCT06983054-INC-09-seed7](compiler/NCT06983054-INC-09-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-09-seed8](compiler/NCT06983054-INC-09-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-09-seed9](compiler/NCT06983054-INC-09-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06989723-EXC-01-seed7](compiler/NCT06989723-EXC-01-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-01-seed7](compiler/NCT06989723-INC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-01-seed8](compiler/NCT06989723-INC-01-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-01-seed9](compiler/NCT06989723-INC-01-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06989723-INC-02-seed7](compiler/NCT06989723-INC-02-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-02-seed8](compiler/NCT06989723-INC-02-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-02-seed9](compiler/NCT06989723-INC-02-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-05-seed7](compiler/NCT06989723-INC-05-seed7.md) | 14 | 0 | 0 | 0 | 0 | compiled |
@@ -215,6 +216,7 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic | [NCT06717698-EXC-05-seed8](critic/NCT06717698-EXC-05-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06717698-EXC-05-seed9](critic/NCT06717698-EXC-05-seed9.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06717698-INC-01-seed7](critic/NCT06717698-INC-01-seed7.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic | [NCT06717698-INC-01-seed8](critic/NCT06717698-INC-01-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06717698-INC-01-seed9](critic/NCT06717698-INC-01-seed9.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06717698-INC-03-seed8](critic/NCT06717698-INC-03-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06717698-INC-05-seed7](critic/NCT06717698-INC-05-seed7.md) | 1 | 0 | 0 | 0 | 0 | OK |
@@ -247,8 +249,7 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic | [NCT06983054-INC-09-seed7](critic/NCT06983054-INC-09-seed7.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06983054-INC-09-seed8](critic/NCT06983054-INC-09-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06983054-INC-09-seed9](critic/NCT06983054-INC-09-seed9.md) | 1 | 0 | 0 | 0 | 0 | OK |
-| critic | [NCT06989723-EXC-01-seed8](critic/NCT06989723-EXC-01-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
-| critic | [NCT06989723-EXC-01-seed9](critic/NCT06989723-EXC-01-seed9.md) | 1 | 0 | 0 | 0 | 0 | OK |
+| critic | [NCT06989723-EXC-01-seed7](critic/NCT06989723-EXC-01-seed7.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06989723-INC-01-seed7](critic/NCT06989723-INC-01-seed7.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06989723-INC-01-seed8](critic/NCT06989723-INC-01-seed8.md) | 1 | 0 | 0 | 0 | 0 | OK |
 | critic | [NCT06989723-INC-01-seed9](critic/NCT06989723-INC-01-seed9.md) | 1 | 0 | 0 | 0 | 0 | OK |

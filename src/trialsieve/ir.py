@@ -99,8 +99,8 @@ def validate_query(q: Any, path: str = "query") -> None:
     if q.get("domain") not in DOMAINS:
         raise IRError(f"{path}: unknown domain {q.get('domain')!r}")
     codes = q.get("codes")
-    if not isinstance(codes, list) or not codes or not all(isinstance(c, str) for c in codes):
-        raise IRError(f"{path}: query needs a non-empty list of string codes")
+    if not isinstance(codes, list) or not all(isinstance(c, str) for c in codes):
+        raise IRError(f"{path}: query codes must be a list of string codes")
     broader = q.get("broader_codes")
     if broader is not None:
         if not isinstance(broader, list) or not all(isinstance(c, str) for c in broader):
@@ -109,6 +109,16 @@ def validate_query(q: Any, path: str = "query") -> None:
             raise IRError(
                 f"{path}: a code cannot be both exact and broader than the concept; "
                 f"overlapping: {sorted(set(broader) & set(codes))}")
+    # `codes` may be empty when `broader_codes` carries the concept. That is the
+    # shape this vocabulary forces when a site records only a parent code: the
+    # exact concept has no code here, so nothing can establish it, and presence of
+    # the parent is UNKNOWN rather than MEETS. Requiring `codes` to be non-empty
+    # left the model one legal move, putting the parent in `codes`, which is the
+    # promotion that manufactured 358 of 424 wrong exclusions. A query with no
+    # code in either slot is still meaningless and is still refused.
+    if not codes and not (broader or []):
+        raise IRError(
+            f"{path}: a query needs at least one code, in codes or in broader_codes")
     if q.get("absent_means") not in ABSENT_MEANS:
         raise IRError(
             f"{path}: absent_means must be 'false' (the record is trusted to be complete "

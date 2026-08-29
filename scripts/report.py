@@ -724,6 +724,28 @@ def main() -> int:
                       f"principled. Entry 27 of the improvement changelog has the "
                       f"rest, including why the IR was not changed.")
 
+        if not crashed:
+            md.append("")
+            md.append("Nothing in this run was lost to the validator, and that is a "
+                      "change rather than a property. In the run this report first "
+                      "described, `NCT06989723-EXC-01` had a concept the grounder "
+                      "returned as broader-only, with no exact code at all. "
+                      "`src/trialsieve/ir.py:103` required every query to carry at "
+                      "least one exact code, so the shape `README.md` asks for, "
+                      "`codes: []` with the coarse code in `broader_codes`, could "
+                      "not be written down. The model sent it first, was rejected, "
+                      "hedged into declaring the code both ways, was rejected by the "
+                      "disjointness rule, dropped `codes` again, and ran out of "
+                      "retries. The only shape the validator accepted was the one "
+                      "that puts a coarse code where presence settles a verdict.")
+            md.append("")
+            md.append("The IR now accepts an empty `codes` list when `broader_codes` "
+                      "carries the concept, and refuses only a query with no code in "
+                      "either slot. `tests/test_not_compilable.py` keeps the split "
+                      "visible so a future crash cannot be absorbed into the refusal "
+                      "count the way that one was. Entries 27 and 29 of the "
+                      "improvement changelog have the rest.")
+
     if identical:
         md.append("\n## Noise floor\n")
         md.append(f"**NOT MEASURED.** The {len(digests)} compilation seeds produced "

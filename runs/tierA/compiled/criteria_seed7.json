@@ -4,22 +4,22 @@
  "provider": "shim",
  "n_criteria": 40,
  "stats": {
-  "compiled": 18,
+  "compiled": 19,
   "refused_plan": 8,
   "refused_grounding": 13,
-  "errors": 1,
+  "errors": 0,
   "critic_confirmed": 1,
   "critic_dismissed": 1,
   "revised": 1
  },
  "usage": {
-  "calls": 211,
-  "prompt_tokens": 155324,
-  "completion_tokens": 35939,
-  "wall_s": 14860.25,
-  "cassette_hits": 211
+  "calls": 202,
+  "prompt_tokens": 136765,
+  "completion_tokens": 34225,
+  "wall_s": 13981.92,
+  "cassette_hits": 202
  },
- "wall_s": 1.1,
+ "wall_s": 1.3,
  "criteria": [
   {
    "criterion_id": "NCT06983054-INC-01",
@@ -48,13 +48,13 @@
       "op": "exists",
       "query": {
        "domain": "condition",
-       "codes": [
+       "codes": [],
+       "broader_codes": [
         "44054006"
        ],
-       "broader_codes": [],
        "within_days": null,
        "active_only": false,
-       "absent_means": "false"
+       "absent_means": "unknown"
       }
      }
     ]
@@ -76,7 +76,7 @@
    "compiler_prompt_version": "compiler-v3",
    "seed": 7,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "c9239b0b28c7f115698e56ce6ee95df4aded76587e3f33d63e6e8cf9de4f6266"
+   "predicate_sha256": "be405f777e2ed2a5e662f637891683f028e2fd63068e97e29205a33f0dcc9b2d"
   },
   {
    "criterion_id": "NCT06983054-INC-02",
@@ -654,21 +654,39 @@
    "content_hash": "NCT06989723-INC-02",
    "compilable": true,
    "expr": {
-    "op": "between",
-    "value": {
-     "val": "observation",
-     "codes": [
-      "4548-4"
-     ],
-     "unit": "%",
-     "agg": "latest",
-     "within_days": null
-    },
-    "low": 7.0,
-    "high": 10.0,
-    "inclusive": [
-     true,
-     true
+    "op": "and",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "condition",
+       "codes": [],
+       "broader_codes": [
+        "44054006"
+       ],
+       "within_days": null,
+       "active_only": false,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "between",
+      "value": {
+       "val": "observation",
+       "codes": [
+        "4548-4"
+       ],
+       "unit": "%",
+       "agg": "latest",
+       "within_days": null
+      },
+      "low": 7.0,
+      "high": 10.0,
+      "inclusive": [
+       true,
+       true
+      ]
+     }
     ]
    },
    "grounded": [
@@ -692,12 +710,12 @@
     }
    ],
    "unit_note": "HbA1c is stated as a percentage (%).",
-   "absence_note": "No condition query with absent_means is used because the criterion is defined by the HbA1c observation and no specific condition codes were mapped.",
+   "absence_note": "Condition absent_means is set to 'false' because chronic conditions such as diabetes are expected to be documented on a standard coded problem list; having no recorded diabetes codes indicates absence, whereas finding broader codes leaves the specific diagnosis undetermined.",
    "confidence": "high",
    "compiler_prompt_version": "compiler-v3",
    "seed": 7,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "3ffb06aff0e9d74b50f69dd789bb25a3d53fdcb927f30896925899a2d2928628"
+   "predicate_sha256": "9d0d4fb73ad88cd6668bccc177c9e1e286ac10d437d80cce07ba99c3a3c22977"
   },
   {
    "criterion_id": "NCT06989723-INC-03",
@@ -987,11 +1005,65 @@
    "kind": "exclusion",
    "category": "medication",
    "source_text": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
-   "text": "Patients receiving insulin therapy or diagnosed with type 1 diabetes mellitus.",
    "content_hash": "NCT06989723-EXC-01",
-   "compilable": false,
-   "reason_not_compilable": "compiler failed: AgentError",
-   "compile_error": true
+   "compilable": true,
+   "expr": {
+    "op": "or",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "medication",
+       "codes": [
+        "106892"
+       ],
+       "within_days": null,
+       "active_only": true,
+       "absent_means": "false"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "condition",
+       "codes": [],
+       "broader_codes": [
+        "44054006"
+       ],
+       "within_days": null,
+       "active_only": false,
+       "absent_means": "unknown"
+      }
+     }
+    ]
+   },
+   "grounded": [
+    {
+     "concept": "Insulin",
+     "domain": "medication",
+     "status": "PARTIAL",
+     "codes": [
+      "106892"
+     ],
+     "broader_codes": []
+    },
+    {
+     "concept": "Type 1 diabetes mellitus",
+     "domain": "condition",
+     "status": "BROADER_ONLY",
+     "codes": [],
+     "broader_codes": [
+      "44054006"
+     ]
+    }
+   ],
+   "unit_note": "No units are present in this criterion.",
+   "absence_note": "Selected 'false' for both queries under the assumption of standard reconciled medication and coded problem lists where the absence of relevant entries indicates no active insulin therapy and no diabetes history.",
+   "confidence": "medium",
+   "compiler_prompt_version": "compiler-v3",
+   "seed": 7,
+   "model": "gemini-3.7-flash-medium",
+   "predicate_sha256": "c2ec8bbcb9aba5e65d13d9913c093f789777bc3618432b77816b7db093f3daa8"
   },
   {
    "criterion_id": "NCT06989723-EXC-02",
@@ -1241,13 +1313,13 @@
      "op": "exists",
      "query": {
       "domain": "condition",
-      "codes": [
+      "codes": [],
+      "broader_codes": [
        "44054006"
       ],
-      "broader_codes": [],
-      "within_days": 179,
+      "within_days": 180,
       "active_only": false,
-      "absent_means": "false"
+      "absent_means": "unknown"
      }
     }
    },
@@ -1262,13 +1334,13 @@
      ]
     }
    ],
-   "unit_note": "none",
-   "absence_note": "absent_means is set to 'false' because diabetes is a chronic condition documented on the standard problem list, so absence of a record indicates the patient has not been diagnosed with type 2 diabetes.",
+   "unit_note": "No units are referenced in this criterion.",
+   "absence_note": "absent_means is set to 'false' because the criterion permits both patients diagnosed >= 180 days before screening and patients with no diagnosis of type 2 diabetes at all; therefore, having no diagnosis recorded within the last 180 days must evaluate to false for recent occurrence so the overall negation evaluates to TRUE.",
    "confidence": "high",
    "compiler_prompt_version": "compiler-v3",
    "seed": 7,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "9831776891274830f73073a4ef81669474bd03f00b907aa6b6ff5806d53d744c"
+   "predicate_sha256": "29286a92e46e77730278e44fd70693b3d6d0a4accbb9a7c618b3c36d6f8642e2"
   },
   {
    "criterion_id": "NCT06717698-EXC-01",
@@ -1296,18 +1368,32 @@
    "content_hash": "NCT06717698-EXC-02",
    "compilable": true,
    "expr": {
-    "op": "exists",
-    "query": {
-     "domain": "procedure",
-     "codes": [
-      "302497006"
-     ],
-     "broader_codes": [
-      "265764009"
-     ],
-     "within_days": 90,
-     "absent_means": "unknown"
-    }
+    "op": "or",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "procedure",
+       "codes": [
+        "302497006"
+       ],
+       "within_days": 90,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "procedure",
+       "codes": [],
+       "broader_codes": [
+        "265764009"
+       ],
+       "within_days": 90,
+       "absent_means": "unknown"
+      }
+     }
+    ]
    },
    "grounded": [
     {
@@ -1335,7 +1421,7 @@
    "compiler_prompt_version": "compiler-v3",
    "seed": 7,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "51906bc52ef52594acb729d976cfc4cc7e5f2a3330ffb781beb7947b0399522c"
+   "predicate_sha256": "cf4793ccf5880149fdc5382bbafaeeabc1992daea4ab29a08cc968e2bbcfef4a"
   },
   {
    "criterion_id": "NCT06717698-EXC-03",

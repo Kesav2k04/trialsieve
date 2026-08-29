@@ -64,6 +64,12 @@ def t_check() -> None:
     """The engine gate. The protocol makes this a precondition for a scored run."""
     banner("engine gate")
     sh(PY, "-m", "pytest", "-q")
+    # `dependencies = []` is the claim that lets a judge reproduce with no install
+    # step. One new import would end it silently, so the claim is parsed rather
+    # than trusted: every module the reproduction touches, checked against
+    # `sys.stdlib_module_names`.
+    banner("dependency surface")
+    sh(PY, "scripts/lockfile.py", "--imports")
 
 
 def t_environment() -> None:
@@ -77,6 +83,28 @@ def t_environment() -> None:
         "cwd": str(ROOT),
         "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
+    # The interpreter alone did not say enough. Two machines can both report
+    # 3.14.2 and differ in the packages the test gate and the video build run on,
+    # so the lock is read back here and any drift is recorded beside the run
+    # rather than left for a reader to discover.
+    lock = ROOT / "requirements-lock.txt"
+    if lock.exists():
+        import importlib.metadata as _md
+        pinned, drift = {}, {}
+        for line in lock.read_text(encoding="utf-8").splitlines():
+            line = line.split("#", 1)[0].strip()
+            if "==" not in line:
+                continue
+            name, want = line.split("==", 1)
+            pinned[name] = want.strip()
+            try:
+                have = _md.distribution(name).version
+            except Exception:
+                have = None
+            if have != want.strip():
+                drift[name] = {"locked": want.strip(), "installed": have}
+        info["locked_packages"] = len(pinned)
+        info["lock_drift"] = drift
     try:
         info["git_commit"] = subprocess.run(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True

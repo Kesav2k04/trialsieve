@@ -8,18 +8,18 @@
   "refused_plan": 10,
   "refused_grounding": 11,
   "errors": 0,
-  "critic_confirmed": 1,
+  "critic_confirmed": 2,
   "critic_dismissed": 0,
-  "revised": 1
+  "revised": 2
  },
  "usage": {
-  "calls": 200,
-  "prompt_tokens": 146310,
-  "completion_tokens": 34729,
-  "wall_s": 7077.94,
-  "cassette_hits": 136
+  "calls": 201,
+  "prompt_tokens": 140245,
+  "completion_tokens": 34522,
+  "wall_s": 7041.73,
+  "cassette_hits": 193
  },
- "wall_s": 2033.7,
+ "wall_s": 192.6,
  "criteria": [
   {
    "criterion_id": "NCT06983054-INC-01",
@@ -996,8 +996,8 @@
        "codes": [
         "106892"
        ],
-       "within_days": null,
        "active_only": true,
+       "within_days": null,
        "absent_means": "false"
       }
      },
@@ -1005,19 +1005,20 @@
       "op": "exists",
       "query": {
        "domain": "condition",
-       "codes": [
+       "codes": [],
+       "broader_codes": [
         "44054006"
        ],
-       "within_days": null,
        "active_only": false,
-       "absent_means": "false"
+       "within_days": null,
+       "absent_means": "unknown"
       }
      }
     ]
    },
    "grounded": [
     {
-     "concept": "Insulin",
+     "concept": "insulin",
      "domain": "medication",
      "status": "PARTIAL",
      "codes": [
@@ -1026,7 +1027,7 @@
      "broader_codes": []
     },
     {
-     "concept": "Type 1 diabetes mellitus",
+     "concept": "type 1 diabetes mellitus",
      "domain": "condition",
      "status": "BROADER_ONLY",
      "codes": [],
@@ -1035,13 +1036,13 @@
      ]
     }
    ],
-   "unit_note": "No units are present in the criterion text.",
-   "absence_note": "absent_means is set to 'false' under the assumption of complete EHR problem lists and active medication reconciliation lists for ongoing diabetes care.",
-   "confidence": "low",
+   "unit_note": "No units specified in the criterion.",
+   "absence_note": "absent_means is set to 'false' for both queries because in reconciled medication and problem lists, the absence of insulin therapy or a type 1 diabetes diagnosis indicates that the patient does not have the exclusionary condition and should evaluate to FALSE.",
+   "confidence": "high",
    "compiler_prompt_version": "compiler-v3",
    "seed": 8,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "1413dc399ab55812d1491a6cf6ef04aa791fcf6cc93742af5580c056f3bdc4ae"
+   "predicate_sha256": "c2ec8bbcb9aba5e65d13d9913c093f789777bc3618432b77816b7db093f3daa8"
   },
   {
    "criterion_id": "NCT06989723-EXC-02",
@@ -1290,10 +1291,10 @@
        "val": "count",
        "query": {
         "domain": "condition",
-        "codes": [
+        "codes": [],
+        "broader_codes": [
          "44054006"
         ],
-        "broader_codes": [],
         "within_days": null,
         "active_only": false,
         "absent_means": "false"
@@ -1303,10 +1304,10 @@
        "val": "count",
        "query": {
         "domain": "condition",
-        "codes": [
+        "codes": [],
+        "broader_codes": [
          "44054006"
         ],
-        "broader_codes": [],
         "within_days": 179,
         "active_only": false,
         "absent_means": "false"
@@ -1319,13 +1320,13 @@
        "op": "exists",
        "query": {
         "domain": "condition",
-        "codes": [
+        "codes": [],
+        "broader_codes": [
          "44054006"
         ],
-        "broader_codes": [],
         "within_days": null,
         "active_only": false,
-        "absent_means": "false"
+        "absent_means": "unknown"
        }
       }
      }
@@ -1348,7 +1349,7 @@
    "compiler_prompt_version": "compiler-v3",
    "seed": 8,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "b6f650b38521b6c9d293cb9f4a2ba685abe186e73eb82e8ac126eed7036ab6e9"
+   "predicate_sha256": "8acf93beb0fa69e88b3ead8a90506a0e114d1531dd5b78fb68201cdc003ae968"
   },
   {
    "criterion_id": "NCT06717698-EXC-01",
@@ -1376,18 +1377,35 @@
    "content_hash": "NCT06717698-EXC-02",
    "compilable": true,
    "expr": {
-    "op": "exists",
-    "query": {
-     "domain": "procedure",
-     "codes": [
-      "302497006"
-     ],
-     "broader_codes": [
-      "265764009"
-     ],
-     "within_days": 90,
-     "absent_means": "unknown"
-    }
+    "op": "or",
+    "args": [
+     {
+      "op": "exists",
+      "query": {
+       "domain": "procedure",
+       "codes": [
+        "302497006"
+       ],
+       "broader_codes": [
+        "265764009"
+       ],
+       "within_days": 90,
+       "absent_means": "unknown"
+      }
+     },
+     {
+      "op": "exists",
+      "query": {
+       "domain": "procedure",
+       "codes": [],
+       "broader_codes": [
+        "265764009"
+       ],
+       "within_days": 90,
+       "absent_means": "unknown"
+      }
+     }
+    ]
    },
    "grounded": [
     {
@@ -1417,7 +1435,7 @@
    "compiler_prompt_version": "compiler-v3",
    "seed": 8,
    "model": "gemini-3.7-flash-medium",
-   "predicate_sha256": "51906bc52ef52594acb729d976cfc4cc7e5f2a3330ffb781beb7947b0399522c"
+   "predicate_sha256": "0b6af723b9924e44146598b6b51677eb4bacf40d36fbbdfcca42e451d3f4e522"
   },
   {
    "criterion_id": "NCT06717698-EXC-03",
