@@ -79,7 +79,7 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 349 tests, now that every artifact they read
+8. **The full suite runs**, all 352 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
    trust if this sentence has drifted. Beyond the engine they cover the recorder,
    the sign-off gate, the cassette seal, the contamination perturbation, the

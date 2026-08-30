@@ -162,6 +162,25 @@ def build() -> str:
           f"the abstentions buy is that the remaining answers can be acted on "
           f"without re-reading, and that the abstentions arrive grouped: "
           f"`docs/sample_worklist.md` is what a person is actually handed.", ""]
+    # Where the gap actually sits. `docs/EVAL_PROTOCOL.md` prediction 4 required
+    # this split before the gap was reported, and the coverage row is the place a
+    # reader is most likely to read the gap as accuracy.
+    gap = res.get("k0_gap_by_stratum")
+    if gap:
+        d = gap["definite"]
+        b2r = d["B2"]["wrong"] / d["B2"]["answered"] if d["B2"]["answered"] else 0
+        tsr = d["TS"]["wrong"] / d["TS"]["answered"] if d["TS"]["answered"] else 0
+        i = gap["indeterminate"]
+        L += [f"**And the gap is abstention rather than accuracy.** Split those cells "
+              f"by whether an answer exists. On the {d['cells']} where gold is MEETS or "
+              f"FAILS, B2 is wrong on {b2r:.1%} of what it answered and TrialSieve on "
+              f"{tsr:.1%}, so the baseline is the more accurate arm there. The whole "
+              f"difference sits in the {i['cells']} cells where the record does not "
+              f"say, where B2 commits on {i['B2']['answered']} and TrialSieve on "
+              f"{i['TS']['answered']}. `results/RESULTS.md` carries the split under "
+              f"*The k = 0 gap*, which "
+              f"`docs/EVAL_PROTOCOL.md` required before the gap could be reported.", ""]
+
     L += ["An arm can win the reduction row by ruling out everybody. B0 does "
           "exactly that, reduces the panel by 100%, and wrongly excludes "
           f"{paired['panel_scores']['B0']['false_exclusions']} of {n_screens} "

@@ -7632,6 +7632,35 @@
    "false_exclusions": 31
   }
  ],
+ "k0_gap_by_stratum": {
+  "cells": 400,
+  "definite": {
+   "cells": 105,
+   "B2": {
+    "answered": 99,
+    "wrong": 2
+   },
+   "TS": {
+    "answered": 87,
+    "wrong": 4
+   }
+  },
+  "indeterminate": {
+   "cells": 295,
+   "B2": {
+    "answered": 173,
+    "wrong": 173
+   },
+   "TS": {
+    "answered": 0,
+    "wrong": 0
+   }
+  },
+  "B2_silent_errors": 175,
+  "B2_silent_errors_on_indeterminate": 173,
+  "TS_silent_errors": 4,
+  "TS_silent_errors_on_indeterminate": 0
+ },
  "criterion_coverage": {
   "n_segmented": 65,
   "n_gold": 40,

@@ -67,6 +67,45 @@ def load_cells(run: Path) -> dict[str, list[dict]]:
     return groups
 
 
+def k0_gap_by_stratum(groups: dict[str, list[dict]]) -> dict | None:
+    """Split the paired k = 0 cells by whether an answer exists at all.
+
+    `docs/EVAL_PROTOCOL.md` prediction 4 registered that a large gap at k = 0
+    would be investigated before it was reported, on the reasoning that the
+    design is built for missingness and the corpus has almost none. This is that
+    investigation, and it computes rather than asserts.
+    """
+    rows = []
+    for tag, group in groups.items():
+        if any("B2" in r and "TS" in r for r in group):
+            rows = [r for r in group if "B2" in r and "TS" in r]
+            break
+    if len(rows) < 50:
+        return None
+
+    def block(subset: list[dict]) -> dict:
+        out = {"cells": len(subset)}
+        for arm in ("B2", "TS"):
+            answered = [r for r in subset if r[arm] in ("MEETS", "FAILS")]
+            wrong = [r for r in answered if r[arm] != r["gold"]]
+            out[arm] = {"answered": len(answered), "wrong": len(wrong)}
+        return out
+
+    definite = [r for r in rows if r["gold"] in ("MEETS", "FAILS")]
+    indeterminate = [r for r in rows if r["gold"] == "INDETERMINATE"]
+    out = {
+        "cells": len(rows),
+        "definite": block(definite),
+        "indeterminate": block(indeterminate),
+    }
+    for arm in ("B2", "TS"):
+        wrong = [r for r in rows if r[arm] in ("MEETS", "FAILS") and r[arm] != r["gold"]]
+        on_indet = sum(1 for r in wrong if r["gold"] == "INDETERMINATE")
+        out[arm + "_silent_errors"] = len(wrong)
+        out[arm + "_silent_errors_on_indeterminate"] = on_indet
+    return out
+
+
 def to_cells(rows: list[dict], arm: str) -> list[Cell]:
     out = []
     for r in rows:
@@ -894,6 +933,58 @@ def main() -> int:
         md.append("\nReal missingness is not random. It tracks fragmented care and sicker "
                   "patients, which is the one property this harness cannot reproduce, so "
                   "the curve is a floor on the effect rather than an estimate of it.")
+
+
+    # The investigation prediction 4 registered and the report had not done.
+    gap = k0_gap_by_stratum(groups)
+    if gap:
+        results["k0_gap_by_stratum"] = gap
+        d, i = gap["definite"], gap["indeterminate"]
+        b2_rate = d["B2"]["wrong"] / d["B2"]["answered"] if d["B2"]["answered"] else 0
+        ts_rate = d["TS"]["wrong"] / d["TS"]["answered"] if d["TS"]["answered"] else 0
+        share = (gap["B2_silent_errors_on_indeterminate"]
+                 / max(gap["B2_silent_errors"], 1))
+        md.append("\n## The k = 0 gap, which the protocol required be investigated\n")
+        md.append("`docs/EVAL_PROTOCOL.md` registered prediction 4 before the first "
+                  "scored run: *at k = 0 the gap will be small, the design is built "
+                  "for missingness and the corpus has almost none, and if the gap at "
+                  "k = 0 is large that is a suspicious result and will be investigated "
+                  "before it is reported*. The gap is 42.75 points of silent error "
+                  "rate. That is large, so this is the investigation.\n")
+        md.append("**The premise was wrong rather than the result.** Two different "
+                  "absences were being called one thing. A Synthea record is "
+                  "internally complete, and internal completeness is what the k axis "
+                  "damages. What a trial criterion asks for is one specific "
+                  f"measurement, and it is usually not on file at all: gold is "
+                  f"INDETERMINATE on {i['cells']} of the {gap['cells']} paired cells, "
+                  f"{i['cells'] / gap['cells']:.1%}, because the record does not "
+                  "answer the question. Damaging a resource cannot produce that, "
+                  "because the resource was never there to damage.\n")
+        md.append("**Where the gap lives.** The same cells, split by whether an "
+                  "answer exists:\n")
+        md.append("| gold | cells | B2 answers | B2 wrong | TS answers | TS wrong |")
+        md.append("|---|---|---|---|---|---|")
+        md.append(f"| MEETS or FAILS | {d['cells']} | {d['B2']['answered']} | "
+                  f"{d['B2']['wrong']} ({b2_rate:.1%} of what it answered) | "
+                  f"{d['TS']['answered']} | {d['TS']['wrong']} ({ts_rate:.1%}) |")
+        md.append(f"| INDETERMINATE | {i['cells']} | {i['B2']['answered']} | "
+                  f"{i['B2']['wrong']} | {i['TS']['answered']} | {i['TS']['wrong']} |")
+        md.append("")
+        worse = "more accurate than" if b2_rate < ts_rate else "no more accurate than"
+        md.append(f"**On the cells where an answer exists, the per-cell baseline is "
+                  f"{worse} this system: {b2_rate:.1%} against {ts_rate:.1%} of what "
+                  f"each arm answered.** "
+                  f"{gap['B2_silent_errors_on_indeterminate']} of B2's "
+                  f"{gap['B2_silent_errors']} silent errors, {share:.1%}, are "
+                  f"commitments on cells where the record does not say. Only "
+                  f"{gap['B2_silent_errors'] - gap['B2_silent_errors_on_indeterminate']} "
+                  f"contradict a definite gold answer. The whole gap is abstention "
+                  f"discipline and none of it is better reading, which is a narrower "
+                  f"claim than the headline pair invites on a first reading.\n")
+        md.append("It does rule out the reading prediction 4 was written to catch. If "
+                  "the gap came from gold labels that favour the system, the advantage "
+                  "would appear in the stratum where those labels commit to an answer. "
+                  "It appears only in the stratum where they decline to.")
 
     # label noise floor
     md.append("")

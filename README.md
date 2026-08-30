@@ -8,7 +8,7 @@
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 56 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 57 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 169.8s measured, no key, no network. |
 | The video | submitted as a link on the entry form, 4:54. It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
@@ -139,6 +139,16 @@ contradicts the threshold, so the threshold appears satisfied. The reasoning is
 fluent and the answer is confident, and on those same 400 cells it is wrong on
 43.75% of every cell against TrialSieve's 1.00%. Counted only over the cells each
 one answers, that is 175 of 272 for the baseline and 4 of 87 here.
+
+**Almost all of that gap is one thing, and it is not better reading.** Split the
+same 400 cells by whether an answer exists. On the 105 where gold is MEETS or
+FAILS, the baseline is the *more* accurate arm: 2.0% wrong against 4.6% of what
+each answered. The entire difference sits in the 295 cells where the record does
+not say, where the baseline commits on 173 and this system commits on none. So
+what the design buys is abstention discipline, which is a narrower claim than the
+headline pair invites. That split is in `results/RESULTS.md` under *The k = 0
+gap*, and it is there because `docs/EVAL_PROTOCOL.md` registered before the run
+that a large gap would be investigated rather than reported.
 
 **Read that pair with its sample size.** Those 400 cells are **10 patients**
 against 40 criteria, not 400 people. Ten is what the arm costs: $22.19 for a full
@@ -398,7 +408,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 56 entries, each naming the evidence that found
+- **The Improvement Changelog**, 57 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.

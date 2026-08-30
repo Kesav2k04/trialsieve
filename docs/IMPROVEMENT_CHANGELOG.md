@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Fifty-six entries is
+iteration, each with its evidence and what it decided. Fifty-seven entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -3202,3 +3202,73 @@ for exactly the reason an archive skips them. It fetches the whole history now.
 empty directory, and run `python run.py reproduce`. It prints `NOT COMPARED` for
 the provenance block, then `IDENTICAL`, in 161.7 seconds. The same command in a
 clone compares the provenance block too and takes 169.8.
+
+## 57. A registered trigger fired and the report was published without it
+
+**Found by** an independent reviewer reading `docs/EVAL_PROTOCOL.md` against
+`results/RESULTS.md` and checking whether each pre-registered prediction had been
+answered. Four had. The fourth had fired and nothing had happened.
+
+**What was wrong.** Prediction 4, registered before the first scored run, reads:
+*at k = 0 the gap will be small. The design is built for missingness, and the
+corpus has almost none. If the gap at k = 0 is large, that is a suspicious result
+and will be investigated before it is reported.*
+
+The gap at k = 0 is **42.75 points** of silent error rate. It is the headline pair
+in the README and the first row of the scorecard. It was reported, repeatedly, and
+the investigation the protocol made a condition of reporting it was never done.
+
+That is worse than a wrong number. Pre-registration is only worth the weight it
+carries when the registered branch is unwelcome, and this was the one branch that
+said stop and look.
+
+**What the investigation found: the premise was wrong, not the result.** Two
+different absences were being called one thing. A Synthea record is internally
+complete, and internal completeness is exactly what the k axis damages. What a
+trial criterion asks for is one specific measurement, and it is usually not on file
+at all. Gold is INDETERMINATE on **295 of the 400** paired cells, 73.8%, because the
+record does not answer the question. Damaging a resource cannot produce that,
+because the resource was never there to damage. So k = 0 is not the
+low-missingness condition the prediction assumed; it is the condition where the
+only missingness present is the kind k cannot make.
+
+**And the result is narrower than the headline reads.** Splitting the same cells
+by whether an answer exists:
+
+| gold | cells | B2 answers | B2 wrong | TS answers | TS wrong |
+|---|---|---|---|---|---|
+| MEETS or FAILS | 105 | 99 | 2, 2.0% of what it answered | 87 | 4, 4.6% |
+| INDETERMINATE | 295 | 173 | 173 | 0 | 0 |
+
+On the cells where an answer exists the per-cell baseline is **more accurate than
+this system**, 2.0% against 4.6%. 173 of its 175 silent errors, 98.9%, are
+commitments where the record does not say, and only 2 contradict a definite gold
+answer. The whole 42.75-point gap is abstention discipline and none of it is better
+reading.
+
+It does clear the suspicion the prediction was written to catch. If the gap came
+from gold labels that favour the system, the advantage would appear in the stratum
+where those labels commit to an answer. It appears only in the stratum where they
+decline to.
+
+**What changed.** `scripts/report.py` computes the split from the cells and writes
+it into `results/RESULTS.md` as its own section, so it is generated rather than
+typed and moves when the run moves. `README.md` states the narrower claim beside
+the headline pair rather than under it. `tests/test_k0_gap_investigation.py`
+recounts the strata from `runs/tierA/cells/` and checks the published numbers
+against the recount, and it checks the *direction* of the conclusion separately:
+the sentence saying the baseline is the more accurate arm is a claim about two
+rates, so if those rates ever cross, the test fails until the sentence changes.
+That guard exists because the conclusion argues against this project's own headline
+and is therefore the sentence most likely to be quietly softened later.
+
+| | before | now |
+|---|---|---|
+| registered predictions with an answer in the report | 4 of 5 | **5 of 5** |
+| the k = 0 gap, split by whether an answer exists | not split | **105 cells and 295 cells, separately** |
+| what the report claims the gap measures | accuracy | **abstention, with the accuracy row printed against it** |
+| tests over the k = 0 conclusion | 0 | **3** |
+
+**Evidence.** `python -m pytest tests/test_k0_gap_investigation.py -q`. Reverse
+either rate in the cells and the direction test names both numbers and the sentence
+that no longer matches them.

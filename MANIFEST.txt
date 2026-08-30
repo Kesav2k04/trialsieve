@@ -2530,6 +2530,7 @@ tests/test_gold_is_engine_free.py
 tests/test_grounding_audit.py
 tests/test_headline_figures_match_the_run.py
 tests/test_human_checkpoint.py
+tests/test_k0_gap_investigation.py
 tests/test_label_floor.py
 tests/test_line_endings.py
 tests/test_makefile_matches.py

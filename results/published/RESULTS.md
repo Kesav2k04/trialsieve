@@ -567,6 +567,23 @@ Synthea records are complete by construction, so the failure mode this design ex
 
 Real missingness is not random. It tracks fragmented care and sicker patients, which is the one property this harness cannot reproduce, so the curve is a floor on the effect rather than an estimate of it.
 
+## The k = 0 gap, which the protocol required be investigated
+
+`docs/EVAL_PROTOCOL.md` registered prediction 4 before the first scored run: *at k = 0 the gap will be small, the design is built for missingness and the corpus has almost none, and if the gap at k = 0 is large that is a suspicious result and will be investigated before it is reported*. The gap is 42.75 points of silent error rate. That is large, so this is the investigation.
+
+**The premise was wrong rather than the result.** Two different absences were being called one thing. A Synthea record is internally complete, and internal completeness is what the k axis damages. What a trial criterion asks for is one specific measurement, and it is usually not on file at all: gold is INDETERMINATE on 295 of the 400 paired cells, 73.8%, because the record does not answer the question. Damaging a resource cannot produce that, because the resource was never there to damage.
+
+**Where the gap lives.** The same cells, split by whether an answer exists:
+
+| gold           | cells | B2 answers | B2 wrong                     | TS answers | TS wrong |
+|----------------|-------|------------|------------------------------|------------|----------|
+| MEETS or FAILS | 105   | 99         | 2 (2.0% of what it answered) | 87         | 4 (4.6%) |
+| INDETERMINATE  | 295   | 173        | 173                          | 0          | 0        |
+
+**On the cells where an answer exists, the per-cell baseline is more accurate than this system: 2.0% against 4.6% of what each arm answered.** 173 of B2's 175 silent errors, 98.9%, are commitments on cells where the record does not say. Only 2 contradict a definite gold answer. The whole gap is abstention discipline and none of it is better reading, which is a narrower claim than the headline pair invites on a first reading.
+
+It does rule out the reading prediction 4 was written to catch. If the gap came from gold labels that favour the system, the advantage would appear in the stratum where those labels commit to an answer. It appears only in the stratum where they decline to.
+
 ## Label noise floor
 
 Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.

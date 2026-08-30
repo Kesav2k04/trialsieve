@@ -2,7 +2,7 @@
 
 **DiEtary Sodium Intake Effects on Ertugliflozin-induced Changes in GFR, reNal Oxygenation and Systemic Hemodynamics: the DESIGN Study, a Randomized, Placebo-controlled, Cross-over Study With Ertugliflozin in People With Type 2 Diabetes**
 
-Panel of 385 patients, screened on 2026-08-30.
+Panel of 385 patients, screened on 2026-08-31.
 
 **Each patient is screened as of their own last encounter, not as of today.** In this panel those dates run from 2019-02-23 to 2021-11-18. Ages and lab values below are as of that patient's date. Where a criterion carries no recency window, an old result satisfies it, so a patient under *Ready to contact* may be resting on a years-old value that a coordinator has to confirm before the call.
 
