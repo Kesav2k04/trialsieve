@@ -36,7 +36,7 @@ Six agents. Four of them make model calls and appear below. Two do not, and thei
 | `adjudicator` | **none, and this is the whole bet.** It makes zero model calls. It is a pure function of predicate, chart and unit policy, so there is no trajectory to record: run it twice and it returns the same bytes. Its behaviour is in `tests/`, not in a log. |
 | `worklist` | **none.** It renders a document and refuses to render it without a signature. The signature is a `human_checkpoint` event, and it lives in the compiler trajectory of the predicate that was signed. |
 
-The baselines and the second labeller are recorded the same way and to the same standard, under `baseline-b2/` and `checker_b/`, so an arm this project is measured against cannot be a weaker implementation than the one it is compared to.
+The baselines and the second labeller are recorded the same way and to the same standard, under `baseline-b2/` here and under `runs/checker_b/trajectories/checker_b/`, so an arm this project is measured against cannot be a weaker implementation than the one it is compared to.
 
 Sorted so the trajectories that went wrong come first. Those are the ones worth reading: they show what the agent was told about its own output and what it did next.
 

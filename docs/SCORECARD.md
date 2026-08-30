@@ -24,7 +24,9 @@ The rows below are scored on **the same 400 cells**: 30 screens, meaning ten pat
 
 TrialSieve answers fewer cells than B2 and that is the design, not a shortfall. B2 commits to 68.00% of cells and is wrong on 43.75% of all cells; TrialSieve commits to 21.75% and is wrong on 1.00%. A coordinator cannot use an answer that is wrong two times in five, because checking which two costs the same as reading the chart. What the abstentions buy is that the remaining answers can be acted on without re-reading, and that the abstentions arrive grouped: `docs/sample_worklist.md` is what a person is actually handed.
 
-An arm can win the reduction row by ruling out everybody. B0 does exactly that, reduces the panel by 100%, and wrongly excludes 14 of 30 patients. That is why the registered outcome is VOID at any non-zero false-exclusion count rather than a reduction figure with a caveat.
+An arm can win the reduction row by ruling out everybody. B0 does exactly that, reduces the panel by 100%, and wrongly excludes 14 of 30 screens. That is why the registered outcome is VOID at any non-zero false-exclusion count rather than a reduction figure with a caveat.
+
+**No interval is printed in the table above, on purpose.** The brief's suggested format has four columns and none of them is a confidence interval, and inventing a fifth would make this table something other than the one that was asked for. Every row here has its interval and its comparison against the label noise floor in `results/RESULTS.md`, which is where a difference should be judged interpretable or not. The rows above compare B2 against TrialSieve, and every `TS - B2` row in that file is marked `above` the floor rather than below it. The comparison that does fall below is TrialSieve against B1, the regular-expression arm, and `results/RESULTS.md` marks those rows **below, uninterpretable** rather than reporting them as a win.
 
 ## Where this differs from the suggested format
 

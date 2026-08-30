@@ -284,7 +284,8 @@ def main() -> int:
              "lives in the compiler trajectory of the predicate that was signed. |")
     L.append("")
     L.append("The baselines and the second labeller are recorded the same way and to "
-             "the same standard, under `baseline-b2/` and `checker_b/`, so an arm this "
+             "the same standard, under `baseline-b2/` here and under "
+             "`runs/checker_b/trajectories/checker_b/`, so an arm this "
              "project is measured against cannot be a weaker implementation than the "
              "one it is compared to.")
     L.append("")

@@ -137,8 +137,20 @@ def build() -> str:
     L += ["An arm can win the reduction row by ruling out everybody. B0 does "
           "exactly that, reduces the panel by 100%, and wrongly excludes "
           f"{paired['panel_scores']['B0']['false_exclusions']} of {n_screens} "
-          "patients. That is why the registered outcome is VOID at any non-zero "
+          "screens. That is why the registered outcome is VOID at any non-zero "
           "false-exclusion count rather than a reduction figure with a caveat.", ""]
+    L += ["**No interval is printed in the table above, on purpose.** The brief's "
+          "suggested format has four columns and none of them is a confidence "
+          "interval, and inventing a fifth would make this table something other "
+          "than the one that was asked for. Every row here has its interval and "
+          "its comparison against the label noise floor in `results/RESULTS.md`, "
+          "which is where a difference should be judged interpretable or not. The "
+          "rows above compare B2 against TrialSieve, and every `TS - B2` row in that "
+          "file is marked `above` the floor rather than below it. The comparison "
+          "that does fall below is "
+          "TrialSieve against B1, the regular-expression arm, and `results/RESULTS.md` "
+          "marks those rows **below, uninterpretable** rather than reporting them as "
+          "a win.", ""]
 
     L += ["## Where this differs from the suggested format", ""]
     L += ["- The brief's single **primary outcome** row is split into the "

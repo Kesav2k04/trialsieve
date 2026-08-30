@@ -78,6 +78,13 @@ measurement of how long that takes, so it does not put a number on it. The slow
 step is that the list is longer than the reading capacity, so candidates get worked
 in whatever order the list arrives in.
 
+That last sentence is this project's premise rather than one of its findings, and
+it is not measured here. No coordinator was observed and none was timed. What is
+measured is the consequence a system can be held to: how many of the 15,400 cells
+a person is left holding, and how many of the answers they are handed are wrong in
+a way they cannot see. If the premise is wrong, the numbers in this repository are
+still what they say they are; they would simply matter less.
+
 What can be measured here is the shrink. The panel is 385 Synthea patients and the
 held-out protocol is 40 criteria, giving 15,400 patient-criterion cells.
 `results/RESULTS.md` reports what fraction of that grid the system settles and how
