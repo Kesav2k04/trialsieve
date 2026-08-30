@@ -51,33 +51,38 @@ GENERATED = [
 ]
 
 
-def _files() -> list[Path]:
-    out: list[Path] = []
-    for pattern in GENERATED:
-        out.extend(sorted(ROOT.glob(pattern)))
-    return out
+def _files(pattern: str) -> list[Path]:
+    return sorted(ROOT.glob(pattern))
 
 
 def test_the_scan_covers_something() -> None:
     """A glob that matches nothing passes silently, which is the wrong kind of green."""
-    found = _files()
-    assert len(found) >= 10, (
-        f"only {len(found)} generated files matched; the globs in GENERATED have "
+    found = sum(len(_files(p)) for p in GENERATED)
+    assert found >= 10, (
+        f"only {found} generated files matched; the globs in GENERATED have "
         "drifted from the tree and this test is no longer checking anything"
     )
 
 
-@pytest.mark.parametrize("path", _files(), ids=lambda p: p.relative_to(ROOT).as_posix())
-def test_generated_file_carries_no_absolute_path(path: Path) -> None:
-    text = path.read_text(encoding="utf-8", errors="replace")
+#: Parametrised over the patterns, not over the files they match. Over the files,
+#: the number of tests is a function of which generated artifacts happen to exist,
+#: so a clean clone collects a different count from the tree that wrote it and
+#: `test_reproduce_guide_quotes_the_real_test_count` fails on a machine nobody
+#: can see. It did, by exactly one.
+@pytest.mark.parametrize("pattern", GENERATED)
+def test_generated_files_carry_no_absolute_path(pattern: str) -> None:
+    found = _files(pattern)
+    assert found, f"{pattern!r} matches nothing; it names a file that has moved or gone"
     hits = [
-        f"line {i}: {line.strip()[:120]}"
-        for i, line in enumerate(text.splitlines(), 1)
+        f"{path.relative_to(ROOT).as_posix()}:{i}: {line.strip()[:120]}"
+        for path in found
+        for i, line in enumerate(
+            path.read_text(encoding="utf-8", errors="replace").splitlines(), 1)
         if redact.has_absolute_path(line)
     ]
     assert not hits, (
-        f"{path.relative_to(ROOT).as_posix()} records the machine that generated "
-        f"it, in {len(hits)} place(s). First: {hits[0]}\n"
+        f"{len(hits)} generated line(s) record the machine that generated them. "
+        f"First: {hits[0]}\n"
         "Pass the value through `trialsieve.redact.paths(text, ROOT)` where it is "
         "written, rather than editing the committed file."
     )
