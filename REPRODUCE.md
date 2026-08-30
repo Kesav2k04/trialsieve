@@ -121,11 +121,11 @@ and an estimate of what the same work would cost at published per-token rates.
 
 Two numbers are worth reading before the rest.
 
-**Reproducing costs nothing and takes about three minutes.** `python run.py
+**Reproducing costs nothing and takes under three minutes.** `python run.py
 reproduce` makes no model call, so it costs $0.00 in tokens and needs no key.
 Every recorded call replays from `runs/tierA/cassettes/`, and replay never falls
 through to a live call. Measured end to end on this machine, a Windows laptop
-with a 14-core CPU: **157.8 seconds from a fresh clone into an empty directory**,
+with a 14-core CPU: **145.7 seconds from a fresh clone into an empty directory**,
 and 285.6 seconds on a second run while the same machine was busy rendering
 video. Both are printed by the command itself as its last line, so the figure a
 judge sees is the one their own run measured rather than this one.

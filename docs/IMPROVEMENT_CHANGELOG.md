@@ -1942,3 +1942,62 @@ takes, and it does not pin the last bit of every sample. That is stated in
 
 **Evidence.** `python film/scripts/extract.py --check`, which prints the path it
 disagrees with and the command that fixes it.
+
+## 38. The reproduction guide's own command wrote a home directory into a tracked file
+
+**Found by** doing what the guide tells a reader to do, in the place a reader
+would do it. `git clone` into a temporary directory under a home directory, then
+`python run.py reproduce`. It failed at the test gate. In the tree it was written
+in it had never failed once, and it could not have: this checkout lives on `D:`
+and the leak needs a home directory to exist.
+
+**What was wrong.** Two generated files record an absolute path.
+
+`results/environment.json` stored the working directory. The field's stated job
+is to give a differing number somewhere to point, and it never did that: the
+Python version, the platform, the commit and the lock drift do. What it did do
+was write the account name of whoever ran the command into a tracked file.
+
+`results/contamination.json` stores a Python traceback when a counterfactual
+cannot compile, deliberately, because `KeyError: 'text'` names a key and not the
+line that wanted it. Every frame in a traceback carries the absolute path of its
+file. Seven of them, in the artifact a judge regenerates.
+
+Entry 36 redacted 82 of these out of the trajectories. It fixed the files and not
+the writers, so the next generated artifact carrying an error string leaked
+again, which is what happened here.
+
+**What changed.** `src/trialsieve/redact.py` rewrites a path inside the
+repository as relative to the repository, and collapses anything still absolute
+to `~`. The traceback goes through it where it is written. The working directory
+is not recorded at all, in the run or in `results/published/`.
+
+The scan is the part that matters. `tests/test_no_private_paths.py` looks for a
+home directory, which is the shape that is actually private, and that is exactly
+why it could not find this: on this machine the leak reads `D:\trialsieve`.
+`tests/test_generated_files_name_no_machine.py` rejects **any** absolute path in
+a file this repository generates and commits, which catches `D:\trialsieve` too,
+because the harmless-looking string is the carrier. The same rule is what lets
+two machines write the same bytes.
+
+| | before | now |
+|---|---|---|
+| generated files carrying an absolute path | 2 | **0** |
+| occurrences a judge's clone would produce | 8 | **0** |
+| the scan's result on the machine that wrote the leak | pass | **fail, until fixed** |
+| `python run.py reproduce` from a clone under a home directory | fails at the gate | **OK in 145.7s, IDENTICAL** |
+
+**Two things this got wrong on the way, kept here because they are the same
+mistake in miniature.** The new scan's positive control spelled out the shapes it
+plants, so it became a tracked file containing a home directory and the older
+scanner failed on it: a scanner flagging another scanner's test data. The shapes
+are assembled from parts now. And the scan was first parametrised over the files
+each glob matched, which made the number of collected tests a function of which
+generated artifacts happened to exist, so a clean clone collected one fewer test
+than the tree that wrote it and the count in `REPRODUCE.md` was wrong on a
+machine nobody could see. It is parametrised over the patterns instead.
+
+**Evidence.** `python -m pytest tests/test_generated_files_name_no_machine.py -q`,
+which carries a positive control in every shape the writers produce. The end to
+end check is the one that found it: clone into a directory under a home
+directory and run `python run.py reproduce`.
