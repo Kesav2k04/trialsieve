@@ -127,6 +127,58 @@ def verify_blind(b_run: Path, sys_run: Path) -> dict:
             "pass": not hits and not empty}
 
 
+def probe_blind(b_run: Path, sys_run: Path) -> dict:
+    """Plant a contaminated prompt in a scratch copy and require the scan to find it.
+
+    The other four gates under `verify.py` each carry one of these. This one did
+    not, so "none of 181 recorded Checker B prompts contains a predicate" rested
+    on a search nothing had ever seen succeed. Three of its four term sets are
+    built from the tree at run time; the `empty_term_sets` report catches a set
+    that came back empty, and catches nothing about a scan that walks a full set
+    and matches wrongly.
+
+    So this copies one real cassette, splices a compiled predicate's digest and a
+    line of IR vocabulary into its request, and asserts the scan reports both.
+    The copy lives in a temporary directory and is never written beside the
+    recordings, because a contaminated cassette left in `runs/checker_b/` would
+    be indistinguishable from the thing the gate exists to detect.
+    """
+    import shutil
+    import tempfile
+
+    real = sorted((b_run / "cassettes").glob("*.json"))
+    digests = sorted(d for d in _compiled_digests(sys_run) if d)
+    if not real or not digests:
+        return {"ran": False, "why": "no recordings or no compiled digests here"}
+
+    with tempfile.TemporaryDirectory() as tmp:
+        fake = Path(tmp) / "cassettes"
+        fake.mkdir(parents=True)
+        shutil.copy2(real[0], fake / real[0].name)
+        blob = json.loads((fake / real[0].name).read_text(encoding="utf-8"))
+        # One term of each kind the scan looks for, so a scan that quietly
+        # dropped a term set fails here rather than passing on the other one.
+        #
+        # The IR term goes in as a JSON key, not inside a string. `IR_TOKENS`
+        # entries carry their own quotes, and putting `"absent_means"` inside a
+        # value makes `json.dumps` escape them to `\"absent_means\"`, which the
+        # scan correctly does not match. The first probe planted it that way and
+        # reported that the gate had missed a leak the gate was right to miss.
+        token = next(t for t in IR_TOKENS
+                     if t.startswith('"') and t.endswith('"'))
+        blob["request"] = {"planted_digest": digests[0],
+                           token.strip('"'): True}
+        (fake / "planted.json").write_text(json.dumps(blob), encoding="utf-8",
+                                           newline=chr(10))
+        r = verify_blind(Path(tmp), sys_run)
+
+    kinds = {h["kind"] for h in r["hits"]}
+    return {"ran": True, "cassettes_scanned": r["cassettes_scanned"],
+            "kinds_found": sorted(kinds),
+            "caught": {"predicate digest", "predicate vocabulary"} <= kinds}
+
+
+
 def cmd_blind(run: Path) -> int:
     b_run = ROOT / "runs" / "checker_b"
     if not (b_run / "cassettes").is_dir():
@@ -156,6 +208,21 @@ def cmd_blind(run: Path) -> int:
               f"a failure rather than a pass because a check that searched nothing "
               f"and a check that found nothing print the same zero.", file=sys.stderr)
         return 1
+    probe = probe_blind(b_run, run)
+    if probe.get("ran") and not probe.get("caught"):
+        print(chr(10) + "FAIL: the contamination probe planted a predicate "
+              "digest and a line of IR vocabulary in a copied prompt, and this "
+              "scan did not report both; it reported "
+              f"{probe['kinds_found']}. A clean result "
+              "from a scan that cannot find a planted hit is not evidence.",
+              file=sys.stderr)
+        return 1
+    if probe.get("ran"):
+        print(f"probe: planted one contaminated prompt, the scan reported "
+              f"{probe['kinds_found']}")
+    else:
+        print(f"probe: not run, {probe.get('why')}")
+
     print(f"\nPASS: none of {r['cassettes_scanned']} recorded Checker B prompts "
           f"contains a predicate, a digest, or any part of the compiled output. "
           f"The two labellings are independent readings of the same record.")

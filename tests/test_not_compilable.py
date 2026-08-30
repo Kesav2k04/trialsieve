@@ -20,6 +20,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 COMPILED = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
 
@@ -35,7 +37,7 @@ def _criteria() -> list[dict]:
 
 def test_the_split_between_refusal_and_exhaustion_is_what_the_report_says():
     if not COMPILED.exists():
-        return
+        pytest.skip("no compiled run in this checkout; nothing to count")
     nope = [c for c in _criteria() if not c.get("compilable")]
     crashed = {c["criterion_id"] for c in nope
                if str(c.get("reason_not_compilable", "")).startswith(CRASH_PREFIX)}
@@ -50,7 +52,7 @@ def test_the_split_between_refusal_and_exhaustion_is_what_the_report_says():
 def test_every_principled_refusal_says_something_a_person_can_check():
     """A refusal with no reason is indistinguishable from a crash with a label."""
     if not COMPILED.exists():
-        return
+        pytest.skip("no compiled run in this checkout; nothing to count")
     for c in _criteria():
         if c.get("compilable") or c["criterion_id"] in EXHAUSTED:
             continue
@@ -63,7 +65,7 @@ def test_the_lost_criterion_is_disclosed_by_name_in_the_report():
     """The report is the artifact a reader sees. The name has to be in it."""
     md = (ROOT / "results" / "RESULTS.md")
     if not md.exists():
-        return
+        pytest.skip("no compiled run or no RESULTS.md here; nothing to compare")
     text = md.read_text(encoding="utf-8")
     assert "What did not compile, and why" in text
     for cid in EXHAUSTED:

@@ -135,8 +135,13 @@ def main() -> int:
               "recorded in the signature, so a signature from someone who is not a",
               "clinician says so.", ""]
 
-    if tmp.exists():
-        tmp.unlink()
+    # The document and both sidecars. Only the markdown was removed, so a run
+    # that got past the refusal left `_gate_demo.json` and `_gate_demo.csv` in a
+    # tracked directory, where they read as shipped artifacts of a demo that is
+    # supposed to produce nothing.
+    for stray in (tmp, tmp.with_suffix(".json"), tmp.with_suffix(".csv")):
+        if stray.exists():
+            stray.unlink()
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(L), encoding="utf-8", newline="\n")

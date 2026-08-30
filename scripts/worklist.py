@@ -17,6 +17,7 @@ left.
 from __future__ import annotations
 
 import argparse
+import csv
 import datetime as dt
 import json
 import sys
@@ -58,6 +59,10 @@ def main() -> int:
         return 2
     blob = json.loads(src.read_text(encoding="utf-8"))
     compiled = blob["criteria"]
+    # Held before any filtering. The document reports what it settled; the
+    # complement, the criteria a coordinator still owes on every patient it hands
+    # back, can only be counted against the protocol as written.
+    protocol = list(compiled)
 
     # Firing every compiled predicate is a measurement configuration, not a
     # product one. It includes the criterion whose closed-world `absent_means`
@@ -117,8 +122,8 @@ def main() -> int:
     # One value, used by both halves. The document and the sidecar disagreeing
     # about when they were generated is the kind of thing nobody checks.
     generated = dt.date.today().isoformat()
-    md = worklist.render_markdown(wl, generated=generated,
-                                  reviewer=reviewer, max_listed=a.max_listed)
+    md = worklist.render_markdown(wl, generated=generated, reviewer=reviewer,
+                                  max_listed=a.max_listed, protocol=protocol)
 
     if a.operating_point is not None:
         mine = wl.get("criteria_used") or sorted(c["criterion_id"] for c in compiled)
@@ -215,9 +220,66 @@ def main() -> int:
     }
     out.with_suffix(".json").write_text(
         json.dumps(side, indent=1) + chr(10), encoding="utf-8", newline=chr(10))
+
+    # The third copy, and the only one a trial site can act on without a
+    # programmer. A CTMS and every screening log this project was described to
+    # takes a spreadsheet; markdown is for reading and JSON is for the tests, and
+    # a coordinator asked to hand 198 patients to a colleague had neither. One
+    # row per patient in the same order as the document, so the two can be read
+    # side by side, and the header carries the provenance the other two carry
+    # rather than leaving a detached file to be trusted on its face.
+    csv_path = out.with_suffix(".csv")
+    n_protocol = sum(1 for c in protocol if c.get("nct_id") == side["trial"])
+    # One header row, and the provenance repeated on every line rather than sat
+    # above the header in a block. A two-row preamble made `csv.DictReader` bind
+    # `patient_id` to a column called `trial` and spill the evidence into `None`,
+    # so the one file described as the form a screening log takes was the one
+    # file that could not be imported. Repetition is the cost of a row that is
+    # still true when it is pasted somewhere on its own.
+    fields = ["patient_id", "site_mrn", "index_date", "age", "sex",
+              "decision", "n_open",
+              "criterion", "verdict", "evidence_or_question",
+              "trial", "generated", "run", "not_for_use", "reviewer",
+              "criteria_answered", "criteria_in_protocol"]
+    prov = {"trial": side["trial"], "generated": generated, "run": side["run"],
+            "not_for_use": "TRUE" if side["not_for_use"] else "FALSE",
+            "reviewer": reviewer or "",
+            "criteria_answered": len(wl["criteria_used"]),
+            "criteria_in_protocol": n_protocol}
+    # `newline=""` stops the module doubling the terminator; the terminator
+    # itself is LF so the file git stores and the file on disk are the same
+    # bytes. csv.writer defaults to CRLF, which git normalises on the way in,
+    # and a byte comparison then fails on every clean clone.
+    with csv_path.open("w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields, lineterminator=chr(10))
+        w.writeheader()
+        for s_ in wl["ruled_out"] + wl["review"] + wl["eligible"]:
+            # Blank on purpose, and present on purpose. A Synthea UUID is not a
+            # person a coordinator can phone, and the step that turns this list
+            # into a phone call is the site's own identity linkage. The column is
+            # reserved so the mapping is obvious rather than invented per site.
+            # The date this patient was screened as of, which is their own last
+            # encounter and not the date on the header. A row pasted into a
+            # screening log without it reads as current.
+            base = {"patient_id": s_["patient_id"], "site_mrn": "",
+                    "index_date": s_.get("index_date", ""),
+                    "age": s_["age"], "sex": s_["sex"],
+                    "decision": s_["decision"], "n_open": s_["n_indeterminate"],
+                    **prov}
+            rows = [c for c in s_["criteria"]
+                    if c["verdict"] in ("FAILS", "INDETERMINATE", "MEETS")]
+            for c in rows:
+                w.writerow({**base, "criterion": c["criterion_id"],
+                            "verdict": c["verdict"],
+                            "evidence_or_question": worklist._cite(c)})
+            if not rows:
+                w.writerow({**base, "criterion": "", "verdict": "",
+                            "evidence_or_question": ""})
+
     row = worklist.summary_row(wl)
     print(json.dumps(row, indent=1))
     print(f"wrote {out}")
+    print(f"wrote {csv_path}")
     return 0
 
 

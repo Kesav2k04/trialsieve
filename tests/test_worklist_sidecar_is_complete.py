@@ -86,3 +86,122 @@ def test_the_unsigned_mark_is_in_the_machine_half_too(side) -> None:
 def test_it_says_which_run_it_came_from(side) -> None:
     for field in ("generated", "run", "trial"):
         assert side.get(field), f"the sidecar does not record {field}"
+
+
+CSV = ROOT / "docs" / "sample_worklist.csv"
+
+
+@pytest.fixture(scope="module")
+def sheet() -> list[dict]:
+    """The third copy: the one a trial site can open without a programmer.
+
+    Read with `csv.DictReader` rather than by index, because that is what an
+    import does and because reading it by index is how the first version passed
+    while binding `patient_id` to a column called `trial`. A metadata block above
+    the header made every field name wrong and spilled the evidence into a `None`
+    key, so the one artifact described as the form a screening log takes was the
+    one artifact that could not be imported.
+    """
+    import csv as _csv
+    if not CSV.is_file():
+        pytest.skip("no sample worklist csv; run scripts/gate_demo.py")
+    with CSV.open(encoding="utf-8", newline="") as fh:
+        rows = list(_csv.DictReader(fh))
+    assert rows, "the sheet has a header and no rows"
+    return rows
+
+
+def test_a_stock_reader_binds_the_right_columns(sheet) -> None:
+    first = sheet[0]
+    assert None not in first, (
+        "a row has more fields than the header names, so the reader put the "
+        "overflow under None and every column after it is shifted")
+    assert first["patient_id"] and "-" in first["patient_id"], (
+        f"patient_id came back as {first['patient_id']!r}, which is not a "
+        f"patient identifier, so the header row is not the first row")
+    assert first["verdict"] in ("FAILS", "INDETERMINATE", "MEETS", ""), (
+        f"verdict came back as {first['verdict']!r}")
+
+
+def test_the_sheet_holds_every_cell_not_every_patient(side, sheet) -> None:
+    expected = side["n_screens"] * len(side["criteria_used"])
+    assert len(sheet) == expected, (
+        f"the sheet has {len(sheet)} rows and the panel is {side['n_screens']} "
+        f"patients against {len(side['criteria_used'])} criteria, which is "
+        f"{expected} cells")
+
+
+def test_the_sheet_agrees_with_the_document_on_who_was_ruled_out(side, sheet) -> None:
+    by_decision: dict[str, set[str]] = {}
+    for r in sheet:
+        by_decision.setdefault(r["decision"], set()).add(r["patient_id"])
+    for key, group in (("INELIGIBLE", "ruled_out"), ("NEEDS_REVIEW", "review"),
+                       ("ELIGIBLE", "eligible")):
+        theirs = {p["patient_id"] for p in side[group]}
+        assert by_decision.get(key, set()) == theirs, (
+            f"{key}: the sheet and the sidecar name different patients")
+
+
+def test_every_row_carries_its_provenance_and_the_unsigned_mark(side, sheet) -> None:
+    """A row pasted into a screening log arrives without the rows around it."""
+    mark = "TRUE" if side["not_for_use"] else "FALSE"
+    bad = [r["patient_id"] for r in sheet
+           if r["trial"] != side["trial"] or r["generated"] != side["generated"]
+           or r["run"] != side["run"] or r["not_for_use"] != mark]
+    assert not bad, (
+        f"{len(bad)} rows do not carry the trial, date, run and override mark "
+        f"that the document and the JSON carry, first {bad[:3]}")
+    assert int(sheet[0]["criteria_answered"]) == len(side["criteria_used"])
+    assert int(sheet[0]["criteria_in_protocol"]) > int(sheet[0]["criteria_answered"]), (
+        "the sheet claims the protocol is no larger than the part that was "
+        "answered, which is the fact the document exists to be honest about")
+
+
+def test_the_column_that_makes_this_a_phone_call_is_reserved(sheet) -> None:
+    """`4b10c406` is a Synthea id, not somebody a coordinator can ring.
+
+    Identity linkage is the site's own step and this project does not do it. The
+    column exists and is empty so the mapping is obvious rather than invented per
+    site, and so nobody mistakes the patient id for a record number.
+    """
+    assert "site_mrn" in sheet[0], "no column for the site's own record number"
+    assert all(not r["site_mrn"] for r in sheet), (
+        "site_mrn is populated; this repository has no identity linkage and a "
+        "value here would be one it invented")
+
+
+def test_the_readme_counts_the_protocol_the_way_the_document_does(side) -> None:
+    """`README.md` types 15, 3 and 12. All three are in the run.
+
+    A count of what a document does not do is exactly the kind of number that
+    stops being true when a criterion recompiles, and it is the one a reader uses
+    to decide whether the shrink is worth anything.
+    """
+    import json as _json
+    import re as _re
+    compiled = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
+    if not compiled.is_file():
+        pytest.skip("no compiled run in this checkout")
+    own = [c for c in _json.loads(compiled.read_text(encoding="utf-8"))["criteria"]
+           if c.get("nct_id") == side["trial"]]
+    total, answered = len(own), len(side["criteria_used"])
+    doc = DOC.read_text(encoding="utf-8")
+    assert "## What this document does not settle" in doc, (
+        "the worklist no longer says what it left undone. That section is built "
+        "from the trial's own criterion list, and it renders as nothing at all if "
+        "the trial id stops matching, which is a silent way to lose the half a "
+        "coordinator is accountable for.")
+    assert f"This trial has **{total} criteria**" in doc, (
+        f"the document does not state the protocol size as {total}")
+
+    m = _re.search(
+        r"this\s+trial has (\d+) criteria, the document answers (\d+), and the other\s+"
+        r"(\d+)\b", ROOT.joinpath("README.md").read_text(encoding="utf-8"))
+    assert m, "the README sentence about unsettled criteria was reworded; update this"
+    assert (int(m.group(1)), int(m.group(2)), int(m.group(3))) == \
+           (total, answered, total - answered), (
+        f"README says {m.group(1)}/{m.group(2)}/{m.group(3)}, the run has "
+        f"{total}/{answered}/{total - answered}")
+    assert total > answered, (
+        "the trial has no criteria beyond the ones answered, so this test is "
+        "checking a subtraction that is always zero")

@@ -35,8 +35,7 @@ owns.** i2b2, ATLAS, TriNetX and the EHR query builders cost nothing more to run
 so on price they win and this table is beside the point. The case against them is
 in [Prior art](#prior-art) and it is not about money: a filter cannot tell you who
 it could not decide, and the patients it silently drops are the ones this project
-exists to count.
-
+exists to count. If price is what decides, buy neither; the incumbent is free.
 
 Clinical trial prescreening, built so that ruling a patient out on a fact that is
 missing from their record is a decision somebody has to make on purpose, in
@@ -54,61 +53,17 @@ of them gets a phone call.
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 46 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 53 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
-| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 142s, no key, no network. |
-| The video | [docs/video/trialsieve.mp4](docs/video/trialsieve.mp4), 4:54. Word for word in [docs/video/script.md](docs/video/script.md). |
-| Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call, failures first. |
+| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 154s, no key, no network. |
+| The video | [docs/VIDEO.md](docs/VIDEO.md) carries the link and the shot table. The file is [docs/video/trialsieve.mp4](docs/video/trialsieve.mp4), 4:55, said word for word in [docs/video/script.md](docs/video/script.md). |
+| Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call. Five named exemplars first, then the rest with the failures at the top. The four other arms are indexed the same way beside it. |
+| Traces of the agent that built it | [docs/agent-traces/](docs/agent-traces/README.md), two episodes with the human checkpoints that changed the plan. |
 | Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
 
 The main failure mode is in [How it fails](#how-it-fails) and the hot take is the
 last section. Both are at the bottom because they are the end of the argument, not
 because they are buried.
-
----
-
-## Start here: what a per-cell model does with a missing lab
-
-The criterion is from a real registered trial:
-
-> Urine albumin-to-creatinine ratio below 30 mg/mmol.
-
-In this panel, 359 of 385 patients have no UACR result at all, so a record with
-nothing to compare against is the normal case rather than an unlucky one.
-
-Ask a capable model directly, one cell at a time, giving it the criterion and the
-patient's chart. Over all 400 cells of that arm it **commits to a verdict on 272
-of them**, 68%, including cells where the record is silent. Nothing in the chart
-contradicts the threshold, so the threshold appears satisfied. The reasoning is
-fluent and the answer is confident, and on those same 400 cells it is wrong on 43.8% of every cell against
-TrialSieve's 1.0%. Counted only over the cells each one answers, that is 175 of
-272 for the baseline and 4 of 87 here.
-
-TrialSieve answers:
-
-```
-INDETERMINATE
-  no observation with code 14959-1 in the record
-```
-
-The difference is not accuracy on a hard case. It is that one of these systems
-abstains as a rule and the other abstains as an exception: the baseline is told
-to answer INDETERMINATE and shown how, and still commits on two thirds of its
-cells. A coordinator reading the
-first output has no way to tell it apart from a real result, and the patient it
-concerns is quietly dropped from consideration by a fact that was never there.
-
-That failure is silent by construction: nobody audits the people who were screened
-out, because nobody looks at them again.
-
-**The worked pair is generated, not written, and it is not cherry-picked.**
-`python scripts/counterexample.py` runs both arms on one patient and writes the
-transcript to [docs/COUNTEREXAMPLE.md](docs/COUNTEREXAMPLE.md), using the same
-baseline code path the evaluation scores. On the patient it picks, the baseline
-abstained too, and the document says so rather than hiding it. That is the point
-of publishing the rate instead of the anecdote: the failure is not that the model
-is always wrong, it is that it cannot tell you when it does not know, and two
-thirds of the time it does not tell you.
 
 ---
 
@@ -130,7 +85,16 @@ step is that the list is longer than the reading capacity, so candidates get wor
 in whatever order the list arrives in.
 
 That last sentence is this project's premise rather than one of its findings, and
-it is not measured here. No coordinator was observed and none was timed. What is
+it is not measured here. No coordinator was observed and none was timed. It is
+measured elsewhere: Ni et al., *Automated clinical trial eligibility prescreening*,
+JAMIA 22(1):166-178, 2015 ([PMC4433376](https://europepmc.org/articles/PMC4433376),
+doi:10.1136/amiajnl-2014-002887), ran automated prescreening against a
+physician-generated gold standard across 13 trials and 202,795 emergency-department
+patients and reports "the workload with automated ES was reduced by 92% on the gold
+standard set". That is a different quantity from anything in this repository, on a
+different population, and it is cited for the premise rather than as a comparison:
+it establishes that screening workload is a real and published bottleneck, not that
+92% is a bar this project clears. What is
 measured is the consequence a system can be held to: how many of the 15,400 cells
 a person is left holding, and how many of the answers they are handed are wrong in
 a way they cannot see. If the premise is wrong, the numbers in this repository are
@@ -163,6 +127,61 @@ That constraint is why the interesting number in this repository is not accuracy
 A system that removes nobody is safe and useless; a system that removes the wrong
 person has done the one harm prescreening can do. Coverage and silent error are
 reported as a pair for that reason, and neither is reported alone.
+
+---
+
+## What a per-cell model does with a missing lab
+
+The criterion is from a real registered trial:
+
+> Urine albumin-to-creatinine ratio below 30 mg/mmol.
+
+In this panel, 359 of 385 patients have no UACR result at all, so a record with
+nothing to compare against is the normal case rather than an unlucky one.
+
+Ask a capable model directly, one cell at a time, giving it the criterion and the
+patient's chart. Over all 400 cells of that arm it **commits to a verdict on 272
+of them**, 68%, including cells where the record is silent. Nothing in the chart
+contradicts the threshold, so the threshold appears satisfied. The reasoning is
+fluent and the answer is confident, and on those same 400 cells it is wrong on
+43.8% of every cell against TrialSieve's 1.0%. Counted only over the cells each
+one answers, that is 175 of 272 for the baseline and 4 of 87 here.
+
+**Read that pair with its sample size.** Those 400 cells are **10 patients**
+against 40 criteria, not 400 people. Ten is what the arm costs: $22.19 for a full
+pass, which is the number the cost section is about. The 15,400-cell grid the rest
+of this repository is scored on runs no per-cell model arm at all, so the 43.8%
+figure does not appear there and nothing in this README claims it does. The
+degenerate controls `B0` and `B1` do run on the full grid, and they are weaker
+comparisons than B2, which is said here rather than left to be noticed.
+
+TrialSieve answers:
+
+```
+INDETERMINATE
+  no observation with code 14959-1 in the record
+```
+
+The difference is not accuracy on a hard case. It is that one of these systems
+abstains as a rule and the other abstains as an exception: the baseline is told
+to answer INDETERMINATE and shown how, and still commits on two thirds of its
+cells. A coordinator reading the
+first output has no way to tell it apart from a real result, and the patient it
+concerns is quietly dropped from consideration by a fact that was never there.
+
+That failure is silent by construction: nobody audits the people who were screened
+out, because nobody looks at them again.
+
+**The worked pair is generated, not written, and it is not cherry-picked.**
+`python scripts/counterexample.py` runs both arms on one patient and writes the
+transcript to [docs/COUNTEREXAMPLE.md](docs/COUNTEREXAMPLE.md), using the same
+baseline code path the evaluation scores. On the patient it picks, the baseline
+abstained too, and the document says so rather than hiding it. That is the point
+of publishing the rate instead of the anecdote: the failure is not that the model
+is always wrong, it is that it cannot tell you when it does not know, and two
+thirds of the time it does not tell you.
+
+---
 
 ## The architecture, and why it is shaped this way
 
@@ -311,8 +330,21 @@ absence.
 ## What a coordinator gets
 
 A worklist that recommends nobody. It removes the provably ineligible with evidence,
-ranks the rest by how little is left to check, and writes every open question as a
-question addressed to a person. Sample output: `docs/sample_worklist.md`.
+ranks the rest by how little is left to check, and for each patient it cannot settle
+it names the record entry it could not find, under the criterion that entry blocks:
+`no observation with code 4548-4 in the record`, against `HbA1c 6.5-10%`. That is a
+statement about the chart, not a question addressed to anyone, and calling it a
+question would be the overclaim this repository keeps catching itself in. It ends by saying what it did **not** settle: this
+trial has 15 criteria, the document answers 3, and the other 12 are still the
+coordinator's on every patient it hands back, with the six the compiler refused
+listed and its reason beside each one.
+
+Three files, same run, same provenance header:
+[docs/sample_worklist.md](docs/sample_worklist.md) to read,
+[docs/sample_worklist.json](docs/sample_worklist.json) with the evidence behind
+every decision rather than the first 25, and
+[docs/sample_worklist.csv](docs/sample_worklist.csv), 1,155 rows of one patient per
+criterion, which is the form a screening log or a CTMS takes.
 
 The predicates behind it cannot run against anyone until a named human has read and
 signed each one:
@@ -373,7 +405,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 46 entries, each naming the evidence that found
+- **The Improvement Changelog**, 53 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.
@@ -433,6 +465,18 @@ without appearing anywhere, and nobody re-reads them. That is the same silent
 exclusion this project spends its evaluation measuring, except it happens by
 default rather than by decision.
 
+The measured prior result is Ni et al. above: 92% workload reduction against a
+physician gold standard, with mean average precision 62.9%. It is the number this
+work should be read next to and it is not the number this work reports, because the
+two are not the same quantity. That paper reduces the pool a person must screen and
+is scored on how well the retained pool matches a physician's picks. This one
+removes patients outright with a citation and is scored on how many of those
+removals a label says were wrong: 46.15% panel reduction with 18 false exclusions,
+registered as VOID, and 43.5% with none on the nine criteria that never produce
+one. A reduction figure and a reduction-with-a-zero-false-exclusion-constraint
+figure are not interchangeable, and quoting one against the other would be the
+comparison this repository spends its evaluation section refusing to make.
+
 So the difference is not the compilation step, which is well trodden. It is three
 things. Absence is a per-query decision that a human signs, rather than a property
 of the query language nobody was asked about. The patients the record cannot settle
@@ -473,6 +517,8 @@ every item is a reason the numbers above would not transfer unchanged.
 | Local vocabulary | The grounder resolves concepts against **this** corpus's codes and refuses when it cannot. A site's codes are its own, including local non-standard ones, so the grounding step is per-deployment work, and 19 of the 40 criteria put to the compiler producing predicates is a number about this vocabulary rather than about the method. |
 | Human review | Somebody qualified has to read all 19 compiled predicates before any document is produced. That is the sign-off gate, and it is the real unit cost. It is named beside the cost table at the top of this file, and it is not priced. |
 | Regulatory posture | Prescreening from records generally runs under an IRB-approved protocol with a partial waiver of authorization, and none of that has been sought here. This project has no IRB, no data-use agreement, no validation package, and it makes no claim about 21 CFR Part 11, HIPAA or GCP. It produces a document a human acts on, which is the lightest posture available, and it is still a posture somebody has to establish. |
+| Identity linkage | The worklist names patients by their Synthea UUID. A UUID is not somebody a coordinator can phone. Turning a row into a call means joining it to the site's own record number and then to a name, a chart and a treating clinician, and none of that is here: the CSV reserves an empty `site_mrn` column and nothing fills it. It is one join and it is also the step that turns a research artifact into something touching a person, so it carries the access review, the audit trail and the minimum-necessary argument that the rest of this table describes. |
+| Record recency | Each patient is screened as of their own last encounter, and in this panel those run from 2019-02-23 to 2021-11-18. Two of the three criteria on the sample worklist carry no recency window, so a patient can clear them on a years-old lab. The worklist header says so. A real deployment either sets a window per criterion or accepts that the coordinator confirms currency at the call. |
 | Liability | Nobody is enrolled or excluded by this document; the exclusions are recommendations with a dated citation each. The false-exclusion count is the number that matters and it is published rather than argued away: 18 patients at the operating point, 0 tolerated by the gate the curve is fitted to. |
 
 ### The corpus is one disease area

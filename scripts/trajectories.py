@@ -25,6 +25,63 @@ INTERESTING = ("validation_error", "retry", "critic_finding", "revision",
                "normalisation", "human_checkpoint")
 
 
+#: The five trajectories worth reading before the other two hundred, named by
+#: what each one demonstrates rather than by file. A whole-run index sorted by
+#: how eventful a file is still asks a reader to guess which kind of event they
+#: are looking at, and the interesting kinds here are different from each other:
+#: a schema rejection is the harness disciplining the model, a revision is the
+#: critic doing it, and a refusal is the design working. Selected by predicate
+#: over the run rather than written down, so a rename or a re-record cannot
+#: leave this pointing at a file that no longer demonstrates the thing.
+EXEMPLARS = [
+    ("the schema rejected the model, and it was told why",
+     "{n} of these. The model returned something the schema would not accept. "
+     "The validator's message is fed back as the next turn's input, and the "
+     "retry is the model reading it.",
+     lambda r: r["retries_schema"] > 0),
+    ("the critic asked for a revision and had to prove it first",
+     "{n} of these. The critic names a patient the predicate should get wrong, "
+     "the harness builds that chart and runs the predicate against it, and only "
+     "a finding that survives execution counts. The recompile it caused is in "
+     "that criterion's `compiler/` trajectory.",
+     lambda r: r["agent"] == "critic" and r["outcome"] == "REVISE"),
+    ("the compiler refused, and said what it could not express",
+     "{n} of these. A criterion that cannot be written as a checkable predicate "
+     "is left to a human with a reason attached, which is the whole argument of "
+     "the project arriving in one file.",
+     lambda r: r["outcome"].startswith("refused")),
+    ("the grounder could not map the concept, and stopped rather than guessing",
+     "{n} of these. A near miss on a drug class is indistinguishable from a hit "
+     "right up until it clears a patient, so an unmappable concept ends the step "
+     "instead of returning the closest code.",
+     lambda r: r["outcome"] == "unmappable"),
+    ("a trial's free text cut into numbered criteria",
+     "The first step, and the one every later number depends on. Its output is "
+     "the identifier a gold label stays attached to.",
+     lambda r: r["agent"] == "segmenter"),
+    ("the baseline, recorded to the same standard",
+     "The arm this project is measured against, logged the same way, so the "
+     "comparison cannot be won by a weaker implementation on the other side.",
+     lambda r: r["agent"].startswith("baseline")),
+]
+
+
+def _exemplars(rows: list[dict]) -> list[tuple[str, str, dict]]:
+    """The best instance of each kind, at most one apiece, none repeated."""
+    picked: list[tuple[str, str, dict]] = []
+    seen: set[str] = set()
+    for title, why, matches in EXEMPLARS:
+        hits = [r for r in rows if matches(r)]
+        best = next((r for r in hits if r["md"] not in seen), None)
+        if best:
+            seen.add(best["md"])
+            # The count is filled from the run, not typed. "Sixty-three of these"
+            # was written when there were sixty-three, and a re-record is exactly
+            # the event that would leave it saying so when there are not.
+            picked.append((title, why.format(n=len(hits)), best))
+    return picked
+
+
 def stats(events: list[dict]) -> dict:
     kinds: dict[str, int] = {}
     tools: dict[str, int] = {}
@@ -270,37 +327,68 @@ def main() -> int:
             L.append(f"| `{k}` | {v} | {WHAT.get(k, '')} |")
         L.append("")
 
-    L.append("## Which agent is where, and the two that have no trajectory")
-    L.append("")
-    L.append("Six agents. Four of them make model calls and appear below. Two do not, "
-             "and their absence is the design rather than a gap:")
-    L.append("")
-    L.append("| agent | where its trajectory is |")
-    L.append("|---|---|")
-    L.append("| `segmenter` | `segmenter/`, one per trial. Recorded by "
-             "`evaluation/segmentation.py`, because the scored pipeline uses the "
-             "hand-authored criterion set so a gold label can stay attached to a "
-             "stable identifier. |")
-    L.append("| `grounder` | inside each `compiler/` trajectory, as its `tool_call` "
-             "to the terminology search and the model calls either side of it. It is "
-             "a step of compiling one criterion, not a separate run, and splitting it "
-             "out would break the thread a reader is following. |")
-    L.append("| `compiler` | `compiler/`, one per criterion per seed. |")
-    L.append("| `critic` | `critic/`, one per compiled criterion. |")
-    L.append("| `adjudicator` | **none, and this is the whole bet.** It makes zero "
-             "model calls. It is a pure function of predicate, chart and unit policy, "
-             "so there is no trajectory to record: run it twice and it returns the "
-             "same bytes. Its behaviour is in `tests/`, not in a log. |")
-    L.append("| `worklist` | **none.** It renders a document and refuses to render it "
-             "without a signature. The signature is a `human_checkpoint` event, and it "
-             "lives in the compiler trajectory of the predicate that was signed. |")
-    L.append("")
-    L.append("The baselines and the second labeller are recorded the same way and to "
-             "the same standard, under `baseline-b2/` here and under "
-             "`runs/checker_b/trajectories/checker_b/`, so an arm this "
-             "project is measured against cannot be a weaker implementation than the "
-             "one it is compared to.")
-    L.append("")
+    # Only where it is true. This block names `segmenter/`, `compiler/` and
+    # `critic/` directories and explains why two agents have no log at all. The
+    # second labeller and the vocabulary probes hold none of those, so printing
+    # it there described a layout the reader could not find, on the same page as
+    # a table listing the one agent that actually ran.
+    scored = any(r["agent"] == "compiler" for r in rows)
+    if not scored:
+        L.append("This is one arm of the evaluation rather than the scored pipeline. "
+                 "Its agent is `" + "`, `".join(sorted({r["agent"] for r in rows}))
+                 + "`, and the scored run's index, which explains where each of the "
+                 "six agents keeps its log, is at "
+                 "[runs/tierA/trajectories/index.md](../../tierA/trajectories/index.md). "
+                 "What the arms are and what each one is compared against is in "
+                 "[results/RESULTS.md](../../../results/RESULTS.md).")
+        L.append("")
+
+    if scored:
+        L.append("## Which agent is where, and the two that have no trajectory")
+        L.append("")
+        L.append("Six agents. Four of them make model calls and appear below. Two do not, "
+                 "and their absence is the design rather than a gap:")
+        L.append("")
+        L.append("| agent | where its trajectory is |")
+        L.append("|---|---|")
+        L.append("| `segmenter` | `segmenter/`, one per trial. Recorded by "
+                 "`evaluation/segmentation.py`, because the scored pipeline uses the "
+                 "hand-authored criterion set so a gold label can stay attached to a "
+                 "stable identifier. |")
+        L.append("| `grounder` | inside each `compiler/` trajectory, as its `tool_call` "
+                 "to the terminology search and the model calls either side of it. It is "
+                 "a step of compiling one criterion, not a separate run, and splitting it "
+                 "out would break the thread a reader is following. |")
+        L.append("| `compiler` | `compiler/`, one per criterion per seed. |")
+        L.append("| `critic` | `critic/`, one per compiled criterion. |")
+        L.append("| `adjudicator` | **none, and this is the whole bet.** It makes zero "
+                 "model calls. It is a pure function of predicate, chart and unit policy, "
+                 "so there is no trajectory to record: run it twice and it returns the "
+                 "same bytes. Its behaviour is in `tests/`, not in a log. |")
+        L.append("| `worklist` | **none.** It renders a document and refuses to render it "
+                 "without a signature. The signature is a `human_checkpoint` event, and it "
+                 "lives in the compiler trajectory of the predicate that was signed. |")
+        L.append("")
+        L.append("The baselines and the second labeller are recorded the same way and to "
+                 "the same standard, under `baseline-b2/` here and under "
+                 "[runs/checker_b/trajectories/index.md](../../checker_b/trajectories/index.md), "
+                 "so an arm this project is measured against cannot be a weaker "
+                 "implementation than the one it is compared to. The three vocabulary "
+                 "probes are indexed the same way, under "
+                 "[probe-weak](../../probe-weak/trajectories/index.md), "
+                 "[probe-before](../../probe-before/trajectories/index.md) and "
+                 "[probe-after](../../probe-after/trajectories/index.md).")
+        L.append("")
+
+    picked = _exemplars(rows)
+    if picked:
+        L.append("## Read this one first" if len(picked) == 1
+                 else f"## If you read {len(picked)}, read these")
+        L.append("")
+        for title, why, r in picked:
+            L.append(f"1. **[{title}]({r['md']})** ({r['agent']}, `{r['subject']}`). {why}")
+        L.append("")
+
     L.append("Sorted so the trajectories that went wrong come first. Those are the ones "
              "worth reading: they show what the agent was told about its own output and "
              "what it did next.")

@@ -2,7 +2,9 @@
 
 **DiEtary Sodium Intake Effects on Ertugliflozin-induced Changes in GFR, reNal Oxygenation and Systemic Hemodynamics: the DESIGN Study, a Randomized, Placebo-controlled, Cross-over Study With Ertugliflozin in People With Type 2 Diabetes**
 
-Panel of 385 patients screened on 2026-08-30.
+Panel of 385 patients, screened on 2026-08-30.
+
+**Each patient is screened as of their own last encounter, not as of today.** In this panel those dates run from 2019-02-23 to 2021-11-18. Ages and lab values below are as of that patient's date. Where a criterion carries no recency window, an old result satisfies it, so a patient under *Ready to contact* may be resting on a years-old value that a coordinator has to confirm before the call.
 
 **NOT FOR USE.** No human has reviewed the compiled criteria behind this document. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
 
@@ -15,6 +17,8 @@ Panel of 385 patients screened on 2026-08-30.
 | All checkable criteria met | 8     | 2%    |
 
 The coordinator's list is 198 patients rather than 385.
+
+Two files sit beside this one and carry every patient, not the first 25 of each group: a `.json` with the evidence behind each decision, and a `.csv` of one row per patient per criterion, which is the form a screening log or a CTMS takes. Both carry the same trial, date and run as the heading above.
 
 ## Operating point: 0 tolerated false exclusions
 
@@ -44,6 +48,29 @@ Two things a reader should hold against this. The subset was chosen by counting 
 | `83f922a9` | 57  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 7 % (2020-12-12)    | Age at index date = 57 (2021-09-10) | Body Mass Index = 28.01 kg/m2 (2020-12-12) |
 | `aade3c61` | 35  | male   | Hemoglobin A1c/Hemoglobin.total in Blood = 6.6 % (2020-04-01)  | Age at index date = 35 (2021-05-19) | Body Mass Index = 26.03 kg/m2 (2020-04-01) |
 | `d362f4e5` | 47  | female | Hemoglobin A1c/Hemoglobin.total in Blood = 7.49 % (2021-09-10) | Age at index date = 47 (2021-09-10) | Body Mass Index = 29.99 kg/m2 (2021-09-10) |
+
+## What this document does not settle
+
+This trial has **15 criteria**. This document answers **3** of them. The remaining **12** are unchanged by running it, and every one of the 198 patients above still needs them checked by a person.
+
+|                       | count | why, and what it means for you                                                                                                                                    |
+|-----------------------|-------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Answered here         | 3     | Compiled into a checkable predicate and run against every chart in the panel.                                                                                     |
+| Compiled, not applied | 6     | Compiled successfully and held back by the operating point above, because applying them wrongly removes patients on this panel. Reviewable in `runs/*/compiled/`. |
+| Not compiled          | 6     | The compiler declined to express them and said why. They were never going to be automated by this system and are listed below so they are not forgotten.          |
+
+The ones the compiler refused, with its reason:
+
+| criterion            | text                                                         | why it was left to you                                                                                                   |
+|----------------------|--------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `NCT06983054-INC-05` | Both sexes (females must be post-menopausal; no menses >1... | Menstrual history (no menses for >1 year) is not tracked in structured coded medical records, and resolving postmenopaus |
+| `NCT06983054-INC-06` | Ability to provide signed and dated, written informed...     | Evaluating a participant's ability or willingness to provide informed consent requires assessing consent and capacity, w |
+| `NCT06983054-INC-08` | Sodium intake at baseline < 200 mmol/day                     | Dietary sodium intake is a lifestyle and nutritional assessment that is not routinely captured in structured medical rec |
+| `NCT06983054-INC-10` | All participants need to be on a stable dose of diabetes...  | cannot be represented in this site's vocabulary. Sulfonylurea: no entry in this site's medication vocabulary matches any |
+| `NCT06983054-EXC-03` | Current/chronic use of the following medication: SGLT2...    | cannot be represented in this site's vocabulary. SGLT2 inhibitor: no entry in this site's medication vocabulary matches  |
+| `NCT06983054-EXC-04` | History of diabetic ketoacidosis (DKA) requiring medical...  | cannot be represented in this site's vocabulary. Diabetic ketoacidosis: the vocabulary returned candidates but none of t |
+
+The shrink this document reports is a shrink in the panel, not in the protocol. It is the difference between reading 385 charts against 3 questions and reading 198 charts against 12.
 
 ## Ruled out
 

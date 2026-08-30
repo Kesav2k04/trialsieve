@@ -34,6 +34,7 @@ $ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsign
  "reduction": 0.4857
 }
 wrote docs\sample_worklist.md
+wrote docs\sample_worklist.csv
 WARNING, running unsigned: 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
 0
 ```

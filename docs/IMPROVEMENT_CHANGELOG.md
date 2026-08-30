@@ -15,7 +15,7 @@ and it turns out to apply to the project itself.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Forty-five entries is
+iteration, each with its evidence and what it decided. Fifty-three entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -2637,3 +2637,399 @@ probe and pass every real case forever.
 | ways a missing published file reports IDENTICAL | 1 | **0** |
 | gates on the gold-independence claim | 0 | **1**, with a two-hop control |
 | tests collected | 342 | **346** |
+
+## 47. The arm this project is measured against shipped as raw JSONL
+
+**Found by** an independent reviewer walking the deliverables in the order a judge
+would, opening every directory the documents point at.
+
+**What was wrong.** `runs/tierA/trajectories/` held 235 rendered pages and an
+index sorted so the eventful files come first. The index closes by saying the
+baselines and the second labeller "are recorded the same way and to the same
+standard", and links to `runs/checker_b/trajectories/checker_b/`.
+
+That directory held 180 `.jsonl` files and nothing else. The three vocabulary
+probes held 63 more. So 243 of the 478 committed trajectory logs, every one of
+them belonging to an arm this project is compared against or a probe it cites as
+evidence, arrived with no rendered page and no index. Recorded to the same
+standard, published to a worse one: readable only by somebody willing to parse a
+log by hand, on exactly the side of the comparison a sceptical reader goes to
+first.
+
+The same reviewer named a second thing about the one index that did exist. It
+opens with 235 rows sorted by an interest score, which tells a reader which files
+are eventful and not what kind of event is in them. The three things worth seeing
+here are different from each other: a schema rejection is the harness disciplining
+the model, a revision is the critic doing it, and a refusal is the design working.
+Sorting cannot say that.
+
+**And a third, which was mine and arrived while fixing the first.** Generating the
+four missing indexes printed the scored run's "Which agent is where" table into
+all of them. That table names `segmenter/`, `compiler/` and `critic/`
+directories. In the second labeller's run none of those exist, so the index told a
+reader to look in three places that were not there, on the same page as a table
+listing the one agent that had actually run. A generated block is only true where
+the thing it describes is.
+
+**What changed.**
+
+`run.py reproduce` renders every run git tracks, not the scored one. The set comes
+from `git ls-files` rather than a list in the source, because a list is a second
+place a run has to be registered and the one that gets forgotten is the one nobody
+is watching. Where there is no git, an unpacked source archive holds only tracked
+files anyway, so the directory walk answers the same question.
+
+Each index now opens with named exemplars: the schema rejection, the critic
+revision that had to survive execution, the refusal, the unmappable concept, the
+segmentation, the baseline call. They are chosen by predicate over the run at
+generation time, so a re-record cannot leave one pointing at a file that no longer
+demonstrates it, and the counts inside their descriptions are filled from the run
+rather than typed. The first draft said "Sixty-three of these" and was right on the
+afternoon it was written.
+
+The six-agent layout prints only on the run that has those directories. The others
+say what they are in one sentence and link to the scored index.
+
+`scripts/linkcheck.py` reads the indexes now. The links between them are relative
+paths written in `scripts/trajectories.py`, which is the class of reference that
+rots when a run is renamed, and it was the only class of link in the repository
+that nothing checked.
+
+`tests/test_every_run_is_rendered.py` re-renders each run into a scratch directory
+and byte-compares, because a page that predates its log is the failure a presence
+check waves through. Its own guard is that it refuses to pass on fewer than five
+runs: a resolver that quietly returned one would have passed every assertion in it
+while leaving four unrendered, which is the defect it was written for.
+
+| | before | now |
+|---|---|---|
+| committed trajectory logs with a rendered page | 235 of 478 | **478 of 478** |
+| run directories with an index | 1 of 5 | **5 of 5** |
+| indexes naming what to read first | 0 | **5** |
+| indexes describing directories they do not have | 4 | **0** |
+| path references linkcheck checks | 269 across 18 documents | **768 across 24** |
+| tests collected | 355 | **359** |
+
+**Evidence.** `python run.py reproduce` regenerates all five. `python -m pytest -q
+tests/test_every_run_is_rendered.py` is the gate; append a line to any rendered
+page and it fails naming that file, which is how the freshness half was checked
+rather than assumed.
+
+## 48. The document reported what it did and left the rest to be inferred
+
+**Found by** an independent reviewer scoring the thing on whether a trial site
+could use it, rather than on whether it was correct.
+
+**What was wrong, in three places.**
+
+**The worklist stated its own scope by omission.** `docs/sample_worklist.md` says
+it runs 3 of the trial's compiled criteria and names them. It never said the trial
+has **15**. A coordinator handed 198 patients still to work could read the whole
+document and not learn that the three questions on it are three of fifteen, that
+six more compiled and were held back by the operating point, that six were refused
+by the compiler outright, and that all twelve are still theirs on every one of
+those 198 people. Everything on the page was true. The complement was the half
+they are accountable for, and it was not on the page at all.
+
+**There was no copy a site could act on.** Markdown is for reading and JSON is for
+the tests. A screening log, a CTMS, and every process this project was described
+to takes a spreadsheet, and there was not one. The document told a reader to go to
+"the machine-readable output" for the 167 exclusions it does not list, which is a
+phrase rather than a filename and a JSON array rather than something a coordinator
+can hand to a colleague.
+
+**The premise had no source.** The README says the bottleneck is that the list is
+longer than the reading capacity, then says plainly that this is the project's
+premise rather than one of its findings and that no coordinator was observed or
+timed. Honest, and it left the central claim resting on nothing a reader could
+check.
+
+**What changed.**
+
+`## What this document does not settle` is generated from the trial's own criterion
+list before any filtering, so a filter that drops a criterion cannot also drop the
+sentence saying it was dropped. It gives the count three ways and then lists the
+six the compiler refused with the reason it gave, because those were never going to
+be automated and are the ones most easily forgotten. It closes on the honest form
+of the claim: the shrink is in the panel, not in the protocol, and it is the
+difference between reading 385 charts against 3 questions and reading 198 against
+12.
+
+A `.csv` is written beside the markdown and the JSON: **1,155 rows**, one per
+patient per criterion, in the same order as the document, with the trial, the date,
+the run and the `not_for_use` mark in the header. That last one because
+[entry 46](#46-the-gate-required-the-artifact-that-the-run-it-gates-produces)'s
+lesson applies to a third copy as much as a second: a detached spreadsheet is the
+copy most likely to be read on its own, so it is the copy that most needs to say it
+was produced with the sign-off gate overridden.
+
+The premise now carries the published measurement. Ni et al., *Automated clinical
+trial eligibility prescreening*, JAMIA 22(1):166-178, 2015, ran automated
+prescreening across 13 trials and 202,795 emergency-department patients and reports
+92% workload reduction against a physician-generated gold standard. It is cited for
+the premise and explicitly not as a comparison: their number is a pool reduction
+scored on agreement with a physician's picks, and this project's is an outright
+removal scored on how many of those removals a label calls wrong. Quoting one
+against the other is the comparison the evaluation section spends its length
+refusing to make. The abstract was read from Europe PMC's record rather than from a
+summary of it, because a fetch that summarises is a fetch that can return a
+plausible sentence the page does not contain.
+
+| | before | now |
+|---|---|---|
+| criteria the document accounts for | 3 of 15, stated | **15 of 15**, three ways |
+| refused criteria named with the compiler's reason | 0 | **6** |
+| formats a trial site can open | 2, neither a spreadsheet | **3** |
+| rows in the machine-actionable copy | 0 | **1,155**, one per cell |
+| copies carrying the unsigned override mark | 2 of 2 | **3 of 3** |
+| sources under the bottleneck claim | 0 | **1**, quoted and bounded |
+| tests collected | 359 | **362** |
+
+**Evidence.** `python scripts/gate_demo.py --run runs/tierA` regenerates all three.
+`tests/test_worklist_sidecar_is_complete.py` now checks the sheet against the JSON
+on who was ruled out, on the cell count, and on the override mark, so the third
+copy cannot drift from the two it was derived from.
+
+## 49. The pages were rendered, and a judge would have got none of them
+
+**Found by** an independent reviewer who checked `git ls-files` rather than the
+directory listing, on a repository that had not been pushed yet.
+
+**What was wrong.** [Entry 47](#47-the-arm-this-project-is-measured-against-shipped-as-raw-jsonl)
+says 478 of 478 trajectory logs now have a rendered page and five run directories
+have an index. That was true of this disk. `git ls-files` returned **0** of the 247
+new files. `README.md` and `SUBMISSION.md` had been given links to four of the five
+indexes, and all four 404 from the clean clone `REPRODUCE.md` tells a judge to make.
+The state entry 47 described as fixed was the state a reader would still have found.
+
+**And the gate that exists to catch that could not see it.** `scripts/linkcheck.py`
+reads its document list from `git ls-files` and then resolved every target with
+`Path.exists()` against the working tree. It printed *every path a document points
+at exists* across 771 references while four of them pointed at files git did not
+have. One half of it knew the difference between the repository and this disk and
+the other half did not.
+
+**A third thing, in the file described as the one a site can use.** The CSV from
+[entry 48](#48-the-document-reported-what-it-did-and-left-the-rest-to-be-inferred)
+opened with a two-row provenance block and a blank line before the real header, so
+`csv.DictReader` bound `patient_id` to a column called `trial`, `age` to
+`generated`, and spilled the evidence into a `None` key. The one artifact whose
+whole justification is that a screening log can import it was the one artifact that
+could not be imported. It was checked by reading rows positionally, which is the
+one way of reading a CSV that cannot notice.
+
+**What changed.** The 247 files are tracked. `linkcheck.py` resolves against the
+tracked set and says which kind of failure it found: absent everywhere, or present
+here and absent from git so a clone 404s. It scans only tracked documents, because
+a local scratch run leaves an index this repository does not ship and reporting its
+links reads as a defect of this one. Four directory exemptions went with the change:
+they existed because the old resolver could not see directories, and an exemption
+that outlives its reason is a hole nobody is watching.
+
+The CSV has one header row and carries its provenance on every line, which is what a
+row pasted somewhere on its own needs. It gained `index_date` and an empty
+`site_mrn`. The tests read it with `DictReader`.
+
+| | before | now |
+|---|---|---|
+| rendered pages a clone receives | 0 of 478 | **478 of 478** |
+| indexes a clone receives | 1 of 5 | **5 of 5** |
+| document links that 404 from a clone | 4 | **0** |
+| linkcheck target resolution | this disk | **what git tracks** |
+| directory exemptions in linkcheck | 4 | **0** |
+| columns `csv.DictReader` binds correctly | 0 of 8 | **16 of 16** |
+
+**Evidence.** `python scripts/linkcheck.py` names the three run outputs that are
+generated and gitignored, and passes only once they are exempted by name rather
+than by directory. `python -m pytest -q tests/test_worklist_sidecar_is_complete.py`
+reads the sheet the way an import does.
+
+## 50. Two gates failed on a reader doing exactly what the guide said
+
+**Found by** a review agent following `REPRODUCE.md` literally, which meant running
+the B2 baseline under a tag of its own choosing rather than the one in the example.
+
+**What was wrong.** Two tests went red, on a clean tree, because of that.
+
+`tests/test_replay_is_sealed.py` walks every `meta_B2_*.json` on disk and requires a
+cassette behind each. `REPRODUCE.md` line 124 shows the command with `--tag b2_10p`.
+A reader who follows the pattern under their own tag leaves a meta nothing backs,
+and the suite tells them this repository is broken. It is not; the guide is working.
+
+`tests/test_every_run_is_rendered.py`, added in entry 47 and eleven minutes old at
+the time, had the same shape: it re-rendered each run and byte-compared every page,
+so any scratch log a reader added made the index differ, correctly, and failed.
+
+**What changed.** The seal check runs on the arms `results/results.json` names and
+prints the tags it did not check. The freshness check compares the pages behind
+committed logs, and the index, which counts the whole directory, is compared only
+where the directory holds nothing untracked, printing what it skipped and refusing
+to pass if every run was skipped. Neither says nothing; both say what they left out.
+
+| | before | now |
+|---|---|---|
+| tests that fail on a reader's own correct action | 2 | **0** |
+| of those, that say what they skipped instead | 0 | **2** |
+
+**Evidence.** `python scripts/run_arms.py --run runs/tierA --mode replay --arms B2
+--patients 10 --tag anything --model gemini-3.7-flash-medium`, then `python -m
+pytest -q`. Before: two failures. Now: `not seal-checked, no published result names
+them: ['anything']`, and the suite is green.
+
+## 51. Six numbers in prose that nothing tied to the run
+
+**Found by** an independent engineering review, which counted the gates binding
+prose to `results/results.json` and found three, each written after the one number
+it covers had already drifted.
+
+**What was wrong.** The cost table, the changelog's own size and the sensitivity
+section were checked. Everything else was on trust: 21.75%, 19.15% against 18.44%,
+29.2%, 43.8%, the 46.15% panel reduction and the 18 false exclusions behind its
+VOID. Every one of them is a headline, every one is a second copy of a figure that
+lives in the run, and this changelog's longest recurring theme is that a number
+appearing twice disagrees with itself eventually.
+
+**A second thing about one of those figures.** The 43.8% against 1.0% comparison
+that opens the counterexample section is measured on 400 cells, and the README said
+so. 400 cells is **10 patients** against 40 criteria. Ten is what the arm costs, and
+the full 15,400-cell grid runs no per-cell model arm at all, so the strongest number
+in this repository rests on the smallest sample in it and the sentence carrying it
+gave the cell count rather than the patient count.
+
+**A third, at the top of the file.** The cost table leads with $22.19 against $0.13
+and the Prior art section, four hundred lines later, says the real comparator is the
+cohort tool the site already owns and that it costs nothing more to run. Both are
+true. Leading with cost against an arm nobody deploys, while the section naming the
+actual incumbent concedes cost outright, is an argument that only works if a reader
+stops before reaching the concession.
+
+**And a fourth, in two generated documents.** `scripts/report.py` wrote "358 of the
+424 wrong exclusions **above**" into `results/RESULTS.md`, which carries neither
+figure anywhere. `scripts/grounding_audit.py` printed the same pair. They are real
+and they are entry 29's, measured on the first published run, which is not the run
+either document describes.
+
+**What changed.**
+
+`tests/test_headline_figures_match_the_run.py` is a register: each claim names the
+sentence it lives in, the path in `results.json` that produces it, and how it is
+rendered. A claim whose sentence stops matching **fails**, because a reworded
+sentence is how a checked number becomes an unchecked one, and it caught exactly
+that within the hour when a paragraph was rewrapped across a line. Its control
+moves one figure in a copy of the run and requires the register to reject it, since
+every other assertion in the file is satisfied by a lookup that ignores its input.
+
+The counterexample section now states the sample size and that no per-cell arm runs
+on the full grid. The cost table now says what it is not an argument against, in the
+same screen as the table: on price the incumbent beats both columns, the case is
+about abstention, and if price decides then buy neither. The two historical counts
+now name entry 29 as where they were measured and say they are not in the document
+they appear in.
+
+Three sections of `docs/EVAL_PROTOCOL.md` are frozen and checked. The protocol has
+been amended nine times, each amendment logged with its reason, which is the honest
+way to do it and is also the shape a moved goalpost takes. What is being claimed,
+the decision rule and what would falsify the thesis are compared byte for byte
+against the commit that added the file, and the registration ordering is checked
+from the commit timestamps rather than from the sentence asserting it.
+
+| | before | now |
+|---|---|---|
+| headline figures bound to the run | 3 | **12** |
+| documents claiming a figure that is not in them | 2 | **0** |
+| protocol sections a result could be edited to pass | 3, unchecked | **0**, frozen |
+| sample size stated at the strongest comparison | no | **yes, 10 patients** |
+
+**Evidence.** `python -m pytest -q tests/test_headline_figures_match_the_run.py
+tests/test_protocol_outcome_sections_are_frozen.py`. Change 46.15% to 46.2% in the
+README and the register names the file, the claim and both values.
+
+## 52. Two checks that reported a pass without running
+
+**Found by** an independent engineering review reading commit `0019b90`, which
+converted three files from a bare `return` to `pytest.skip` and stopped there.
+
+**What was wrong.** `tests/test_coverage_numerator.py` and
+`tests/test_not_compilable.py` still held six of them. Each guards on
+`runs/tierA/cells/` or `runs/tierA/compiled/`, both excluded by `.gitignore`, so on
+every clone of this repository they returned before asserting anything and were
+counted among the passes. On any machine that had run the pipeline they were green
+for the other reason. There was no state in which they were informative and visibly
+so. A seventh sat in `tests/test_critic_probe.py`.
+
+**And one gate under `verify.py` had no positive control.** The other four each
+carry one: `prove-replay` changes a prompt by one space and requires a
+`CassetteMiss`, `prove-sensitivity` flips a comparison and requires verdicts to
+move. `verify.py blind` searched 181 recorded prompts for predicate vocabulary,
+predicate digests and gold answer lines, found none, and printed PASS. Nothing had
+ever seen that search succeed. It reports an `empty_term_sets` outcome, which
+catches a term set that came back empty and catches nothing about a full set
+scanned wrongly.
+
+**What changed.** All seven are `pytest.skip` with the reason. Converting them again
+is not the fix, so `tests/test_no_test_skips_by_returning.py` walks the suite's own
+syntax tree and fails on any bare `return` inside a `test_` function, with a control
+that plants one and requires the walk to find it.
+
+`verify.py blind` now runs a probe first: it copies one real cassette into a
+temporary directory, splices a compiled predicate's digest and a line of IR
+vocabulary into the request, and requires the scan to report both. It refuses to
+print PASS otherwise. The first version of the probe planted the IR term inside a
+JSON string, where `json.dumps` escapes the quotes to `\"absent_means\"`, and it
+reported that the gate had missed a leak the gate was right to miss. A control that
+fails for its own reasons is worse than none, so the term now goes in as a key.
+
+| | before | now |
+|---|---|---|
+| tests that report PASSED without checking anything | 7 | **0** |
+| of those, vacuous on any clone | 6 | 0 |
+| `verify.py` gates with a positive control | 4 of 5 | **5 of 5** |
+| gates on the bare-return shape itself | 0 | **1**, with a planted control |
+
+**Evidence.** `python scripts/verify.py blind --run runs/tierA` prints `probe:
+planted one contaminated prompt, the scan reported ['predicate digest', 'predicate
+vocabulary']` before the PASS line, and exits 1 if it does not.
+
+## 53. Four shipped scripts opened by naming the drive they were written on
+
+**Found by** running the film build on the path a reader would, rather than by
+reading it.
+
+**What was wrong.** `film/scripts/capture.py`, `check_grid.py`, `extract.py` and
+`narrate.py` each opened with `REPO = Path(r"D:\trialsieve")`. A clone anywhere else
+cannot build the film, and the constant publishes the author's directory layout in
+four committed files. Two lines in `narrate.py` were worse: they named a directory
+belonging to an **entirely different project** on the same disk, once for the voice
+reference and once for the interpreter carrying the TTS package. So a public
+repository shipped the folder structure of unrelated work as a default argument.
+
+`tests/test_generated_files_name_no_machine.py` already existed and passes. It
+covers files a script *writes*. Nothing covered the scripts.
+
+**What changed.** All four derive the repository from `__file__`. The voice
+directory and the TTS interpreter come from `TRIALSIEVE_VOICE_DIR` and
+`TRIALSIEVE_TTS_PYTHON`, documented in `film/README.md`, defaulting to `film/voice/`
+and `sys.executable` so a clone fails by not finding a file rather than by naming
+somebody's disk.
+
+`tests/test_source_names_no_machine.py` walks every tracked script under `scripts/`,
+`src/`, `evaluation/`, `film/scripts/` and `run.py`, and fails on any absolute path
+literal. It reads with `ast` rather than grepping the text, so a path inside a
+comment explaining this rule is not itself a violation, and its control plants one
+of each and requires exactly the assignment to be flagged. `tests/` is out of scope
+on purpose: a test that checks how a path is redacted has to contain a path to
+redact, and the version that scanned itself flagged its own fixture.
+
+The one exemption is a string containing `...`, which is the redaction table's
+replacement in `capture.py`. An elided path is the sanitiser working, not a machine
+name shipping.
+
+| | before | now |
+|---|---|---|
+| shipped scripts that run only on one machine | 4 | **0** |
+| defaults naming an unrelated project | 2 | **0** |
+| gates on absolute paths in source | 0 | **1**, with a control |
+
+**Evidence.** `python -m pytest -q tests/test_source_names_no_machine.py`. Put
+`P = "C:/anything"` in `scripts/report.py` and it names the file, the line and the
+literal.

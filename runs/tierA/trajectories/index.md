@@ -37,7 +37,15 @@ Six agents. Four of them make model calls and appear below. Two do not, and thei
 | `adjudicator` | **none, and this is the whole bet.** It makes zero model calls. It is a pure function of predicate, chart and unit policy, so there is no trajectory to record: run it twice and it returns the same bytes. Its behaviour is in `tests/`, not in a log. |
 | `worklist` | **none.** It renders a document and refuses to render it without a signature. The signature is a `human_checkpoint` event, and it lives in the compiler trajectory of the predicate that was signed. |
 
-The baselines and the second labeller are recorded the same way and to the same standard, under `baseline-b2/` here and under `runs/checker_b/trajectories/checker_b/`, so an arm this project is measured against cannot be a weaker implementation than the one it is compared to.
+The baselines and the second labeller are recorded the same way and to the same standard, under `baseline-b2/` here and under [runs/checker_b/trajectories/index.md](../../checker_b/trajectories/index.md), so an arm this project is measured against cannot be a weaker implementation than the one it is compared to. The three vocabulary probes are indexed the same way, under [probe-weak](../../probe-weak/trajectories/index.md), [probe-before](../../probe-before/trajectories/index.md) and [probe-after](../../probe-after/trajectories/index.md).
+
+## If you read 5, read these
+
+1. **[the schema rejected the model, and it was told why](compiler/NCT06717698-EXC-01-seed7.md)** (compiler, `NCT06717698-EXC-01-seed7`). 3 of these. The model returned something the schema would not accept. The validator's message is fed back as the next turn's input, and the retry is the model reading it.
+1. **[the critic asked for a revision and had to prove it first](critic/NCT06717698-INC-07-seed7.md)** (critic, `NCT06717698-INC-07-seed7`). 5 of these. The critic names a patient the predicate should get wrong, the harness builds that chart and runs the predicate against it, and only a finding that survives execution counts. The recompile it caused is in that criterion's `compiler/` trajectory.
+1. **[the compiler refused, and said what it could not express](compiler/NCT06717698-EXC-01-seed9.md)** (compiler, `NCT06717698-EXC-01-seed9`). 66 of these. A criterion that cannot be written as a checkable predicate is left to a human with a reason attached, which is the whole argument of the project arriving in one file.
+1. **[a trial's free text cut into numbered criteria](segmenter/NCT06989723.md)** (segmenter, `NCT06989723`). The first step, and the one every later number depends on. Its output is the identifier a gold label stays attached to.
+1. **[the baseline, recorded to the same standard](baseline-b2/0bbf4179-b2_10p.md)** (baseline-b2, `0bbf4179-b2_10p`). The arm this project is measured against, logged the same way, so the comparison cannot be won by a weaker implementation on the other side.
 
 Sorted so the trajectories that went wrong come first. Those are the ones worth reading: they show what the agent was told about its own output and what it did next.
 

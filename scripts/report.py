@@ -740,8 +740,13 @@ def main() -> int:
                       f"turns an UNKNOWN into a MEETS. So on this concept the "
                       f"schema rejects the careful answer and accepts the "
                       f"dangerous one. 44054006 is the code behind those two "
-                      f"promotions and behind 358 of the 424 wrong exclusions "
-                      f"above: one coarse code, three failures, one root cause.")
+                      f"promotions, and it is the same code that produced 358 of "
+                      f"the 424 wrong exclusions in the first published run. "
+                      f"That pair is a record of a run this one is not: those "
+                      f"numbers are not above and they are not in this document, "
+                      f"they are entry 29 of `docs/IMPROVEMENT_CHANGELOG.md`, "
+                      f"which is where the measurement lives. One coarse code, "
+                      f"three failures, one root cause.")
             md.append("")
             md.append(f"The criterion reads *{text}*, and insulin is in this "
                       f"vocabulary, so this is not a concept the corpus cannot "

@@ -44,6 +44,7 @@ GENERATED = [
     "docs/SCORECARD.md",
     "docs/sample_worklist.md",
     "docs/sample_worklist.json",
+    "docs/sample_worklist.csv",
     "runs/*/trajectories/index.md",
     "film/src/data.json",
     "film/src/timings.json",

@@ -178,6 +178,28 @@ def _recorded_model(run: str, arm: str, tag: str) -> str | None:
     return None
 
 
+def _runs_with_trajectories(first: str) -> list[str]:
+    """Every run directory whose trajectory logs ship, the scored one first.
+
+    Discovered rather than listed, because a list is a second place a run has to
+    be registered and the one that gets forgotten is the one nobody is watching.
+    Scoped to what is committed: this machine also holds development and smoke
+    runs that `.gitignore` keeps out, and rendering those would leave a reader's
+    checkout with pages that are not in anybody else's. Asked of git, and if
+    there is no git here (an unpacked source archive holds only tracked files
+    anyway) the directory walk answers the same question.
+    """
+    tracked = subprocess.run(
+        ["git", "ls-files", "--", "runs/*/trajectories/*.jsonl"],
+        cwd=ROOT, capture_output=True, text=True)
+    if tracked.returncode == 0 and tracked.stdout.strip():
+        names = {line.split("/")[1] for line in tracked.stdout.split()}
+    else:
+        names = {d.name for d in (ROOT / "runs").iterdir()
+                 if any((d / "trajectories").rglob("*.jsonl"))}
+    return [first] + sorted(f"runs/{n}" for n in names if f"runs/{n}" != first)
+
+
 def t_verify(run: str = RUN) -> None:
     banner("verification")
     sh(PY, "scripts/verify.py", "all", "--run", run)
@@ -257,7 +279,13 @@ def t_reproduce(run: str = RUN) -> None:
     banner("regenerate the documents that quote numbers")
     sh(PY, "scripts/counterexample.py", "--run", run, "--mode", "replay")
     sh(PY, "scripts/gate_demo.py", "--run", run)
-    sh(PY, "scripts/trajectories.py", "--run", run)
+    # Every run directory that holds a trajectory, not only the scored one. The
+    # second labeller and the three vocabulary probes shipped 243 raw JSONL logs
+    # with nothing rendered beside them, so an arm this project is measured
+    # against was readable only by someone willing to parse it, while the arm
+    # doing the measuring had 235 rendered pages and an index.
+    for traj_run in _runs_with_trajectories(run):
+        sh(PY, "scripts/trajectories.py", "--run", traj_run)
 
     banner("check every path a document points at")
     sh(PY, "scripts/linkcheck.py")

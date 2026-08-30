@@ -17,6 +17,14 @@ what happened.** So the body below is left as it was written, and every place th
 build departed from it is recorded here instead, with the reason. A reader comparing
 this document to the repository will find these nine differences and no others; if
 they find a tenth, this list is the thing that is wrong.
+**Three sections are not amendable and are checked against their registration.**
+Section 1 (what is being claimed), section 11 (the decision rule) and section 12
+(what would falsify the thesis) are the parts a result could be made to pass by
+editing. `tests/test_protocol_outcome_sections_are_frozen.py` compares all three,
+byte for byte, against the commit that added this file, and separately checks from
+the commit timestamps rather than from the sentence above that the protocol was
+registered before the first scored result. Amend anything else and argue it here;
+those three fail the suite.
 
 **A1, 2026-08-29. Blindness is no longer a git fact, and the claim it replaces was
 weaker.** Section 6 says Checker B's labels are committed before any commit

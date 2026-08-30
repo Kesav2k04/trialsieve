@@ -75,6 +75,18 @@ def build(compiled: list[dict], panel: list[Chart], trial: dict,
             "compiled": {c["criterion_id"]: c for c in compiled}}
 
 
+def _cell(text: str) -> str:
+    """Criterion prose, safe to put in a markdown table cell.
+
+    A `|` inside a criterion ends the cell and shifts every column after it, and
+    protocol text is written by people who use pipes. None of the 40 criteria here
+    contains one, which is why this was not noticed and is exactly why it is worth
+    handling: the failure arrives with the first protocol that does, in a table a
+    coordinator is reading to decide who to phone.
+    """
+    return " ".join(str(text or "").split()).replace("|", chr(92) + "|")
+
+
 def _short(text: str, limit: int = 34) -> str:
     """A column heading from criterion prose, cut on a word rather than mid-token.
 
@@ -96,8 +108,75 @@ def _cite(c: dict, limit: int = 2) -> str:
                      + (f" ({e['date']})" if e.get("date") else "") for e in ev)
 
 
+def _still_owed(wl: dict, protocol: list[dict]) -> list[str]:
+    """The criteria this document did not settle, and who they are still owed by.
+
+    Everything above this section is what the system did. This is the complement,
+    and it is the half a coordinator is accountable for. Counted from the trial's
+    own criterion list rather than from the subset that reached the screen, so a
+    filter that drops a criterion cannot also drop the sentence that says it was
+    dropped.
+    """
+    nct = wl["trial"].get("nct_id", "")
+    mine = set(wl["criteria_used"])
+    own = [c for c in protocol if c.get("nct_id") == nct]
+    if not own:
+        return []
+    refused = [c for c in own if not c.get("compilable")]
+    held = [c for c in own
+            if c.get("compilable") and c.get("criterion_id") not in mine]
+    left = len(wl["review"]) + len(wl["eligible"])
+
+    L = ["## What this document does not settle", ""]
+    L.append(f"This trial has **{len(own)} criteria**. This document answers "
+             f"**{len(mine)}** of them. The remaining **{len(refused) + len(held)}** "
+             f"are unchanged by running it, and every one of the {left} patients "
+             f"above still needs them checked by a person.")
+    L.append("")
+    L.append("| | count | why, and what it means for you |")
+    L.append("|---|---|---|")
+    L.append(f"| Answered here | {len(mine)} | Compiled into a checkable predicate "
+             f"and run against every chart in the panel. |")
+    if held:
+        L.append(f"| Compiled, not applied | {len(held)} | Compiled successfully and "
+                 f"held back by the operating point above, because applying them "
+                 f"wrongly removes patients on this panel. Reviewable in "
+                 f"`runs/*/compiled/`. |")
+    if refused:
+        L.append(f"| Not compiled | {len(refused)} | The compiler declined to express "
+                 f"them and said why. They were never going to be automated by this "
+                 f"system and are listed below so they are not forgotten. |")
+    L.append("")
+    if refused:
+        L.append("The ones the compiler refused, with its reason:")
+        L.append("")
+        L.append("| criterion | text | why it was left to you |")
+        L.append("|---|---|---|")
+        for c in refused:
+            why = str(c.get("reason_not_compilable") or "").strip()
+            L.append(f"| `{c['criterion_id']}` | "
+                     f"{_cell(_short(str(c.get('source_text', '')), 60))} "
+                     f"| {_cell(why)[:120]} |")
+        L.append("")
+    L.append("The shrink this document reports is a shrink in the panel, not in the "
+             "protocol. It is the difference between reading "
+             f"{len(wl['screens'])} charts against {len(mine)} questions and reading "
+             f"{left} charts against {len(refused) + len(held)}.")
+    L.append("")
+    return L
+
+
 def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
-                    max_listed: int = 25) -> str:
+                    max_listed: int = 25, protocol: list[dict] | None = None) -> str:
+    """`protocol` is every criterion the trial has, before any filtering.
+
+    Without it this document reports what it did and leaves what it did not do to
+    be inferred from an absence. A coordinator handed a list of 198 patients still
+    to work needs to know that the questions on it are three of the protocol's
+    fifteen, and that the other twelve are still theirs on every one of those
+    patients. Optional, because the sign-off gate demo renders without a protocol
+    to hand, and a section that cannot be filled is omitted rather than guessed.
+    """
     t = wl["trial"]
     n = len(wl["screens"])
     ro, rv, el = wl["ruled_out"], wl["review"], wl["eligible"]
@@ -107,8 +186,24 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
     L.append("")
     L.append(f"**{t.get('title', '')}**")
     L.append("")
-    L.append(f"Panel of {n} patients screened on {generated or dt.date.today()}.")
+    L.append(f"Panel of {n} patients, screened on "
+             f"{generated or dt.date.today()}.")
     L.append("")
+    # The date the document was produced is not the date the records stop. Each
+    # patient is screened as of their own last encounter, so an age and a lab in
+    # a row here can both be years old, and two criteria in this trial carry no
+    # recency window at all. A header that gave only today's date read as though
+    # the panel had been screened against current records.
+    dates = sorted(s["index_date"] for s in wl["screens"] if s.get("index_date"))
+    if dates:
+        L.append(f"**Each patient is screened as of their own last encounter, not "
+                 f"as of today.** In this panel those dates run from {dates[0]} to "
+                 f"{dates[-1]}. Ages and lab values below are as of that patient's "
+                 f"date. Where a criterion carries no recency window, an old result "
+                 f"satisfies it, so a patient under *Ready to contact* may be "
+                 f"resting on a years-old value that a coordinator has to confirm "
+                 f"before the call.")
+        L.append("")
     if reviewer:
         L.append(f"Compiled criteria reviewed and signed by {reviewer}.")
     else:
@@ -129,6 +224,15 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
     L.append("")
     L.append(f"The coordinator's list is {len(rv) + len(el)} patients rather than {n}.")
     L.append("")
+    # Named here rather than left to be discovered. This document lists the first
+    # 25 of each group and sends the reader elsewhere for the rest, and "the
+    # machine-readable output" was a phrase rather than a filename.
+    L.append("Two files sit beside this one and carry every patient, not the first "
+             "25 of each group: a `.json` with the evidence behind each decision, "
+             "and a `.csv` of one row per patient per criterion, which is the form "
+             "a screening log or a CTMS takes. Both carry the same trial, date and "
+             "run as the heading above.")
+    L.append("")
 
     if wl["ruleout_reasons"]:
         L.append("## What removed people")
@@ -137,7 +241,7 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
         L.append("|---|---|---|")
         for cid, cnt in wl["ruleout_reasons"].most_common():
             src = wl["compiled"].get(cid, {}).get("source_text", "")
-            L.append(f"| `{cid}` | {cnt} | {src[:88]} |")
+            L.append(f"| `{cid}` | {cnt} | {_cell(src)[:88]} |")
         L.append("")
 
     # The one group this document counted in its summary and never printed. A
@@ -181,6 +285,9 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
             L.append(f"_{len(el) - max_listed} further eligible patients in the "
                      f"machine-readable output._")
     L.append("")
+
+    if protocol is not None:
+        L += _still_owed(wl, protocol)
 
     L.append("## Ruled out")
     L.append("")

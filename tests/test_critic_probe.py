@@ -218,7 +218,8 @@ def test_the_report_names_a_class_it_never_planted():
 
     blob = ROOT / "results" / "critic_probe.json"
     if not blob.exists():
-        return
+        pytest.skip("no critic-probe output in this checkout; the unplanted-class "
+                    "field was never read")
     got = json.loads(blob.read_text(encoding="utf-8"))
     assert "classes_never_planted" in got, (
         "the probe output no longer records which classes went unplanted, which is "
