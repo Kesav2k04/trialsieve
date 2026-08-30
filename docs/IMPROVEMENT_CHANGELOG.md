@@ -2513,3 +2513,41 @@ finding.
 `grep -n "seventh" results/RESULTS.md` returns nothing and the seed paragraph
 reads "Both are flat. Across 3 seeds ... the range is 0 on each".
 `python -m pytest tests/test_published_environment_is_current.py -q`, 4 tests.
+
+### A seventh sentence, and this one pointed at an empty file
+
+**Found by** an independent reviewer reading the repository as a buyer rather than
+as an engineer, asking what a coordinator is actually handed.
+
+`docs/sample_worklist.md` lists 20 ruled-out patients and then says *"167 further
+ruled-out patients in the machine-readable output."* The machine-readable output
+was `docs/sample_worklist.json`, and it held nine keys, every one of them an
+aggregate: `n_ruled_out`, `n_review`, `n_eligible`, and question sets counted by
+`n_patients`. There were no patients in it. Not truncated, not summarised. None.
+
+This belongs with the six above because it is the same shape, a sentence that
+described something real when the sidecar was designed to feed `docs/COST.md` its
+counts, and it kept its meaning while the file it pointed at never gained the rows
+it promised. It is worse than the six in one way. Those misstated a number a
+reader could recompute. This one sent a reader to a file for evidence that was not
+there, so 167 of 187 exclusions had no reachable justification anywhere in the
+repository, in a system whose entire argument is that a person removed from a
+panel is owed a dated reason somebody can check.
+
+**What changed.** `scripts/worklist.py` now writes the patients themselves:
+`ruled_out` carries every patient with age, sex, and each failed criterion beside
+the record line that failed it; `review` carries every patient with the criteria
+left open and how many; `eligible` carries the rest. The counts stay where they
+were, because `docs/COST.md` reads them and a generated figure should not start
+depending on the length of a list.
+
+| | before | now |
+|---|---|---|
+| ruled-out patients reachable in the sidecar | 0 of 187 | **187 of 187** |
+| exclusions carrying evidence a reader can reach | 20 | **187** |
+| patients in review reachable with their open criteria | 0 of 190 | **190 of 190** |
+
+**Evidence.** `python scripts/gate_demo.py --run runs/tierA`, then
+`python -c "import json; d=json.load(open('docs/sample_worklist.json')); print(len(d['ruled_out']), len(d['review']), len(d['eligible']))"`
+prints `187 190 8` against the `n_ruled_out`, `n_review` and `n_eligible` the same
+file reports.

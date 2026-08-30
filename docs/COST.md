@@ -13,7 +13,7 @@ call, and its wall clock is seconds.
 
 | step                                               | model calls | from cassette | prompt tokens | completion tokens | wall clock     | at published rates |
 |----------------------------------------------------|-------------|---------------|---------------|-------------------|----------------|--------------------|
-| compile the held-out protocols, 40 criteria        | 202         | 202           | 136,765       | 34,225            | 2 s            | $0.13              |
+| compile the held-out protocols, 40 criteria        | 202         | 202           | 136,765       | 34,225            | 1 s            | $0.13              |
 | segmenter, 3 trials                                | 3           | 0             | 3,362         | 3,929             | 4 min 15 s     | $0.01              |
 | recompile under seed 8, for the noise floor        | 201         | 201           | 140,245       | 34,522            | 1 s            | $0.13              |
 | recompile under seed 9, for the noise floor        | 210         | 210           | 142,845       | 36,038            | 1 s            | $0.13              |
@@ -23,14 +23,14 @@ call, and its wall clock is seconds.
 | counterfactual thresholds, contamination check 3   | 24          | 24            | 19,373        | 3,569             | 0 s            | $0.01              |
 | critic probe, planted defects                      | 25          | 12            | 19,497        | 3,710             | 5 min 18 s     | $0.02              |
 | arms B2 over 10 patients, group b2_10p             | 400         | 400           | 1,656,168     | 31,769            | 0 s            | $0.58              |
-| arms TS, B0, B1 over 385 patients, group k0_seed7  | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS, B0, B1 over 385 patients, group k0_seed7  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k0_seed8  | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
-| arms TS, B0, B1 over 385 patients, group k0_seed9  | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS, B0, B1 over 385 patients, group k0_seed9  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k10_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k20_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k40_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS over 385 patients, group k0_seed7          | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
-| arms TS over 385 patients, group ow                | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS over 385 patients, group ow                | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | second blind labeller, Checker B                   | 100         | 0             | 444,910       | 2,680             | 1 h 55 min     | $0.14              |
 | **total**                                          | **1,291**   |               | **2,627,232** | **174,395**       | **2 h 28 min** | **$1.22**          |
 
@@ -47,7 +47,7 @@ the report says which rather than averaging the distinction away.
 
 Both arms answer the same 40 questions about the same patient. They differ in what the model is asked to do, and that difference is a cost curve rather than a constant.
 
-Compiling the 40 criteria cost **$0.13** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **3 s**.
+Compiling the 40 criteria cost **$0.13** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **2 s**.
 
 The per-cell baseline pays per question per patient. Measured over its 400 recorded cells, that is **$0.0014** a cell, or **$0.06** to put one patient through 40 criteria.
 

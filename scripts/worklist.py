@@ -167,6 +167,26 @@ def main() -> int:
         "question_sets": sorted(
             ({"criteria": list(k), "n_patients": v} for k, v in groups.items()),
             key=lambda g: (-g["n_patients"], g["criteria"])),
+        # Every patient, not a count of them. The document lists 20 of the ruled
+        # out and points here for the rest, so if this holds only totals then the
+        # evidence behind most exclusions is unreachable and the sentence that
+        # sends a reader here is false. A coordinator has to be able to answer
+        # "why was this person dropped" for all of them, not for the first screen.
+        "ruled_out": [
+            {"patient_id": s["patient_id"], "age": s["age"], "sex": s["sex"],
+             "failed": [{"criterion_id": c["criterion_id"],
+                         "evidence": worklist._cite(c)}
+                        for c in s["criteria"] if c["verdict"] == "FAILS"]}
+            for s in wl["ruled_out"]],
+        "review": [
+            {"patient_id": s["patient_id"], "age": s["age"], "sex": s["sex"],
+             "n_open": s["n_indeterminate"],
+             "open": sorted(c["criterion_id"] for c in s["criteria"]
+                            if c["verdict"] == "INDETERMINATE")}
+            for s in wl["review"]],
+        "eligible": [
+            {"patient_id": s["patient_id"], "age": s["age"], "sex": s["sex"]}
+            for s in wl["eligible"]],
     }
     out.with_suffix(".json").write_text(
         json.dumps(side, indent=1) + chr(10), encoding="utf-8", newline=chr(10))
