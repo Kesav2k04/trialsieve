@@ -206,7 +206,11 @@ def main() -> int:
     L: list[str] = []
     L.append("# Agent trajectories")
     L.append("")
-    L.append(f"{len(rows)} trajectories from `{run}`. Each markdown file below is a "
+    # `as_posix()` rather than the path as given. A generated document that prints
+    # `runs\tierA` tells a reader which operating system produced it and nothing
+    # else, and the same document is read on three.
+    L.append(f"{len(rows)} trajectories from `{Path(run).as_posix()}`. Each markdown "
+             f"file below is a "
              f"rendering of the JSONL beside it, and the JSONL is the source of truth. "
              f"Every model call in every one of them is matched to a recorded cassette "
              f"by `python scripts/verify.py trajectories`, so the prompt shown here is "
