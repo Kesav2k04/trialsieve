@@ -39,12 +39,22 @@ a person is dropped from the panel, patients wrongly ruled out, fell from 182
 to 18. Two units, both reported, because a cell is not a patient and only one
 of them gets a phone call.
 
-**Judging this?** [SUBMISSION.md](SUBMISSION.md) is the index: every deliverable
-and every ground rule, each pointing at the file that answers it, including what
-existed before the competition started and what was built during it.
-[REPRODUCE.md](REPRODUCE.md) is one command from a clean environment.
-[docs/VIDEO.md](docs/VIDEO.md) is the five minute walkthrough, and
-[docs/video/script.md](docs/video/script.md) is what it says, word for word.
+**Reviewing this? Here is each deliverable and the one file that answers it.**
+
+| | |
+|---|---|
+| Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
+| Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 45 entries. Its opening table is the whole arc. |
+| Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
+| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 142s, no key, no network. |
+| The video | [docs/video/trialsieve.mp4](docs/video/trialsieve.mp4), 4:54. Word for word in [docs/video/script.md](docs/video/script.md). |
+| Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call, failures first. |
+| Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
+
+The main failure mode is in [How it fails](#how-it-fails) and the hot take is the
+last section. Both are at the bottom because they are the end of the argument, not
+because they are buried.
 
 ---
 

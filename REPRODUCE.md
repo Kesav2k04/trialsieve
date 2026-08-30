@@ -27,6 +27,11 @@ no `make` and the reproduction should not depend on one.
 The patient panel and the trial records are committed, so there is no 95 MB
 download and no Java runtime in the path. `data/vendor/panel_provenance.json`
 carries the source URL and the sha256 of the archive they were built from.
+[docs/DATA_FINDINGS.md](docs/DATA_FINDINGS.md) records what was found in that
+corpus as it was found, which is where several evaluation choices come from: the
+records are complete by construction, so the failure mode this system exists for
+barely occurs at k=0 and had to be induced by the degradation harness rather than
+waited for.
 
 Which of those files has a generator, precisely, because "it can be rebuilt" is
 the kind of sentence that goes stale without anyone noticing:
@@ -122,6 +127,50 @@ checks that make the replay falsifiable rather than merely repeatable:
 `verify.py` prints five lines, each beginning `PASS` or `FAIL`, and exits non-zero
 on the first failure. About 85 seconds together, nearly all of it in `verify.py`
 re-hashing 1,047 cassettes.
+
+## What a successful run looks like
+
+The last lines of a real run, copied out of
+[`film/public/terminal/reproduce.txt`](film/public/terminal/reproduce.txt), which
+is captured stdout rather than a sample typed into this file. The whole 1,836-line
+transcript is in there, and `python film/scripts/capture.py --all` regenerates it
+by actually running the command:
+
+    ========================================================================
+    compare against the published numbers
+    ========================================================================
+    IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
+
+    OK  (reproduce in 142.6s)
+
+    exit 0
+
+`IDENTICAL` is the whole result. If it prints a diff instead, the last section of
+this file is what to do about it. Immediately above that line, `verify.py` will
+have printed five results, each starting `PASS` or `FAIL`, the last of them:
+
+    PASS: none of 181 recorded Checker B prompts contains a predicate, a digest, or any part of the compiled output. The two labellings are independent readings of the same record.
+
+### The models these cassettes recorded
+
+Replay needs none of them; they are here because "relevant versions" includes the
+things that produced the recording, and because a re-record would drift if they
+were not written down.
+
+| model | what it did |
+|---|---|
+| `gemini-3.7-flash-medium` | the compiler, grounder, critic and segmenter, and the B2 baseline |
+| `gpt-oss-120b-medium` | Checker B, the independent second labeller |
+| `granite3.1-dense:8b` | the weak-model probe |
+
+The per-model call counts are in [`SUBMISSION.md`](SUBMISSION.md), counted there
+rather than here so the same quantity does not get two homes and drift apart;
+`python -m pytest tests/test_recorded_call_counts.py -q` recounts them from the
+tracked cassettes. To re-record rather than replay, `--backend codex` maps to
+`gpt-5.6-terra`, which is why that name appears further down this file.
+
+The film toolchain, which no reproduction step touches: Remotion 4.0.489,
+React 19.1.1, Chatterbox 0.1.7.
 
 ## The five checks, and what each one rules out
 
