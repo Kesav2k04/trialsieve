@@ -114,7 +114,10 @@ def main() -> int:
 
     panel = load_panel(a.panel)
     wl = worklist.build(compiled, panel, trial, unit_policy=a.unit_policy)
-    md = worklist.render_markdown(wl, generated=dt.date.today().isoformat(),
+    # One value, used by both halves. The document and the sidecar disagreeing
+    # about when they were generated is the kind of thing nobody checks.
+    generated = dt.date.today().isoformat()
+    md = worklist.render_markdown(wl, generated=generated,
                                   reviewer=reviewer, max_listed=a.max_listed)
 
     if a.operating_point is not None:
@@ -155,9 +158,24 @@ def main() -> int:
                            if c["verdict"] == "INDETERMINATE"))
         if key:
             groups[key] = groups.get(key, 0) + 1
+    # `docs/GATE.md` says the override leaves a mark in the artifact rather than
+    # only in a shell history. That was true of the document and false of this
+    # file: the markdown stamps NOT FOR USE across every page and the sidecar
+    # carried no trace of it, so an unsigned JSON was byte-indistinguishable from
+    # a signed one. The half a person reads was marked and the half a machine
+    # reads was not, which is the wrong way round.
     side = {
         "trial": (wl["trial"] or {}).get("nct_id"),
+        "not_for_use": not reviewer,
+        "reviewer": reviewer or None,
+        "generated": generated,
+        "run": str(Path(a.run).as_posix()),
         "criteria_used": sorted(wl["criteria_used"]),
+        # The reader is sent here for the questions and used to arrive at a bare
+        # `NCT06983054-INC-02`. The text is what makes it a question.
+        "criterion_text": {c["criterion_id"]: c["source_text"]
+                           for c in compiled
+                           if c["criterion_id"] in set(wl["criteria_used"])},
         "n_screens": len(wl["screens"]),
         "n_cells": len(wl["screens"]) * len(wl["criteria_used"]),
         "n_ruled_out": len(wl["ruled_out"]),
@@ -184,8 +202,15 @@ def main() -> int:
              "open": sorted(c["criterion_id"] for c in s["criteria"]
                             if c["verdict"] == "INDETERMINATE")}
             for s in wl["review"]],
+        # These eight are the only people this document says to phone, so they are
+        # the rows most in need of a reason, and they were shipping with an id, an
+        # age and a sex. The markdown gave them three cited columns and the machine
+        # half gave them none.
         "eligible": [
-            {"patient_id": s["patient_id"], "age": s["age"], "sex": s["sex"]}
+            {"patient_id": s["patient_id"], "age": s["age"], "sex": s["sex"],
+             "met": [{"criterion_id": c["criterion_id"],
+                      "evidence": worklist._cite(c)}
+                     for c in s["criteria"] if c["verdict"] == "MEETS"]}
             for s in wl["eligible"]],
     }
     out.with_suffix(".json").write_text(

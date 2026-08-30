@@ -20,13 +20,22 @@ every rescreen, because one side of it is flat.
 
 **The larger cost is not in that table, and it is a person.** Before this produces
 any document, somebody qualified reads all 19 compiled predicates and signs them.
-That is the expensive item, it is not priced here, and no model spend is comparable
-to it. It is also the honest comparison rather than a caveat on one. The compiled
-path has 19 things to review, once per protocol, and rescreening the same panel next
-month reviews nothing again. The per-cell baseline has no reviewable artifact at
-all: to get the same assurance you would read 15,400 individual answers, and read
-them again next month. What compiling buys is not a smaller bill. It is a review
-surface small enough that reviewing it is possible.
+No clinician was timed here, so this repository does not put a rate on it. What it
+can do is give you the quantity, measured rather than guessed: **19 predicates,
+1,478 words in total** across their source text, expression, unit note and absence
+note. Median 60 words each, longest 262. Price that at your own reviewer's rate.
+
+Against the per-cell baseline that is the whole argument, because the baseline has
+no reviewable artifact at all. To get the same assurance you would read 15,400
+individual answers, and read them again next month. What compiling buys is not a
+smaller bill. It is a review surface small enough that reviewing it is possible.
+
+**And the cost table above is not the argument against the tool a site already
+owns.** i2b2, ATLAS, TriNetX and the EHR query builders cost nothing more to run,
+so on price they win and this table is beside the point. The case against them is
+in [Prior art](#prior-art) and it is not about money: a filter cannot tell you who
+it could not decide, and the patients it silently drops are the ones this project
+exists to count.
 
 
 Clinical trial prescreening, built so that ruling a patient out on a fact that is

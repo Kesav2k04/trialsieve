@@ -1,10 +1,19 @@
 {
  "trial": "NCT06983054",
+ "not_for_use": true,
+ "reviewer": null,
+ "generated": "2026-08-30",
+ "run": "runs/tierA",
  "criteria_used": [
   "NCT06983054-INC-02",
   "NCT06983054-INC-03",
   "NCT06983054-INC-04"
  ],
+ "criterion_text": {
+  "NCT06983054-INC-02": "HbA1c 6.5-10%",
+  "NCT06983054-INC-03": "Age 18 - 85 years of age",
+  "NCT06983054-INC-04": "Overweight or obese with BMI: >25 kg/m2"
+ },
  "n_screens": 385,
  "n_cells": 1155,
  "n_ruled_out": 187,
@@ -3858,42 +3867,154 @@
   {
    "patient_id": "4b10c406-d391-31dc-cefd-5812b6832cf9",
    "age": 69,
-   "sex": "female"
+   "sex": "female",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 6.86 % (2021-05-27)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 69 (2021-07-08)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 27.44 kg/m2 (2021-05-27)"
+    }
+   ]
   },
   {
    "patient_id": "509f9a77-2a22-f98b-c539-9a44057efb51",
    "age": 56,
-   "sex": "female"
+   "sex": "female",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 7.46 % (2021-11-15)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 56 (2021-11-15)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 29.83 kg/m2 (2021-11-15)"
+    }
+   ]
   },
   {
    "patient_id": "56cfe6a5-4835-d925-fd7a-84faf11306f0",
    "age": 51,
-   "sex": "male"
+   "sex": "male",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 6.95 % (2021-03-06)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 51 (2021-03-06)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 33.82 kg/m2 (2021-03-06)"
+    }
+   ]
   },
   {
    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
    "age": 36,
-   "sex": "female"
+   "sex": "female",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 7.47 % (2019-05-19)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 36 (2021-10-03)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 29.88 kg/m2 (2019-05-19)"
+    }
+   ]
   },
   {
    "patient_id": "80534c6c-b12d-caa5-42de-b179fd7f9695",
    "age": 26,
-   "sex": "male"
+   "sex": "male",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 6.6 % (2019-10-18)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 26 (2021-04-16)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 26.75 kg/m2 (2019-10-18)"
+    }
+   ]
   },
   {
    "patient_id": "83f922a9-3567-cb65-b57f-2da9cc05af15",
    "age": 57,
-   "sex": "female"
+   "sex": "female",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 7 % (2020-12-12)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 57 (2021-09-10)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 28.01 kg/m2 (2020-12-12)"
+    }
+   ]
   },
   {
    "patient_id": "aade3c61-92bd-d079-9d28-0b2b7fde0fbb",
    "age": 35,
-   "sex": "male"
+   "sex": "male",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 6.6 % (2020-04-01)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 35 (2021-05-19)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 26.03 kg/m2 (2020-04-01)"
+    }
+   ]
   },
   {
    "patient_id": "d362f4e5-244f-cf80-f2d5-25bcd2c97785",
    "age": 47,
-   "sex": "female"
+   "sex": "female",
+   "met": [
+    {
+     "criterion_id": "NCT06983054-INC-02",
+     "evidence": "Hemoglobin A1c/Hemoglobin.total in Blood = 7.49 % (2021-09-10)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-03",
+     "evidence": "Age at index date = 47 (2021-09-10)"
+    },
+    {
+     "criterion_id": "NCT06983054-INC-04",
+     "evidence": "Body Mass Index = 29.99 kg/m2 (2021-09-10)"
+    }
+   ]
   }
  ]
 }

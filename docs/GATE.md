@@ -45,6 +45,12 @@ The document is produced and the first thing on it is this:
 The override leaves a mark in the artifact rather than only in a shell
 history, which is the point. A reader who is handed the file can tell.
 
+It marks both halves. For a while it marked only this one: `sample_worklist.json`
+carried no trace of the override, so an unsigned worklist was byte-identical in shape
+to a signed one for anything downstream that reads JSON rather than prose. The
+sidecar now carries `not_for_use` and the reviewer, and `tests/test_worklist_sidecar_is_complete.py`
+checks the two against each other and against this document.
+
 ## 3. Signed
 
 **Nothing is signed in this checkout, and that is not an oversight.**
