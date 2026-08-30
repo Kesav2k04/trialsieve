@@ -82,7 +82,7 @@ was read as a count of zero by the document a reviewer signs.
 8. **The full suite runs**, all 380 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
    trust if this sentence has drifted. From a clone that is 380 passed. From an
-   unpacked source archive it is 364 passed and 7 skipped, because seven of
+   unpacked source archive it is 373 passed and 7 skipped, because seven of
    them resolve a commit or read history and an archive carries the tree without
    an object database. The pre-registration freeze is no longer among them:
    `docs/protocol_registration.json` carries the registering commit and the
