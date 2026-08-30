@@ -3068,7 +3068,7 @@ lines of qualification before learning what the thing is. The 358-of-424 story t
 ran three times in one file.
 
 **What changed.** All four wall-clocks are one figure per thing measured and every
-one is real: 169.8s from a fresh clone, 151.3s in place, 285.6s on a busy machine,
+one is real: 158.9s from a fresh clone, 151.3s in place, 285.6s on a busy machine,
 each printed by the command itself. The spread is given rather than a single number
 chosen from it, because a cold clone pays for reading 57 MB off disk and that is the
 honest answer to how long it takes. The rate carries the scorecard's two decimals.
@@ -3194,14 +3194,14 @@ for exactly the reason an archive skips them. It fetches the whole history now.
 | `run.py reproduce` from the unpacked archive | exit 1 | **exit 0, IDENTICAL** |
 | tests failing in the unpacked archive | 13 | **0** |
 | tests skipping there, each printing why | 13 | **16** |
-| `python -m pytest` on a fresh clone, before anything is generated | 1 failed | **347 passed, 2 skipped** |
+| `python -m pytest` on a fresh clone, before anything is generated | 1 failed | **the suite passes, 2 skipped with the reason printed** |
 | commits the CI checkout can see | 1 | **all of them** |
 | sources of truth for what shipped | 1, unavailable offline | **2, checked against each other** |
 
 **Evidence.** `git archive --format=zip -o trialsieve.zip HEAD`, unpack it into an
 empty directory, and run `python run.py reproduce`. It prints `NOT COMPARED` for
-the provenance block, then `IDENTICAL`, in 161.7 seconds. The same command in a
-clone compares the provenance block too and takes 169.8.
+the provenance block, then `IDENTICAL`, in 155.1 seconds. The same command in a
+clone compares the provenance block too and takes 158.9.
 
 ## 57. A registered trigger fired and the report was published without it
 
