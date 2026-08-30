@@ -229,7 +229,7 @@ Two numbers are worth reading before the rest.
 reproduce` makes no model call, so it costs $0.00 in tokens and needs no key.
 Every recorded call replays from `runs/tierA/cassettes/`, and replay never falls
 through to a live call. Measured end to end on this machine, a Windows laptop
-with a 14-core CPU: **174.5 seconds from a fresh clone into an empty directory**,
+with a 14-core CPU: **169.8 seconds from a fresh clone into an empty directory**,
 151.3 seconds in place with the artifacts already warm, and 285.6 seconds on a
 second run while the same machine was busy rendering video. Every one of those is
 printed by the command itself as its last line, so the figure a judge sees is the
