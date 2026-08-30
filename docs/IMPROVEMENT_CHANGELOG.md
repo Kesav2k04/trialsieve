@@ -3067,7 +3067,7 @@ lines of qualification before learning what the thing is. The 358-of-424 story t
 ran three times in one file.
 
 **What changed.** All four wall-clocks are one figure per thing measured and every
-one is real: 168.5s from a fresh clone, 151.3s in place, 285.6s on a busy machine,
+one is real: 174.5s from a fresh clone, 151.3s in place, 285.6s on a busy machine,
 each printed by the command itself. The spread is given rather than a single number
 chosen from it, because a cold clone pays for reading 57 MB off disk and that is the
 honest answer to how long it takes. The rate carries the scorecard's two decimals.
