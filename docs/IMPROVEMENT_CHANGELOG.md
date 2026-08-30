@@ -348,6 +348,8 @@ so that the two halves of each comparison share a model.
 
 ---
 
+**Evidence.** `python scripts/costs.py`, which regenerates `docs/COST.md` from the recorded calls and reports each model's token and call counts separately, so the switch is visible as two rows rather than as a sentence here. `python -m pytest tests/test_recorded_call_counts.py -q` holds the per-model counts in `SUBMISSION.md` against the tracked cassettes.
+
 ## 9. A code can contain a concept without establishing it
 
 **Found by** the same vocabulary probe, and it turned into a feature rather than a
@@ -547,6 +549,8 @@ for a reader to find.
 
 ---
 
+**Evidence.** `python -m pytest tests/test_label_floor.py tests/test_coverage_numerator.py -q`. The first holds the noise floor to the post-stratified estimate over the population rather than over the hardest stratum; the second holds the coverage numerator to the compiler's output rather than to the gold set's. Both were the errors, and both flattered the old system.
+
 ## 13. A reproduction step that appears to hang is not reproducible
 
 **Found by** running the scoring step for the first time on the full panel and
@@ -602,6 +606,8 @@ weaker thing to be able to say about a published confidence interval.
 The same file also carries an A/A control: two identical arms must produce an
 interval containing zero. A bootstrap that manufactured a difference out of
 resampling noise would pass every speed test and fail that one.
+
+**Evidence.** `python -m pytest tests/test_bootstrap.py -q`, which runs the resampler at the committed iteration count and fails if it stops printing progress. The wall-clock line `python run.py reproduce` prints as its last output is the end-to-end version of the same check.
 
 ## 14. The prediction about how this fails was wrong, and in the dangerous direction
 
@@ -660,6 +666,8 @@ a predicate for "type 1 diabetes mellitus" puts the type 2 display in front of t
 reviewer who has to sign it. That is a property of the artifact and it is checkable
 by reading the file. It is not a measurement that a reviewer catches it, and this
 changelog is not going to claim it is.
+
+**Evidence.** `python scripts/compare_probes.py runs/probe-before/probe.json runs/probe-after/probe.json`, which prints both probes side by side and is the source of the numbers in `docs/WEAK_MODEL.md`. The prediction it falsified is in section 10 of `docs/EVAL_PROTOCOL.md`, *Predictions, registered before measuring*, which is kept as written rather than edited to match the outcome.
 
 ## 15. Three checks that could not fail, and one that reported a pass for a comparison it never made
 
@@ -725,6 +733,8 @@ disclosed the override and the submission document did not, so the two disagreed
 about how strong the gate is. The submission now names it, says what it stamps on
 the document, and points at `docs/GATE.md`.
 
+**Evidence.** `python -m pytest tests/test_signoff.py tests/test_worklist_gate.py -q`, and `python scripts/verify.py blind --run runs/tierA` for the fourth. Each carries a positive control, which is the whole point of the entry: a check with no way to fail reports a pass for a comparison it never made.
+
 ## 16. A committed data file with no generator, and the check it broke
 
 **Found by** a reviewer recomputing a published figure. `data/vendor/panel_code_counts.json`
@@ -764,6 +774,8 @@ build error read as a clinical finding.
 7%, appear in no panel patient. It is 47, 6.5%, and the observation domain is 4
 rather than 7. Entry 6 is corrected in place with a note. The defect entry 6
 describes was sitting inside entry 6's own fix.
+
+**Evidence.** `python scripts/build_panel_counts.py --check`, which recomputes the file from the panel and exits non-zero if the committed copy disagrees. That mode did not exist before this entry, which is why the file could sit three codes short without anything noticing.
 
 ## 17. An event kind with a renderer, a counter, a column, and no call site
 
@@ -1183,6 +1195,8 @@ the number: a sample enriched in the hardest stratum must reweight **downward**,
 an equal-share population must reproduce the sample rate exactly, and an
 unweighable population must return nothing.
 
+**Evidence.** `python -m pytest tests/test_label_floor.py -q`, which requires the floor to be post-stratified over the population and fails if it is read off the doubly-labelled stratum alone. `results/results.json` carries both, `label_noise_floor` and `groups.k0_seed7.label_floor_poststratified`, so the two can be compared rather than taken on trust.
+
 ## 24. The probe that scored 9 of 9 had never tried the defect that mattered
 
 **Found by** a reviewer asking which defect classes the critic probe had actually
@@ -1237,6 +1251,8 @@ A probe that cannot fail is not a probe. This one scored 100% for as long as it
 avoided the question.
 
 ---
+
+**Evidence.** `python -m pytest tests/test_critic_probe.py -q`, which requires every declared defect class to have been planted at least once, and `results/critic_probe.json` for the per-class result. `by_class` is the field that makes 9 of 9 readable as a coverage gap rather than a score.
 
 ## 25. The one invariant the design calls its own sharp edge was never checked
 
@@ -1316,6 +1332,8 @@ run it damaged was written when this entry was, and it was overtaken.
 
 ---
 
+**Evidence.** `python scripts/grounding_audit.py --run runs/tierA`, which exits non-zero on any criterion using a broader-only code as an exact code, and `python -m pytest tests/test_grounding_audit.py -q`, which holds the ledger at zero and requires the audit to have scanned a non-empty set so a clean result cannot come from reading nothing.
+
 ## 26. The experiment I registered and then could not honestly run
 
 **Found by** a reviewer counting how many entries in this changelog describe an
@@ -1361,6 +1379,8 @@ guarantee and the self-consistency arm were always mutually exclusive. Keeping
 both on the page for as long as I did was the error, not choosing between them.
 
 ---
+
+**Evidence.** amendment A5 in `docs/EVAL_PROTOCOL.md`, where the arm stays in the registered table at row B3 and unrun with the reason, and the absence of a B3 column anywhere in `results/RESULTS.md`. There is nothing to run here, and that is the entry: the evidence for a removed experiment is that no number from it was published.
 
 ## 27. The schema rejected the careful answer and accepted the dangerous one
 
@@ -1436,6 +1456,8 @@ the numbers is the reason entry 29 has the title it has.
 
 ---
 
+**Evidence.** `python -m pytest tests/test_not_compilable.py -q`, which holds the split at 21 refusals and 0 lost to the validator, so a schema change that quietly turns a careful answer back into a validator loss fails there rather than in a table.
+
 ## 28. The coverage headline was the answer key's number, not the system's
 
 **Found by** signing off the video narration. `scripts/make_video.py claims`
@@ -1486,6 +1508,8 @@ still never ask what the inputs mean.
 That is also why it was found by a narration gate rather than by the test suite.
 Speaking a number out loud forces you to say what it is a number *of*, and this
 one had no true sentence.
+
+**Evidence.** `python -m pytest tests/test_coverage_numerator.py -q`, which requires the coverage numerator to come from `runs/tierA/compiled/` rather than from the gold set's `checkable` count. `criterion_coverage` in `results/results.json` is the figure it guards, and `docs/EVAL_PROTOCOL.md` is the band it now misses.
 
 ## 29. The fix that made every headline number worse
 

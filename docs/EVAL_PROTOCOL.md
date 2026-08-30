@@ -47,6 +47,14 @@ The bootstrap resamples unique criteria and patients over the Synthea panel only
 a capability that was registered and not delivered, which is a smaller claim than the
 protocol makes, and saying so is cheaper than the alternative.
 
+The brief asks for one challenging case and what it revealed, and that is answered
+instead by a case found in the corpus rather than authored against it: SNOMED
+44054006, the parent code three criteria actually need. It is written up in
+[`SUBMISSION.md`](../SUBMISSION.md), under *The one challenging case, and what it
+revealed*, with the four distinct ways it was handled wrongly and the changelog
+entry for each. A found case cannot be accused of having been chosen to be
+survivable, which is the one advantage it has over the set registered here.
+
 **A4, 2026-08-29. Checker B labels are not human-adjudicated.** Section 6 says every
 B label is human-adjudicated with a rationale logged per case. No human adjudicated
 anything. `evaluation/checker_b.py` states the design plainly in its own docstring:
