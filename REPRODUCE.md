@@ -98,10 +98,8 @@ was read as a count of zero by the document a reviewer signs.
 
 ## The solution, the baseline and the evaluation, as three separate commands
 
-`python run.py reproduce` runs all of them in order and is the command to use if
-you only run one thing. They are written out separately here because each is a
-different claim, and a reader who wants to check one of them should not have to
-read the task runner to find out how. All of these replay from
+`python run.py reproduce` runs all of them in order. They are written out
+separately below because each is a different claim. All replay from
 `runs/tierA/cassettes/` and call no model, so they need no key and no network.
 
 **The solution.** Compile each criterion once, then execute the compiled

@@ -88,11 +88,9 @@ where the two disagree, the work follows whichever asks for more.
 | Problem & User Value | 15 | not scored separately | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Hot Take / Insights | 5 | not scored separately | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
 
-The listing drops two categories the PDF scores and moves their weight onto
-reproducibility and measured improvement. Nothing was removed from this
-submission on that basis: the README still introduces the user and the
-bottleneck, and the hot take is still there, because the PDF's deliverables list
-asks for both regardless of how they are weighted.
+The listing drops the last two categories and moves their weight onto
+reproducibility and measured improvement. Both are still answered here, because
+the PDF's deliverables list asks for them regardless of how they are weighted.
 
 ### The dual solution requirement
 

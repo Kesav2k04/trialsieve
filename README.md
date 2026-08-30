@@ -171,13 +171,12 @@ gap*, and it is there because `docs/EVAL_PROTOCOL.md` registered before the run
 that a large gap would be investigated rather than reported.
 
 **And gold was written by the person who wrote the system.** There was no
-independent clinical annotator on this, and neither labeller is a trial
-coordinator. That biases in the direction of this system looking correct, so a
-second labeller works from the criterion prose alone, on a different model
-family, with no sight of the compiled predicate, and the rate at which the two
-disagree is published as a floor under which no difference here is called
-interpretable. Read every number as agreement with two readings of the protocol
-text, one of them the author's, rather than with a clinician.
+independent clinical annotator, and neither labeller is a trial coordinator. That
+biases toward this system looking correct, which is why a second labeller reads
+the criterion prose alone on a different model family, and why the rate at which
+the two disagree is published as a floor
+([below](#evaluation)). Read every number as agreement with two readings of the
+protocol text, one of them the author's, rather than with a clinician.
 
 **Read that pair with its sample size.** Those 400 cells are **10 patients**
 against 40 criteria, not 400 people. Ten is what the arm costs: $22.19 for a full
