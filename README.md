@@ -24,7 +24,9 @@ last section.
 
 The baseline is the obvious build and the brief's own first suggestion: one model
 call per patient per criterion. Both arms below ran on **the same 400 cells**,
-against the same gold labels, scored by the same script.
+against the same gold labels, scored by the same script. Four hundred cells is ten
+patients against forty criteria, not four hundred people, and the sample is that
+small because the baseline is the arm that costs money.
 
 | | one model call per cell | TrialSieve |
 |---|---|---|
