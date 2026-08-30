@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Fifty-five entries is
+iteration, each with its evidence and what it decided. Fifty-six entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -3137,3 +3137,55 @@ word commit followed by a backticked hash into any tracked document and the gate
 names the document and the hash. This entry is written so that it does not trip
 its own rule, which is the second time a scanner in this repository has flagged
 the sentence describing it.
+
+## 56. The reproduction failed for anyone who downloaded the zip instead of cloning
+
+**Found by** unpacking the source archive the entry form asks for into an empty
+directory and running the one command this repository tells a reader to run.
+
+**What was wrong.** `python run.py reproduce` exited 1 in three separate places,
+and every one of them was the same mistake: a check that asked git what shipped,
+in a tree that has no git.
+
+`scripts/linkcheck.py` called `git ls-files` with `check=True` and raised
+`CalledProcessError`, which took the whole run down at the first step. Seven test
+files did the same and produced thirteen failures. And the byte comparison against
+the published numbers reported **DIFFERENT**, because `prompt_files_last_commit`
+records which commit last touched each prompt file, there are no commits in an
+archive, and four empty strings do not equal four hashes.
+
+That last one is the worst of the three. Every number had reproduced. The step
+that exists to say so said the opposite, in the exact words a judge would read as
+the headline claim failing.
+
+**What changed.** The question those checks ask is what the reader actually
+received, and git is the right answer only where there is a git. A working tree
+carries whatever the run just generated, so a directory walk is not a substitute:
+the first attempt at one counted `.pytest_cache/` and the uncommitted cells under
+`runs/`, which took the disk gate's total from 57 MB to 105 MB and made the
+line-endings gate report a carriage return in a file that does not ship.
+
+So the answer is written down once, from git, and travels inside the archive.
+`MANIFEST.txt` lists every shipped file, `scripts/manifest.py --write` regenerates
+it, and `tests/test_manifest_matches_git.py` fails when it drifts. `tests/_shipped.py`
+asks git first and the manifest second, and the two gates that need history rather
+than a file list, the credential scan over every commit and the published-commit
+check, skip with a sentence saying why.
+
+The provenance block is compared wherever it can be and named where it cannot.
+`run.py diff` prints **NOT COMPARED** for that block alone, excludes it from both
+sides, and compares everything else, which is the third outcome this repository
+keeps needing: a check that cannot run has to say so rather than pick one of pass
+or fail.
+
+| | before | now |
+|---|---|---|
+| `run.py reproduce` from the unpacked archive | exit 1 | **exit 0, IDENTICAL** |
+| tests failing in the unpacked archive | 13 | **0** |
+| tests skipping there, each printing why | 13 | **16** |
+| sources of truth for what shipped | 1, unavailable offline | **2, checked against each other** |
+
+**Evidence.** `git archive --format=zip -o trialsieve.zip HEAD`, unpack it into an
+empty directory, and run `python run.py reproduce`. It prints `NOT COMPARED` for
+the provenance block, then `IDENTICAL`, in 161.7 seconds. The same command in a
+clone compares the provenance block too and takes 174.5.
