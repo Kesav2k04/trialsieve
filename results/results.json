@@ -7604,7 +7604,7 @@
    "coverage": 0.1915,
    "ser": 0.0072,
    "false_fails": 66,
-   "reduction": 0.4615,
+   "reduction": 0.4614718614718615,
    "false_exclusions": 18
   },
   {
@@ -7612,7 +7612,7 @@
    "coverage": 0.1881,
    "ser": 0.0075,
    "false_fails": 65,
-   "reduction": 0.4416,
+   "reduction": 0.44155844155844154,
    "false_exclusions": 19
   },
   {
@@ -7620,7 +7620,7 @@
    "coverage": 0.1845,
    "ser": 0.0068,
    "false_fails": 60,
-   "reduction": 0.4372,
+   "reduction": 0.43722943722943725,
    "false_exclusions": 17
   },
   {
@@ -7628,7 +7628,7 @@
    "coverage": 0.1749,
    "ser": 0.0088,
    "false_fails": 81,
-   "reduction": 0.4009,
+   "reduction": 0.40086580086580087,
    "false_exclusions": 31
   }
  ],

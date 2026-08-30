@@ -844,7 +844,11 @@ def main() -> int:
         if not ts or not ps:
             continue
         curve.append({"k_percent": k, "coverage": ts["coverage"], "ser": ts["ser"],
-                      "false_fails": ts["n_false_fails"], "reduction": ps["reduction"],
+                      "false_fails": ts["n_false_fails"],
+                      # Divided, not the stored four-place `reduction`, for the
+                      # same reason the sensitivity table above divides: two
+                      # roundings of one quantity print two different tenths.
+                      "reduction": ps["n_ineligible"] / ps["n_screens"],
                       "false_exclusions": ps["false_exclusions"]})
     if len(curve) >= 2:
         curve.sort(key=lambda r: r["k_percent"])
@@ -989,7 +993,14 @@ def main() -> int:
                 ("silent errors", base["n_silent"], ow["n_silent"], "int"),
                 ("false FAILS", base["n_false_fails"], ow["n_false_fails"], "int"),
                 ("false MEETS", base["n_false_meets"], ow["n_false_meets"], "int"),
-                ("panel reduction", bp["reduction"], op["reduction"], "pct"),
+                # Divided rather than read. `reduction` is rounded to four
+                # places on the way into results.json, and formatting that to
+                # one decimal rounds a second time: 0.46147 stores as 0.4615
+                # and prints as 46.2%, against the 46.1% every other table
+                # here prints and the narration speaks.
+                ("panel reduction",
+                 bp["n_ineligible"] / bp["n_screens"],
+                 op["n_ineligible"] / op["n_screens"], "pct"),
                 ("false exclusions", bp["false_exclusions"], op["false_exclusions"], "int")]
         md.append("| | as compiled | absence forced to unknown | change |")
         md.append("|---|---|---|---|")

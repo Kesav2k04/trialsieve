@@ -560,7 +560,7 @@ Synthea records are complete by construction, so the failure mode this design ex
 
 | k   | coverage | SER  | false-FAILS | panel reduction | false exclusions |
 |-----|----------|------|-------------|-----------------|------------------|
-| 0%  | 19.1%    | 0.7% | 66          | 46.2%           | **18**           |
+| 0%  | 19.1%    | 0.7% | 66          | 46.1%           | **18**           |
 | 10% | 18.8%    | 0.8% | 65          | 44.2%           | **19**           |
 | 20% | 18.4%    | 0.7% | 60          | 43.7%           | **17**           |
 | 40% | 17.5%    | 0.9% | 81          | 40.1%           | **31**           |
@@ -608,7 +608,7 @@ Checker B abstains more than A does (71 against 60 of 180), which is the directi
 | silent errors     | 111         | 111                       | +0, +0%     |
 | false FAILS       | 66          | 66                        | +0, +0%     |
 | false MEETS       | 45          | 45                        | +0, +0%     |
-| panel reduction   | 46.2%       | 41.1%                     | -5.0 points |
+| panel reduction   | 46.1%       | 41.1%                     | -5.0 points |
 | false exclusions  | 18          | 18                        | +0, +0%     |
 
 Ignoring every closed-world decision the compiler made removes 0 of 111 silent errors (0%) and 0 of 18 false exclusions, and costs 0.7 points of coverage. Read that the way it falls: after the repairs in entries 29 and 30, the closed-world assertions left in this run are not where its error is. This section used to close by saying the opposite, that almost all of the error was the model reading a silent record as an answer, which is what the run looked like before those repairs and is contradicted by the row above it now. The remaining flags sit inside disjunctions where another term settles the verdict anyway, so flipping them moves nothing.
