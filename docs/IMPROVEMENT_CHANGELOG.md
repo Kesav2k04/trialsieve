@@ -3712,9 +3712,10 @@ Nothing read it, which is the only reason it was harmless. A file in `results/` 
 name describes a different measurement than its contents is a trap set for the next
 reader, and this repository hands itself to strangers.
 
-**What changed.** `--json` is required. There is no shared default to fall through
-to, so a comparison worth keeping has to be named for what it compares. The duplicate
-is deleted.
+**What changed.** There is no default to fall through to. Passing `--json` names
+where a comparison goes and omitting it prints the table without writing anything,
+so no run can quietly overwrite another run's file and no run has to invent a name
+for output it did not want. The duplicate is deleted.
 
 | | before | now |
 |---|---|---|
@@ -3722,7 +3723,9 @@ is deleted.
 | tracked files under `results/` that nothing reads and whose name misdescribes them | 1 | **0** |
 
 **Evidence.** `python scripts/compare_probes.py runs/probe-before/probe.json
-runs/probe-after/probe.json` now exits 2 with `--json is required`.
+runs/probe-after/probe.json` prints the comparison and writes nothing, and
+`git ls-files results/` no longer lists a file whose name describes a different
+measurement than its contents.
 
 ## 70. A gate's own explanation froze the numbers it was written about
 

@@ -117,12 +117,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("before")
     ap.add_argument("after")
-    # No default. A shared default path made every invocation overwrite the last
-    # one, and `results/probe_comparison.json` ended up holding the weak-model
-    # comparison under a name that reads like the before-and-after repair. A
-    # comparison that is worth keeping is worth naming.
-    ap.add_argument("--json", required=True,
-                    help="where to write the comparison, named for what it compares")
+    # No default, and not required either. A shared default path made every
+    # invocation overwrite the last one, and results/probe_comparison.json ended
+    # up holding the weak-model comparison under a name that reads like the
+    # before-and-after repair. A comparison worth keeping is worth naming, and a
+    # run that only wants to read the table should not have to name a file at
+    # all: without --json this prints and writes nothing.
+    ap.add_argument("--json", default="",
+                    help="write the comparison here, named for what it compares. "
+                         "Omit it to print without writing.")
     ap.add_argument("--out", default="", help="also write a markdown report here")
     a = ap.parse_args()
     before_p, after_p = Path(a.before), Path(a.after)
@@ -169,10 +172,12 @@ def main() -> int:
     out["over_under_after"] = split([after[k] for k in common])
     out["model_before"] = header(before_p)["model"]
     out["model_after"] = header(after_p)["model"]
-    dest = ROOT / a.json
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
-    print(f"\nwrote {dest}")
+    if a.json:
+        dest = ROOT / a.json
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8",
+                        newline="\n")
+        print(f"\nwrote {dest.relative_to(ROOT).as_posix()}")
     if a.out:
         markdown(before_p, after_p, before, after, common, ROOT / a.out)
     return 0
