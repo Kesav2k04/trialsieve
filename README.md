@@ -15,72 +15,94 @@
 | Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call. Five named exemplars first, then the rest with the failures at the top. The four other arms are indexed the same way beside it. |
 | Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
 
-The main failure mode is in [How it fails](#how-it-fails) and the hot take is the
-last section. Both are at the bottom because they are the end of the argument, not
-because they are buried.
+The main failure mode is in [How it fails](#how-it-fails); the hot take is the
+last section.
+
+---
+
+## The result, before the argument for it
+
+The baseline is the obvious build and the brief's own first suggestion: one model
+call per patient per criterion. Both arms below ran on **the same 400 cells**,
+against the same gold labels, scored by the same script.
+
+| | one model call per cell | TrialSieve |
+|---|---|---|
+| cells answered wrong, with nothing on the page to say so | 43.75% | **1.00%** |
+| screens wrongly ruled out, of 30 | 10 | **2** |
+| patients it would have enrolled who do not qualify | 145 | **0** |
+| model spend per 385-patient panel | $22.19 | **$0.13**, then $0.00 to rescreen |
+| cells it answers at all | 68.00% | 21.75% |
+| cells resolved correctly per screen, the registered co-primary | **3.23** | 2.77 |
+
+The last two rows are losses and they are here for that reason. TrialSieve
+abstains three times as often, and a guard registered before the first run
+specifically so that an arm could not win by abstaining finds against it by 17%.
+The false-exclusion row has a 95% interval that includes zero, so ten against two
+is what this run did and not a difference this evaluation can separate from
+chance. [docs/SCORECARD.md](docs/SCORECARD.md) carries every row with its
+uncertainty beside it.
+
+What that buys: the 43.75% number is the one a coordinator cannot audit. A wrong
+answer that looks like a right answer costs a chart re-read to find, which is the
+work the tool was bought to remove. TrialSieve says *the record does not say*
+instead, and the residue it leaves is grouped by question rather than by patient.
 
 ---
 
 ## Who this is for, and what it is
 
-**The user is the clinical research coordinator at a trial site.** They are handed a
-protocol and a panel of candidate patients, and they decide who is worth screening
-in person. Nobody else in the process reads every criterion against every chart, and
-nobody re-reads the people they rule out.
+**The user is the clinical research coordinator at a trial site.** They are handed
+a protocol and a panel of candidate patients, and they decide who is worth
+screening in person. Nobody else in the process reads every criterion against every
+chart, and nobody re-reads the people they rule out.
 
-A prescreening system that turns a panel of several hundred patients into a ranked
-worklist: the people who are provably ineligible are removed with a dated citation
-each, and everyone else is ordered by how few questions remain.
+TrialSieve turns that panel into a ranked worklist: the provably ineligible are
+removed with a dated citation each, and everyone else is ordered by how few
+questions remain.
 
-The bottleneck it targets is not the individual chart. A coordinator reading one
-chart against one criterion is not the slow step, and this project has no
-measurement of how long that takes, so it does not put a number on it. The slow
-step is that the list is longer than the reading capacity, so candidates get worked
-in whatever order the list arrives in.
+The bottleneck is not the individual chart. Reading one chart against one criterion
+is not the slow step, and this project never timed it, so it puts no number on it.
+The slow step is that the list is longer than the reading capacity, so candidates
+get worked in whatever order the list arrives in.
 
-That last sentence is this project's premise rather than one of its findings, and
-it is not measured here. No coordinator was observed and none was timed. It is
-measured elsewhere: Ni et al., *Automated clinical trial eligibility prescreening*,
-JAMIA 22(1):166-178, 2015 ([PMC4433376](https://europepmc.org/articles/PMC4433376),
-doi:10.1136/amiajnl-2014-002887), ran automated prescreening against a
-physician-generated gold standard across 13 trials and 202,795 emergency-department
-patients and reports "the workload with automated ES was reduced by 92% on the gold
-standard set". That is a different quantity from anything in this repository, on a
-different population, and it is cited for the premise rather than as a comparison:
-it establishes that screening workload is a real and published bottleneck, not that
-92% is a bar this project clears. What is
-measured is the consequence a system can be held to: how many of the 15,400 cells
-a person is left holding, and how many of the answers they are handed are wrong in
-a way they cannot see. If the premise is wrong, the numbers in this repository are
-still what they say they are; they would simply matter less.
+That is this project's premise, not one of its findings. No coordinator was
+observed here. It is measured elsewhere: Ni et al., *Automated clinical trial
+eligibility prescreening*, JAMIA 22(1):166-178, 2015
+([PMC4433376](https://europepmc.org/articles/PMC4433376),
+doi:10.1136/amiajnl-2014-002887) ran automated prescreening against a
+physician-generated gold standard across 13 trials and 202,795
+emergency-department patients and reports "the workload with automated ES was
+reduced by 92% on the gold standard set". Different quantity, different
+population, cited for the premise and not as a bar this project clears. If the
+premise is wrong, the numbers here are still what they say they are. They would
+simply matter less.
 
-What can be measured here is the shrink. The panel is 385 Synthea patients and the
-held-out protocol is 40 criteria, giving 15,400 patient-criterion cells.
-`results/RESULTS.md` reports what fraction of that grid the system settles and how
-many of the settled cells it gets wrong. Both numbers come from
-`scripts/report.py`, and the second one is the one that decides whether the first
-is worth anything.
+What is measured here is the grid: 385 Synthea patients against a held-out
+40-criterion protocol, 15,400 patient-criterion cells. `results/RESULTS.md`
+reports what fraction of it the system settles and how many of the settled cells
+it gets wrong. The second number is the one that decides whether the first is
+worth anything.
 
 **And what is left is shaped like questions, not like patients.** On the published
 worklist (one trial, the zero-false-exclusion operating point) the engine settles
-187 of 385 screens and clears 8 to contact. The 190 that remain open contain **two
-distinct questions**, and 188 of them are open on the same one: no HbA1c on file.
-So a coordinator has one thing to go and find rather than 190 charts to read.
-Getting it still returns 188 separate values, one per patient. What collapses is
-the search, not the answers, and that is the honest version of the claim: 1,155
-readings become 2 things to go and get. It follows from compiling once instead of asking
-per cell: a predicate fails the same way for everyone it fails for, so its residue
-sorts into questions, while a per-cell model answers each patient separately and
-leaves a residue that sorts into patients with nothing to group. The counts are
-generated into [docs/COST.md](docs/COST.md) from
-[docs/sample_worklist.json](docs/sample_worklist.json), and the section there
-states what does and does not generalise from one trial.
+187 of 385 screens and clears 8 to contact. The 190 still open carry **two distinct
+questions** between them, and 188 are open on the same one: no HbA1c on file. So a
+coordinator has one thing to go and find rather than 190 charts to read. Getting it
+still returns 188 separate values. What collapses is the search, not the answers.
+That follows from compiling once instead of asking per cell: a predicate fails the
+same way for everyone it fails for, so its residue sorts into questions, while a
+per-cell model answers each patient separately and leaves a residue that sorts into
+patients with nothing to group. The counts are generated into
+[docs/COST.md](docs/COST.md) from
+[docs/sample_worklist.json](docs/sample_worklist.json), which states what does and
+does not generalise from one trial.
 
-The job worth doing is to shrink the list **without a single false exclusion**.
-That constraint is why the interesting number in this repository is not accuracy.
-A system that removes nobody is safe and useless; a system that removes the wrong
-person has done the one harm prescreening can do. Coverage and silent error are
-reported as a pair for that reason, and neither is reported alone.
+The job is to shrink the list **without a single false exclusion**. That constraint
+is why the interesting number here is not accuracy. A system that removes nobody is
+safe and useless; a system that removes the wrong person has done the one harm
+prescreening can do. Coverage and silent error are reported as a pair for that
+reason, and neither is reported alone.
 
 ---
 
@@ -96,11 +118,9 @@ reported as a pair for that reason, and neither is reported alone.
 Each row names the set it is counted over, because they are not the same set: the
 cost rows are the whole 15,400-cell panel and the last row is one trial at one
 operating point. Every money figure is read back out of
-[docs/COST.md](docs/COST.md) by `tests/test_readme_cost_claims.py`, which is the
-rule the rest of this repository runs on. A number that appears twice disagrees
-with itself eventually, so the second copy is checked against the first. The two
-costs cross at 2.2 patients, and past that the gap grows with every patient and
-every rescreen, because one side of it is flat.
+[docs/COST.md](docs/COST.md) by `tests/test_readme_cost_claims.py`. The two costs
+cross at 2.2 patients, and past that the gap grows with every patient and every
+rescreen, because one side of it is flat.
 
 **The larger cost is not in that table, and it is a person.** Before this produces
 any document, somebody qualified reads all 19 compiled predicates and signs them.
@@ -593,21 +613,18 @@ records, and its diabetes cohort is coded with a single unspecified code.
 
 ## Hot take
 
-Most agent evaluations report accuracy on the cases where the agent answered, and
-the cases it should not have answered at all do not appear anywhere in the number.
-That is backwards for anything that acts on people. The question that matters is not
-how often a system is right, it is how often it is confidently wrong in a way nobody
-can see. Until an agent can say "the record does not say" as a first-class output,
-and be scored on it, its accuracy figure is a measure of its willingness to guess.
+Most agent evaluations report accuracy over the cases where the agent answered.
+The cases it should never have answered at all do not appear in the number. That
+is backwards for anything that acts on people. How often a system is right matters
+less than how often it is confidently wrong in a way nobody can see, and until an
+agent can say *the record does not say* as a first-class output and be scored on
+it, an accuracy figure is a measure of willingness to guess.
 
-This project can put a number on that rather than only assert it, and the number
-came out against the design. In the grounding probe, a local 8B model answered 21
-concepts and got 7 wrong. Every one of the 7 was an over-acceptance: a real code
-from the site's own vocabulary that means something adjacent to the concept asked
-for. Not one was a refusal. The stronger model got 6 of those 7 right and made the
-same mistake on the seventh. An accuracy score of 14 of 21 and 20 of 21 makes those
-two failures look like the same kind of thing at different rates. They are not: the
-errors are entirely on the side that costs a patient and entirely absent from the
-side that costs coverage, and that asymmetry is invisible in any single figure.
-[docs/WEAK_MODEL.md](docs/WEAK_MODEL.md) reports both columns for that reason, and
-the headline results report coverage and silent error as a pair for the same one.
+The grounding probe above is the argument, and it went against the design. Two
+models, 14 of 21 and 20 of 21. As accuracy that reads as the same kind of failure
+at two rates. It is not: **all seven of the weak model's errors are
+over-acceptance and none is a refusal**, so the errors sit entirely on the side
+that costs a patient and entirely off the side that costs coverage. One number
+cannot show that. Two can, which is why
+[docs/WEAK_MODEL.md](docs/WEAK_MODEL.md) prints both columns and why every
+headline here reports coverage and silent error as a pair.
