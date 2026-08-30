@@ -63,9 +63,15 @@ def test_reproduce_guide_quotes_the_real_test_count():
     import sys as _sys
 
     doc = (ROOT / "REPRODUCE.md").read_text(encoding="utf-8")
-    m = re.search(r"The engine gate runs\.\*\* (\d+) tests, of which (\d+) are semantic", doc)
-    assert m, "the sentence that quotes the counts has been reworded; update this test"
-    claimed_total, claimed_engine = int(m.group(1)), int(m.group(2))
+    # Two counts, two homes, because entry 46 split the gate: the engine tests
+    # gate the run at step 2 and the whole suite runs at step 8, once the
+    # artifacts it reads exist. Both are asserted, so moving one and forgetting
+    # the other fails here rather than in front of a reader.
+    eng = re.search(r"The engine gate runs\.\*\* The (\d+) semantic tests", doc)
+    assert eng, "the step 2 sentence quoting the engine count has been reworded"
+    tot = re.search(r"The full suite runs\*\*, all (\d+) tests", doc)
+    assert tot, "the step 8 sentence quoting the total has been reworded"
+    claimed_total, claimed_engine = int(tot.group(1)), int(eng.group(1))
 
     out = subprocess.run([_sys.executable, "-m", "pytest", "--collect-only", "-q"],
                          cwd=ROOT, capture_output=True, text=True).stdout

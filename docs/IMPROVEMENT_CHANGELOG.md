@@ -57,7 +57,7 @@ same data. Neither is an estimate.
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
 | silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
 | false exclusions at 40% record damage | 206 | **31** | `degradation_curve` in `results/results.json` |
-| `python run.py reproduce` on a clean clone | fails, then DIFFERENT | **IDENTICAL** | clone into an empty directory and run it; entry 34 |
+| `python run.py reproduce` on a clean clone | fails, then DIFFERENT | **IDENTICAL** | clone into an empty directory and run it; entries 34 and 46 |
 | tracked files carrying a home directory | 57 | **0** | `python -m pytest tests/test_no_private_paths.py`; entry 36 |
 
 One row that is **not** in this table: on the six **absence** concepts,
@@ -2551,3 +2551,48 @@ depending on the length of a list.
 `python -c "import json; d=json.load(open('docs/sample_worklist.json')); print(len(d['ruled_out']), len(d['review']), len(d['eligible']))"`
 prints `187 190 8` against the `n_ruled_out`, `n_review` and `n_eligible` the same
 file reports.
+
+## 46. The gate required the artifact that the run it gates produces
+
+**Found by** an independent reviewer who did not read the reproduction claim but
+tested it: `git clone`, then `python run.py reproduce`, on a machine that had
+never held this project's generated files.
+
+**What was wrong.** It failed. **19 failed, 323 passed**, at the first gate, on the
+one command every other claim in this repository is advertised on. Eighteen were
+`tests/test_narration_matches_the_script.py` and one was
+`tests/test_sensitivity_section.py`, and the error named the cause without
+ambiguity: `MissingFigure: no scored-run meta under runs/tierA/cells`.
+
+`runs/tierA/cells/` is 46 MB of per-cell output and `.gitignore` excludes it, on
+purpose. `reproduce` regenerates it at step 4. The test gate ran at step 2. So the
+suite was asked to check figures against a run that had not happened yet, and the
+gate could only pass on a machine that already had the answer sitting on disk.
+
+That is the same shape as the sign-off gate in entry 21, and it is worth naming
+because it survives every local check: **a gate cannot require what the run it
+gates produces.** Every developer machine here had the cells. Nothing on this
+machine could ever have failed. Entry 34 had already fixed one version of this and
+its own summary row, `run.py reproduce on a clean clone | fails at linkcheck, then
+DIFFERENT | IDENTICAL`, was false again by the time it was read.
+
+**What changed.** The gate now runs what the protocol actually names as the
+precondition, the engine's own semantics: `tests/test_engine.py`, 52 tests, Kleene
+tables, window boundaries, unit conversions, absent distinguished from zero. That
+needs nothing the run produces. `run.py`'s own help had said `check` was "the
+engine gate, about a second" all along, while it ran the whole suite in 25; the
+description was right and the code was not. The full 342 now run at step 8, after
+the artifacts they read exist, so nothing is skipped and nothing is trusted.
+
+| | before | now |
+|---|---|---|
+| `git clone` then `python run.py reproduce` | **19 failed, 323 passed**, exit 1 | **342 passed, IDENTICAL**, exit 0 |
+| tests gating the scored run | 342, of which 19 read its output | **52**, none of which do |
+| tests run after the artifacts exist | 0 | **342** |
+| wall clock on a clean clone | did not finish | 147.4s |
+
+**Evidence.** Clone into an empty directory and run it. The run above was done
+twice from scratch, once to see the failure and once to see it gone.
+`python run.py check` is now the 52 and `python run.py suite` is the 342, and
+`tests/test_makefile_matches.py` caught that the new target was not reachable
+through `make`, which is the second gate doing its job on the first.

@@ -61,15 +61,32 @@ def banner(title: str) -> None:
 # ---------------------------------------------------------------- targets ---
 
 def t_check() -> None:
-    """The engine gate. The protocol makes this a precondition for a scored run."""
+    """The engine gate. The protocol makes this a precondition for a scored run.
+
+    This runs the engine's own semantics and nothing else, which is what the
+    protocol names as the precondition and what this file's own help has always
+    said it was. It used to run the whole suite, and that could not work from a
+    clean clone: the suite includes tests that read `runs/tierA/cells/`, the
+    directory `reproduce` regenerates several steps later and `.gitignore`
+    excludes. Nineteen of them failed for everyone whose checkout did not already
+    have the files, on the one command the whole evidence chain is advertised on.
+    A gate cannot require what the run it gates produces. The full suite still
+    runs inside `reproduce`, after the artifacts it describes exist.
+    """
     banner("engine gate")
-    sh(PY, "-m", "pytest", "-q")
+    sh(PY, "-m", "pytest", "-q", "tests/test_engine.py")
     # `dependencies = []` is the claim that lets a judge reproduce with no install
     # step. One new import would end it silently, so the claim is parsed rather
     # than trusted: every module the reproduction touches, checked against
     # `sys.stdlib_module_names`.
     banner("dependency surface")
     sh(PY, "scripts/lockfile.py", "--imports")
+
+
+def t_suite() -> None:
+    """The whole suite, run where every artifact it reads already exists."""
+    banner("the full test suite")
+    sh(PY, "-m", "pytest", "-q")
 
 
 def t_environment() -> None:
@@ -251,6 +268,7 @@ def t_reproduce(run: str = RUN) -> None:
     banner("score and report")
     sh(PY, "scripts/report.py", "--run", run, "--out", "results")
 
+    t_suite()
     t_verify(run)
     t_diff()
 

@@ -53,14 +53,16 @@ was read as a count of zero by the document a reviewer signs.
 1. **`results/environment.json`** is written: Python version, platform, git commit,
    and whether the tree was dirty. A number that differs on your machine has
    somewhere to point.
-2. **The engine gate runs.** 342 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
-   Kleene truth tables, both boundaries of every date window, both directions of
-   every unit conversion, absent distinguished from zero. The protocol makes this
-   a precondition for a scored run, so `reproduce` stops here if it fails. The
-   rest cover the recorder, the sign-off gate, the cassette seal, the
-   contamination perturbation and the mutation harness. `python -m pytest -q`
-   prints the current count, which is the number to trust if this sentence has
-   drifted.
+2. **The engine gate runs.** The 52 semantic tests over the evaluation engine
+   alone (`tests/test_engine.py`): Kleene truth tables, both boundaries of every
+   date window, both directions of every unit conversion, absent distinguished
+   from zero. The protocol makes this a precondition for a scored run, so
+   `reproduce` stops here if it fails. It is only the engine, and that is the
+   point: the full suite reads artifacts this command has not produced yet, so
+   gating the run on it would mean requiring what the run creates. It did, until
+   an independent reviewer cloned this repository and hit nineteen failures on
+   the one command everything else is advertised on. The whole suite runs at
+   step 8, where the things it reads exist.
 3. **The compile is replayed** from `runs/tierA/cassettes/`. Each cassette is a
    recorded model call keyed on the sha256 of the full canonical request. Replay
    never falls through to a live call: a missing cassette raises `CassetteMiss`
@@ -77,8 +79,14 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The five verification checks run** (see below).
-9. **The report is compared** byte for byte against `results/published/results.json`,
+8. **The full suite runs**, all 342 tests, now that every artifact they read
+   exists. `python -m pytest -q` prints the current count, which is the number to
+   trust if this sentence has drifted. Beyond the engine they cover the recorder,
+   the sign-off gate, the cassette seal, the contamination perturbation, the
+   mutation harness, and what the film's cards and narration say against what the
+   run actually printed.
+9. **The five verification checks run** (see below).
+10. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
 
 ## The solution, the baseline and the evaluation, as three separate commands

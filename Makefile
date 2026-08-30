@@ -3,13 +3,16 @@
 
 PY ?= python
 
-.PHONY: help check reproduce verify diff live live-smoke panel clean \n        contamination environment links publish
+.PHONY: help check suite reproduce verify diff live live-smoke panel clean \n        contamination environment links publish
 
 help:
 	@$(PY) run.py help
 
 check:
 	@$(PY) run.py check
+
+suite:
+	@$(PY) run.py suite
 
 reproduce:
 	@$(PY) run.py reproduce
