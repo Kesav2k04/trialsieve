@@ -1472,7 +1472,7 @@ the numbers is the reason entry 29 has the title it has.
 
 ## 28. The coverage headline was the answer key's number, not the system's
 
-**Found by** signing off the video narration. the video build script` claims`
+**Found by** signing off the video narration. the video build's claims gate
 prints every spoken quantity and refuses to build until each has been read
 against the run output. One of them was "twenty-four of the sixty-five criteria
 compile to predicates", and checking it against
@@ -1892,7 +1892,7 @@ the one word that has to be exactly right.
 build needed `edge-tts` and `playwright`; the new one needs Node, which is not
 reachable from anything in `src/`, `scripts/` or `run.py`. So
 `pyproject.toml` now declares exactly one optional dependency, `pytest`, and
-`scripts/lockfile.py --imports` still reports zero third-party imports across 53
+`scripts/lockfile.py --imports` still reports zero third-party imports across 54
 modules on the reproduction path.
 
 | | before | now |
@@ -1902,13 +1902,14 @@ modules on the reproduction path.
 | lines that overrun the card spoken over them | 4 of 6 | **0 of 16** |
 | a card showing one run from protocol text to worklist | none | **cards 7, 8 and 9** |
 | third-party Python packages the repository declares | 3 | **1** |
-| length against the five minute limit | 4:54 | **4:58** |
+| length against the five minute limit | claimed, not read | **4:54, read from the file** |
 
-**Evidence.** `cd film && python scripts/the narration script --check` measures every wav
-against the card holding it. `python scripts/the grid checker re-counts the grids.
-`python scripts/the terminal capture --check` re-runs the terminals. `npx tsc --noEmit`
-fails on a card that names a sentence the script no longer has. `python
-the video build script check` measures the committed mp4.
+**Evidence.** Four gates, which ship with the video build rather than here. The
+narration check measures every wav against the card holding it, the grid checker
+re-counts the grids, the terminal capture re-runs the terminals, and `npx tsc
+--noEmit` fails on a card that names a sentence the script no longer has. The
+length is read from the rendered file with ffprobe rather than claimed: 294.06
+seconds, which is 4:54.
 
 ---
 
@@ -1970,13 +1971,13 @@ its own stale copy, so it would have animated to thirty-four under a voice sayin
 thirty-six.
 
 Every gate the film has was pointed at something else. the film's grid checker re-counts
-the cells the grids draw. the film's narration script` --check` proves each line fits its card.
-the film's terminal capture` --check` re-runs the captured commands. the video build script` claims` binds
+the cells the grids draw. the narration check proves each line fits its card.
+the terminal capture's own check re-runs the captured commands. the video build's claims gate binds
 every spoken quantity to the repository. Not one of them looked at the file that
 sits between the repository and the screen, because it was output, and output was
 assumed to be current.
 
-**What changed.** the film's figure extractor` --check` re-derives the whole file and exits
+**What changed.** the figure extractor's own check re-derives the whole file and exits
 non-zero if the committed copy differs by a byte. It is the fifth check in
 the film's own README, and it fails loudly on the exact state this repository was in
 ten minutes before it was written. The generator no longer writes a machine
@@ -2151,9 +2152,9 @@ seven lines were summaries composed in the TSX that no command had printed, unde
 a comment claiming the card could not go on showing a pass after the command
 stopped passing.
 
-**Why every gate missed both.** the film's figure extractor` --check` (entry 37)
+**Why every gate missed both.** the figure extractor's own check (entry 37)
 compares the film's figure file against the repository, and both defects were string
-literals in TSX rather than data. the film's terminal capture` --check` re-runs the
+literals in TSX rather than data. the terminal capture's own check re-runs the
 fast commands, and the stale capture was the slow one it skips. `npx tsc --noEmit`
 type-checks a string. The film rendered, the suite passed, and
 `python run.py reproduce` printed IDENTICAL, because none of them looks at what a
@@ -2173,7 +2174,7 @@ was written for before being kept:
 
 **A third gate, from looking for the same shape one layer down.** The two defects
 above are a card saying something the repository does not. The voice can do it
-too, and the film's narration script` --check` cannot see it: it re-measures each wav
+too, and the narration check cannot see it: it re-measures each wav
 and compares the duration and digest against the file those measurements were
 written to, so it compares audio against its own record. Change a spoken figure in
 the video's own page, re-render the film without re-running the speech model, and every
@@ -2230,7 +2231,7 @@ this project's own argument, since an arm that answers less can only be compared
 fairly if the rates share a denominator, and the one place it was dropped is the
 one a reviewer hears rather than reads.
 
-**Why the claims gate signed it.** the video build script` claims` requires every
+**Why the claims gate signed it.** the video build's claims gate requires every
 spoken quantity to be read against the run and signed. Both numbers in that
 sentence are real numbers from `results.json`, so the sentence was signed. A gate
 that checks each figure cannot see a relation asserted between two of them. That
@@ -2251,7 +2252,7 @@ to be read against the run and signed on its own.
 | the factor the sentence flattered by | 4.6 | **1** |
 | spoken figures typed rather than derived | 1 | **0** |
 
-**Evidence.** `python the video build script claims` reports 27 sentences stating a
+**Evidence.** the video build's claims gate reports 27 sentences stating a
 quantity, all signed and none unchecked, and prints `paired_cells = four hundred`
 beside `ts_error_pct = one percent`, both out of the same group in
 `results/results.json`.
@@ -2261,7 +2262,7 @@ beside `ts_error_pct = one percent`, both out of the same group in
 **Found by** rewriting the narration for a listener who is not an engineer, which
 put two money figures into it and made the gate say nothing at all.
 
-**What was wrong.** the video build script` claims` is the rule that a spoken
+**What was wrong.** the video build's claims gate is the rule that a spoken
 quantity must be read against the run and signed by a person before the film can
 be built. It finds quantities by matching number words against `WORD_NUM`. That
 table went one, two, three, up to twelve, then jumped to thirty, forty, fifty,
@@ -2316,7 +2317,7 @@ not a letter.
 | load-bearing claims never offered to a human | 1 | **0** |
 | compound figures the fallback could match | 0 | **all of them** |
 
-**Evidence.** `python the video build script claims` reports 31 sentences stating a
+**Evidence.** the video build's claims gate reports 31 sentences stating a
 quantity, none unchecked. Running the old table and the old whitespace split over
 the same script finds 25.
 
@@ -3178,11 +3179,23 @@ sides, and compares everything else, which is the third outcome this repository
 keeps needing: a check that cannot run has to say so rather than pick one of pass
 or fail.
 
+**Two more of the same shape, once it was clear what to look for.**
+`tests/test_sensitivity_section.py` guarded on the compiled file, which is tracked,
+and then read the evaluated cells, which are not. On a fresh clone it therefore
+failed with nothing wrong, which is entry 46's rule again in a gate that had been
+rewritten since: a gate cannot require what the run it gates produces. It now skips
+and names the command that writes the cells. And `.github/workflows/reproduce.yml`
+used the default checkout, which fetches one commit, so the two gates that resolve
+the commit the published numbers came from would have gone red on the first push
+for exactly the reason an archive skips them. It fetches the whole history now.
+
 | | before | now |
 |---|---|---|
 | `run.py reproduce` from the unpacked archive | exit 1 | **exit 0, IDENTICAL** |
 | tests failing in the unpacked archive | 13 | **0** |
 | tests skipping there, each printing why | 13 | **16** |
+| `python -m pytest` on a fresh clone, before anything is generated | 1 failed | **347 passed, 2 skipped** |
+| commits the CI checkout can see | 1 | **all of them** |
 | sources of truth for what shipped | 1, unavailable offline | **2, checked against each other** |
 
 **Evidence.** `git archive --format=zip -o trialsieve.zip HEAD`, unpack it into an
