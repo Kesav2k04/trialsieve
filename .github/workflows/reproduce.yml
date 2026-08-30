@@ -22,7 +22,14 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ["3.10", "3.13"]
     steps:
+      # Full history, not the default shallow fetch. Two gates resolve the
+      # commit the published numbers came from, and one reads which commit last
+      # touched each prompt file. A one-commit clone answers neither, so a
+      # shallow checkout fails here for the same reason an unpacked archive
+      # skips: there is no history to ask.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
@@ -35,6 +42,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"

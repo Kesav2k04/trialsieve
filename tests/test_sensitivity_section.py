@@ -53,6 +53,15 @@ def test_worst_offender_is_named_and_counted_from_the_cells():
     run = ROOT / "runs" / "tierA"
     if not (run / "compiled" / "criteria_seed7.json").exists():
         pytest.skip("no compiled run in this checkout")
+    # The compiled file is tracked and the evaluated cells are not, so a fresh
+    # clone has one and none of the other. Without the cells the search below
+    # has nothing to search and reports the same None it reports when there is
+    # genuinely no offender, which failed this on a clone where nothing was
+    # wrong. `python run.py reproduce` writes them, and the suite runs again
+    # after it does.
+    if not list((run / "cells").glob("cells_*.jsonl")):
+        pytest.skip("no evaluated cells in this checkout; `python run.py reproduce` "
+                    "writes them and this compares the report against them")
     groups = mod.load_cells(run)
 
     # How many compiled queries actually assert a closed world. If there are
