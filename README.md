@@ -16,7 +16,8 @@ of them gets a phone call.
 and every ground rule, each pointing at the file that answers it, including what
 existed before the competition started and what was built during it.
 [REPRODUCE.md](REPRODUCE.md) is one command from a clean environment.
-[docs/VIDEO.md](docs/VIDEO.md) is the five minute walkthrough.
+[docs/VIDEO.md](docs/VIDEO.md) is the five minute walkthrough, and
+[docs/video/script.md](docs/video/script.md) is what it says, word for word.
 
 ---
 

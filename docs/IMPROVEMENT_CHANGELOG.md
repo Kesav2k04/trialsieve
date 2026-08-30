@@ -1563,7 +1563,10 @@ could never have stored it. Its silence carries no information, and reading that
 silence as absence commits FALSE on every patient whose chart simply never
 mentions the parent.
 
-`NCT06983054-INC-01` did that 358 times. `NCT06989723-INC-02` did it 246 times.
+`NCT06983054-INC-01` did that 358 times in the first published run, of that run's
+424. `NCT06989723-INC-02` did it 246 times, of the 670 in the run entry 29
+produced: it was lost to the validator before that and could not fail where
+anyone could count it. The two are from different states and do not add.
 
 **What changed.** `open_world_broader_only()` in `compiler.py` walks the emitted
 expression and forces `absent_means` to `unknown` on any query with an empty
@@ -1589,7 +1592,7 @@ to arrive at the only remaining answer.
 | panel reduction | 60.35% | 75.32% | 46.15% |
 
 Against the simple baseline, on the paired 400-cell sample the two arms share:
-B2 is wrong on 43.75% of cells and wrongly rules out 10 of 30 patients,
+B2 is wrong on 43.75% of cells and wrongly rules out 10 of 30 screens,
 TrialSieve is wrong on 1.00% and wrongly rules out 2.
 
 **The trade is real and is not hidden.** Cells answered fell from 24.12% to

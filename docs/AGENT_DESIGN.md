@@ -21,7 +21,7 @@ designed away.
 | `grounder` | 2 per concept | concept name and domain | UNMAPPABLE, which stops the criterion |
 | `compiler` | 2 per criterion, plus repairs | criterion content hash | refusal with a named blocker, or invalid IR that the validator rejects |
 | `critic` | 1 per criterion, plus 1 revision | predicate digest | a counterexample that the engine then confirms or dismisses |
-| `adjudicator` | **0** | nothing to cache, it is a pure function | a raised exception, never a verdict |
+| `adjudicator` (`Evaluator`, `src/trialsieve/evaluator.py`) | **0** | nothing to cache, it is a pure function | a raised exception, never a verdict |
 | `worklist` | 0 | nothing | a refusal to render without sign-off |
 
 The grounder cache is the one that matters economically. Forty criteria across
@@ -163,6 +163,11 @@ design cares most about is the reason the human sign-off gate is not decoration.
 ## `adjudicator`
 
 **Zero model calls.** This is the whole bet.
+
+It is the role name, not the module name. The code is `class Evaluator` in
+[`src/trialsieve/evaluator.py`](../src/trialsieve/evaluator.py), and there is no
+file called `adjudicator.py` to grep for. The two names are kept because the
+role is what the design argues about and the class is what a reader opens.
 
 It takes compiled predicates and a chart and returns a verdict, a reason, and the
 dated resources it read. It is a pure function of (predicate, chart, unit policy).

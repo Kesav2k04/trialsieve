@@ -68,7 +68,8 @@ def build() -> str:
           f"`docs/sample_worklist.json`. `python run.py reproduce` regenerates "
           f"both offline from recorded model calls.", ""]
     L += [f"The rows below are scored on **the same {n_cells} cells**: "
-          f"{n_screens} patients against the criteria that compiled, judged by "
+          f"{n_screens} screens, meaning ten patients each read against three "
+          f"trials, against the criteria that compiled, judged by "
           f"both arms. B2 is the only baseline that spends a model call per cell, "
           f"so it was recorded over a seeded sample rather than the full "
           f"{full['cell_scores']['TS']['n_cells']:,}-cell panel, and every arm it "
@@ -93,7 +94,7 @@ def build() -> str:
              f"({tsp['false_exclusions']} false exclusions, reduction "
              f"{_pct(tsp['reduction'])}) | both void; the harm behind the void "
              f"falls from {b2p['false_exclusions']} to {tsp['false_exclusions']} |")
-    L.append(f"| Patients wrongly ruled out, of {n_screens} | "
+    L.append(f"| Screens wrongly ruled out, of {n_screens} | "
              f"{b2p['false_exclusions']} | **{tsp['false_exclusions']}** | "
              f"{b2p['false_exclusions'] - tsp['false_exclusions']} fewer |")
     L.append(f"| Silent error rate per cell | {_pct(b2['ser'])} | "
