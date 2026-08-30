@@ -336,12 +336,34 @@ def t_contamination() -> None:
     sh(PY, "scripts/contamination.py", "--run", RUN)
 
 
-def _canonical(p: Path) -> str:
+#: Which commit last touched each prompt file. Evidence about the recording
+#: rather than a number this run computes, and readable only where there is an
+#: object database.
+PROVENANCE = "prompt_files_last_commit"
+
+
+def _canonical(p: Path, drop_provenance: bool = False) -> str:
     """Compare the numbers, not the timestamps."""
     d = json.loads(p.read_text(encoding="utf-8"))
     for k in ("generated_at", "wall_s", "environment", "elapsed_s"):
         d.pop(k, None)
+    if drop_provenance:
+        d.pop(PROVENANCE, None)
     return json.dumps(d, sort_keys=True, indent=1)
+
+
+def _without_provenance(text: str) -> str:
+    """The report with its Provenance section removed, both sides alike.
+
+    Only ever called when the section cannot be produced here, and only after
+    saying so. Masking it silently would mean the one block a reader might want
+    to check is the one block nothing checks.
+    """
+    head, sep, rest = text.partition("\n## Provenance\n")
+    if not sep:
+        return text
+    nxt = rest.find("\n## ")
+    return head + (rest[nxt:] if nxt != -1 else "")
 
 
 def t_diff() -> None:
@@ -364,7 +386,19 @@ def t_diff() -> None:
     if not mine.exists():
         print(f"missing {mine}", file=sys.stderr)
         raise SystemExit(1)
-    a, b = _canonical(mine), _canonical(theirs)
+    # An archive has no commits, so the provenance block is empty here and full
+    # in the published copy. That is a fact about the reader's tree rather than a
+    # number that failed to reproduce, and reporting DIFFERENT for it told a judge
+    # the headline claim had failed when every number had matched.
+    local = json.loads(mine.read_text(encoding="utf-8")).get(PROVENANCE) or {}
+    no_provenance = not any(local.values())
+    if no_provenance:
+        print("NOT COMPARED: the provenance block names the commit that last "
+              "touched each prompt file, and this tree has no object database, so "
+              "there is nothing here to compare it against. It is excluded on both "
+              "sides and everything else below is compared as usual. Clone the "
+              "repository to have it checked too.\n")
+    a, b = _canonical(mine, no_provenance), _canonical(theirs, no_provenance)
 
     # `publish` freezes three files and this compared one of them. RESULTS.md is
     # the document a reader actually reads, and every sentence in it is generated
@@ -383,7 +417,11 @@ def t_diff() -> None:
             print(f"missing {path.relative_to(ROOT)}, so there is nothing to "
                   f"compare and nothing to claim")
             raise SystemExit(1)
-    md_same = md_mine.read_bytes() == md_theirs.read_bytes()
+    md_a = md_mine.read_text(encoding="utf-8")
+    md_b = md_theirs.read_text(encoding="utf-8")
+    if no_provenance:
+        md_a, md_b = _without_provenance(md_a), _without_provenance(md_b)
+    md_same = md_a == md_b
 
     if a == b and md_same:
         print("IDENTICAL: every published number reproduced on this machine, and "
@@ -396,8 +434,7 @@ def t_diff() -> None:
               "changing.", file=sys.stderr)
         import difflib
         for line in list(difflib.unified_diff(
-                md_theirs.read_text(encoding="utf-8").splitlines(),
-                md_mine.read_text(encoding="utf-8").splitlines(),
+                md_b.splitlines(), md_a.splitlines(),
                 fromfile="published/RESULTS.md", tofile="this machine",
                 lineterm=""))[:40]:
             print(line, file=sys.stderr)

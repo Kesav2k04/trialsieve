@@ -1203,13 +1203,23 @@ def main() -> int:
             prompts[f.name] = ""
     results["prompt_files_last_commit"] = prompts
     md.append("\n## Provenance\n")
-    md.append("The commit that last touched each prompt-carrying file. If any of these is "
-              "later than the commit that produced these numbers, the run is invalid and "
-              "is rerun. See `docs/DEV_SPLIT.md`.\n")
-    md.append("| file | last touched by |")
-    md.append("|---|---|")
-    for k, v in prompts.items():
-        md.append(f"| `{k}` | `{v[:16]}` {v[41:]} |")
+    if not any(prompts.values()):
+        # An unpacked source archive has the prompt files and no object database,
+        # so there is no commit to name. Saying that is the only honest rendering:
+        # an empty table would read as "no prompt file has ever been touched".
+        md.append("This tree has no object database, so the commit that last touched "
+                  "each prompt-carrying file cannot be read here. A clone of the "
+                  "repository shows it, and `python run.py diff` says so rather than "
+                  "comparing an empty block against a full one. See "
+                  "`docs/DEV_SPLIT.md`.\n")
+    else:
+        md.append("The commit that last touched each prompt-carrying file. If any of these is "
+                  "later than the commit that produced these numbers, the run is invalid and "
+                  "is rerun. See `docs/DEV_SPLIT.md`.\n")
+        md.append("| file | last touched by |")
+        md.append("|---|---|")
+        for k, v in prompts.items():
+            md.append(f"| `{k}` | `{v[:16]}` {v[41:]} |")
 
     out = Path(a.out or (run / "report"))
     out.mkdir(parents=True, exist_ok=True)
