@@ -79,10 +79,10 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 382 tests, now that every artifact they read
+8. **The full suite runs**, all 383 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
-   trust if this sentence has drifted. From a clone that is 382 passed. From an
-   unpacked source archive it is 375 passed and 7 skipped, because seven of
+   trust if this sentence has drifted. From a clone that is 383 passed. From an
+   unpacked source archive it is 376 passed and 7 skipped, because seven of
    them resolve a commit or read history and an archive carries the tree without
    an object database. The pre-registration freeze is no longer among them:
    `docs/protocol_registration.json` carries the registering commit and the
@@ -147,7 +147,7 @@ re-hashing 1,047 cassettes.
 
 The last lines of a real run, copied out of
 [`docs/reproduce_transcript.txt`](docs/reproduce_transcript.txt), which is
-captured stdout rather than a sample typed into this file. The whole 1,925-line
+captured stdout rather than a sample typed into this file. The whole 1,994-line
 transcript is in there, so there is more than a tail to compare against. Run the
 command yourself and read your own last lines beside these:
 
@@ -156,7 +156,7 @@ command yourself and read your own last lines beside these:
     ========================================================================
     IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
 
-    OK  (reproduce in 151.3s)
+    OK  (reproduce in 149.2s)
 
     exit 0
 
@@ -232,18 +232,18 @@ and an estimate of what the same work would cost at published per-token rates.
 
 Two numbers are worth reading before the rest.
 
-**Reproducing costs nothing and takes under three minutes.** `python run.py
-reproduce` makes no model call, so it costs $0.00 in tokens and needs no key.
-Every recorded call replays from `runs/tierA/cassettes/`, and replay never falls
-through to a live call. Measured end to end on this machine, a Windows laptop
-with a 14-core CPU: **158.9 seconds from a fresh clone into an empty directory**,
-151.3 seconds in place with the artifacts already warm, and 285.6 seconds on a
-second run while the same machine was busy rendering video. Every one of those is
-printed by the command itself as its last line, so the figure a judge sees is the
-one their own run measured rather than this one. Three readings of the same
-command are given because the spread is the honest answer to "how long does it
-take": a cold clone pays for reading 57 MB off disk, and a busy machine pays
-twice.
+**Reproducing costs nothing and takes about two and a half minutes.** `python
+run.py reproduce` makes no model call, so it costs $0.00 in tokens and needs no
+key. Every recorded call replays from `runs/tierA/cassettes/`, and replay never
+falls through to a live call. The reading you can check rather than take on trust
+is the last line of
+[`docs/reproduce_transcript.txt`](docs/reproduce_transcript.txt), which is
+captured stdout from a clean tree: **149.2 seconds** on a Windows laptop with a
+14-core CPU. Repeated runs on that machine landed between 143 and 164 seconds,
+and the spread is the honest answer to "how long does it take": a cold clone pays
+to read 57 MB off disk, and a machine that is busy pays twice. Every one of them
+is printed by the command itself as its last line, so the figure a judge sees is
+the one their own run measured rather than this one.
 
 **Screening is free, and that is the architecture showing up as a runtime fact.**
 The step that touches all 385 patients across all 40 criteria makes zero model

@@ -36,10 +36,23 @@ B2_PATIENTS = 10
 PUBLISHED = ROOT / "results" / "published"
 
 
+def shown(cmd: list[str]) -> str:
+    """The command as a reader would retype it, with no absolute path in it.
+
+    `sys.executable` is absolute, and on Windows it usually sits under a home
+    directory, so echoing it verbatim wrote a username into every command line of
+    every captured run. That is entry 36 of the changelog, the leaked binary
+    path, arriving a second time through stdout instead of through the recorder.
+    The interpreter running this file is `python` to anyone following along, so
+    it is shown that way; everything after it is verbatim.
+    """
+    return " ".join("python" if a == PY else a for a in cmd)
+
+
 def sh(*args: str, env_extra: dict | None = None, check: bool = True) -> int:
     """Run a command in the foreground, showing it first."""
     cmd = [str(a) for a in args]
-    print(f"\n$ {' '.join(cmd)}", flush=True)
+    print(f"\n$ {shown(cmd)}", flush=True)
     env = dict(os.environ)
     # Windows consoles default to cp1252 and the reason lines carry mu, degree
     # and per-mille signs. Without this the run dies on a print statement.
@@ -49,7 +62,7 @@ def sh(*args: str, env_extra: dict | None = None, check: bool = True) -> int:
         env.update(env_extra)
     rc = subprocess.run(cmd, cwd=ROOT, env=env).returncode
     if check and rc != 0:
-        print(f"\nFAILED ({rc}): {' '.join(cmd)}", file=sys.stderr)
+        print(f"\nFAILED ({rc}): {shown(cmd)}", file=sys.stderr)
         raise SystemExit(rc)
     return rc
 

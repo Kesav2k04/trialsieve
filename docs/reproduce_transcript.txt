@@ -8,11 +8,11 @@ environment
  "implementation": "CPython",
  "platform": "Windows-11-10.0.26200-SP0",
  "machine": "AMD64",
- "utc": "2026-08-30T15:03:22Z",
+ "utc": "2026-08-30T22:49:07Z",
  "locked_packages": 8,
  "lock_drift": {},
- "git_commit": "b6b1459dee887d80e55d9efd11100752296c4e26",
- "git_dirty": true,
+ "git_commit": "329fb9b6a3cd29da6129f4ffeabe0f198840ab4b",
+ "git_dirty": false,
  "git_dirty_excludes": "results/"
 }
 
@@ -22,7 +22,7 @@ engine gate
 
 $ python -m pytest -q tests/test_engine.py
 ....................................................                     [100%]
-52 passed in 0.18s
+52 passed in 0.17s
 
 ========================================================================
 dependency surface
@@ -30,12 +30,12 @@ dependency surface
 
 $ python scripts/lockfile.py --imports
 {
- "files_parsed": 54,
+ "files_parsed": 55,
  "third_party_imports": [],
  "pass": true
 }
 
-PASS: 54 modules on the reproduction path import nothing but the standard library and each other. That is what lets a judge run `python run.py reproduce` with no install step at all.
+PASS: 55 modules on the reproduction path import nothing but the standard library and each other. That is what lets a judge run `python run.py reproduce` with no install step at all.
 
 ========================================================================
 replay the compile, every published seed
@@ -83,7 +83,7 @@ $ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider s
   [39/40] NCT06717698-EXC-07   refused(vocab)
   [40/40] NCT06717698-EXC-08   refused(plan)
 
-{"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 1, "critic_dismissed": 1, "revised": 1}
+{"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 1, "critic_dismissed": 1, "revised": 0, "revised_unchanged": 1}
 usage: {'calls': 202, 'prompt_tokens': 136765, 'completion_tokens': 34225, 'wall_s': 13981.92, 'cassette_hits': 202}
 wrote runs\tierA\compiled\criteria_seed7.json
 
@@ -129,7 +129,7 @@ $ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider s
   [39/40] NCT06717698-EXC-07   refused(vocab)
   [40/40] NCT06717698-EXC-08   refused(plan)
 
-{"compiled": 19, "refused_plan": 10, "refused_grounding": 11, "errors": 0, "critic_confirmed": 2, "critic_dismissed": 0, "revised": 2}
+{"compiled": 19, "refused_plan": 10, "refused_grounding": 11, "errors": 0, "critic_confirmed": 2, "critic_dismissed": 0, "revised": 1, "revised_unchanged": 1}
 usage: {'calls': 201, 'prompt_tokens': 140245, 'completion_tokens': 34522, 'wall_s': 7041.73, 'cassette_hits': 201}
 wrote runs\tierA\compiled\criteria_seed8.json
 
@@ -175,7 +175,7 @@ $ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider s
   [39/40] NCT06717698-EXC-07   refused(vocab)
   [40/40] NCT06717698-EXC-08   refused(plan)
 
-{"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 2, "critic_dismissed": 1, "revised": 2}
+{"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 2, "critic_dismissed": 1, "revised": 2, "revised_unchanged": 0}
 usage: {'calls': 210, 'prompt_tokens': 142845, 'completion_tokens': 36038, 'wall_s': 5022.77, 'cassette_hits': 210}
 wrote runs\tierA\compiled\criteria_seed9.json
 
@@ -209,7 +209,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
-  260/385 patients, 10400 cells, 2s
+  260/385 patients, 10400 cells, 1s
   270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
@@ -246,7 +246,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.4,
+ "wall_s": 2.2,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -348,7 +348,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
   260/385 patients, 10400 cells, 1s
-  270/385 patients, 10800 cells, 2s
+  270/385 patients, 10800 cells, 1s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
   300/385 patients, 12000 cells, 2s
@@ -384,7 +384,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.3,
+ "wall_s": 2.2,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -402,7 +402,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   50/385 patients, 2000 cells, 0s
   60/385 patients, 2400 cells, 0s
   70/385 patients, 2800 cells, 0s
-  80/385 patients, 3200 cells, 1s
+  80/385 patients, 3200 cells, 0s
   90/385 patients, 3600 cells, 1s
   100/385 patients, 4000 cells, 1s
   110/385 patients, 4400 cells, 1s
@@ -416,8 +416,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   190/385 patients, 7600 cells, 1s
   200/385 patients, 8000 cells, 1s
   210/385 patients, 8400 cells, 1s
-  220/385 patients, 8800 cells, 2s
-  230/385 patients, 9200 cells, 2s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 2s
   250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
@@ -430,9 +430,9 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   330/385 patients, 13200 cells, 2s
   340/385 patients, 13600 cells, 2s
   350/385 patients, 14000 cells, 2s
-  360/385 patients, 14400 cells, 3s
-  370/385 patients, 14800 cells, 3s
-  380/385 patients, 15200 cells, 3s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
   385/385 patients, 15400 cells, 3s
 
 {
@@ -457,7 +457,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 2482,
  "degradation_manifest_sha256": "36d4dbc2f9cb98a433ebecf0eacaee24583b07eb2c6448c7ad6bb163d5015ffe",
- "wall_s": 2.8,
+ "wall_s": 2.6,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -485,9 +485,9 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   190/385 patients, 7600 cells, 1s
   200/385 patients, 8000 cells, 1s
   210/385 patients, 8400 cells, 1s
-  220/385 patients, 8800 cells, 2s
-  230/385 patients, 9200 cells, 2s
-  240/385 patients, 9600 cells, 2s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 1s
+  240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
@@ -499,10 +499,10 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   330/385 patients, 13200 cells, 2s
   340/385 patients, 13600 cells, 2s
   350/385 patients, 14000 cells, 2s
-  360/385 patients, 14400 cells, 3s
-  370/385 patients, 14800 cells, 3s
-  380/385 patients, 15200 cells, 3s
-  385/385 patients, 15400 cells, 3s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 2s
 
 {
  "arms": [
@@ -526,7 +526,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 4745,
  "degradation_manifest_sha256": "12cad59781e256a6c0452799a9be7b5b76e2d030a11ef718d9d49b05fb77dbfd",
- "wall_s": 2.7,
+ "wall_s": 2.5,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -555,8 +555,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   200/385 patients, 8000 cells, 1s
   210/385 patients, 8400 cells, 1s
   220/385 patients, 8800 cells, 1s
-  230/385 patients, 9200 cells, 2s
-  240/385 patients, 9600 cells, 2s
+  230/385 patients, 9200 cells, 1s
+  240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
@@ -570,8 +570,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   350/385 patients, 14000 cells, 2s
   360/385 patients, 14400 cells, 2s
   370/385 patients, 14800 cells, 2s
-  380/385 patients, 15200 cells, 3s
-  385/385 patients, 15400 cells, 3s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 2s
 
 {
  "arms": [
@@ -595,7 +595,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 9652,
  "degradation_manifest_sha256": "7e31e857c75247b993f596560e3e0172a8ce2b17dda939de57ac67ad02f4028e",
- "wall_s": 2.6,
+ "wall_s": 2.4,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -892,7 +892,7 @@ signed. That is enforced by exit code, and the refusal is tested.
 ## 1. Unsigned
 
 ```
-$ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/video/_gate_demo.md  ; echo $?
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/_gate_demo.md  ; echo $?
 REFUSED.
 
 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
@@ -970,6 +970,7 @@ rendered 235 trajectories, wrote runs\tierA\trajectories\index.md
  "transport_retries": 1,
  "critic_findings": 31,
  "revisions": 5,
+ "revisions_changed": 3,
  "normalisations": 72,
  "human_checkpoints": 0,
  "completion_tokens": 148878
@@ -988,6 +989,7 @@ rendered 180 trajectories, wrote runs\checker_b\trajectories\index.md
  "transport_retries": 73,
  "critic_findings": 0,
  "revisions": 0,
+ "revisions_changed": 0,
  "normalisations": 0,
  "human_checkpoints": 0,
  "completion_tokens": 4782
@@ -1006,6 +1008,7 @@ rendered 21 trajectories, wrote runs\probe-after\trajectories\index.md
  "transport_retries": 3,
  "critic_findings": 0,
  "revisions": 0,
+ "revisions_changed": 0,
  "normalisations": 0,
  "human_checkpoints": 0,
  "completion_tokens": 8493
@@ -1024,6 +1027,7 @@ rendered 21 trajectories, wrote runs\probe-before\trajectories\index.md
  "transport_retries": 4,
  "critic_findings": 0,
  "revisions": 0,
+ "revisions_changed": 0,
  "normalisations": 0,
  "human_checkpoints": 0,
  "completion_tokens": 8276
@@ -1042,6 +1046,7 @@ rendered 21 trajectories, wrote runs\probe-weak\trajectories\index.md
  "transport_retries": 0,
  "critic_findings": 0,
  "revisions": 0,
+ "revisions_changed": 0,
  "normalisations": 0,
  "human_checkpoints": 0,
  "completion_tokens": 7184
@@ -1052,8 +1057,8 @@ check every path a document points at
 ========================================================================
 
 $ python scripts/linkcheck.py
-checked 789 path reference(s) across 27 document(s)
-every path a document points at exists
+checked 762 path reference(s) and 22 anchor(s) across 23 document(s), resolved against git
+every path a document points at exists, and every anchor names a heading that is there
 
 ========================================================================
 cost and runtime
@@ -1073,7 +1078,7 @@ call, and its wall clock is seconds.
 
 ## Recorded
 
-| step | model calls | from cassette | prompt tokens | completion tokens | wall clock | at published rates |
+| step | model calls | from cassette | prompt tokens | completion tokens | wall clock | at an illustrative rate |
 |---|---|---|---|---|---|---|
 | compile the held-out protocols, 40 criteria | 202 | 202 | 136,765 | 34,225 | 1 s | $0.13 |
 | segmenter, 3 trials | 3 | 0 | 3,362 | 3,929 | 4 min 15 s | $0.01 |
@@ -1083,20 +1088,20 @@ call, and its wall clock is seconds.
 | vocabulary probe, after | 42 | 38 | 22,981 | 8,493 | 7 min 58 s | $0.03 |
 | vocabulary probe, weak model | 42 | 0 | 26,753 | 7,184 | 5 min 21 s | $0.03 |
 | counterfactual thresholds, contamination check 3 | 24 | 24 | 19,373 | 3,569 | 0 s | $0.01 |
-| critic probe, planted defects | 25 | 12 | 19,497 | 3,710 | 5 min 18 s | $0.02 |
+| critic probe, planted defects | 25 | 25 | 19,497 | 3,710 | 0 s | $0.02 |
 | arms B2 over 10 patients, group b2_10p | 400 | 400 | 1,656,168 | 31,769 | 0 s | $0.58 |
 | arms TS, B0, B1 over 385 patients, group k0_seed7 | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | arms TS, B0, B1 over 385 patients, group k0_seed8 | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | arms TS, B0, B1 over 385 patients, group k0_seed9 | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | arms TS, B0, B1 over 385 patients, group k10_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
 | arms TS, B0, B1 over 385 patients, group k20_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
-| arms TS, B0, B1 over 385 patients, group k40_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k40_seed7 | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | arms TS over 385 patients, group k0_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
 | arms TS over 385 patients, group ow | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | second blind labeller, Checker B | 100 | 0 | 444,910 | 2,680 | 1 h 55 min | $0.14 |
-| **total** | **1,291** | | **2,627,232** | **174,395** | **2 h 28 min** | **$1.22** |
+| **total** | **1,291** | | **2,627,232** | **174,395** | **2 h 23 min** | **$1.22** |
 
-The right-hand column is an estimate at a mid-tier hosted model at $0.30 in / $2.50 out per million tokens. Each row is rounded to the cent, so adding the column comes to a cent or two more than the total, which is computed once from the raw token counts rather than by summing rounded rows. It is not what this
+The right-hand column is an estimate at an illustrative mid-tier hosted rate of $0.30 in / $2.50 out per million tokens, not a quote from a named vendor. Each row is rounded to the cent, so adding the column comes to a cent or two more than the total, which is computed once from the raw token counts rather than by summing rounded rows. It is not what this
 run cost. This ran on a locally authenticated vendor CLI on a subscription, so
 the marginal cost of a call was zero, and reporting zero would be true and
 useless to anyone deciding whether to run it themselves.
@@ -1166,12 +1171,14 @@ $ python scripts/report.py --run runs/tierA --out results
 
 400 cells, 30 screens, arms TS, B0, B1, B2.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 21.8% | 1.0% | 4 | 4 | 0 | 18 | 0 | 40 |
-| B0 | 100.0% | 93.8% | 375 | 375 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 75 | 0 | 40 |
-| B2 | 68.0% | 43.8% | 175 | 30 | 145 | 6 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 21.8% | 1.0% | **2.77** | 4 | 4 | 0 | 18 | 0 | 40 |
+| B0 | 100.0% | 93.8% | **0.83** | 375 | 375 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 75 | 0 | 40 |
+| B2 | 68.0% | 43.8% | **3.23** | 175 | 30 | 145 | 6 | 0 | 40 |
+
+**The co-primary goes to B2.** `docs/EVAL_PROTOCOL.md` registers `resolved_correct_per_screen` as a co-primary outcome, in its own words *so an arm cannot win by abstaining*, and on this group B2 resolves 3.23 cells correctly per screen against TrialSieve's 2.77. Abstaining costs nothing on silent error rate and it costs exactly this. Both numbers are in the table above rather than in a footnote, because the outcome was registered before the run and the arm it favours does not change that.
 
 #### Fairness check: the 320 cells where no record was trimmed
 
@@ -1233,19 +1240,21 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9275 | [-0.9750, -0.8625] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.7825 | [-0.8975, -0.6525] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9275 | [-0.9750, -0.8625] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0100 | [+0.0000, +0.0375] | yes | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.1425 | [+0.0525, +0.2500] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0100 | [+0.0000, +0.0375] | yes | 40 criteria | **below, uninterpretable** |
-| TS - B2 | ser | -0.4275 | [-0.5700, -0.2850] | no | 40 criteria | above |
-| TS - B2 | coverage | -0.4625 | [-0.6075, -0.3175] | no | 40 criteria | above |
-| TS - B2 | false_fails | -0.0650 | [-0.1550, +0.0050] | yes | 40 criteria | above |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9275 | [-0.9750, -0.8625] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.7825 | [-0.8975, -0.6525] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9275 | [-0.9750, -0.8625] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0100 | [+0.0000, +0.0375] | yes | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1425 | [+0.0525, +0.2500] | no | 40 criteria | above | above |
+| TS - B1 | false_fails | +0.0100 | [+0.0000, +0.0375] | yes | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B2 | ser | -0.4275 | [-0.5700, -0.2850] | no | 40 criteria | above | above |
+| TS - B2 | coverage | -0.4625 | [-0.6075, -0.3175] | no | 40 criteria | above | above |
+| TS - B2 | false_fails | -0.0650 | [-0.1550, +0.0050] | yes | 40 criteria | above | **borderline** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.7%** (95% CI 1.5% to 4.2%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 400 cells are 6.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. One row changes verdict between the two: `TS - B2` on `false_fails`. The amendment was made after the scored run existed and it moved that row in this project's favour, which is why both columns are here rather than one. `docs/EVAL_PROTOCOL.md` records the amendment, its date and the defect that prompted it.
 
 **What B2 is, and what it is not.** B2 is one model call per cell at temperature 0, sampled once. The protocol also registers B3, the same baseline sampled three times with a majority vote, and B3 was not run: the cassette key is a hash of the full request including temperature and the store keeps one response per key, so three draws of one request replay as one answer counted three times (`docs/EVAL_PROTOCOL.md:65`, entry 26 of the improvement changelog). So the gap measured here is against a single-sample per-cell baseline, not against the best per-cell baseline money can buy. Self-consistency would plausibly close some of it, and this evaluation cannot say how much.
 
@@ -1253,11 +1262,13 @@ The last column compares the absolute difference against the rate at which the t
 
 15400 cells, 1155 screens, arms TS, B0, B1.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 19.1% | 0.7% | 111 | 66 | 45 | 618 | 0 | 40 |
-| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 19.1% | 0.7% | **2.46** | 111 | 66 | 45 | 618 | 0 | 40 |
+| B0 | 100.0% | 94.8% | **0.70** | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+**The co-primary goes to TS**, 2.46 cells resolved correctly per screen against 1.00 for the next arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an arm cannot win by abstaining, so it is printed whichever way it falls.
 
 ### Primary outcome, as registered
 
@@ -1304,26 +1315,30 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9405 | [-0.9732, -0.9012] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.8085 | [-0.9100, -0.6919] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9434 | [-0.9742, -0.9066] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0072 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.1165 | [+0.0426, +0.2066] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0110] | yes | 40 criteria | **below, uninterpretable** |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9405 | [-0.9732, -0.9012] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.8085 | [-0.9100, -0.6919] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9434 | [-0.9742, -0.9066] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0072 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1165 | [+0.0426, +0.2066] | no | 40 criteria | above | above |
+| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0110] | yes | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k0_seed8  
 
 15400 cells, 1155 screens, arms TS, B0, B1.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 19.2% | 0.7% | 112 | 67 | 45 | 605 | 0 | 40 |
-| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 19.2% | 0.7% | **2.47** | 112 | 67 | 45 | 605 | 0 | 40 |
+| B0 | 100.0% | 94.8% | **0.70** | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+**The co-primary goes to TS**, 2.47 cells resolved correctly per screen against 1.00 for the next arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an arm cannot win by abstaining, so it is printed whichever way it falls.
 
 ### Primary outcome, as registered
 
@@ -1370,26 +1385,30 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9404 | [-0.9731, -0.9012] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.8076 | [-0.9092, -0.6913] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9433 | [-0.9740, -0.9065] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0073 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.1174 | [+0.0436, +0.2077] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0111] | yes | 40 criteria | **below, uninterpretable** |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9404 | [-0.9731, -0.9012] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.8076 | [-0.9092, -0.6913] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9433 | [-0.9740, -0.9065] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0073 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1174 | [+0.0436, +0.2077] | no | 40 criteria | above | above |
+| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0111] | yes | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k0_seed9  
 
 15400 cells, 1155 screens, arms TS, B0, B1.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 21.6% | 0.7% | 112 | 67 | 45 | 235 | 0 | 40 |
-| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 21.6% | 0.7% | **2.79** | 112 | 67 | 45 | 235 | 0 | 40 |
+| B0 | 100.0% | 94.8% | **0.70** | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+**The co-primary goes to TS**, 2.79 cells resolved correctly per screen against 1.00 for the next arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an arm cannot win by abstaining, so it is printed whichever way it falls.
 
 ### Primary outcome, as registered
 
@@ -1436,26 +1455,30 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9404 | [-0.9731, -0.9012] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.7836 | [-0.8921, -0.6623] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9433 | [-0.9740, -0.9065] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0073 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.1414 | [+0.0571, +0.2412] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0111] | yes | 40 criteria | **below, uninterpretable** |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9404 | [-0.9731, -0.9012] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.7836 | [-0.8921, -0.6623] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9433 | [-0.9740, -0.9065] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0073 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1414 | [+0.0571, +0.2412] | no | 40 criteria | above | above |
+| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0111] | yes | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k10_seed7  
 
 15400 cells, 1155 screens, arms TS, B0, B1.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 18.8% | 0.8% | 116 | 65 | 51 | 635 | 0 | 40 |
-| B0 | 100.0% | 95.0% | 14623 | 14623 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2357 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 18.8% | 0.8% | **2.41** | 116 | 65 | 51 | 635 | 0 | 40 |
+| B0 | 100.0% | 95.0% | **0.67** | 14623 | 14623 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 2357 | 0 | 40 |
+
+**The co-primary goes to TS**, 2.41 cells resolved correctly per screen against 1.00 for the next arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an arm cannot win by abstaining, so it is printed whichever way it falls.
 
 ### Primary outcome, as registered
 
@@ -1502,26 +1525,30 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9420 | [-0.9742, -0.9034] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.8119 | [-0.9121, -0.6973] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9453 | [-0.9753, -0.9099] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0075 | [+0.0004, +0.0169] | no | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.1131 | [+0.0412, +0.2009] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0042 | [+0.0003, +0.0104] | no | 40 criteria | **below, uninterpretable** |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9420 | [-0.9742, -0.9034] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.8119 | [-0.9121, -0.6973] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9453 | [-0.9753, -0.9099] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0075 | [+0.0004, +0.0169] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1131 | [+0.0412, +0.2009] | no | 40 criteria | above | above |
+| TS - B1 | false_fails | +0.0042 | [+0.0003, +0.0104] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.1% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k20_seed7  
 
 15400 cells, 1155 screens, arms TS, B0, B1.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 18.5% | 0.7% | 105 | 60 | 45 | 662 | 0 | 40 |
-| B0 | 100.0% | 95.0% | 14625 | 14625 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2320 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 18.5% | 0.7% | **2.37** | 105 | 60 | 45 | 662 | 0 | 40 |
+| B0 | 100.0% | 95.0% | **0.67** | 14625 | 14625 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 2320 | 0 | 40 |
+
+**The co-primary goes to TS**, 2.37 cells resolved correctly per screen against 1.00 for the next arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an arm cannot win by abstaining, so it is printed whichever way it falls.
 
 ### Primary outcome, as registered
 
@@ -1568,26 +1595,30 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9429 | [-0.9743, -0.9052] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.8155 | [-0.9141, -0.7020] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9458 | [-0.9754, -0.9102] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0068 | [+0.0006, +0.0150] | no | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.1095 | [+0.0397, +0.1956] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0039 | [+0.0003, +0.0095] | no | 40 criteria | **below, uninterpretable** |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9429 | [-0.9743, -0.9052] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.8155 | [-0.9141, -0.7020] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9458 | [-0.9754, -0.9102] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0068 | [+0.0006, +0.0150] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1095 | [+0.0397, +0.1956] | no | 40 criteria | above | above |
+| TS - B1 | false_fails | +0.0039 | [+0.0003, +0.0095] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.0% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k40_seed7  
 
 15400 cells, 1155 screens, arms TS, B0, B1.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 17.5% | 0.9% | 135 | 81 | 54 | 706 | 0 | 40 |
-| B0 | 100.0% | 95.3% | 14677 | 14677 | 0 | 0 | 0 | 40 |
-| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2183 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 17.5% | 0.9% | **2.21** | 135 | 81 | 54 | 706 | 0 | 40 |
+| B0 | 100.0% | 95.3% | **0.63** | 14677 | 14677 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | **1.00** | 0 | 0 | 0 | 2183 | 0 | 40 |
+
+**The co-primary goes to TS**, 2.21 cells resolved correctly per screen against 1.00 for the next arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an arm cannot win by abstaining, so it is printed whichever way it falls.
 
 ### Primary outcome, as registered
 
@@ -1634,16 +1665,18 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
-|---|---|---|---|---|---|---|
-| TS - B0 | ser | -0.9443 | [-0.9755, -0.9068] | no | 40 criteria | above |
-| TS - B0 | coverage | -0.8251 | [-0.9197, -0.7162] | no | 40 criteria | above |
-| TS - B0 | false_fails | -0.9478 | [-0.9766, -0.9133] | no | 40 criteria | above |
-| TS - B1 | ser | +0.0088 | [+0.0002, +0.0210] | no | 40 criteria | **below, uninterpretable** |
-| TS - B1 | coverage | +0.0999 | [+0.0361, +0.1789] | no | 40 criteria | above |
-| TS - B1 | false_fails | +0.0053 | [+0.0002, +0.0122] | no | 40 criteria | **below, uninterpretable** |
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor | vs the floor before A7 |
+|---|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9443 | [-0.9755, -0.9068] | no | 40 criteria | above | above |
+| TS - B0 | coverage | -0.8251 | [-0.9197, -0.7162] | no | 40 criteria | above | above |
+| TS - B0 | false_fails | -0.9478 | [-0.9766, -0.9133] | no | 40 criteria | above | above |
+| TS - B1 | ser | +0.0088 | [+0.0002, +0.0210] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1 | coverage | +0.0999 | [+0.0361, +0.1789] | no | 40 criteria | above | **borderline** |
+| TS - B1 | false_fails | +0.0053 | [+0.0002, +0.0122] | no | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.1%** (95% CI 1.1% to 3.3%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 4.7% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. One row changes verdict between the two: `TS - B1` on `coverage`. The amendment was made after the scored run existed and it moved that row in this project's favour, which is why both columns are here rather than one. `docs/EVAL_PROTOCOL.md` records the amendment, its date and the defect that prompted it.
 
 ## ow  (sensitivity: every absence forced to unknown)
 
@@ -1653,9 +1686,9 @@ The scored arm above remains the pre-registered result.
 
 15400 cells, 1155 screens, arms TS.
 
-| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
-|---|---|---|---|---|---|---|---|---|
-| TS | 18.4% | 0.7% | 111 | 66 | 45 | 727 | 0 | 40 |
+| arm | coverage | SER | **resolved correct / screen** | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|---|
+| TS | 18.4% | 0.7% | **2.36** | 111 | 66 | 45 | 727 | 0 | 40 |
 
 ### Primary outcome, as registered
 
@@ -1727,7 +1760,26 @@ Synthea records are complete by construction, so the failure mode this design ex
 
 Real missingness is not random. It tracks fragmented care and sicker patients, which is the one property this harness cannot reproduce, so the curve is a floor on the effect rather than an estimate of it.
 
+## The k = 0 gap, which the protocol required be investigated
+
+`docs/EVAL_PROTOCOL.md` registered prediction 4 before the first scored run: *at k = 0 the gap will be small, the design is built for missingness and the corpus has almost none, and if the gap at k = 0 is large that is a suspicious result and will be investigated before it is reported*. The gap is 42.75 points of silent error rate. That is large, so this is the investigation.
+
+**The premise was wrong rather than the result.** Two different absences were being called one thing. A Synthea record is internally complete, and internal completeness is what the k axis damages. What a trial criterion asks for is one specific measurement, and it is usually not on file at all: gold is INDETERMINATE on 295 of the 400 paired cells, 73.8%, because the record does not answer the question. Damaging a resource cannot produce that, because the resource was never there to damage.
+
+**Where the gap lives.** The same cells, split by whether an answer exists:
+
+| gold | cells | B2 answers | B2 wrong | TS answers | TS wrong |
+|---|---|---|---|---|---|
+| MEETS or FAILS | 105 | 99 | 2 (2.0% of what it answered) | 87 | 4 (4.6%) |
+| INDETERMINATE | 295 | 173 | 173 | 0 | 0 |
+
+**On the cells where an answer exists, the per-cell baseline is more accurate than this system: 2.0% against 4.6% of what each arm answered.** 173 of B2's 175 silent errors, 98.9%, are commitments on cells where the record does not say. Only 2 contradict a definite gold answer. The whole gap is abstention discipline and none of it is better reading, which is a narrower claim than the headline pair invites on a first reading.
+
+It does rule out the reading prediction 4 was written to catch. If the gap came from gold labels that favour the system, the advantage would appear in the stratum where those labels commit to an answer. It appears only in the stratum where they decline to.
+
 ## Label noise floor
+
+**Who wrote gold.** Checker A is hand-authored by the author of this system. There was no independent clinical annotator, and neither labeller is a trial coordinator. That is a real bias in the direction of this system looking correct: a gold predicate written by the same person who wrote the compiler can encode the same reading of a criterion, and agreement would then measure one mind against itself. Checker B exists to bound it. B works from the criterion prose and a flattened patient table on a different model family, with no sight of the IR, of A, or of any system output, and B's labels are committed before any commit carrying system output. What that buys is a published disagreement rate, below which no difference in this report is called interpretable. What it does not buy is clinical ground truth. Read every number above as agreement with two independent readings of the protocol text, one of them the author's, rather than as agreement with a clinician.
 
 Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.
 
@@ -1815,18 +1867,35 @@ Against 40 the compiled figure is 48%. The 25 criteria the gold set drops are li
 The panel-reduction figures above inherit the same denominator: a screen is ruled ineligible on the 40 hand-authored criteria, and a coordinator runs the whole protocol. The reduction is therefore what these criteria achieve, not what the protocol would.
 
 
+## The five registered predictions, scored
+
+`docs/EVAL_PROTOCOL.md` section 10 registers these before the first scored run. A prediction that is only checked when it holds is not a prediction, so all five are here, including the one that cannot be checked with what ran.
+
+| # | registered | measured | held |
+|---|---|---|---|
+| 1 | coverage lands at 30 to 40% of segmented criteria | 29.2% (19 of 65) | **no, below the band** |
+| 2 | B2 is close to TS on plain numeric criteria and separates on unit traps, temporal windows and degraded records | not testable as registered: B2 ran at k = 0 only, so the degraded-record half has no data in either direction | **partly untested** |
+| 3 | B2's headline weakness is overcommitment rather than accuracy: it answers where gold is INDETERMINATE rather than getting committed cells wrong | 173 of B2's 175 silent errors are commitments where gold is INDETERMINATE, and 2 contradict a definite answer | **yes** |
+| 4 | the gap at k = 0 is small, and a large one is suspicious and is investigated before it is reported | 42.75 points, which is large. The investigation is the section above | **no, and the trigger fired** |
+| 5 | TS panel reduction is lower than B2's apparent reduction, and B2's voids on false exclusions | TS 53.3% against B2 86.7%, and B2 is VOID on 10 false exclusions | **yes** |
+
+**2 of 5 held as registered.** The coverage band was missed low, the k = 0 prediction was wrong in its premise and is investigated above, and one is partly untestable because the per-cell arm was never run against a degraded record. None of that is a defect in the result; leaving it unreported would have been a defect in the reporting.
+
 ## Provenance
 
 The commit that last touched each prompt-carrying file. If any of these is later than the commit that produced these numbers, the run is invalid and is rerun. See `docs/DEV_SPLIT.md`.
 
 | file | last touched by |
 |---|---|
-| `compiler.py` | `343b29cb013a4552` 2026-08-30T00:03:20+05:30 |
+| `compiler.py` | `db4180db117c9148` 2026-08-30T00:03:20+05:30 |
 | `critic.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
 | `grounder.py` | `270ed8190f8f1af6` 2026-08-29T05:12:12+05:30 |
 | `segmenter.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
 
 wrote results\RESULTS.md and results\results.json
+
+$ python scripts/scorecard.py
+wrote docs\SCORECARD.md
 
 ========================================================================
 the full test suite
@@ -1835,11 +1904,11 @@ the full test suite
 $ python -m pytest -q
 ........................................................................ [ 18%]
 ........................................................................ [ 37%]
-........................................................................ [ 55%]
-........................................................................ [ 74%]
+........................................................................ [ 56%]
+........................................................................ [ 75%]
 ........................................................................ [ 93%]
-...........................                                              [100%]
-387 passed in 28.20s
+.......................                                                  [100%]
+383 passed in 31.10s
 
 ========================================================================
 verification
@@ -1920,6 +1989,6 @@ compare against the published numbers
 ========================================================================
 IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
 
-OK  (reproduce in 151.3s)
+OK  (reproduce in 149.2s)
 
 exit 0

@@ -359,7 +359,7 @@ def main() -> int:
     dest = ROOT / "docs" / "COST.md"
     dest.write_text(align_tables("\n".join(L)), encoding="utf-8", newline="\n")
     print("\n".join(L))
-    print(f"\nwrote {dest}")
+    print(f"\nwrote {dest.relative_to(ROOT).as_posix()}")
     return 0
 
 

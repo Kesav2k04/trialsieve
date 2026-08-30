@@ -91,3 +91,31 @@ def test_the_scan_can_fail():
     assert PATTERNS[0][1].search(windows), "the Windows pattern no longer matches"
     assert PATTERNS[1][1].search(posix), "the POSIX pattern no longer matches"
     assert not PATTERNS[0][1].search("C:" + ("\\" * 4) + "Users" + ("\\" * 4) + "...")
+
+
+def test_the_runner_does_not_echo_the_interpreters_absolute_path():
+    """Where the last leak came from, closed at the source rather than the scan.
+
+    `run.py` prints every sub-command before running it, and it invokes them with
+    `sys.executable`, which is absolute. On this machine that path sits under a
+    home directory, so a captured transcript carried a username on every command
+    line. The scan above found it, which is the scan working; this requires the
+    runner not to write it in the first place, because a transcript is what a
+    reader is invited to paste into a bug report.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("_run_under_test", ROOT / "run.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+
+    line = mod.shown([mod.PY, "scripts/report.py", "--run", "runs/tierA"])
+    assert line.startswith("python "), (
+        f"the interpreter is still shown as {line.split()[0]!r}; a reader cannot "
+        f"retype that and it carries whatever directory it was installed into")
+    assert "scripts/report.py --run runs/tierA" in line, (
+        "everything after the interpreter has to stay verbatim, or the echo is "
+        "no longer the command that ran")
+    for _name, pattern in PATTERNS:
+        assert not pattern.search(line), f"{_name} survived in the echoed command"

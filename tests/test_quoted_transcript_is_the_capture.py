@@ -79,16 +79,29 @@ def test_the_prose_counts_the_transcripts_lines() -> None:
 
 
 def test_only_one_wall_clock_is_quoted_as_the_headline() -> None:
-    """`README.md` names one figure for the clean clone, and it is measured here.
+    """One figure for the clean run, and it is the one the capture recorded.
 
     The README said 154s, the transcript said 142.6s and a paragraph eighty lines
     down said 154.1s. Any of the three could have been right; a reader had no way
-    to know which, which is the state this whole repository argues against.
+    to know which, which is the state this whole repository argues against. The
+    figure is therefore taken out of the capture and both documents have to agree
+    with the capture, rather than with each other.
     """
+    if not CAPTURE.is_file():
+        pytest.skip("no captured transcript in this checkout")
+    ok = re.search(r"OK\s+\(reproduce in ([\d.]+)s\)",
+                   CAPTURE.read_text(encoding="utf-8"))
+    assert ok, "the transcript no longer ends with the runner's own timing line"
+    measured = ok.group(1)
+
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    m = re.search(r"One command from a clean clone, ([\d.]+)s measured", readme)
+    m = re.search(r"One command from a clean clone, ([\d.]+)s captured", readme)
     assert m, "the README's reproduction row was reworded"
+    assert m.group(1) == measured, (
+        f"the README says {m.group(1)}s from a clean clone and the capture it "
+        f"points at recorded {measured}s")
+
     guide = GUIDE.read_text(encoding="utf-8")
-    assert f"**{m.group(1)} seconds from a fresh clone" in guide, (
-        f"README says {m.group(1)}s from a clean clone and REPRODUCE.md does not "
-        f"state the same figure for the same thing")
+    assert f"**{measured} seconds** on a Windows laptop" in guide, (
+        f"REPRODUCE.md does not give {measured}s as the reading its own capture "
+        f"recorded")
