@@ -525,23 +525,24 @@ win and neither can answering everything.
 
 ## Safety, scope and data
 
-- Public and synthetic data only. Synthea (Apache-2.0, sha256 pinned) and
-  ClinicalTrials.gov API v2 (US Government, public domain).
-- No credential appears in this repository. The local model shim copies an auth
-  token to a temporary directory outside the tree and deletes it at exit.
-- No consequential action is taken. The system produces a document. It enrols
+- Public and synthetic data only: Synthea (Apache-2.0, sha256 pinned) and
+  ClinicalTrials.gov API v2 (US Government, public domain). No credential
+  appears in this repository or anywhere in its history, and the local model
+  shim copies its auth token to a temporary directory outside the tree and
+  deletes it at exit.
+- Nothing consequential happens. The system produces a document. It enrols
   nobody, contacts nobody, and writes to no clinical system.
-- The sign-off gate is a human action and it is left to a human. Whether it has been
-  cleared in this checkout is a fact in the repository rather than a claim in this
-  file: `python scripts/signoff.py --run runs/tierA --list` prints it. It reads
-  `runs/tierA/signoffs.jsonl`, which does not exist in this checkout, and that
-  absence is the answer rather than an oversight. Any signature here is the author's,
-  who is not a clinician, and the `reviewer_role` field records that rather than
-  leaving it to be assumed. A deployment puts a qualified clinical reviewer in
-  exactly that slot.
-- Until the gate is cleared, `scripts/worklist.py` refuses with exit code 3, and
-  that refusal is the demonstration. There is an `--allow-unsigned` flag for showing
-  the document anyway, and using it stamps **NOT FOR USE** across every page.
+- The sign-off gate is a human action and it is left to a human, so whether it
+  has been cleared in this checkout is a fact in the repository rather than a
+  claim in this file: `python scripts/signoff.py --run runs/tierA --list` prints
+  it. It reads `runs/tierA/signoffs.jsonl`, which does not exist here, and that
+  absence is the answer rather than an oversight. Until the gate is cleared,
+  `scripts/worklist.py` refuses with exit code 3. There is an `--allow-unsigned`
+  flag for showing the document anyway, and using it stamps **NOT FOR USE**
+  across every page.
+
+Each ground rule the brief sets, against the thing that satisfies it, is in
+[SUBMISSION.md](SUBMISSION.md#ground-rules).
 
 ### What running this on real patients would take, none of which is done here
 

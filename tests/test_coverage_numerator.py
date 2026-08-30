@@ -6,11 +6,16 @@ settle the criterion at all. It is a ceiling. `scripts/report.py` used it as the
 numerator and printed "the system expresses 24 criteria as predicates", which is
 the answer key wearing the system's name.
 
-The compiler produced 18. The difference is seven criteria the vocabulary refused
-plus one lost to the IR validator, minus one that compiled without being marked
-checkable. Against the registered denominator of 65 that is 27.7% rather than
-37%, and the pre-registered band is 30 to 40%, so the label decided whether this
-run is reported as inside or below its own prediction.
+The compiler produced 18 the day this was written. The difference is seven
+criteria the vocabulary refused plus one lost to the IR validator, minus one that
+compiled without being marked checkable. Against the registered denominator of 65
+that was 27.7% rather than 37%, and the pre-registered band is 30 to 40%, so the
+label decided whether the run is reported as inside or below its own prediction.
+
+The predicates have moved since. The run in this checkout compiles 19 and reports
+29.2%, still below the band. Those two figures are read out of the artifact by
+the tests below rather than out of this paragraph, which is the whole point: a
+docstring is prose and prose is what drifts.
 
 These tests hold the numerator to the compiled artifact and hold both figures in
 the document, so a future edit cannot quietly go back to the flattering one.
