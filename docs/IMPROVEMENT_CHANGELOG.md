@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Sixty-six entries is
+iteration, each with its evidence and what it decided. Seventy-one entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -3634,3 +3634,169 @@ for how much it mattered; the table shows them.
 **Evidence.** `python scripts/scorecard.py` and `python scripts/report.py --run
 runs/tierA --out results`, then read the two floor columns in `results/RESULTS.md`
 and the three paragraphs under the scorecard table.
+
+## 67. A row said where a human checkpoint lives, and none exists
+
+**Found by** reading the trajectory index end to end rather than by section.
+
+**What was wrong.** The summary table prints `| human checkpoints | 0 |`. Twenty
+lines above it, the row explaining the `worklist` agent said "The signature is a
+`human_checkpoint` event, and it lives in the compiler trajectory of the predicate
+that was signed." It is a true sentence about a mechanism and it reads as a claim
+about a file. Nobody has signed anything here, so there is no such predicate and no
+such event, and the two statements sit in one generated document contradicting each
+other.
+
+**What changed.** The row is generated from the same total the table above it
+prints, so the sentence now ends "the count of them in the table above is the count
+that exist: 0". A prose claim about how many of a thing exist cannot disagree with
+the count on the same page, because it is the count.
+
+| | before | now |
+|---|---|---|
+| where the checkpoint count comes from in that row | a sentence | `tot['human_checkpoints']` |
+| readings of "does a checkpoint exist here" in one document | 2 | **1** |
+
+**Evidence.** `python scripts/trajectories.py`, then read the `worklist` row of
+`runs/tierA/trajectories/index.md` against the summary table above it.
+
+## 68. The opening table counted cells and called them patients
+
+**Found by** a reader checking the README's first table against `results.json`.
+
+**What was wrong.** The lead table's third row read "patients it would have enrolled
+who do not qualify | 145 | 0". The 145 is `cell_scores.B2.n_false_meets`, a count of
+criterion-by-patient cells, and the group it comes from has 30 screens over ten
+patients. A hundred and forty-five patients is not merely unsourced there, it is
+impossible. `docs/SCORECARD.md` had the same figure under the correct name the whole
+time: "Wrong MEETS, the verdict that enrols someone who should not be."
+
+The same table was missing the worst fact about the result. The primary outcome was
+registered before the run as panel reduction at zero false exclusions, and it reads
+**VOID** for TrialSieve as well as for the baseline. That was in the scorecard and in
+`results/RESULTS.md`, two clicks from the table a judge reads first.
+
+**What changed.** The row is renamed to what it counts. The registered primary
+outcome is the first row of the table, VOID against VOID, with the paragraph under it
+saying that neither arm passes and why an arm that wrongly rules out two screens
+fails it exactly as one that rules out ten does. Both cells are read back out of
+`panel_scores` by `tests/test_headline_figures_match_the_run.py`, so the row cannot
+drift and cannot quietly disappear: the register fails when its anchor sentence stops
+matching.
+
+| | before | now |
+|---|---|---|
+| the unit named on the 145 row | patients | **cells** |
+| where the registered outcome appears | two documents away | **row one** |
+| lead-table figures read back out of the run | 9 | **11** |
+
+**Evidence.** `python -m pytest -q tests/test_headline_figures_match_the_run.py`,
+then read the first table in `README.md`.
+
+## 69. A comparison written to a shared default path overwrote its own name
+
+**Found by** an inventory of everything tracked under `results/`, asking of each file
+what reads it.
+
+**What was wrong.** `scripts/compare_probes.py` took `--json` with a default of
+results/probe_comparison.json, written without backticks here because the file no
+longer exists and `scripts/linkcheck.py` reads a backticked path as a promise
+that it does. It is run three times, for three different
+comparisons, and two of those runs passed an explicit path. The third did not, so the
+default held whichever comparison ran last. What was committed under
+that name was the weak-model comparison, byte for byte the same content
+as `probe_weak_comparison.json` beside it, under a name that reads like the
+before-and-after repair that actually lives in `probe_comparison_before_after.json`.
+
+Nothing read it, which is the only reason it was harmless. A file in `results/` whose
+name describes a different measurement than its contents is a trap set for the next
+reader, and this repository hands itself to strangers.
+
+**What changed.** `--json` is required. There is no shared default to fall through
+to, so a comparison worth keeping has to be named for what it compares. The duplicate
+is deleted.
+
+| | before | now |
+|---|---|---|
+| default output path shared by three comparisons | 1 | **0** |
+| tracked files under `results/` that nothing reads and whose name misdescribes them | 1 | **0** |
+
+**Evidence.** `python scripts/compare_probes.py runs/probe-before/probe.json
+runs/probe-after/probe.json` now exits 2 with `--json is required`.
+
+## 70. A gate's own explanation froze the numbers it was written about
+
+**Found by** a reader taking the docstring of a live test as a statement of the
+current run.
+
+**What was wrong.** `tests/test_coverage_numerator.py` opens with the argument for
+its own existence: coverage is a claim about the system, so its numerator has to come
+from the system rather than from the answer key. Written the day the defect was
+found, it said "The compiler produced 18" and "that is 27.7%" in the present tense.
+The predicates have moved since; the run in this checkout compiles 19 and reports
+29.2%. The assertions underneath read both figures out of the artifact and were
+right the whole time. The paragraph explaining them was two versions behind, in a
+file whose entire subject is a number that drifted from its source.
+
+**What changed.** The paragraph is dated to when it was written, then states the
+current pair and where they come from. The gate itself is unchanged, because the gate
+was never wrong.
+
+| | before | now |
+|---|---|---|
+| tense of the figures in that docstring | present | **dated, then current** |
+| places in the file where a number is typed rather than read | 2 | **2, both marked as history** |
+
+**Evidence.** `python -m pytest -q tests/test_coverage_numerator.py`, then read the
+docstring against `criterion_coverage` in `results/results.json`.
+
+## 71. Every captured run wrote a username, and the receipt named a commit that was gone
+
+**Found by** capturing the transcript again from a clean tree, which failed two of
+this repository's own scans.
+
+**What was wrong.** Two defects in one artifact.
+
+`run.py` prints each sub-command before running it, and it invokes them with
+`sys.executable`. That is an absolute path, and on this machine it sits under a home
+directory, so twenty-seven command lines in
+`docs/reproduce_transcript.txt` carried a username. `scripts/costs.py` printed the
+absolute path of the file it had just written, for one more. This is entry 36
+arriving a second time: the same leak, through stdout instead of through the
+recorder, into the one file a reader is invited to paste into a bug report.
+
+And the committed transcript recorded `"git_commit": "b6b1459..."`, a hash that no
+longer resolves in this repository, beside `"git_dirty": true`. A receipt that names
+a commit nobody can check is not a receipt. It also reported `"files_parsed": 54`
+where the reproduction path now walks 55, so the one artifact offered as proof of a
+clean run was the stalest file in the tree.
+
+**What changed.** `run.py` gained `shown()`, which prints the interpreter as
+`python` and everything after it verbatim, and `costs.py` prints its destination
+relative to the root. `tests/test_no_private_paths.py` gained a case that calls
+`shown()` directly and requires every home-directory pattern to miss it, so the leak
+is closed at the source rather than caught downstream by a scan.
+
+The capture is now a command rather than a copy and paste. It refuses on a dirty tree,
+because the commit the transcript records would not be the code that produced the
+numbers under it, and it refuses on a failing run, because a transcript of a failure
+filed under "what a successful run looks like" is this repository's own recurring
+defect. The committed transcript names a commit that resolves, against a tree that
+was clean.
+
+`REPRODUCE.md` used to give three wall clocks for the same command, none of which
+appeared in any artifact. It now gives the one the capture recorded and a range for
+the rest, and `tests/test_quoted_transcript_is_the_capture.py` reads that figure out
+of the capture and requires both documents to agree with it rather than with each
+other.
+
+| | before | now |
+|---|---|---|
+| command lines in the transcript carrying a home directory | 28 | **0** |
+| the commit the transcript names | does not resolve | **resolves, tree clean** |
+| `files_parsed` in the transcript against the current path | 54 against 55 | **55 against 55** |
+| unsourced wall clocks quoted for one command | 3 | **0** |
+
+**Evidence.** `git cat-file -t $(grep git_commit docs/reproduce_transcript.txt)`
+returns `commit`, and `python -m pytest -q tests/test_no_private_paths.py
+tests/test_quoted_transcript_is_the_capture.py` covers the rest.
