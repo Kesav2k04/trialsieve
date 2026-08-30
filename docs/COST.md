@@ -24,7 +24,7 @@ call, and its wall clock is seconds.
 | critic probe, planted defects                      | 25          | 12            | 19,497        | 3,710             | 5 min 18 s     | $0.02              |
 | arms B2 over 10 patients, group b2_10p             | 400         | 400           | 1,656,168     | 31,769            | 0 s            | $0.58              |
 | arms TS, B0, B1 over 385 patients, group k0_seed7  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
-| arms TS, B0, B1 over 385 patients, group k0_seed8  | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS, B0, B1 over 385 patients, group k0_seed8  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k0_seed9  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k10_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k20_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
