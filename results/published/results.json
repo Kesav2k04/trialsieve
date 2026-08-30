@@ -7718,6 +7718,38 @@
    }
   ]
  },
+ "registered_predictions": [
+  {
+   "n": 1,
+   "registered": "coverage lands at 30 to 40% of segmented criteria",
+   "measured": "29.2% (19 of 65)",
+   "held": "no, below the band"
+  },
+  {
+   "n": 2,
+   "registered": "B2 is close to TS on plain numeric criteria and separates on unit traps, temporal windows and degraded records",
+   "measured": "not testable as registered: B2 ran at k = 0 only, so the degraded-record half has no data in either direction",
+   "held": "partly untested"
+  },
+  {
+   "n": 3,
+   "registered": "B2's headline weakness is overcommitment rather than accuracy: it answers where gold is INDETERMINATE rather than getting committed cells wrong",
+   "measured": "173 of B2's 175 silent errors are commitments where gold is INDETERMINATE, and 2 contradict a definite answer",
+   "held": "yes"
+  },
+  {
+   "n": 4,
+   "registered": "the gap at k = 0 is small, and a large one is suspicious and is investigated before it is reported",
+   "measured": "42.75 points, which is large. The investigation is the section above",
+   "held": "no, and the trigger fired"
+  },
+  {
+   "n": 5,
+   "registered": "TS panel reduction is lower than B2's apparent reduction, and B2's voids on false exclusions",
+   "measured": "TS 53.3% against B2 86.7%, and B2 is VOID on 10 false exclusions",
+   "held": "yes"
+  }
+ ],
  "prompt_files_last_commit": {
   "compiler.py": "db4180db117c9148b995b010df664c2ccf04e5ee 2026-08-30T00:03:20+05:30",
   "critic.py": "6901032c4e9d09b27538b4778822a633f4dd12a2 2026-08-29T02:08:48+05:30",

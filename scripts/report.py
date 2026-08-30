@@ -67,6 +67,83 @@ def load_cells(run: Path) -> dict[str, list[dict]]:
     return groups
 
 
+def registered_predictions(results: dict) -> list[dict] | None:
+    """The five predictions in `docs/EVAL_PROTOCOL.md`, each against its outcome.
+
+    Scored from what the run produced wherever the outcome is a number this report
+    already computes. Where it is not, the row says so rather than guessing, because
+    a prediction marked untested is information and a prediction quietly dropped is
+    the failure this table exists to prevent.
+    """
+    cov = results.get("criterion_coverage") or {}
+    gap = results.get("k0_gap_by_stratum") or {}
+    paired = (results.get("groups") or {}).get("b2_10p") or {}
+    panel = paired.get("panel_scores") or {}
+    cells = paired.get("cell_scores") or {}
+    if not cov or not gap or not panel:
+        return None
+
+    out = []
+
+    got = cov.get("compiled_of_segmented")
+    out.append({
+        "n": 1,
+        "registered": "coverage lands at 30 to 40% of segmented criteria",
+        "measured": f"{got:.1%} ({cov.get('n_compiled')} of {cov.get('n_segmented')})",
+        "held": "no, below the band" if got < 0.30 else
+                ("no, above the band" if got > 0.40 else "yes"),
+    })
+
+    out.append({
+        "n": 2,
+        "registered": "B2 is close to TS on plain numeric criteria and separates on "
+                      "unit traps, temporal windows and degraded records",
+        "measured": "not testable as registered: B2 ran at k = 0 only, so the "
+                    "degraded-record half has no data in either direction",
+        "held": "partly untested",
+    })
+
+    silent = gap.get("B2_silent_errors", 0)
+    on_ind = gap.get("B2_silent_errors_on_indeterminate", 0)
+    out.append({
+        "n": 3,
+        "registered": "B2's headline weakness is overcommitment rather than "
+                      "accuracy: it answers where gold is INDETERMINATE rather "
+                      "than getting committed cells wrong",
+        "measured": f"{on_ind} of B2's {silent} silent errors are commitments where "
+                    f"gold is INDETERMINATE, and {silent - on_ind} contradict a "
+                    f"definite answer",
+        "held": "yes" if silent and on_ind / silent > 0.8 else "no",
+    })
+
+    b2s = cells.get("B2", {}).get("ser")
+    tss = cells.get("TS", {}).get("ser")
+    out.append({
+        "n": 4,
+        "registered": "the gap at k = 0 is small, and a large one is suspicious "
+                      "and is investigated before it is reported",
+        "measured": f"{(b2s - tss) * 100:.2f} points, which is large. The "
+                    f"investigation is the section above" if b2s is not None else
+                    "not computed",
+        "held": "no, and the trigger fired",
+    })
+
+    ts_red = panel.get("TS", {}).get("n_ineligible", 0) / max(
+        panel.get("TS", {}).get("n_screens", 1), 1)
+    b2_red = panel.get("B2", {}).get("n_ineligible", 0) / max(
+        panel.get("B2", {}).get("n_screens", 1), 1)
+    b2_void = panel.get("B2", {}).get("primary_outcome") == "VOID"
+    out.append({
+        "n": 5,
+        "registered": "TS panel reduction is lower than B2's apparent reduction, "
+                      "and B2's voids on false exclusions",
+        "measured": f"TS {ts_red:.1%} against B2 {b2_red:.1%}, and B2 is "
+                    f"{'VOID on ' + str(panel.get('B2', {}).get('false_exclusions')) + ' false exclusions' if b2_void else 'not void'}",
+        "held": "yes" if (ts_red < b2_red and b2_void) else "no",
+    })
+    return out
+
+
 def k0_gap_by_stratum(groups: dict[str, list[dict]]) -> dict | None:
     """Split the paired k = 0 cells by whether an answer exists at all.
 
@@ -1014,6 +1091,7 @@ def main() -> int:
                   "would appear in the stratum where those labels commit to an answer. "
                   "It appears only in the stratum where they decline to.")
 
+
     # label noise floor
     md.append("")
     md.append("## Label noise floor")
@@ -1328,6 +1406,31 @@ def main() -> int:
                   f"would.")
         md.append("")
         results["criterion_coverage"] = cd
+
+    # Every registered prediction against its outcome. Four of the five had never
+    # been compared to anything, which makes a pre-registration a gesture: its
+    # only value is that the unwelcome branch gets reported too.
+    preds = registered_predictions(results)
+    if preds:
+        results["registered_predictions"] = preds
+        md.append("\n## The five registered predictions, scored\n")
+        md.append("`docs/EVAL_PROTOCOL.md` section 10 registers these before the "
+                  "first scored run. A prediction that is only checked when it "
+                  "holds is not a prediction, so all five are here, including the "
+                  "one that cannot be checked with what ran.\n")
+        md.append("| # | registered | measured | held |")
+        md.append("|---|---|---|---|")
+        for r in preds:
+            md.append(f"| {r['n']} | {r['registered']} | {r['measured']} | "
+                      f"**{r['held']}** |")
+        kept = sum(1 for r in preds if r["held"] == "yes")
+        md.append(f"\n**{kept} of {len(preds)} held as registered.** The coverage "
+                  f"band was missed low, the k = 0 prediction was wrong in its "
+                  f"premise and is investigated above, and one is partly untestable "
+                  f"because the per-cell arm was never run against a degraded "
+                  f"record. None of that is a defect in the result; leaving it "
+                  f"unreported would have been a defect in the reporting.")
+
 
     # provenance: which commit last touched each prompt file
     prompts = {}
