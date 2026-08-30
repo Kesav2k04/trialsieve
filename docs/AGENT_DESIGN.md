@@ -11,6 +11,21 @@ the thing this project exists to make visible and countable. It still happens
 here, 111 times in 15,400 cells, and the number is published rather than
 designed away.
 
+**Where the instructions themselves are.** This file explains why each prompt is
+shaped the way it is; it does not reproduce them. The text every agent was
+actually sent is in two places, and they are kept identical on purpose:
+
+| | |
+|---|---|
+| beside the code | [`src/trialsieve/agents/`](../src/trialsieve/agents/), as module constants. `compiler.py` carries `PLAN_SYSTEM`, `PLAN`, `EMIT_SYSTEM`, `EMIT`, `GRAMMAR` and `EXAMPLES`, because it runs two turns and the grammar is pasted into the second. `grounder.py` carries `EXPAND_SYSTEM`, `EXPAND`, `SELECT_SYSTEM` and `SELECT`, for the same reason. `critic.py` and `segmenter.py` are one turn each and carry a single `SYSTEM`. Every module carries a `PROMPT_VERSION`: `compiler-v3`, `grounder-v3`, `critic-v1`, `segmenter-v1`. |
+| in the record | the first `instructions` event of every file under [`runs/tierA/trajectories/`](../runs/tierA/trajectories/index.md), carrying the same text and the version tag the run recorded. |
+
+The second is the one to read if you want proof rather than intent, because
+`python scripts/verify.py trajectories` matches all 1,077 recorded calls against a
+cassette whose stored request is byte-identical to the prompt printed in the
+trajectory. A prompt edited after the fact would stop the run rather than quietly
+disagree with the record.
+
 ---
 
 ## Where the model calls are
