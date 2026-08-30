@@ -18,6 +18,16 @@ with itself eventually, so the second copy is checked against the first. The two
 costs cross at 2.2 patients, and past that the gap grows with every patient and
 every rescreen, because one side of it is flat.
 
+**The larger cost is not in that table, and it is a person.** Before this produces
+any document, somebody qualified reads all 19 compiled predicates and signs them.
+That is the expensive item, it is not priced here, and no model spend is comparable
+to it. It is also the honest comparison rather than a caveat on one. The compiled
+path has 19 things to review, once per protocol, and rescreening the same panel next
+month reviews nothing again. The per-cell baseline has no reviewable artifact at
+all: to get the same assurance you would read 15,400 individual answers, and read
+them again next month. What compiling buys is not a smaller bill. It is a review
+surface small enough that reviewing it is possible.
+
 
 Clinical trial prescreening, built so that ruling a patient out on a fact that is
 missing from their record is a decision somebody has to make on purpose, in
@@ -388,11 +398,29 @@ check that fires on the disease name can only ever return positive.
 
 Criteria2Query, TrialGPT, RECTIFIER, and the CHIP 2025 shared task all attack
 criteria-to-structured-query. HL7 CQL is the standards-track answer to executable
-clinical logic. What is different here is not the compilation step, which is well
-trodden, but that the executable form carries an explicit third truth value and an
-explicit per-query decision about what absence means, and that the evaluation is
-scored on a joint (coverage, silent error) pair so that abstaining everywhere cannot
-win.
+clinical logic, and it already has three-valued null semantics, so a third truth
+value is not the novelty here and this file should not have implied it was.
+
+**The thing to compare against is not a paper, it is the cohort tool the site
+already owns.** i2b2, OMOP with ATLAS, TriNetX, and the query builders inside the
+major EHRs all filter a population on structured fields, they are already connected
+to real data inside an approved pathway, and they cost nothing more to run. On the
+criteria this system actually compiles, mostly lab values and demographics, they do
+the same job. Any honest reading has to start there.
+
+What a filter cannot do is tell you who it could not decide. A patient with no
+HbA1c on file does not match `HbA1c between 6.5 and 10`, so they leave the panel
+without appearing anywhere, and nobody re-reads them. That is the same silent
+exclusion this project spends its evaluation measuring, except it happens by
+default rather than by decision.
+
+So the difference is not the compilation step, which is well trodden. It is three
+things. Absence is a per-query decision that a human signs, rather than a property
+of the query language nobody was asked about. The patients the record cannot settle
+come back as a grouped question, 188 of 190 open screens waiting on the same
+missing lab, rather than as an absence from a result set. And the evaluation is
+scored on a joint (coverage, silent error) pair, so abstaining everywhere cannot
+win and neither can answering everything.
 
 ## Safety, scope and data
 
@@ -413,6 +441,29 @@ win.
 - Until the gate is cleared, `scripts/worklist.py` refuses with exit code 3, and
   that refusal is the demonstration. There is an `--allow-unsigned` flag for showing
   the document anyway, and using it stamps **NOT FOR USE** across every page.
+
+### What running this on real patients would take, none of which is done here
+
+Nothing below has been attempted. It is listed because a system that prescreens
+patients is not a system whose deployment cost can be left implied, and because
+every item is a reason the numbers above would not transfer unchanged.
+
+| | |
+|---|---|
+| Data access | Synthea records are flat, complete and already normalised. Real charts are none of those. This reads one denormalised table; a site would need a FHIR or OMOP extract, and the coverage figure of 21.75% is measured on records that are complete by construction, so it is an upper bound rather than an estimate. |
+| Local vocabulary | The grounder resolves concepts against **this** corpus's codes and refuses when it cannot. A site's codes are its own, including local non-standard ones, so the grounding step is per-deployment work, and 19 of the 40 criteria put to the compiler producing predicates is a number about this vocabulary rather than about the method. |
+| Human review | Somebody qualified has to read all 19 compiled predicates before any document is produced. That is the sign-off gate, and it is the real unit cost. It is named beside the cost table at the top of this file, and it is not priced. |
+| Regulatory posture | Prescreening from records generally runs under an IRB-approved protocol with a partial waiver of authorization, and none of that has been sought here. This project has no IRB, no data-use agreement, no validation package, and it makes no claim about 21 CFR Part 11, HIPAA or GCP. It produces a document a human acts on, which is the lightest posture available, and it is still a posture somebody has to establish. |
+| Liability | Nobody is enrolled or excluded by this document; the exclusions are recommendations with a dated citation each. The false-exclusion count is the number that matters and it is published rather than argued away: 18 patients at the operating point, 0 tolerated by the gate the curve is fitted to. |
+
+### The corpus is one disease area
+
+The three held-out trials are all type 2 diabetes and diabetic kidney disease,
+against one synthetic vocabulary and 385 patients. The criteria that compile are
+mostly lab values and demographics, which is the easiest shape this problem has.
+A cardiology or oncology protocol leans on imaging, staging and performance status,
+and there is no evidence here about any of them. Read every number in this
+repository as a measurement of this corpus, not of the method.
 
 ## How it fails
 
