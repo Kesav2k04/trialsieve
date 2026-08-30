@@ -73,14 +73,21 @@ def t_check() -> None:
 
 
 def t_environment() -> None:
-    """Write down what this machine is, so a differing number has somewhere to point."""
+    """Write down what this machine is, so a differing number has somewhere to point.
+
+    The working directory is not recorded. It never explained a differing
+    number, and it is the one field here that names the person running the
+    command: a checkout under a home directory writes their account name into a
+    tracked file, and `tests/test_no_private_paths.py` then fails on the second
+    run. That failure is how this was found, in a clean clone under a home
+    directory rather than in the tree it was written in.
+    """
     banner("environment")
     info = {
         "python": sys.version.split()[0],
         "implementation": platform.python_implementation(),
         "platform": platform.platform(),
         "machine": platform.machine(),
-        "cwd": str(ROOT),
         "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     # The interpreter alone did not say enough. Two machines can both report

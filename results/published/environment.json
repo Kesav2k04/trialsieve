@@ -3,7 +3,6 @@
  "implementation": "CPython",
  "platform": "Windows-11-10.0.26200-SP0",
  "machine": "AMD64",
- "cwd": "D:\\trialsieve",
  "utc": "2026-08-29T19:22:13Z",
  "locked_packages": 23,
  "lock_drift": {},
