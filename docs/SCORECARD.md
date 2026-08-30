@@ -13,8 +13,8 @@ The rows below are scored on **the same 400 cells**: 30 screens, meaning ten pat
 | metric | simple baseline (B2) | TrialSieve | change |
 |---|---|---|---|
 | **Primary outcome** as registered: panel reduction at zero false exclusions | **VOID** (10 false exclusions, reduction 86.67%) | **VOID** (2 false exclusions, reduction 53.33%) | both void; the harm behind the void falls from 10 to 2 |
-| Screens wrongly ruled out, of 30 | 10 | **2** | 8 fewer |
-| Silent error rate per cell, each at the coverage beside it | 43.75% at 68.00% coverage | **1.00%** at 21.75% coverage | 44x lower, at a third of the coverage |
+| Screens wrongly ruled out, of 30 | 10 | **2** | 8 fewer; paired bootstrap on the same cells puts the per-cell difference at -0.0650 (95% CI -0.1550 to +0.0050), which crosses zero, so this run cannot separate it from chance |
+| Silent error rate per cell, each at the coverage beside it | 43.75% at 68.00% coverage | **1.00%** (below the 2.7% label noise floor, so it is not distinguishable from zero here) at 21.75% coverage | 44x lower, at a third of the coverage |
 | Cells answered with a definite verdict | 68.00% | 21.75% | lower on purpose, see below |
 | Cells resolved correctly per screen, the registered co-primary | 3.23 | 2.77 | **the baseline wins this row** |
 | Wrong MEETS, the verdict that enrols someone who should not be | 145 | **0** | 145 fewer |
@@ -33,7 +33,11 @@ TrialSieve answers fewer cells than B2 and that is the design, not a shortfall. 
 
 An arm can win the reduction row by ruling out everybody. B0 does exactly that, reduces the panel by 100%, and wrongly excludes 14 of 30 screens. That is why the registered outcome is VOID at any non-zero false-exclusion count rather than a reduction figure with a caveat.
 
-**No interval is printed in the table above, on purpose.** The brief's suggested format has four columns and none of them is a confidence interval, and inventing a fifth would make this table something other than the one that was asked for. Every row here has its interval and its comparison against the label noise floor in `results/RESULTS.md`, which is where a difference should be judged interpretable or not. The rows above compare B2 against TrialSieve, and every `TS - B2` row in that file is marked `above` the floor rather than below it. The comparison that does fall below is TrialSieve against B1, the regular-expression arm, and `results/RESULTS.md` marks those rows **below, uninterpretable** rather than reporting them as a win.
+**Where the uncertainty is.** The brief's suggested format has four columns and none of them is a confidence interval, so this table keeps its shape and carries the interval inside the row it qualifies rather than in a fifth column. Every difference here is bootstrapped in `results/RESULTS.md`, resampling unique criteria and patients, and each one is printed against the rate at which two independent labellers contradict each other.
+
+**The one that does not separate from chance.** Of the three `TS - B2` differences, `false_fails` has a 95% interval that includes zero. That is the false-exclusion comparison, which is the headline figure of this project, and on 400 cells it is a real reduction that this evaluation is not powered to distinguish from a lucky draw. The silent error rate and the coverage differences do exclude zero. Nothing here is reported as significant that is not.
+
+**And the floor moved.** `results/RESULTS.md` prints every difference against two label noise floors: the poststratified one that amendment A7 introduced after the scored run existed, and the unweighted sample rate it replaced. Exactly one row changes verdict between them, and it is the false-exclusion row, which A7 moved from borderline to above. The comparison that falls below either floor is TrialSieve against B1, the regular-expression arm, and `results/RESULTS.md` marks those rows **below, uninterpretable** rather than reporting them as a result.
 
 ## Where this differs from the suggested format
 

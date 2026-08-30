@@ -75,19 +75,21 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9275    | [-0.9750, -0.8625] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7825    | [-0.8975, -0.6525] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9275    | [-0.9750, -0.8625] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0100    | [+0.0000, +0.0375] | yes          | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1425    | [+0.0525, +0.2500] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0100    | [+0.0000, +0.0375] | yes          | 40 criteria | **below, uninterpretable** |
-| TS - B2    | ser         | -0.4275    | [-0.5700, -0.2850] | no           | 40 criteria | above                      |
-| TS - B2    | coverage    | -0.4625    | [-0.6075, -0.3175] | no           | 40 criteria | above                      |
-| TS - B2    | false_fails | -0.0650    | [-0.1550, +0.0050] | yes          | 40 criteria | above                      |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9275    | [-0.9750, -0.8625] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.7825    | [-0.8975, -0.6525] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9275    | [-0.9750, -0.8625] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0100    | [+0.0000, +0.0375] | yes          | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1425    | [+0.0525, +0.2500] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | false_fails | +0.0100    | [+0.0000, +0.0375] | yes          | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B2    | ser         | -0.4275    | [-0.5700, -0.2850] | no           | 40 criteria | above                      | above                      |
+| TS - B2    | coverage    | -0.4625    | [-0.6075, -0.3175] | no           | 40 criteria | above                      | above                      |
+| TS - B2    | false_fails | -0.0650    | [-0.1550, +0.0050] | yes          | 40 criteria | above                      | **borderline**             |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.7%** (95% CI 1.5% to 4.2%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 400 cells are 6.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. One row changes verdict between the two: `TS - B2` on `false_fails`. The amendment was made after the scored run existed and it moved that row in this project's favour, which is why both columns are here rather than one. `docs/EVAL_PROTOCOL.md` records the amendment, its date and the defect that prompted it.
 
 **What B2 is, and what it is not.** B2 is one model call per cell at temperature 0, sampled once. The protocol also registers B3, the same baseline sampled three times with a majority vote, and B3 was not run: the cassette key is a hash of the full request including temperature and the store keeps one response per key, so three draws of one request replay as one answer counted three times (`docs/EVAL_PROTOCOL.md:65`, entry 26 of the improvement changelog). So the gap measured here is against a single-sample per-cell baseline, not against the best per-cell baseline money can buy. Self-consistency would plausibly close some of it, and this evaluation cannot say how much.
 
@@ -148,16 +150,18 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9405    | [-0.9732, -0.9012] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.8085    | [-0.9100, -0.6919] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9434    | [-0.9742, -0.9066] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0072    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1165    | [+0.0426, +0.2066] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0110] | yes          | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9405    | [-0.9732, -0.9012] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.8085    | [-0.9100, -0.6919] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9434    | [-0.9742, -0.9066] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0072    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1165    | [+0.0426, +0.2066] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0110] | yes          | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k0_seed8  
 
@@ -216,16 +220,18 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9404    | [-0.9731, -0.9012] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.8076    | [-0.9092, -0.6913] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9433    | [-0.9740, -0.9065] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0073    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1174    | [+0.0436, +0.2077] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0111] | yes          | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9404    | [-0.9731, -0.9012] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.8076    | [-0.9092, -0.6913] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9433    | [-0.9740, -0.9065] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0073    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1174    | [+0.0436, +0.2077] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0111] | yes          | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k0_seed9  
 
@@ -284,16 +290,18 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9404    | [-0.9731, -0.9012] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.7836    | [-0.8921, -0.6623] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9433    | [-0.9740, -0.9065] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0073    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1414    | [+0.0571, +0.2412] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0111] | yes          | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9404    | [-0.9731, -0.9012] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.7836    | [-0.8921, -0.6623] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9433    | [-0.9740, -0.9065] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0073    | [+0.0003, +0.0164] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1414    | [+0.0571, +0.2412] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | false_fails | +0.0043    | [+0.0000, +0.0111] | yes          | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k10_seed7  
 
@@ -352,16 +360,18 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9420    | [-0.9742, -0.9034] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.8119    | [-0.9121, -0.6973] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9453    | [-0.9753, -0.9099] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0075    | [+0.0004, +0.0169] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1131    | [+0.0412, +0.2009] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0042    | [+0.0003, +0.0104] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9420    | [-0.9742, -0.9034] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.8119    | [-0.9121, -0.6973] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9453    | [-0.9753, -0.9099] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0075    | [+0.0004, +0.0169] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1131    | [+0.0412, +0.2009] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | false_fails | +0.0042    | [+0.0003, +0.0104] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.1% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k20_seed7  
 
@@ -420,16 +430,18 @@ The curve above is **in-sample**: each row picks the criterion subset using the 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9429    | [-0.9743, -0.9052] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.8155    | [-0.9141, -0.7020] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9458    | [-0.9754, -0.9102] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0068    | [+0.0006, +0.0150] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.1095    | [+0.0397, +0.1956] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0039    | [+0.0003, +0.0095] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9429    | [-0.9743, -0.9052] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.8155    | [-0.9141, -0.7020] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9458    | [-0.9754, -0.9102] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0068    | [+0.0006, +0.0150] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.1095    | [+0.0397, +0.1956] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | false_fails | +0.0039    | [+0.0003, +0.0095] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.0% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. No row changes verdict between the two, so on this group the correction changed the number and not a single conclusion drawn from it.
 
 ## k40_seed7  
 
@@ -488,16 +500,18 @@ The two curves agree on every row. That is a property of this panel rather than 
 
 ### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
 
-| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             |
-|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|
-| TS - B0    | ser         | -0.9443    | [-0.9755, -0.9068] | no           | 40 criteria | above                      |
-| TS - B0    | coverage    | -0.8251    | [-0.9197, -0.7162] | no           | 40 criteria | above                      |
-| TS - B0    | false_fails | -0.9478    | [-0.9766, -0.9133] | no           | 40 criteria | above                      |
-| TS - B1    | ser         | +0.0088    | [+0.0002, +0.0210] | no           | 40 criteria | **below, uninterpretable** |
-| TS - B1    | coverage    | +0.0999    | [+0.0361, +0.1789] | no           | 40 criteria | above                      |
-| TS - B1    | false_fails | +0.0053    | [+0.0002, +0.0122] | no           | 40 criteria | **below, uninterpretable** |
+| comparison | metric      | difference | 95% CI             | crosses zero | n_eff       | vs label floor             | vs the floor before A7     |
+|------------|-------------|------------|--------------------|--------------|-------------|----------------------------|----------------------------|
+| TS - B0    | ser         | -0.9443    | [-0.9755, -0.9068] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | coverage    | -0.8251    | [-0.9197, -0.7162] | no           | 40 criteria | above                      | above                      |
+| TS - B0    | false_fails | -0.9478    | [-0.9766, -0.9133] | no           | 40 criteria | above                      | above                      |
+| TS - B1    | ser         | +0.0088    | [+0.0002, +0.0210] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
+| TS - B1    | coverage    | +0.0999    | [+0.0361, +0.1789] | no           | 40 criteria | above                      | **borderline**             |
+| TS - B1    | false_fails | +0.0053    | [+0.0002, +0.0122] | no           | 40 criteria | **below, uninterpretable** | **below, uninterpretable** |
 
 The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.1%** (95% CI 1.1% to 3.3%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 4.7% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What A7 moved.** The last column applies the floor as it was published before the amendment, 10.6% unweighted. One row changes verdict between the two: `TS - B1` on `coverage`. The amendment was made after the scored run existed and it moved that row in this project's favour, which is why both columns are here rather than one. `docs/EVAL_PROTOCOL.md` records the amendment, its date and the defect that prompted it.
 
 ## ow  (sensitivity: every absence forced to unknown)
 

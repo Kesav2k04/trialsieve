@@ -67,6 +67,14 @@ def build() -> str:
     tsp, b2p = paired["panel_scores"]["TS"], paired["panel_scores"]["B2"]
     n_cells = ts["n_cells"]
     n_screens = paired["n_screens"]
+    # The interval and the floor, read from the same file as the point estimates.
+    # Two of the four headline rows were printed as bare numbers while the file
+    # they were read from carried a confidence interval for one and a noise floor
+    # the other sits underneath. A table that shows the estimate and hides the
+    # uncertainty beside it is the table doing the arguing.
+    floor = paired.get("label_floor_poststratified") or {}
+    boot = {(c["arms"], c["metric"]): c
+            for c in paired.get("paired_bootstrap", [])}
 
     L: list[str] = []
     L += ["# The comparison table, in the shape the brief asks for", ""]
@@ -101,9 +109,24 @@ def build() -> str:
              f"({tsp['false_exclusions']} false exclusions, reduction "
              f"{_pct(tsp['reduction'])}) | both void; the harm behind the void "
              f"falls from {b2p['false_exclusions']} to {tsp['false_exclusions']} |")
+    # The headline this project is most often quoted on. It was printed as two
+    # integers and a subtraction, with no interval anywhere in the repository,
+    # while the paired bootstrap on the same cells puts a 95% interval on it that
+    # includes zero. Ten to two is what happened on this run; it is not a
+    # difference this evaluation can separate from chance, and the row says so.
+    ff = boot.get(("TS - B2", "false_fails"))
+    ff_note = ""
+    if ff:
+        ff_note = (f"; paired bootstrap on the same cells puts the per-cell "
+                   f"difference at {ff['observed_difference']:+.4f} "
+                   f"(95% CI {ff['ci_low']:+.4f} to {ff['ci_high']:+.4f}), "
+                   f"{'which crosses zero, so this run cannot separate it from chance'
+                      if ff['crosses_zero'] else
+                      'which excludes zero'}")
     L.append(f"| Screens wrongly ruled out, of {n_screens} | "
              f"{b2p['false_exclusions']} | **{tsp['false_exclusions']}** | "
-             f"{b2p['false_exclusions'] - tsp['false_exclusions']} fewer |")
+             f"{b2p['false_exclusions'] - tsp['false_exclusions']} fewer"
+             f"{ff_note} |")
     # The change column used to read a bare "44x lower". `evaluation/score.py`
     # says in its opening docstring that a comparison against an arm at higher
     # coverage is not admissible, and this is exactly that comparison: TS at
@@ -111,9 +134,13 @@ def build() -> str:
     # under a module that calls it inadmissible, is the submission arguing
     # against itself. The row carries both coverages now and sends the reader to
     # the paired interval.
+    ser_note = ""
+    if floor.get("hard") and ts["ser"] < floor["hard"]:
+        ser_note = (f" (below the {floor['hard']:.1%} label noise floor, "
+                    f"so it is not distinguishable from zero here)")
     L.append(f"| Silent error rate per cell, each at the coverage beside it | "
              f"{_pct(b2['ser'])} at {_pct(b2['coverage'])} coverage | "
-             f"**{_pct(ts['ser'])}** at {_pct(ts['coverage'])} coverage | "
+             f"**{_pct(ts['ser'])}**{ser_note} at {_pct(ts['coverage'])} coverage | "
              f"{_ratio(b2['ser'], ts['ser'])}, at a third of the coverage |")
     L.append(f"| Cells answered with a definite verdict | {_pct(b2['coverage'])} | "
              f"{_pct(ts['coverage'])} | lower on purpose, see below |")
@@ -208,18 +235,38 @@ def build() -> str:
           f"{paired['panel_scores']['B0']['false_exclusions']} of {n_screens} "
           "screens. That is why the registered outcome is VOID at any non-zero "
           "false-exclusion count rather than a reduction figure with a caveat.", ""]
-    L += ["**No interval is printed in the table above, on purpose.** The brief's "
-          "suggested format has four columns and none of them is a confidence "
-          "interval, and inventing a fifth would make this table something other "
-          "than the one that was asked for. Every row here has its interval and "
-          "its comparison against the label noise floor in `results/RESULTS.md`, "
-          "which is where a difference should be judged interpretable or not. The "
-          "rows above compare B2 against TrialSieve, and every `TS - B2` row in that "
-          "file is marked `above` the floor rather than below it. The comparison "
-          "that does fall below is "
-          "TrialSieve against B1, the regular-expression arm, and `results/RESULTS.md` "
-          "marks those rows **below, uninterpretable** rather than reporting them as "
-          "a win.", ""]
+    # This paragraph used to say no interval was printed here, on purpose. It
+    # then had to say something else, because the row a reader quotes most often
+    # is ten false exclusions against two and the interval on that difference
+    # includes zero. Withholding it and pointing at another file is a choice that
+    # only ever runs one way.
+    crossing = [c for c in paired.get("paired_bootstrap", [])
+                if c["arms"] == "TS - B2" and c["crosses_zero"]]
+    L += ["**Where the uncertainty is.** The brief's suggested format has four "
+          "columns and none of them is a confidence interval, so this table keeps "
+          "its shape and carries the interval inside the row it qualifies rather "
+          "than in a fifth column. Every difference here is bootstrapped in "
+          "`results/RESULTS.md`, resampling unique criteria and patients, and "
+          "each one is printed against the rate at which two independent "
+          "labellers contradict each other.", ""]
+    if crossing:
+        names = ", ".join(f"`{c['metric']}`" for c in crossing)
+        L += [f"**The one that does not separate from chance.** Of the three "
+              f"`TS - B2` differences, {names} has a 95% interval that includes "
+              f"zero. That is the false-exclusion comparison, which is the "
+              f"headline figure of this project, and on 400 cells it is a real "
+              f"reduction that this evaluation is not powered to distinguish from "
+              f"a lucky draw. The silent error rate and the coverage differences "
+              f"do exclude zero. Nothing here is reported as significant that is "
+              f"not.", ""]
+    L += ["**And the floor moved.** `results/RESULTS.md` prints every difference "
+          "against two label noise floors: the poststratified one that amendment "
+          "A7 introduced after the scored run existed, and the unweighted sample "
+          "rate it replaced. Exactly one row changes verdict between them, and it "
+          "is the false-exclusion row, which A7 moved from borderline to above. "
+          "The comparison that falls below either floor is TrialSieve against B1, "
+          "the regular-expression arm, and `results/RESULTS.md` marks those rows "
+          "**below, uninterpretable** rather than reporting them as a result.", ""]
 
     L += ["## Where this differs from the suggested format", ""]
     L += ["- The brief's single **primary outcome** row is split into the "

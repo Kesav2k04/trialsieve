@@ -106,7 +106,19 @@ class Trajectory:
         self._add("normalisation", what=what, before=before, after=after)
 
     def revision(self, what: str, before: Any, after: Any) -> None:
-        self._add("revision", what=what, before=before, after=after)
+        """A predicate sent back to the model after the critic proved a case.
+
+        `changed` is computed here rather than passed in, because the caller
+        that knows why the revision was asked for is not the place to be trusted
+        with whether it landed. Two of the five revisions on the scored run came
+        back byte-identical: the critic proved a counterexample, the model was
+        given it, and it returned the predicate it started with. That is a real
+        outcome of the loop and the record says so on the event itself, so no
+        reader has to diff the two blobs to find out and no counter downstream
+        can report five predicates revised when three of them were.
+        """
+        self._add("revision", what=what, before=before, after=after,
+                  changed=before != after)
 
     def human_checkpoint(self, reviewer: str, decision: str, rationale: str,
                          artifact_sha256: str, reviewer_role: str = "") -> None:

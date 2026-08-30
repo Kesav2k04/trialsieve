@@ -26,6 +26,7 @@ source.
 """
 from __future__ import annotations
 
+import gzip
 import io
 import json
 import re
@@ -63,30 +64,74 @@ def _tracked() -> list[Path]:
     return shipped_paths()
 
 
+def _readable_text(p: Path) -> str | None:
+    """The file's text, decompressing it first when that is what it is.
+
+    A `.gz` is compressed bytes, so a strict UTF-8 decode raises on it and the
+    caller that only caught the exception moved on without a word. The docstring
+    below claimed `.gz` coverage while `data/vendor/panel.jsonl.gz`, the largest
+    tracked file in the repository, was never looked at. It happens to be clean,
+    which is why the gap survived: nothing about the run looked different.
+
+    Returns None only for a file that is still not text after the right decoder
+    has been tried. The caller counts those rather than discarding them.
+    """
+    try:
+        if p.suffix == ".gz":
+            with gzip.open(p, "rt", encoding="utf-8", errors="strict") as fh:
+                return fh.read()
+        return p.read_text(encoding="utf-8", errors="strict")
+    except (UnicodeDecodeError, OSError, gzip.BadGzipFile, EOFError):
+        return None
+
+
 def test_no_tracked_file_contains_a_credential():
     """Every tracked file is opened, not a suffix allow-list of them.
 
-    This used to skip anything whose extension was not on a short list of
-    known text types, which meant a key sitting in `.png`, `.mp3` or `.gz`
-    was invisible to the scan. The repository is small enough (low tens of
-    megabytes tracked) that reading every file costs nothing worth trading
-    coverage for, and a genuinely binary file still gets skipped: the UTF-8
-    decode fails on its first invalid byte and the except below moves on.
+    This used to skip anything whose extension was not on a short list of known
+    text types, which meant a key sitting in `.png`, `.mp3` or `.gz` was
+    invisible to the scan. The repository is small enough (low tens of megabytes
+    tracked) that reading every file costs nothing worth trading coverage for.
+
+    A file that cannot be decoded after the right decoder has been tried is
+    genuinely binary. It is named in `skipped` rather than dropped, because a
+    scan that reports zero findings and quietly read nothing looks exactly like
+    a scan that reports zero findings and read everything.
     """
-    compiled = [(re.compile(p), why) for p, why in PATTERNS]
-    findings = []
+    compiled = [(re.compile(pat), why) for pat, why in PATTERNS]
+    findings, scanned, skipped = [], 0, []
     for p in _tracked():
         if p.name == SELF or not p.exists():
             continue
-        try:
-            text = p.read_text(encoding="utf-8", errors="strict")
-        except (UnicodeDecodeError, OSError):
+        text = _readable_text(p)
+        if text is None:
+            skipped.append(p.relative_to(ROOT).as_posix())
             continue
+        scanned += 1
         for rx, why in compiled:
             for m in rx.finditer(text):
-                line = text.count("\n", 0, m.start()) + 1
+                line = text.count(chr(10), 0, m.start()) + 1
                 findings.append(f"{p.relative_to(ROOT).as_posix()}:{line} {why}")
     assert not findings, "credential-shaped strings in tracked files: " + "; ".join(findings)
+    assert scanned > 100, (
+        f"only {scanned} tracked files were readable, which is too few for this "
+        f"repository, so the scan is reporting clean on almost nothing. "
+        f"skipped: {skipped[:20]}")
+
+
+def test_the_compressed_panel_is_scanned_rather_than_skipped():
+    """The one tracked file the strict decode used to swallow.
+
+    Named on its own because the count above would still pass if this single
+    file went back to being unreadable, and it is the biggest thing here.
+    """
+    panel = ROOT / "data" / "vendor" / "panel.jsonl.gz"
+    if not panel.exists():
+        pytest.skip("data/vendor/panel.jsonl.gz is not in this checkout")
+    text = _readable_text(panel)
+    assert text is not None, "the compressed panel is still skipped by the scan"
+    assert len(text) > 10_000, (
+        f"decompressed to {len(text)} characters, which is not the panel")
 
 
 def test_the_scan_would_catch_a_planted_key(tmp_path):

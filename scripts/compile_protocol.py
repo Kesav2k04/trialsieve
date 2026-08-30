@@ -112,7 +112,7 @@ def main() -> int:
     ground_cache: dict[str, dict] = {}
     out, stats = [], {"compiled": 0, "refused_plan": 0, "refused_grounding": 0,
                       "errors": 0, "critic_confirmed": 0, "critic_dismissed": 0,
-                      "revised": 0}
+                      "revised": 0, "revised_unchanged": 0}
     t0 = time.time()
 
     for i, c in enumerate(todo, 1):
@@ -144,10 +144,22 @@ def main() -> int:
                     stats["critic_confirmed"] += 1
                     rec2, traj = revise_with_finding(client, crit, rec, finding, traj)
                     if rec2.get("compilable"):
-                        traj.revision("predicate revised after a confirmed counterexample",
-                                      rec.get("expr"), rec2.get("expr"))
+                        # The critic proved a case and the model was given it.
+                        # Whether it then changed anything is a separate
+                        # question, and on this run the answer was no twice out
+                        # of five. Counting those as revisions would publish a
+                        # revision rate the artefacts do not support, so the
+                        # unchanged ones are counted apart and the event itself
+                        # carries `changed`.
+                        changed = rec.get("expr") != rec2.get("expr")
+                        traj.revision(
+                            "predicate revised after a confirmed counterexample"
+                            if changed else
+                            "revision returned the predicate unchanged after a "
+                            "confirmed counterexample",
+                            rec.get("expr"), rec2.get("expr"))
                         rec = rec2
-                        stats["revised"] += 1
+                        stats["revised" if changed else "revised_unchanged"] += 1
             except Exception as exc:
                 ctraj.final(error=f"{type(exc).__name__}: {exc}")
             ctraj.write(run / "trajectories")

@@ -11,7 +11,8 @@
 | recompiles after a confirmed counterexample | 5 |
 | requests resent after the endpoint failed | 1 |
 | critic findings | 31 |
-| predicates revised after a confirmed counterexample | 5 |
+| revisions asked for after a confirmed counterexample | 5 |
+| of those, the predicate actually changed | 3 |
 | malformed fields the harness repaired without a retry | 72 |
 | human checkpoints | 0 |
 | completion tokens | 148878 |

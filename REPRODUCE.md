@@ -79,12 +79,15 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 360 tests, now that every artifact they read
+8. **The full suite runs**, all 371 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
-   trust if this sentence has drifted. From a clone that is 356 passed. From an
-   unpacked source archive it is 350 passed and 10 skipped, because ten of
+   trust if this sentence has drifted. From a clone that is 371 passed. From an
+   unpacked source archive it is 364 passed and 7 skipped, because seven of
    them resolve a commit or read history and an archive carries the tree without
-   an object database. Each prints the reason it skipped rather than passing
+   an object database. The pre-registration freeze is no longer among them:
+   `docs/protocol_registration.json` carries the registering commit and the
+   digest of each frozen section, so an archive checks the freeze against that
+   file and a clone additionally checks the file against git. Each prints the reason it skipped rather than passing
    quietly. Beyond the engine they cover the recorder,
    the sign-off gate, the cassette seal, the contamination perturbation, the
    mutation harness, and what the film's cards and narration say against what the

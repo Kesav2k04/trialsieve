@@ -34,6 +34,7 @@ docs/IMPROVEMENT_CHANGELOG.md
 docs/SCORECARD.md
 docs/SEGMENTATION.md
 docs/WEAK_MODEL.md
+docs/protocol_registration.json
 docs/reproduce_transcript.txt
 docs/sample_worklist.csv
 docs/sample_worklist.json
@@ -2473,6 +2474,7 @@ scripts/costs.py
 scripts/counterexample.py
 scripts/describe_corpus.py
 scripts/fetch_trials.py
+scripts/freeze_protocol.py
 scripts/gate_demo.py
 scripts/grounding_audit.py
 scripts/index_patients.py
@@ -2534,6 +2536,7 @@ tests/test_human_checkpoint.py
 tests/test_k0_gap_investigation.py
 tests/test_label_floor.py
 tests/test_line_endings.py
+tests/test_linkcheck_anchors.py
 tests/test_makefile_matches.py
 tests/test_manifest_matches_git.py
 tests/test_md_tables.py

@@ -10,7 +10,8 @@
   "errors": 0,
   "critic_confirmed": 2,
   "critic_dismissed": 0,
-  "revised": 2
+  "revised": 1,
+  "revised_unchanged": 1
  },
  "usage": {
   "calls": 201,

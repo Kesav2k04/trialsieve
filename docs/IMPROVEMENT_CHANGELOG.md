@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Sixty-one entries is
+iteration, each with its evidence and what it decided. Sixty-six entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -59,7 +59,7 @@ same data. Neither is an estimate.
 | patients wrongly ruled out, 385-patient panel | 182 | **18** | `groups.k0_seed7.panel_scores.TS.false_exclusions` |
 | silent error rate per cell | 3.05% | **0.72%** | `groups.k0_seed7.cell_scores.TS.ser` |
 | silent errors the open-world arm would still remove | 358 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
-| third-party imports on the reproduction path | never checked | **0 of 54 modules, parsed** | `python scripts/lockfile.py --imports` |
+| third-party imports on the reproduction path | never checked | **0 of 55 modules, parsed** | `python scripts/lockfile.py --imports` |
 | cards whose length was measured rather than guessed | 0 of 6 | **16 of 16** | the film's measured timings, written from the rendered audio; entry 35 |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
 | silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
@@ -1696,7 +1696,7 @@ is a claim that no gate parses, and the entry describing it had become one.
 file and fails if any of them disagrees with what the checker walks, so the
 prose and the command cannot drift apart again.
 
-**Evidence.** `python scripts/lockfile.py --imports` reports 54 modules parsed
+**Evidence.** `python scripts/lockfile.py --imports` reports 55 modules parsed
 and zero third-party imports. `requirements-lock.txt` carries 23 pins under
 `python 3.14.2 (cpython)`, and seven tests hold the lock exact, complete against
 what pyproject declares, interpreter-stamped, and matched to the count this file
@@ -1892,7 +1892,7 @@ the one word that has to be exactly right.
 build needed `edge-tts` and `playwright`; the new one needs Node, which is not
 reachable from anything in `src/`, `scripts/` or `run.py`. So
 `pyproject.toml` now declares exactly one optional dependency, `pytest`, and
-`scripts/lockfile.py --imports` still reports zero third-party imports across 54
+`scripts/lockfile.py --imports` still reports zero third-party imports across 55
 modules on the reproduction path.
 
 | | before | now |
@@ -3438,3 +3438,199 @@ likely to disappear the next time the generator is edited.
 
 **Evidence.** `python -m pytest tests/test_critic_probe_matches_the_trajectories.py -q`.
 Change a count in the generated table and it names the class and both numbers.
+## 62. Five predicates revised, three of which came back unchanged
+
+**Found by** a reviewer diffing the `before` and `after` blobs on the `revision`
+events instead of trusting the label on them. Two of the five are byte-identical.
+
+**What was wrong.** The critic proves a counterexample, the predicate goes back to
+the model, and whatever returns is written down as a revision. On two of the five
+the model returned exactly what it was given. `scripts/compile_protocol.py`
+incremented `revised`, `scripts/trajectories.py` counted the event, and the index
+published *predicates revised after a confirmed counterexample: 5*. Three had been.
+
+The event carried the evidence all along. `before` and `after` were both on it, in
+every file. Nothing compared them, so the one number a reader would quote about the
+critic loop was two thirds higher than the artefacts behind it, and the artefacts
+were sitting there saying so.
+
+This also corrects the count in
+[entry 22](#22-deleting-a-run-that-never-happened-is-not-enough),
+which recorded *one predicate revised* on seed 7 once the stale files were removed.
+That one is half of the identical pair. Seed 7 revised nothing.
+
+**What changed.** `Trajectory.revision` computes `changed` from the two payloads
+itself rather than accepting it from the caller, so the record cannot disagree with
+its own contents. The compiler counts `revised` and `revised_unchanged` apart and
+writes a different sentence into the trajectory for each. The index prints both
+rows, the count asked for and the count that landed.
+
+A revision that changes nothing is not a defect and it is not being buried now that
+it is counted. The critic proved a case, the model was handed it, and the model
+declined. That is a finding about a one-shot revision budget and it belongs in the
+record beside the ones that worked.
+
+| | before | now |
+|---|---|---|
+| revisions the index reports | 5 | **5 asked for, 3 landed** |
+| `revision` events carrying whether they changed anything | 0 of 5 | **5 of 5** |
+| counters the compiler keeps for this | 1 | 2 |
+
+**Evidence.** `python scripts/trajectories.py --run runs/tierA` prints both rows,
+and the `changed` field is on every `revision` event in
+`runs/tierA/trajectories/compiler/`.
+
+## 63. The pre-registration was checkable only by people who cloned
+
+**Found by** a reviewer running the test suite of an unpacked source archive rather
+than of the repository. `tests/test_protocol_outcome_sections_are_frozen.py`
+skipped in its entirety.
+
+**What was wrong.** The freeze is the load-bearing claim of this evaluation. Three
+sections of `docs/EVAL_PROTOCOL.md` decide whether the project succeeded, and the
+test compares them against the commit that registered them, which needs a git
+object database. A source archive has no `.git`, so every assertion in the file
+turned into a skip and the archive reported a clean suite with the one check that
+matters not run.
+
+A skip and a pass produce the same green summary line. The reader most likely to
+want the freeze checked is the reader least equipped to check it.
+
+**What changed.** `scripts/freeze_protocol.py` writes
+`docs/protocol_registration.json`: the registering commit, its timestamp, and the
+sha256 and length of each frozen section as that commit holds them. It refuses to
+run without git, so the file is derived rather than typed.
+
+The test now has two arms. Every reader checks the current protocol against those
+digests. A reader with an object database additionally checks the receipt against
+git, so a checkout with history cannot be fooled by an edited receipt, and the
+archive copy is verifiable by anyone who clones. The case with no git is a passing
+test whose name says which of the two sources the run had, rather than a skip that
+says nothing.
+
+The file records the protocol registering commit, which is older than the commit
+that carries the file. It never records its own.
+
+| | before | now |
+|---|---|---|
+| freeze assertions an unpacked archive runs | 0 | **7** |
+| what the archive is trusting | the absence of a failure | a named file, checkable against a clone |
+| where the digests come from | nowhere | `git show` of the registering commit |
+
+**Evidence.** `python scripts/freeze_protocol.py --check` compares the file against
+the object database. `python -m pytest
+tests/test_protocol_outcome_sections_are_frozen.py -q` passes with git and without
+it, and says which.
+
+## 64. The credential scan skipped the largest file in the repository
+
+**Found by** a reviewer reading the scan docstring, which claims coverage of `.gz`,
+against the line that opens each file.
+
+**What was wrong.** `tests/test_no_credentials.py` reads every tracked file with
+`errors="strict"` and catches `UnicodeDecodeError` to move past genuinely binary
+files. `data/vendor/panel.jsonl.gz` is gzip, so the strict decode raised, the
+`except` swallowed it, and the file was never scanned. It is the largest tracked
+file here.
+
+That file is clean, which is why this survived. Nothing about the run looked
+different: the scan reported no findings, because it had nothing to report on.
+
+**What changed.** A `.gz` is decompressed before it is decoded, so what gets scanned
+is its contents rather than its container. A file that still will not decode is
+named in `skipped` instead of dropped in silence, and the test asserts a floor on
+how many files were actually read, because a scan reporting clean on nothing looks
+exactly like a scan reporting clean on everything. The compressed panel has its own
+named test, since the floor would still pass if that single file went back to being
+invisible.
+
+| | before | now |
+|---|---|---|
+| tracked bytes the scan reads | everything decodable as UTF-8 | that, plus every `.gz` decompressed |
+| what happens to an unreadable file | discarded | named in the failure message |
+| assertions on how much was scanned | 0 | 2 |
+
+**Evidence.** `python -m pytest tests/test_no_credentials.py -q`.
+
+## 65. The link checker did not open the file every claim points at
+
+**Found by** a reviewer listing which documents `scripts/linkcheck.py` reads.
+`results/RESULTS.md` was not among them.
+
+**What was wrong.** Two holes. The checker opened `README.md`, `SUBMISSION.md`,
+`REPRODUCE.md` and `docs/*.md`, so the one document written entirely by a
+generator, and the one every headline number sends a reader to, had its links
+checked by nothing. And no version of it ever looked at an anchor:
+`FILE.md#a-section` was truncated at the `#` and only the path resolved, so a link
+stayed green while the heading it named was renamed out from under it. A reader
+clicking that link lands at the top of a long document with no way to tell they
+were sent somewhere that is gone.
+
+**What changed.** `results/RESULTS.md` is on the list. Fragments resolve against the
+headings the target document actually has, using GitHub slug rules rather than an
+approximation of them: markup dropped and its text kept, everything that is not a
+word character, a space or a hyphen removed, spaces joined with hyphens, a repeated
+heading suffixed `-1`, a `#` inside a fenced block not treated as a heading, and a
+hand-written HTML anchor counted.
+
+The corpus carries two anchors and both resolve, which means a run over this
+repository cannot tell a working anchor check from one that matches everything. So
+the slug rules are exercised on planted text in `tests/test_linkcheck_anchors.py`,
+including the case the corpus cannot supply: an anchor that names no heading,
+rejected.
+
+| | before | now |
+|---|---|---|
+| documents checked | 22 | **23**, including the generated one |
+| anchors validated | 0 | every one, against real headings |
+| tests for the slug rules | 0 | 7 |
+
+**Evidence.** `python scripts/linkcheck.py` prints how many paths and anchors it
+resolved. `python -m pytest tests/test_linkcheck_anchors.py -q`.
+
+## 66. The headline number had no interval and the floor under it had moved
+
+**Found by** two reviewers, on the same table, from opposite directions.
+
+**What was wrong.** Three things, and they compound.
+
+The figure this project is quoted on is ten screens wrongly ruled out against two.
+`docs/SCORECARD.md` printed it as two integers and a subtraction. The paired
+bootstrap on those same 400 cells puts the per-cell difference at -0.0650 with a
+95% interval of -0.1550 to +0.0050. It includes zero. The reduction happened on
+this run, this evaluation is not powered to separate it from a lucky draw, and the
+one document a reader is most likely to read alone said neither.
+
+The silent error rate row printed **1.00%** with no floor beside it. The two
+independent labellers contradict each other at 2.7% on this group mix of labels,
+so 1.00% is a number underneath the uncertainty of the labels it is scored against.
+
+And amendment A7 replaced the unweighted label noise floor with a poststratified
+one, moving it from 10.6% to 2.3%, after the scored run existed. The amendment is
+argued at length in `docs/EVAL_PROTOCOL.md` and it is correct: the sample was drawn
+with equal shares of each label and the panel is 5.2% FAILS, so the old floor was
+the disagreement rate of a population made of the hardest cells. It is also a
+change made after the data was seen that moved every verdict in this project
+favour, and the report printed only the number that helps.
+
+**What changed.** The scorecard false-exclusion row carries the interval and states
+in the row that it crosses zero. The silent error rate row names the floor it sits
+under. The paragraph that used to explain why no interval was printed is replaced
+by three that say where the uncertainty is, which single `TS - B2` difference does
+not separate from chance, and which row the amendment moved.
+
+`results/RESULTS.md` now prints **both** floors, in two columns, per group, with a
+generated paragraph naming the rows whose verdict differs between them. On the
+scored 400-cell group exactly one does, and it is the false-exclusion row, which A7
+moved from borderline to above. A reader does not have to take the amendment word
+for how much it mattered; the table shows them.
+
+| | before | now |
+|---|---|---|
+| interval on the 10-to-2 headline | nowhere in the repository | in the row, with `crosses zero` stated |
+| floors printed per comparison | 1, the one A7 introduced | **2**, the retired one beside it |
+| rows whose verdict A7 changed | unstated | **1**, named in generated prose |
+
+**Evidence.** `python scripts/scorecard.py` and `python scripts/report.py --run
+runs/tierA --out results`, then read the two floor columns in `results/RESULTS.md`
+and the three paragraphs under the scorecard table.

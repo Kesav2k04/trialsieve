@@ -258,6 +258,28 @@ def coverage_denominators() -> dict | None:
                            "gold": t.get("n_gold")} for t in trials]}
 
 
+def _floor_verdict(difference: float, hard: float | None) -> str:
+    """Where one difference sits against one label-noise floor.
+
+    Split out because two floors are now reported for every row, and a verdict
+    computed twice from two copies of the same three-branch rule is a verdict
+    that will disagree with itself the first time one copy is edited.
+    """
+    if hard is None:
+        return "not measured"
+    d = abs(difference)
+    if d >= hard:
+        return "above"
+    if d >= hard / 2:
+        return "borderline"
+    return "below, uninterpretable"
+
+
+def _emph(verdict: str) -> str:
+    """Bold the verdicts a reader should not skim past."""
+    return verdict if verdict in ("above", "not measured") else f"**{verdict}**"
+
+
 def load_label_floor() -> dict | None:
     """The measured disagreement between the two independent labellers.
 
@@ -712,26 +734,35 @@ def main() -> int:
             md.append("\n### Paired difference, two-way bootstrap "
                       f"(B={a.bootstrap}, resampling unique criteria and patients)\n")
             md.append("| comparison | metric | difference | 95% CI | crosses zero | "
-                      "n_eff | vs label floor |")
-            md.append("|---|---|---|---|---|---|---|")
+                      "n_eff | vs label floor | vs the floor before A7 |")
+            md.append("|---|---|---|---|---|---|---|---|")
+            flipped = []
             for r in comparisons:
                 # The prose under the noise-floor table promises that a difference
                 # smaller than the two labellers' own disagreement is reported as
                 # uninterpretable. It was a promise and nothing enforced it, so the
                 # verdict is computed here and printed in the row it applies to.
-                if gfloor is None:
-                    verdict = "not measured"
-                elif abs(r["observed_difference"]) >= gfloor["hard"]:
-                    verdict = "above"
-                elif abs(r["observed_difference"]) >= gfloor["hard"] / 2:
-                    verdict = "**borderline**"
-                else:
-                    verdict = "**below, uninterpretable**"
-                r["vs_label_floor"] = verdict.replace("*", "")
+                #
+                # Both floors are printed. Amendment A7 replaced the unweighted
+                # sample rate with a poststratified one after the scored run
+                # existed, and it moved every verdict in the direction that
+                # favours this project. Publishing only the number that helps and
+                # arguing for it in a protocol appendix is not the same as showing
+                # a reader which rows the change actually moved, so the column the
+                # amendment retired is kept beside the one that replaced it.
+                verdict = _floor_verdict(r["observed_difference"],
+                                         gfloor["hard"] if gfloor else None)
+                was = _floor_verdict(r["observed_difference"],
+                                     floor["hard_in_sample"] if floor else None)
+                r["vs_label_floor"] = verdict
+                r["vs_label_floor_unweighted"] = was
+                if verdict != was:
+                    flipped.append(f"`{r['arms']}` on `{r['metric']}`")
                 md.append(f"| {r['arms']} | {r['metric']} | {r['observed_difference']:+.4f} | "
                           f"[{r['ci_low']:+.4f}, {r['ci_high']:+.4f}] | "
                           f"{'yes' if r['crosses_zero'] else 'no'} | "
-                          f"{r['n_unique_criteria']} criteria | {verdict} |")
+                          f"{r['n_unique_criteria']} criteria | "
+                          f"{_emph(verdict)} | {_emph(was)} |")
             if gfloor is not None:
                 md.append("")
                 md.append(f"The last column compares the absolute difference against "
@@ -751,6 +782,25 @@ def main() -> int:
                           f"zero says the difference is not noise from resampling; it "
                           f"says nothing about whether the labels themselves could "
                           f"support a difference that small.")
+                md.append("")
+                if flipped:
+                    md.append(
+                        f"**What A7 moved.** The last column applies the floor as it "
+                        f"was published before the amendment, {floor['hard_in_sample']:.1%} "
+                        f"unweighted. "
+                        f"{'One row changes verdict' if len(flipped) == 1 else f'{len(flipped)} rows change verdict'}"
+                        f" between the two: {', '.join(flipped)}. The amendment was "
+                        f"made after the scored run existed and it moved that row in "
+                        f"this project's favour, which is why both columns are here "
+                        f"rather than one. `docs/EVAL_PROTOCOL.md` records the "
+                        f"amendment, its date and the defect that prompted it.")
+                else:
+                    md.append(
+                        f"**What A7 moved.** The last column applies the floor as it "
+                        f"was published before the amendment, {floor['hard_in_sample']:.1%} "
+                        f"unweighted. No row changes verdict between the two, so on "
+                        f"this group the correction changed the number and not a "
+                        f"single conclusion drawn from it.")
 
             if any(r["arms"] == "TS - B2" for r in block["paired_bootstrap"]):
                 md.append("")

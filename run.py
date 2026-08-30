@@ -295,6 +295,13 @@ def t_reproduce(run: str = RUN) -> None:
 
     banner("score and report")
     sh(PY, "scripts/report.py", "--run", run, "--out", "results")
+    # The comparison table the brief asks for is generated from the same
+    # results.json and was not on this path. `docs/SCORECARD.md` is the one page
+    # a reviewer most likely reads alone, and until this line it could hold
+    # numbers from an earlier run while everything around it regenerated. The
+    # worklist is deliberately not here: it is gated on a human signature and
+    # regenerating it would mean this path either signs the gate or fails.
+    sh(PY, "scripts/scorecard.py")
 
     t_suite()
     t_verify(run)

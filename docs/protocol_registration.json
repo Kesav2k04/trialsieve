@@ -1,0 +1,27 @@
+{
+ "what_this_is": "The pre-registration, as data, so that a reader without a git object database can check the three sections of docs/EVAL_PROTOCOL.md that a result could be made to pass by editing. Written by scripts/freeze_protocol.py, which reads them out of the commit that introduced the protocol.",
+ "what_this_does_not_establish": "That the registration is honest. A reader holding only a source archive is trusting this file, and a clone is not: with git present the test verifies every digest here against the object database, so the archive's copy can be checked by anyone who clones the repository. That is the whole of what it offers.",
+ "protocol": "docs/EVAL_PROTOCOL.md",
+ "registered_in_commit": "23f24dcb9b5aaf9331fc2a76086e43621d7e4629",
+ "registered_at_unix": 1787947410,
+ "frozen_sections": {
+  "1. What is being claimed": {
+   "sha256": "5da607fe6570f174427bff708f6fc8e2f293d579988e4fa62ac13f66638a9324",
+   "characters": 497
+  },
+  "11. Decision rule, fixed in advance": {
+   "sha256": "496f2152fa0cb24c318f3932c3d8d5b303dc57f9dc49e26ee0bfd3256db85ab9",
+   "characters": 305
+  },
+  "12. What would falsify the thesis": {
+   "sha256": "b805b4ddab6edf5827e4167bea1871e61186428be4152dae36fc79367368aa1d",
+   "characters": 261
+  }
+ },
+ "first_scored_result": {
+  "path": "results/results.json",
+  "added_in_commit": "e94f1fa04f46466436e33e6349a194071f8822c0",
+  "added_at_unix": 1787981971,
+  "seconds_after_registration": 34561
+ }
+}

@@ -114,6 +114,12 @@ def stats(events: list[dict]) -> dict:
         "transport_retries": kinds.get("transport_retry", 0),
         "critic_findings": kinds.get("critic_finding", 0),
         "revisions": kinds.get("revision", 0),
+        # A revision the model was asked for and did not make. The critic proved
+        # a counterexample, the predicate went back, and what came out was the
+        # predicate that went in. Counted apart so the index cannot report five
+        # predicates revised when the files show three.
+        "revisions_changed": sum(
+            1 for e in events if e["event"] == "revision" and e.get("changed")),
         "normalisations": kinds.get("normalisation", 0),
         "human_checkpoints": kinds.get("human_checkpoint", 0),
         "completion_tokens": tokens,
@@ -267,7 +273,8 @@ def main() -> int:
     tot = {k: sum(r[k] for r in rows) for k in
            ("events", "llm_calls", "tool_calls", "validation_errors", "retries",
             "retries_schema", "retries_critic",
-            "transport_retries", "critic_findings", "revisions", "normalisations",
+            "transport_retries", "critic_findings", "revisions",
+            "revisions_changed", "normalisations",
             "human_checkpoints", "completion_tokens")}
 
     L: list[str] = []
@@ -294,7 +301,10 @@ def main() -> int:
     L.append(f"| requests resent after the endpoint failed | "
              f"{tot['transport_retries']} |")
     L.append(f"| critic findings | {tot['critic_findings']} |")
-    L.append(f"| predicates revised after a confirmed counterexample | {tot['revisions']} |")
+    L.append(f"| revisions asked for after a confirmed counterexample | "
+             f"{tot['revisions']} |")
+    L.append(f"| of those, the predicate actually changed | "
+             f"{tot['revisions_changed']} |")
     L.append(f"| malformed fields the harness repaired without a retry | "
              f"{tot['normalisations']} |")
     L.append(f"| human checkpoints | {tot['human_checkpoints']} |")
