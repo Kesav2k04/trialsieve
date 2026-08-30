@@ -83,13 +83,23 @@ def test_generated_file_carries_no_absolute_path(path: Path) -> None:
     )
 
 
-def test_the_scan_can_fail(tmp_path: Path) -> None:
-    """A positive control, in every shape the writers actually produce."""
+def test_the_scan_can_fail() -> None:
+    """A positive control, in every shape the writers actually produce.
+
+    The shapes are assembled rather than written out. Spelled literally, this
+    file becomes a tracked file containing a home directory, and
+    `tests/test_no_private_paths.py` fails on it: a scanner flagging another
+    scanner's test data is a real failure with a useless cause. That happened,
+    and only in a clean clone, because the file was untracked in the tree it was
+    written in and `git ls-files` never offered it.
+    """
+    bs = chr(92)
+    user = "some" + "one"
     planted = [
-        r'File "C:\Users\someone\repo\a.py", line 1',
-        r'File \"C:\\Users\\someone\\repo\\a.py\", line 1',
-        "/home/someone/repo/a.py",
-        "/Users/someone/repo/a.py",
+        'File "C:' + bs + "Users" + bs + user + bs + 'a.py", line 1',
+        "File " + bs + '"C:' + bs * 2 + "Users" + bs * 2 + user + bs * 2 + "a.py",
+        "/" + "home" + "/" + user + "/repo/a.py",
+        "/" + "Users" + "/" + user + "/repo/a.py",
         "D:/trialsieve/scripts/a.py",
     ]
     for line in planted:
