@@ -82,7 +82,7 @@ was read as a count of zero by the document a reviewer signs.
 8. **The full suite runs**, all 360 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
    trust if this sentence has drifted. From a clone that is 356 passed. From an
-   unpacked source archive it is 342 passed and 14 skipped, because fourteen of
+   unpacked source archive it is 350 passed and 10 skipped, because ten of
    them resolve a commit or read history and an archive carries the tree without
    an object database. Each prints the reason it skipped rather than passing
    quietly. Beyond the engine they cover the recorder,
