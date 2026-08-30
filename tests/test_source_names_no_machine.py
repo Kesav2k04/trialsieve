@@ -1,10 +1,10 @@
 """No shipped script hardcodes a path on the machine that wrote it.
 
 `tests/test_generated_files_name_no_machine.py` covers files a script writes. It
-does not cover the scripts. Four committed files under `film/scripts/` opened with
-`REPO = Path(r"D:\trialsieve")`, so a clone anywhere else could not build the film,
-and two of them named a directory belonging to an entirely different project, which
-published the author's disk layout alongside the code.
+does not cover the scripts. Four committed files in the video build opened with a
+drive-rooted assignment of the repository root, so a clone anywhere else could not
+run them, and two of them named a directory belonging to an entirely different
+project, which published the author's disk layout alongside the code.
 
 Scoped to shipped code. `tests/` is excluded on purpose: a test that checks how a
 path is redacted has to contain a path to redact, and the version of this file that
@@ -25,7 +25,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 #: Directories whose Python is shipped and run by somebody else.
-SHIPPED = ("scripts/", "src/", "evaluation/", "film/scripts/", "run.py")
+SHIPPED = ("scripts/", "src/", "evaluation/", "run.py")
 
 #: A Windows drive-rooted path, or a POSIX home directory.
 # Two backslashes in the pattern source, so the class holds one. A single

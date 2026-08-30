@@ -19,7 +19,7 @@ no `make` and the reproduction should not depend on one.
 |---|---|
 | Python | 3.10 or newer. Developed on 3.14.2, CI runs 3.10 and 3.13. |
 | Install | `pytest`, for the test gate. Nothing else. |
-| Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The film is a Remotion project in [`film/`](film/README.md), which is Node rather than Python and is not reachable from anything here. |
+| Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The video was rendered by a separate Node project, which is not part of this submission and is not reachable from anything here. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
 | Disk | **90 MB of tracked files, and a fresh clone measured 269 MB** including history. Every figure in this row is decimal MB. That command prints bytes, so divide by a million to land on these numbers; dividing by 1024 squared instead reads 86 rather than 90, which looks like the row is wrong again and is not. The tracked bulk is `runs/` at 48 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/` at 20 MB, almost all of it the video and the rendered walkthrough, then `film/` at 14 MB, almost all of it the narration the walkthrough is cut to, then the vendored panel at 7 MB. The gap between 90 and 269 is history, and most of it is the ten versions of the video this history carries: a 19 MB binary does not delta-compress, and the film was rebuilt every time a figure on one of its cards moved. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong six times, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, then at 61 MB before the film was, then at 185 MB, 231 MB and 247 MB after further rebuilds, so it is worth measuring rather than reading. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
@@ -79,7 +79,7 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 387 tests, now that every artifact they read
+8. **The full suite runs**, all 339 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
    trust if this sentence has drifted. Beyond the engine they cover the recorder,
    the sign-off gate, the cassette seal, the contamination perturbation, the
@@ -138,18 +138,15 @@ re-hashing 1,047 cassettes.
 
 ## What a successful run looks like
 
-The last lines of a real run, copied out of
-[`film/public/terminal/reproduce.txt`](film/public/terminal/reproduce.txt), which
-is captured stdout rather than a sample typed into this file. The whole 1,836-line
-transcript is in there, and `python film/scripts/capture.py --all` regenerates it
-by actually running the command:
+The last lines of a real run, captured from stdout rather than typed into this
+file. Run the command yourself and compare your own last lines against these:
 
     ========================================================================
     compare against the published numbers
     ========================================================================
     IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
 
-    OK  (reproduce in 142.6s)
+    OK  (reproduce in 151.3s)
 
     exit 0
 
@@ -177,8 +174,8 @@ rather than here so the same quantity does not get two homes and drift apart;
 tracked cassettes. To re-record rather than replay, `--backend codex` maps to
 `gpt-5.6-terra`, which is why that name appears further down this file.
 
-The film toolchain, which no reproduction step touches: Remotion 4.0.489,
-React 19.1.1, Chatterbox 0.1.7.
+The video toolchain, which no reproduction step touches and which is not part of
+this submission: Remotion 4.0.489, React 19.1.1, Chatterbox 0.1.7.
 
 ## The five checks, and what each one rules out
 
@@ -229,10 +226,14 @@ Two numbers are worth reading before the rest.
 reproduce` makes no model call, so it costs $0.00 in tokens and needs no key.
 Every recorded call replays from `runs/tierA/cassettes/`, and replay never falls
 through to a live call. Measured end to end on this machine, a Windows laptop
-with a 14-core CPU: **154.1 seconds from a fresh clone into an empty directory**,
-and 285.6 seconds on a second run while the same machine was busy rendering
-video. Both are printed by the command itself as its last line, so the figure a
-judge sees is the one their own run measured rather than this one.
+with a 14-core CPU: **168.5 seconds from a fresh clone into an empty directory**,
+151.3 seconds in place with the artifacts already warm, and 285.6 seconds on a
+second run while the same machine was busy rendering video. Every one of those is
+printed by the command itself as its last line, so the figure a judge sees is the
+one their own run measured rather than this one. Three readings of the same
+command are given because the spread is the honest answer to "how long does it
+take": a cold clone pays for reading 90 MB off disk, and a busy machine pays
+twice.
 
 **Screening is free, and that is the architecture showing up as a runtime fact.**
 The step that touches all 385 patients across all 40 criteria makes zero model

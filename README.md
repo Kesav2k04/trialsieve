@@ -2,63 +2,17 @@
 
 **The model reads the protocol once. It never reads a patient.**
 
-| 385 patients, 40 criteria, 15,400 judgements | today | TrialSieve |
-|---|---|---|
-| model spend per screening pass, at published rates | $22.19, asking per cell | **$0.13**, paid once per protocol |
-| the same panel rescreened next month | $22.19 again | **$0.00**, the predicates are already compiled |
-| wall clock for the pass | a nurse reading charts | under 5 seconds, zero model calls |
-| what a coordinator is handed *(one trial, the 3 criteria the zero-false-exclusion operating point applies, so 1,155 of those judgements)* | 1,155 chart readings | 190 screens carrying 2 open questions, [grouped](docs/sample_worklist.md) |
-
-Each row names the set it is counted over, because they are not the same set: the
-cost rows are the whole 15,400-cell panel and the last row is one trial at one
-operating point. Every money figure is read back out of
-[docs/COST.md](docs/COST.md) by `tests/test_readme_cost_claims.py`, which is the
-rule the rest of this repository runs on. A number that appears twice disagrees
-with itself eventually, so the second copy is checked against the first. The two
-costs cross at 2.2 patients, and past that the gap grows with every patient and
-every rescreen, because one side of it is flat.
-
-**The larger cost is not in that table, and it is a person.** Before this produces
-any document, somebody qualified reads all 19 compiled predicates and signs them.
-No clinician was timed here, so this repository does not put a rate on it. What it
-can do is give you the quantity, measured rather than guessed: **19 predicates,
-1,478 words in total** across their source text, expression, unit note and absence
-note. Median 60 words each, longest 262. Price that at your own reviewer's rate.
-
-Against the per-cell baseline that is the whole argument, because the baseline has
-no reviewable artifact at all. To get the same assurance you would read 15,400
-individual answers, and read them again next month. What compiling buys is not a
-smaller bill. It is a review surface small enough that reviewing it is possible.
-
-**And the cost table above is not the argument against the tool a site already
-owns.** i2b2, ATLAS, TriNetX and the EHR query builders cost nothing more to run,
-so on price they win and this table is beside the point. The case against them is
-in [Prior art](#prior-art) and it is not about money: a filter cannot tell you who
-it could not decide, and the patients it silently drops are the ones this project
-exists to count. If price is what decides, buy neither; the incumbent is free.
-
-Clinical trial prescreening, built so that ruling a patient out on a fact that is
-missing from their record is a decision somebody has to make on purpose, in
-writing, where a reviewer can see it. One criterion in this repository's first published run made that decision and it
-cost 358 of the 424 cells where the system answered FAILS and the labels did
-not. The repair, and what it cost in coverage, are measured below rather than
-claimed away: 424 of those cells became 66, and the count that decides whether
-a person is dropped from the panel, patients wrongly ruled out, fell from 182
-to 18. Two units, both reported, because a cell is not a patient and only one
-of them gets a phone call.
-
 **Reviewing this? Here is each deliverable and the one file that answers it.**
 
 | | |
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 53 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 54 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
-| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 154s, no key, no network. |
-| The video | [docs/VIDEO.md](docs/VIDEO.md) carries the link and the shot table. The file is [docs/video/trialsieve.mp4](docs/video/trialsieve.mp4), 4:55, said word for word in [docs/video/script.md](docs/video/script.md). |
+| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 168.5s measured, no key, no network. |
+| The video | submitted as a link on the entry form, 4:54. It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
 | Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call. Five named exemplars first, then the rest with the failures at the top. The four other arms are indexed the same way beside it. |
-| Traces of the agent that built it | [docs/agent-traces/](docs/agent-traces/README.md), two episodes with the human checkpoints that changed the plan. |
 | Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
 
 The main failure mode is in [How it fails](#how-it-fails) and the hot take is the
@@ -130,6 +84,45 @@ reported as a pair for that reason, and neither is reported alone.
 
 ---
 
+## What it costs, and what that number is not an argument about
+
+| 385 patients, 40 criteria, 15,400 judgements | today | TrialSieve |
+|---|---|---|
+| model spend per screening pass, at published rates | $22.19, asking per cell | **$0.13**, paid once per protocol |
+| the same panel rescreened next month | $22.19 again | **$0.00**, the predicates are already compiled |
+| wall clock for the pass | a nurse reading charts | under 5 seconds, zero model calls |
+| what a coordinator is handed *(one trial, the 3 criteria the zero-false-exclusion operating point applies, so 1,155 of those judgements)* | 1,155 chart readings | 190 screens carrying 2 open questions, [grouped](docs/sample_worklist.md) |
+
+Each row names the set it is counted over, because they are not the same set: the
+cost rows are the whole 15,400-cell panel and the last row is one trial at one
+operating point. Every money figure is read back out of
+[docs/COST.md](docs/COST.md) by `tests/test_readme_cost_claims.py`, which is the
+rule the rest of this repository runs on. A number that appears twice disagrees
+with itself eventually, so the second copy is checked against the first. The two
+costs cross at 2.2 patients, and past that the gap grows with every patient and
+every rescreen, because one side of it is flat.
+
+**The larger cost is not in that table, and it is a person.** Before this produces
+any document, somebody qualified reads all 19 compiled predicates and signs them.
+No clinician was timed here, so this repository does not put a rate on it. What it
+can do is give you the quantity, measured rather than guessed: **19 predicates,
+1,478 words in total** across their source text, expression, unit note and absence
+note. Median 60 words each, longest 262. Price that at your own reviewer's rate.
+
+Against the per-cell baseline that is the whole argument, because the baseline has
+no reviewable artifact at all. To get the same assurance you would read 15,400
+individual answers, and read them again next month. What compiling buys is not a
+smaller bill. It is a review surface small enough that reviewing it is possible.
+
+**And the cost table above is not the argument against the tool a site already
+owns.** i2b2, ATLAS, TriNetX and the EHR query builders cost nothing more to run,
+so on price they win and this table is beside the point. The case against them is
+in [Prior art](#prior-art) and it is not about money: a filter cannot tell you who
+it could not decide, and the patients it silently drops are the ones this project
+exists to count. If price is what decides, buy neither; the incumbent is free.
+
+---
+
 ## What a per-cell model does with a missing lab
 
 The criterion is from a real registered trial:
@@ -144,7 +137,7 @@ patient's chart. Over all 400 cells of that arm it **commits to a verdict on 272
 of them**, 68%, including cells where the record is silent. Nothing in the chart
 contradicts the threshold, so the threshold appears satisfied. The reasoning is
 fluent and the answer is confident, and on those same 400 cells it is wrong on
-43.8% of every cell against TrialSieve's 1.0%. Counted only over the cells each
+43.75% of every cell against TrialSieve's 1.00%. Counted only over the cells each
 one answers, that is 175 of 272 for the baseline and 4 of 87 here.
 
 **Read that pair with its sample size.** Those 400 cells are **10 patients**
@@ -405,7 +398,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 53 entries, each naming the evidence that found
+- **The Improvement Changelog**, 54 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.

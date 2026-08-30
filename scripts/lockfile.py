@@ -130,10 +130,10 @@ def _parse(text: str) -> dict[str, str]:
 STDLIB = set(sys.stdlib_module_names)
 
 #: Directories whose imports must stay standard library for the claim to hold.
-#: The video script is the documented exception: the video is a deliverable
-#: rather than a number, and nothing under `run.py reproduce` imports them.
+#: `lockfile.py` is skipped because it is the tool doing the reading, not a
+#: module on the path it reads.
 REPRO_DIRS = ["src", "evaluation"]
-REPRO_SCRIPT_SKIP = {"make_video.py", "_video_figures.py", "lockfile.py"}
+REPRO_SCRIPT_SKIP = {"lockfile.py"}
 
 
 def _module_files() -> list[Path]:

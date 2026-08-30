@@ -80,14 +80,11 @@ runs/tierA/cells/
 local_dev.db
 profile-claim.lock
 
-# Video build intermediates. Regenerable offline from what is tracked:
-# `python scripts/make_video.py shots` recaptures, `assemble` re-renders.
-docs/video/frames/
-docs/video/shots/
-# The rendered file is committed. It is 9.9 MB, which a clone can carry, and a
-# judge who cannot reach the hosted copy can still watch the deliverable. What is
-# tracked beside it is everything needed to rebuild it from scratch: the script,
-# the narration audio, its cue timings, and the shot spec.
+# The video build. It is a deliverable rather than part of the solution, nothing
+# under `run.py` touches it, and a judge is asked to run the code rather than to
+# rebuild the recording, so none of it is tracked.
+docs/video/
+film/
 
 # Internal planning notes and the review passes run over this repository while it
 # was built. Working material rather than a deliverable: SUBMISSION.md requires

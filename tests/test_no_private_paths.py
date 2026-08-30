@@ -1,9 +1,8 @@
 """No tracked file may carry a path through somebody's home directory.
 
-`tests/test_agent_traces.py` already enforces this for `docs/agent-traces/`,
-because a coding-agent transcript is obviously a shell session on a laptop. What
-that test does not cover is the other kind of artifact: the trajectories the
-system itself writes while running. Those record what a tool returned, and one of
+A coding-agent transcript is obviously a shell session on a laptop, and the
+exporter that wrote those redacted them. The other kind of artifact went
+unchecked: the trajectories the system itself writes while running. Those record what a tool returned, and one of
 the things a tool returned was an HTTP 502 whose message quoted the absolute path
 of the CLI binary that had just died. Eighty-two copies of it, across fifty-seven
 files, none of which anybody would have thought to read.
@@ -35,11 +34,8 @@ PATTERNS = [
 #: Files that name a home directory on purpose. Each one is here with a reason,
 #: and the list is short so that adding to it is a decision rather than a habit.
 ALLOWED = {
-    # The reproduction guide has to show what a clone looks like, and the film's
-    # capture script has to name the pattern it redacts.
+    # A test for how a path is redacted has to contain a path to redact.
     "tests/test_no_private_paths.py",
-    "tests/test_agent_traces.py",
-    "scripts/agent_traces.py",
 }
 
 

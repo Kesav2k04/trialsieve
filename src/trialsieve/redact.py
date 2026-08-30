@@ -30,7 +30,7 @@ from pathlib import Path
 #: on Windows writes backslashes; the same string inside JSON writes them
 #: doubled; a URL or a git-bash line writes forward slashes. Redacting one shape
 #: and missing the rest is the mistake this repository already made once, in the
-#: agent-trace exporter, and `tests/test_agent_traces.py` is where it failed.
+#: agent-trace exporter, whose own test is where it failed.
 def _shapes(prefix: Path) -> list[str]:
     native = str(prefix)
     posix = prefix.as_posix()

@@ -12,10 +12,17 @@ of them raised an error. Each would have produced a plausible result with nothin
 in the output to say it was wrong. That is the failure mode this project is about,
 and it turns out to apply to the project itself.
 
+**The film is not in this repository.** It builds one of the four deliverables
+rather than being part of the solution, and `python run.py reproduce` never touches
+it, so shipping a Node project and a 19 MB binary alongside code a judge is asked to
+run would be weight without a reason. The video is submitted as a link. Entries
+below that describe work on it name what changed rather than a path to open; every
+entry about the system itself still points at a file in this tree.
+
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Fifty-three entries is
+iteration, each with its evidence and what it decided. Fifty-four entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -52,8 +59,8 @@ same data. Neither is an estimate.
 | patients wrongly ruled out, 385-patient panel | 182 | **18** | `groups.k0_seed7.panel_scores.TS.false_exclusions` |
 | silent error rate per cell | 3.05% | **0.72%** | `groups.k0_seed7.cell_scores.TS.ser` |
 | silent errors the open-world arm would still remove | 358 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
-| third-party imports on the reproduction path | never checked | **0 of 54 modules, parsed** | `python scripts/lockfile.py --imports` |
-| cards whose length was measured rather than guessed | 0 of 6 | **16 of 16** | `film/src/timings.json`, written from the rendered audio; entry 35 |
+| third-party imports on the reproduction path | never checked | **0 of 53 modules, parsed** | `python scripts/lockfile.py --imports` |
+| cards whose length was measured rather than guessed | 0 of 6 | **16 of 16** | the film's measured timings, written from the rendered audio; entry 35 |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
 | silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
 | false exclusions at 40% record damage | 206 | **31** | `degradation_curve` in `results/results.json` |
@@ -131,11 +138,11 @@ of which appears nowhere in the patient's record.
 **Evidence.** Three tests, and they were mutation-checked: reverting the two lines
 of the fix makes all three fail and the other 67 pass.
 
-```
+``
 tests/test_engine.py::test_a_threshold_on_the_left_is_converted_like_one_on_the_right
 tests/test_engine.py::test_a_comparison_means_the_same_thing_written_either_way_round
 tests/test_engine.py::test_an_unconvertible_threshold_on_the_left_refuses
-```
+``
 
 **What it would have cost.** The reviewer flagged that this alone would void the
 primary outcome, and that is right: the primary outcome counts patients wrongly
@@ -151,9 +158,9 @@ ruled out, and an 8.84x error on a renal threshold produces exactly those.
 positional argument. On Windows it arrived empty. The model, given a system prompt
 and no task, replied:
 
-```
+``
 Ready. What would you like to work on?
-```
+``
 
 The harness did what it should with an unparseable reply: it retried three times
 with the validator's error fed back, then recorded a refusal. So the pipeline
@@ -272,13 +279,13 @@ all 385 of them. It looks like a result.
 
 **Evidence.**
 
-```
+``
 $ python -c "from trialsieve import explain; ..."
 STOP. These codes are in the site vocabulary but on no chart in this panel, and
 the query treats their absence as proof. Every patient will come back the same
 way, and it will look like a result:
   - 265764009 (Renal dialysis (procedure), 0 patients in this panel)
-```
+``
 
 **What it would have cost.** A criterion that appeared to work, applied to every
 patient in the panel, resting on evidence that could not exist. The gold set caught
@@ -1274,10 +1281,10 @@ model puts a broader-only code in `codes` anyway?
 built its allow-list of legal codes as one set (entry 29 is where those lines
 changed, so they no longer read this way):
 
-```python
+``python
 allowed = {c for g in grounded for c in g["codes"]}
 allowed |= {c for g in grounded for c in (g.get("broader_codes") or [])}
-```
+``
 
 The union is right for deciding whether a code was hallucinated, which is what the
 check was written to do. It is exactly wrong for deciding which slot a code belongs
@@ -1465,7 +1472,7 @@ the numbers is the reason entry 29 has the title it has.
 
 ## 28. The coverage headline was the answer key's number, not the system's
 
-**Found by** signing off the video narration. `scripts/make_video.py claims`
+**Found by** signing off the video narration. the video build script` claims`
 prints every spoken quantity and refuses to build until each has been read
 against the run output. One of them was "twenty-four of the sixty-five criteria
 compile to predicates", and checking it against
@@ -1474,9 +1481,9 @@ compile to predicates", and checking it against
 **What was wrong.** `coverage_denominators()` in `scripts/report.py` built its
 numerator like this:
 
-```python
+``python
 n_checkable = sum(1 for c in CRITERIA if c.get("checkable"))
-```
+``
 
 `checkable` is a field in `evaluation/gold/criteria_set.py`. It is a human
 deciding, before any run, whether a structured record *could* settle a criterion
@@ -1579,10 +1586,10 @@ at 21 and 0.
 **Found by** reading the three worst criteria in the run entry 29 produced, per
 criterion rather than in aggregate. Two of the three had the same shape:
 
-```json
+``json
 {"domain": "condition", "codes": [], "broader_codes": ["44054006"],
  "absent_means": "false"}
-```
+``
 
 `absent_means: "false"` says the record is trusted to be complete for this query,
 so silence settles it. That is a claim about the record, and it is only available
@@ -1689,7 +1696,7 @@ is a claim that no gate parses, and the entry describing it had become one.
 file and fails if any of them disagrees with what the checker walks, so the
 prose and the command cannot drift apart again.
 
-**Evidence.** `python scripts/lockfile.py --imports` reports 54 modules parsed
+**Evidence.** `python scripts/lockfile.py --imports` reports 53 modules parsed
 and zero third-party imports. `requirements-lock.txt` carries 23 pins under
 `python 3.14.2 (cpython)`, and seven tests hold the lock exact, complete against
 what pyproject declares, interpreter-stamped, and matched to the count this file
@@ -1854,24 +1861,24 @@ is the one thing the brief's video section asks for by name.
 **What changed.** The film is sixteen cards built as React components and
 rendered by Remotion, and the order is inverted. Each line is synthesised first,
 its wav measured, and the card's frame count computed from that measurement:
-`film/scripts/narrate.py` writes `film/src/timings.json` and `film/src/Film.tsx`
+the film's narration script writes the film's measured timings and the film's root component
 reads the durations out of it. No card's length is chosen.
 
 The same measurement decides when things appear. The renderer records where each
-spoken sentence starts inside its beat, and `film/src/cues.ts` is how a card sits
+spoken sentence starts inside its beat, and the film's cue table is how a card sits
 on a word, so a figure lands as the voice says it rather than on a keyframe
 somebody picked by eye. Reword a line and every element on that card moves with
 it on the next render. Delete a sentence and the card that referred to it fails
 the type check rather than drifting silently on screen: that guard fired three
 times while the script was being cut to length, on cards 9, 14 and 15.
 
-Nothing on screen is drawn from a value typed into it. `film/scripts/extract.py`
-writes `film/src/data.json` from `results/results.json` and the scored cells, so the
+Nothing on screen is drawn from a value typed into it. the film's figure extractor
+writes the film's figure file from `results/results.json` and the scored cells, so the
 15,400-cell grid is 15,400 real verdicts and the four-arm comparison is the four
-arms. `film/scripts/check_grid.py` re-counts what the grids draw, with the
+arms. the film's grid checker re-counts what the grids draw, with the
 `silent_error` rule from `evaluation/score.py` transcribed into TypeScript and
 compared line for line against a copy in the checker, and requires the totals to
-equal the published ones. `film/scripts/capture.py` re-runs the commands whose
+equal the published ones. the film's terminal capture re-runs the commands whose
 output is shown and redacts them, so a card showing a passing gate cannot go on
 showing it after the gate stops passing.
 
@@ -1882,8 +1889,8 @@ a fixed seed. A clone generates a name, it does not replay it, and the name is
 the one word that has to be exactly right.
 
 **What it cost.** Two third-party packages, and they went the right way. The old
-build needed `edge-tts` and `playwright`; the new one needs Node, which lives in
-`film/` and is not reachable from anything in `src/`, `scripts/` or `run.py`. So
+build needed `edge-tts` and `playwright`; the new one needs Node, which is not
+reachable from anything in `src/`, `scripts/` or `run.py`. So
 `pyproject.toml` now declares exactly one optional dependency, `pytest`, and
 `scripts/lockfile.py --imports` still reports zero third-party imports across 53
 modules on the reproduction path.
@@ -1897,11 +1904,11 @@ modules on the reproduction path.
 | third-party Python packages the repository declares | 3 | **1** |
 | length against the five minute limit | 4:54 | **4:58** |
 
-**Evidence.** `cd film && python scripts/narrate.py --check` measures every wav
-against the card holding it. `python scripts/check_grid.py` re-counts the grids.
-`python scripts/capture.py --check` re-runs the terminals. `npx tsc --noEmit`
+**Evidence.** `cd film && python scripts/the narration script --check` measures every wav
+against the card holding it. `python scripts/the grid checker re-counts the grids.
+`python scripts/the terminal capture --check` re-runs the terminals. `npx tsc --noEmit`
 fails on a card that names a sentence the script no longer has. `python
-scripts/make_video.py check` measures the committed mp4.
+the video build script check` measures the committed mp4.
 
 ---
 
@@ -1919,10 +1926,9 @@ CLI binary that had just exited. The recorder wrote that error into the
 trajectory, faithfully, as it is supposed to. The path ran through a home
 directory, so it named a person.
 
-`scripts/agent_traces.py` already redacts home directories, and
-`tests/test_agent_traces.py` already enforces it, but only over
-`docs/agent-traces/`, because a coding-agent transcript is obviously a shell
-session on a laptop. The trajectories the system writes about its own runs are a
+The coding-agent trace exporter already redacted home directories, and its own
+test already enforced it, but only over the transcripts it wrote, because a
+coding-agent transcript is obviously a shell session on a laptop. The trajectories the system writes about its own runs are a
 different artifact and nobody had thought of them as transcripts. Eighty-two
 copies, across the Checker B trajectories, both vocabulary probes and the
 segmenter.
@@ -1943,7 +1949,7 @@ redaction.
 |---|---|---|
 | tracked files carrying a home directory | 57 | **0** |
 | occurrences | 82 | **0** |
-| files the private-information scan covers | `docs/agent-traces/` | **every tracked text file** |
+| files the private-information scan covers | one exported directory | **every tracked text file** |
 
 **Evidence.** `python -m pytest tests/test_no_private_paths.py -q`. It carries a
 positive control that plants each shape and requires the pattern to find it, so a
@@ -1951,28 +1957,28 @@ regex broken by an editor fails there rather than in front of a judge.
 
 ## 37. The film counted to thirty-four while the voice said thirty-six
 
-**Found by** reading `film/src/data.json` before a render, for an unrelated
+**Found by** reading the film's figure file before a render, for an unrelated
 reason. Nothing had failed. The claims gate passed, the grid recount passed,
 `npx tsc --noEmit` passed, and the film would have rendered without complaint.
 
 **What was wrong.** Two entries were added to this changelog. The narration is
 generated through this repository's own figure table, so the spoken line picked
 the new count up immediately and said "thirty-six". The film's data file is
-generated too, by `film/scripts/extract.py`, but it is generated **once and then
+generated too, by the film's figure extractor, but it is generated **once and then
 committed**, and nobody re-ran it. The card that counts up on screen was reading
 its own stale copy, so it would have animated to thirty-four under a voice saying
 thirty-six.
 
-Every gate the film has was pointed at something else. `film/scripts/check_grid.py` re-counts
-the cells the grids draw. `film/scripts/narrate.py --check` proves each line fits its card.
-`film/scripts/capture.py --check` re-runs the captured commands. `scripts/make_video.py claims` binds
+Every gate the film has was pointed at something else. the film's grid checker re-counts
+the cells the grids draw. the film's narration script` --check` proves each line fits its card.
+the film's terminal capture` --check` re-runs the captured commands. the video build script` claims` binds
 every spoken quantity to the repository. Not one of them looked at the file that
 sits between the repository and the screen, because it was output, and output was
 assumed to be current.
 
-**What changed.** `film/scripts/extract.py --check` re-derives the whole file and exits
+**What changed.** the film's figure extractor` --check` re-derives the whole file and exits
 non-zero if the committed copy differs by a byte. It is the fifth check in
-`film/README.md`, and it fails loudly on the exact state this repository was in
+the film's own README, and it fails loudly on the exact state this repository was in
 ten minutes before it was written. The generator no longer writes a machine
 absolute path into its output either, so the file is a function of the run and
 nothing else.
@@ -1989,9 +1995,9 @@ duration to the millisecond, and the only length that moved was the section whos
 words had changed. Twelve of sixteen came back byte for byte; four matched in
 length but not in bytes. So the fixed seed pins what is said and how long it
 takes, and it does not pin the last bit of every sample. That is stated in
-`film/README.md` rather than left as an implied "deterministic".
+the film's own README rather than left as an implied "deterministic".
 
-**Evidence.** `python film/scripts/extract.py --check`, which prints the path it
+**Evidence.** `python the film's figure extractor --check`, which prints the path it
 disagrees with and the command that fixes it.
 
 ## 38. The reproduction guide's own command wrote a home directory into a tracked file
@@ -2064,10 +2070,10 @@ closed-world assertion costs the most, to name it rather than leave "most of the
 error comes from closed-world assertions" as an aggregate a reader cannot check.
 It counted one direction:
 
-```python
+``python
 if r.get("TS") == "FAILS" and r.get("gold") != "FAILS":
     wrong[cid] += 1
-```
+``
 
 A criterion that over-*accepts* scores zero there. The worst one in this run does
 exactly that: `NCT06989723-INC-05` makes 0 wrong FAILS and **29 wrong MEETS**, of
@@ -2126,11 +2132,11 @@ the compiled predicate for *"Adults with previously diagnosed T2DM"*, so that a
 viewer can watch one JSON field flip from `"false"` to `"unknown"` and see what it
 cost. It showed:
 
-```json
+``json
 "concept": "Type 2 diabetes mellitus",
 "codes": [],
 "broader_codes": ["73211009"],
-```
+``
 
 The compiler produced `44054006`. `73211009` is diabetes mellitus, the parent
 concept. Both are valid SNOMED codes and they are indistinguishable by reading,
@@ -2145,9 +2151,9 @@ seven lines were summaries composed in the TSX that no command had printed, unde
 a comment claiming the card could not go on showing a pass after the command
 stopped passing.
 
-**Why every gate missed both.** `film/scripts/extract.py --check` (entry 37)
-compares `film/src/data.json` against the repository, and both defects were string
-literals in TSX rather than data. `film/scripts/capture.py --check` re-runs the
+**Why every gate missed both.** the film's figure extractor` --check` (entry 37)
+compares the film's figure file against the repository, and both defects were string
+literals in TSX rather than data. the film's terminal capture` --check` re-runs the
 fast commands, and the stale capture was the slow one it skips. `npx tsc --noEmit`
 type-checks a string. The film rendered, the suite passed, and
 `python run.py reproduce` printed IDENTICAL, because none of them looks at what a
@@ -2157,24 +2163,24 @@ card says.
 the current capture. Two tests were added, and each was run against the defect it
 was written for before being kept:
 
-- `tests/test_film_terminals_are_captured.py` reads every string literal out of
+- the terminal-capture gate reads every string literal out of
   the three terminal cards and fails unless each line occurs in the capture that
   card quotes. It refuses to pass on a card with no literals, and it fails if a
   fourth `<Terminal>` is added to the film without being mapped to a capture.
-- `tests/test_film_codes_are_real.py` pulls every SNOMED and LOINC code out of
-  `film/src` and requires it to appear in `runs/tierA/compiled/criteria_seed7.json`.
+- the film-codes gate pulls every SNOMED and LOINC code out of
+  the film's source and requires it to appear in `runs/tierA/compiled/criteria_seed7.json`.
   Being a well-formed code is not enough, because `73211009` is one.
 
 **A third gate, from looking for the same shape one layer down.** The two defects
 above are a card saying something the repository does not. The voice can do it
-too, and `film/scripts/narrate.py --check` cannot see it: it re-measures each wav
+too, and the film's narration script` --check` cannot see it: it re-measures each wav
 and compares the duration and digest against the file those measurements were
 written to, so it compares audio against its own record. Change a spoken figure in
-`docs/VIDEO.md`, re-render the film without re-running the speech model, and every
+the video's own page, re-render the film without re-running the speech model, and every
 check stays green while the voice says the old number over the new card.
-`tests/test_narration_matches_the_script.py` resolves the script through the same
-`scripts/_video_figures.py` the narration used and requires it to be
-sentence-for-sentence what `film/src/timings.json` records as spoken. It caught
+the narration gate resolves the script through the same
+the shared figure resolver the narration used and requires it to be
+sentence-for-sentence what the film's measured timings records as spoken. It caught
 this entry's own edit: adding entry 40 moved the spoken count from thirty-nine to
 forty and the test failed on section 12 until the wav was re-rendered.
 
@@ -2185,7 +2191,7 @@ forty and the test failed on section 12 until the wav was re-rendered.
 | gates that read what a card says | 0 | **2** |
 | gates that read what the voice says | 0 | **1** |
 
-**Evidence.** `python -m pytest tests/test_film_codes_are_real.py tests/test_film_terminals_are_captured.py tests/test_narration_matches_the_script.py -q`,
+**Evidence.** `python -m pytest the film-codes gate the terminal-capture gate the narration gate -q`,
 28 tests. Planting `73211009` back into the card fails the first with *"shows
 terminology code 73211009 and it does not appear in
 runs/tierA/compiled/criteria_seed7.json"*, and planting `270 passed, 1 skipped`
@@ -2223,7 +2229,7 @@ this project's own argument, since an arm that answers less can only be compared
 fairly if the rates share a denominator, and the one place it was dropped is the
 one a reviewer hears rather than reads.
 
-**Why the claims gate signed it.** `scripts/make_video.py claims` requires every
+**Why the claims gate signed it.** the video build script` claims` requires every
 spoken quantity to be read against the run and signed. Both numbers in that
 sentence are real numbers from `results.json`, so the sentence was signed. A gate
 that checks each figure cannot see a relation asserted between two of them. That
@@ -2232,7 +2238,7 @@ defect that mattered was never planted: the check was sound and the thing it
 checked was not the thing at risk.
 
 **What changed.** The denominator is spoken, and it is derived rather than typed.
-`_paired_cells()` in `scripts/_video_figures.py` reads `n_cells` off the paired
+`_paired_cells()` in the shared figure resolver reads `n_cells` off the paired
 group, so the sentence now says "wrong on one percent of all four hundred" and the
 four hundred cannot drift from the run that produced the one percent. The old
 sentence's signature was removed rather than edited, so the corrected sentence had
@@ -2244,7 +2250,7 @@ to be read against the run and signed on its own.
 | the factor the sentence flattered by | 4.6 | **1** |
 | spoken figures typed rather than derived | 1 | **0** |
 
-**Evidence.** `python scripts/make_video.py claims` reports 27 sentences stating a
+**Evidence.** `python the video build script claims` reports 27 sentences stating a
 quantity, all signed and none unchecked, and prints `paired_cells = four hundred`
 beside `ts_error_pct = one percent`, both out of the same group in
 `results/results.json`.
@@ -2254,7 +2260,7 @@ beside `ts_error_pct = one percent`, both out of the same group in
 **Found by** rewriting the narration for a listener who is not an engineer, which
 put two money figures into it and made the gate say nothing at all.
 
-**What was wrong.** `scripts/make_video.py claims` is the rule that a spoken
+**What was wrong.** the video build script` claims` is the rule that a spoken
 quantity must be read against the run and signed by a person before the film can
 be built. It finds quantities by matching number words against `WORD_NUM`. That
 table went one, two, three, up to twelve, then jumped to thirty, forty, fifty,
@@ -2309,7 +2315,7 @@ not a letter.
 | load-bearing claims never offered to a human | 1 | **0** |
 | compound figures the fallback could match | 0 | **all of them** |
 
-**Evidence.** `python scripts/make_video.py claims` reports 31 sentences stating a
+**Evidence.** `python the video build script claims` reports 31 sentences stating a
 quantity, none unchecked. Running the old table and the old whitespace split over
 the same script finds 25.
 
@@ -2560,7 +2566,7 @@ never held this project's generated files.
 
 **What was wrong.** It failed. **19 failed, 323 passed**, at the first gate, on the
 one command every other claim in this repository is advertised on. Eighteen were
-`tests/test_narration_matches_the_script.py` and one was
+the narration gate and one was
 `tests/test_sensitivity_section.py`, and the error named the cause without
 ambiguity: `MissingFigure: no scored-run meta under runs/tierA/cells`.
 
@@ -2995,10 +3001,10 @@ vocabulary']` before the PASS line, and exits 1 if it does not.
 **Found by** running the film build on the path a reader would, rather than by
 reading it.
 
-**What was wrong.** `film/scripts/capture.py`, `check_grid.py`, `extract.py` and
-`narrate.py` each opened with `REPO = Path(r"D:\trialsieve")`. A clone anywhere else
+**What was wrong.** the film's terminal capture, the grid checker, the figure extractor and
+the narration script each opened with `REPO = Path(r"D:\trialsieve")`. A clone anywhere else
 cannot build the film, and the constant publishes the author's directory layout in
-four committed files. Two lines in `narrate.py` were worse: they named a directory
+four committed files. Two lines in the narration script were worse: they named a directory
 belonging to an **entirely different project** on the same disk, once for the voice
 reference and once for the interpreter carrying the TTS package. So a public
 repository shipped the folder structure of unrelated work as a default argument.
@@ -3008,12 +3014,12 @@ covers files a script *writes*. Nothing covered the scripts.
 
 **What changed.** All four derive the repository from `__file__`. The voice
 directory and the TTS interpreter come from `TRIALSIEVE_VOICE_DIR` and
-`TRIALSIEVE_TTS_PYTHON`, documented in `film/README.md`, defaulting to `film/voice/`
+`TRIALSIEVE_TTS_PYTHON`, documented in the film's own README, defaulting to the voice directory
 and `sys.executable` so a clone fails by not finding a file rather than by naming
 somebody's disk.
 
 `tests/test_source_names_no_machine.py` walks every tracked script under `scripts/`,
-`src/`, `evaluation/`, `film/scripts/` and `run.py`, and fails on any absolute path
+`src/`, `evaluation/`, the film's scripts and `run.py`, and fails on any absolute path
 literal. It reads with `ast` rather than grepping the text, so a path inside a
 comment explaining this rule is not itself a violation, and its control plants one
 of each and requires exactly the assignment to be flagged. `tests/` is out of scope
@@ -3021,7 +3027,7 @@ on purpose: a test that checks how a path is redacted has to contain a path to
 redact, and the version that scanned itself flagged its own fixture.
 
 The one exemption is a string containing `...`, which is the redaction table's
-replacement in `capture.py`. An elided path is the sanitiser working, not a machine
+replacement in the terminal capture. An elided path is the sanitiser working, not a machine
 name shipping.
 
 | | before | now |
@@ -3033,3 +3039,57 @@ name shipping.
 **Evidence.** `python -m pytest -q tests/test_source_names_no_machine.py`. Put
 `P = "C:/anything"` in `scripts/report.py` and it names the file, the line and the
 literal.
+
+## 54. Three wall-clocks for one command, and a transcript that was typed
+
+**Found by** an independent reviewer reading `README.md` and `REPRODUCE.md`
+side by side, which nobody who wrote either had done in one sitting.
+
+**What was wrong.** `REPRODUCE.md` has a section headed *What a successful run
+looks like*, and it opens by saying the block under it is "captured stdout rather
+than a sample typed into this file". It was typed into this file, once, and the
+capture was regenerated four times around it. By the time the two were read
+together the guide quoted `OK  (reproduce in 142.6s)`, the transcript it names said
+151.3s, and a paragraph eighty lines below said 154.1s. `README.md` said 154s. Four
+readings of one command, on a page whose second paragraph is that a number
+appearing twice disagrees with itself eventually. The line count in the same
+sentence, "the whole 1,836-line transcript", was 1,925.
+
+The same reviewer found the rate rendered two ways: the README's counterexample
+said 43.8% against 1.0% and `docs/SCORECARD.md` said 43.75% against 1.00%, which is
+one measurement written for two audiences and reads as two measurements.
+
+**And the order of the README put the deliverable behind the caveats.** The brief
+asks for the intended user, the bottleneck and the value. Those landed at line 72,
+behind a headline cost table and two paragraphs retracting it, so a judge read 69
+lines of qualification before learning what the thing is. The 358-of-424 story then
+ran three times in one file.
+
+**What changed.** All four wall-clocks are one figure per thing measured and every
+one is real: 168.5s from a fresh clone, 151.3s in place, 285.6s on a busy machine,
+each printed by the command itself. The spread is given rather than a single number
+chosen from it, because a cold clone pays for reading 90 MB off disk and that is the
+honest answer to how long it takes. The rate carries the scorecard's two decimals.
+
+the transcript gate compares the quoted block against
+the captured reproduce transcript line by line, requires it to be the transcript's
+**ending** rather than a passage from its middle, counts the line count in the prose,
+and requires the README's clean-clone figure to be the one `REPRODUCE.md` states for
+the same thing. Its first version folded two indented blocks in that section into
+one and compared a seven-line block against a six-line tail, which is the failure a
+looser check would have shipped as a pass.
+
+The README now opens with the deliverable map and *Who this is for*. The cost table
+follows under its own heading, with both its caveats still attached to it, because
+they are true and they belong beside the claim rather than in front of the project.
+
+| | now |
+|---|---|
+| wall-clock figures for `run.py reproduce` | 4, three of them wrong | **3, each a different measurement, all real** |
+| renderings of the paired silent-error rate | 2 | **1** |
+| lines before the README names its user | 69 | **25** |
+| gates on the quoted transcript | 0 | **4** |
+
+**Evidence.** `python -m pytest -q the transcript gate`.
+Change one digit in the quoted block and it names the line and tells you to re-run
+the capture or stop calling it captured.

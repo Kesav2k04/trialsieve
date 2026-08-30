@@ -12,7 +12,7 @@ signed. That is enforced by exit code, and the refusal is tested.
 ## 1. Unsigned
 
 ```
-$ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/video/_gate_demo.md  ; echo $?
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/_gate_demo.md  ; echo $?
 REFUSED.
 
 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...

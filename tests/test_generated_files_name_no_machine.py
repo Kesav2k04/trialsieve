@@ -14,9 +14,7 @@ generates and commits carries no absolute path at all. That rejects
 the property that lets two machines produce the same bytes.
 
 The scan is over generated artifacts only. Prose is exempt because a document may
-legitimately quote a command, and `docs/agent-traces/` is exempt because a shell
-transcript is a record of a shell and is redacted by `scripts/agent_traces.py`
-under its own test.
+legitimately quote a command.
 """
 
 from __future__ import annotations
@@ -46,9 +44,6 @@ GENERATED = [
     "docs/sample_worklist.json",
     "docs/sample_worklist.csv",
     "runs/*/trajectories/index.md",
-    "film/src/data.json",
-    "film/src/timings.json",
-    "film/receipts/*.json",
 ]
 
 

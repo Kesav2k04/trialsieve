@@ -10,8 +10,9 @@ dependencies = []
 dev = ["pytest>=7.4"]
 # There is no second group. There used to be a `video` group carrying edge-tts
 # and playwright, for a build that synthesised a voice and screenshotted pages
-# into a slideshow. The film is a Remotion project in `film/` now, so both went
-# with it, and pytest is the only third-party package this repository declares.
+# into a slideshow. The video is rendered by a separate Node project that is not
+# part of this submission, so both went with it, and pytest is the only
+# third-party package this repository declares.
 
 [build-system]
 requires = ["setuptools>=68"]

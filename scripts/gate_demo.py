@@ -49,13 +49,11 @@ def main() -> int:
     from trialsieve.signoff import load
 
     run_dir = Path(a.run)
-    # Somewhere the gate can be told to write that nothing publishes. It used
-    # to be the video build's screenshot directory, which stopped existing
-    # when the film moved to `film/`, and a demo of a refusal that fails
-    # because its scratch path is gone reads exactly like the refusal.
-    scratch = ROOT / "docs" / "video"
-    scratch.mkdir(parents=True, exist_ok=True)
-    tmp = scratch / "_gate_demo.md"
+    # Somewhere the gate can be told to write that nothing publishes. It has
+    # twice been a directory that later stopped existing, and a demo of a
+    # refusal that fails because its scratch path is gone reads exactly like
+    # the refusal, so this one is a directory the repository always has.
+    tmp = ROOT / "docs" / "_gate_demo.md"
 
     # The sample ships at the published operating point. Rendered with every
     # compiled criterion it ruled out 385 of 385 and handed a coordinator an
