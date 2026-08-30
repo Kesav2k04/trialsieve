@@ -5,9 +5,12 @@
 Clinical trial prescreening, built so that ruling a patient out on a fact that is
 missing from their record is a decision somebody has to make on purpose, in
 writing, where a reviewer can see it. One criterion in this repository's first published run made that decision and it
-cost 358 wrong exclusions out of 424. The repair, and what it cost in coverage,
-are measured below rather than claimed away: the run now makes 66 wrong
-exclusions in total.
+cost 358 of the 424 cells where the system answered FAILS and the labels did
+not. The repair, and what it cost in coverage, are measured below rather than
+claimed away: 424 of those cells became 66, and the count that decides whether
+a person is dropped from the panel, patients wrongly ruled out, fell from 182
+to 18. Two units, both reported, because a cell is not a patient and only one
+of them gets a phone call.
 
 **Judging this?** [SUBMISSION.md](SUBMISSION.md) is the index: every deliverable
 and every ground rule, each pointing at the file that answers it, including what
@@ -172,7 +175,7 @@ Two rules the code enforces rather than requests:
 - **So absence can rule someone out, and that is the sharp edge of this design.**
   An earlier version of this file said absence never rules anyone out. The code says otherwise (`src/trialsieve/evaluator.py:233`) and so did the first
 published run: one criterion compiled with `absent_means: "false"` produced 358
-of the 424 wrong exclusions in the whole evaluation. The control that was supposed to catch it
+of the 424 wrong FAILS in the whole evaluation. The control that was supposed to catch it
   is the human reading the predicate in English before any worklist exists, and
   on that run it was not caught.
 - **One case is no longer the model's to decide.** A query with an empty `codes`

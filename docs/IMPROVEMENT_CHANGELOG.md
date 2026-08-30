@@ -12,6 +12,25 @@ of them raised an error. Each would have produced a plausible result with nothin
 in the output to say it was wrong. That is the failure mode this project is about,
 and it turns out to apply to the project itself.
 
+## The journey, in the shape the brief suggests
+
+The brief sketches a progression: baseline, then one row per meaningful
+iteration, each with its evidence and what it decided. Thirty-eight entries is
+more rows than that sketch has, so this is the spine. Every row links to the full
+entry, and the entries themselves stay in the order they were found rather than
+being rearranged into a story.
+
+| stage | what I tried and why | evidence | decision and learning |
+|---|---|---|---|
+| **Baseline** | B2: one model call per patient per criterion, the brief's own first suggestion. It is the arm the pre-registered protocol names as the one that matters. | 43.75% of committed verdicts wrong, on the 400-cell paired sample. 145 wrong MEETS: patients it would have enrolled. | Per-cell judgement is not the bottleneck's shape. Compile the criterion once, execute it 15,400 times. |
+| **Iteration 1** | Move the model upstream. Six agents compile a protocol into predicates; a deterministic engine runs them. Three truth values, so "the record does not say" is an answer rather than a guess. | Silent error rate 1.00% against the baseline's 43.75% on the same cells. Screening makes zero model calls. | Kept. Coverage falls to 21.75%, which is the trade and is reported beside it rather than under it. |
+| **Iteration 2** | Add a critic that attacks each compiled predicate, then a second labeller who never sees the system's output. | The critic catches 15 of 15 planted defects in four classes and 3 of 4 in the fifth. `verify.py blind` reads independence out of the prompts. | Kept, with the weak class named: [entry 24](#24-the-probe-that-scored-9-of-9-had-never-tried-the-defect-that-mattered). A probe that scores 9 of 9 has usually not planted the defect that matters. |
+| **Iteration 3** | Fix the instrument before believing the result. The noise floor, the coverage denominator, the operating point, three checks that could not fail. | The label disagreement floor moved 10.6% to 2.3%; coverage moved 37% to 29.2%, below the band the protocol registered in advance. | Kept. The run now misses its own prediction and says so. [Entries 12](#12-the-measuring-instrument-was-wrong-twice-and-both-errors-flattered-the-old-system), [15](#15-three-checks-that-could-not-fail-and-one-that-reported-a-pass-for-a-comparison-it-never-made), [19](#19-the-headline-operating-point-was-chosen-using-the-labels-it-was-scored-on), [23](#23-a-noise-floor-measured-on-the-hardest-cells-excused-the-losses), [28](#28-the-coverage-headline-was-the-answer-keys-number-not-the-systems). |
+| **Iteration 4** | Repair the design's own sharp edge: one criterion was reading a silent chart as proof of absence. First attempt widened what the validator accepted. | It made every headline worse: silent error 3.05% to 6.97%, patients wrongly ruled out 182 to 318. | Kept anyway, and published. [Entry 29](#29-the-fix-that-made-every-headline-number-worse) recovered a criterion that turned out worse than the abstention it replaced. The number getting worse was the measurement starting to work. |
+| **Iteration 5, the one that contributed most** | A query with no exact code for its concept may not read the record's silence as absence. | Patients wrongly ruled out 182 to **18**. Silent error 3.05% to **0.72%**. Cells answered 24.12% to 19.15%, in the same move. | Kept. [Entry 30](#30-closed-world-absence-on-a-concept-this-vocabulary-cannot-express) prints both columns of that trade in one table, because a coverage loss reported without the error it bought is not a result. |
+| **Removed** | B3, a self-consistency baseline: sample each cell three times, take the majority. | Under replay all three samples are the same recorded call, so the vote is unanimous by construction and the arm measures the cassette store. | Removed before it was run, and left registered in `docs/EVAL_PROTOCOL.md` with the reason. [Entry 26](#26-the-experiment-i-registered-and-then-could-not-honestly-run). The gap reported here is against a single sample, not a self-consistent one. |
+| **Final** | The arms above, run on the same cells with the same gold labels, plus the harness that keeps the claims honest. | Primary outcome **VOID**: 46.15% panel reduction with 18 false exclusions, against a registered rule that voids any result with more than zero. On the nine criteria that never produce one, 43.5% reduction with none. | The registered outcome is reported as VOID rather than replaced with the subset figure that passes. [The table below](#what-the-numbers-did-when-the-measurements-were-fixed) is what each measurement said before and after it was fixed. |
+
 ## What the numbers did when the measurements were fixed
 
 Most of the entries below are defects in the system. A handful are defects in the
