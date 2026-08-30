@@ -90,8 +90,10 @@ was read as a count of zero by the document a reviewer signs.
    file and a clone additionally checks the file against git. Each prints the reason it skipped rather than passing
    quietly. Beyond the engine they cover the recorder,
    the sign-off gate, the cassette seal, the contamination perturbation, the
-   mutation harness, and what the film's cards and narration say against what the
-   run actually printed.
+   mutation harness, and every figure a shipped document quotes against the run
+   that produced it. The film's own checks are not among them: the film is built
+   by a separate project that is not in this repository, so nothing here can
+   verify it and nothing here claims to.
 9. **The five verification checks run** (see below).
 10. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
