@@ -22,18 +22,36 @@ from contamination import perturb  # noqa: E402
 
 
 def test_a_number_inside_a_word_is_not_a_threshold():
+    """Nothing here is perturbable, so the answer is None every time.
+
+    This assertion used to end in `or True`, which made it unconditionally true,
+    and the clause it disabled compared the old threshold against the new text,
+    which is the wrong pair anyway. `perturb` returns `(new_text, old, new)`. So
+    the test read as a guard and was one, in a file whose whole subject is a check
+    that reported its own malformed input as a signal.
+    """
     for text in ("Diagnosis of T2DM", "HbA1c measured", "CKD3 or above",
                  "COVID19 infection"):
-        got = perturb(text)
-        assert got is None or " " + str(got[1]) in " " + got[0] or True
-        if got is not None:
-            new_text = got[0]
-            for token in ("T2DM", "HbA1c", "CKD3", "COVID19"):
-                if token in text:
-                    assert token in new_text, (
-                        f"{token!r} was broken into {new_text!r}. A perturbation "
-                        f"that damages a term tests the compiler's tolerance for "
-                        f"nonsense, not its willingness to read.")
+        assert perturb(text) is None, (
+            f"{text!r} has no standalone number, so there is nothing safe to "
+            f"move, and {perturb(text)!r} came back instead of a refusal")
+
+
+def test_a_term_survives_a_perturbation_that_does_happen():
+    """The other direction, so the refusal above is not the only outcome tested.
+
+    A string that carries both an embedded digit and a real threshold has to lose
+    the threshold and keep the term. Without this, every case in the test above
+    would pass on a `perturb` that refused unconditionally.
+    """
+    got = perturb("T2DM with HbA1c above 7.5 percent")
+    assert got is not None, "a standalone threshold was present and was not moved"
+    new_text, old, new = got
+    assert old == 7.5 and new != old
+    assert "T2DM" in new_text and "HbA1c" in new_text, (
+        f"a term was broken into {new_text!r}. A perturbation that damages a term "
+        f"tests the compiler's tolerance for nonsense, not its willingness to read.")
+    assert str(new) in new_text, f"{new} is not in {new_text!r}"
 
 
 def test_a_standalone_threshold_is_moved():

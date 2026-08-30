@@ -70,7 +70,8 @@ def _accuracy_on_the_same_cells() -> list[str]:
         f"Cheaper is not the same as worse here, and the two arms are scored on the "
         f"same {g.get('n_rows', 0):,} cells. Silent error rate: "
         f"**{cell['TS']['ser']:.1%}** compiled against "
-        f"**{cell['B2']['ser']:.1%}** per cell. Patients wrongly ruled out: "
+        f"**{cell['B2']['ser']:.1%}** per cell. Screens wrongly ruled out, of "
+        f"thirty, which is ten patients each read against three trials: "
         f"**{panel['TS']['false_exclusions']}** against "
         f"**{panel['B2']['false_exclusions']}**. Both arms are VOID against the "
         f"registered primary outcome, which requires zero.", "",

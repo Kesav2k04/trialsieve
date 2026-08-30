@@ -2047,3 +2047,66 @@ machine nobody could see. It is parametrised over the patterns instead.
 which carries a positive control in every shape the writers produce. The end to
 end check is the one that found it: clone into a directory under a home
 directory and run `python run.py reproduce`.
+
+## 39. A one-directional error metric, and a skip that called its blindness a good result
+
+**Found by** four independent reviewers reading this submission cold,
+briefed separately, none shown the others' findings. Two of the
+three defects below came from the one asked to argue the case against the project.
+
+**What was wrong.** `scripts/report.py` picks the compiled criterion whose
+closed-world assertion costs the most, to name it rather than leave "most of the
+error comes from closed-world assertions" as an aggregate a reader cannot check.
+It counted one direction:
+
+```python
+if r.get("TS") == "FAILS" and r.get("gold") != "FAILS":
+    wrong[cid] += 1
+```
+
+A criterion that over-*accepts* scores zero there. The worst one in this run does
+exactly that: `NCT06989723-INC-05` makes 0 wrong FAILS and **29 wrong MEETS**, of
+the run's 45. So the search returned nothing, and the guard test skipped with
+
+> no closed-world assertion in this run, which is the good case
+
+which was false. Three compiled queries set `absent_means` to `false`. It was the
+only skip in the suite, and it was reporting a blind spot as a clean result. This
+repository's own definition of a silent error, in `evaluation/score.py`, is a
+committed verdict that is wrong in either direction, and the metric that hunts for
+the worst one did not use it.
+
+**Two more from the same pass.** `tests/test_perturb.py` carried
+`assert got is None or ... or True`, which cannot fail, in the file whose subject
+is a check that reported its own malformed input as a signal. And
+`docs/SCORECARD.md` and `docs/COST.md` both wrote "patients" where the count was
+screens: ten patients read against three trials each is 30 screens, and the
+README two files away sells exactly that distinction.
+
+**What changed.** The metric counts any committed verdict that disagrees with gold
+and reports the two directions separately. The guard test counts the compiled
+closed-world queries first: if there are none, `None` is the good case and it says
+so; if there are some, `None` means the search cannot see them and the test fails.
+The perturbation assertion is a real one now, with a case that has to be refused
+and a case that has to be perturbed. The units say screens.
+
+**And the conclusion it exposed.** With the metric fixed, the section's closing
+sentence read *"Almost all of the system's error is the model deciding that a
+silent record is an answer"* directly under a row saying that ignoring every
+closed-world decision removes **0 of 111** silent errors. That sentence was true
+of the run before entries 29 and 30 and is contradicted by the table above it now.
+It says what the measurement says instead: the assertions left in this run are not
+where the error is, because they sit inside disjunctions where another term
+settles the verdict. The named criterion is kept, relabelled as the correlation it
+is rather than the cause it was presented as.
+
+| | before | now |
+|---|---|---|
+| error directions the offender search counted | 1 | **2** |
+| skips in the test suite | 1, on a false reason | **0** |
+| assertions that cannot fail | 1 | **0** |
+| the section's conclusion against its own table | contradicted it | **states it** |
+
+**Evidence.** `python -m pytest tests/test_sensitivity_section.py tests/test_perturb.py -q`.
+The first now counts the compiled closed-world queries itself and fails rather than
+skips if the search cannot find them, so the blindness cannot come back as a pass.

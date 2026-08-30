@@ -17,7 +17,7 @@ The rows below are scored on **the same 400 cells**: 30 screens, meaning ten pat
 | Silent error rate per cell | 43.75% | **1.00%** | 44x lower |
 | Cells answered with a definite verdict | 68.00% | 21.75% | lower on purpose, see below |
 | Wrong MEETS, the verdict that enrols someone who should not be | 145 | **0** | 145 fewer |
-| **Human time per task**, as judgements a person is left holding *(one trial, 385 patients, not the sample above)* | 1,155 cell judgements, the manual process today | 190 screens carrying **2 distinct questions** | 2 question sets instead of 1,155 separate readings |
+| **Human time per task**, as judgements a person is left holding *(one trial, 385 patients, not the sample above, and against the 3 criteria this operating point applies rather than the trial's full set)* | 1,155 cell judgements, the manual process today | 190 screens carrying **2 distinct questions** | 2 question sets instead of 1,155 separate readings |
 | **Cost per panel** of 385 patients, at published rates | $22.19 | **$0.13** | the crossover is in `docs/COST.md` |
 
 ## Reading the coverage row honestly

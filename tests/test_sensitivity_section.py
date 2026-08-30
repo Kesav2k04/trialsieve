@@ -54,12 +54,35 @@ def test_worst_offender_is_named_and_counted_from_the_cells():
     if not (run / "compiled" / "criteria_seed7.json").exists():
         pytest.skip("no compiled run in this checkout")
     groups = mod.load_cells(run)
+
+    # How many compiled queries actually assert a closed world. If there are
+    # none, the search returning None is the good case and the skip is honest.
+    # If there are some, None means the search cannot see them, and skipping on
+    # it is how a one-directional metric hid: it counted wrong FAILS only, the
+    # worst offender over-accepted instead, and the skip message said "no
+    # closed-world assertion in this run, which is the good case" while three
+    # were compiled and one of them was wrong 29 times.
+    compiled = json.loads(
+        (run / "compiled" / "criteria_seed7.json").read_text(encoding="utf-8"))
+    n_closed = sum(
+        str(c.get("expr")).count("'absent_means': 'false'")
+        for c in compiled.get("criteria", []) if c.get("compilable"))
+
     got = mod.worst_closed_world_criterion(run, groups)
-    if got is None:
-        pytest.skip("no closed-world assertion in this run, which is the good case")
-    cid, right, wrong, code, text = got
+    if n_closed == 0:
+        assert got is None
+        pytest.skip("nothing in this run asserts a closed world, so there is "
+                    "no offender to name")
+    assert got is not None, (
+        f"{n_closed} compiled queries set absent_means to false and the search "
+        "for the worst offender found none, so it is not looking at all of them")
+
+    cid, right, wrong, n_fails, n_meets, code, text = got
     assert wrong > 0
     assert right >= 0
+    assert n_fails + n_meets == wrong, (
+        f"{n_fails} wrong FAILS plus {n_meets} wrong MEETS is not {wrong} wrong "
+        "commitments; the two directions do not account for the total")
     assert code and code != "(no code)"
     assert text, "the criterion text is quoted in the report and must be present"
 

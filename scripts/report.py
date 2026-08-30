@@ -297,16 +297,31 @@ def worst_closed_world_criterion(run: Path, groups: dict) -> tuple | None:
         if tag != "k0_seed7":
             continue
         wrong, right = Counter(), Counter()
+        fails, meets = Counter(), Counter()
         for r in rows:
             cid = r["criterion_id"]
             if cid not in closed:
                 continue
-            if r.get("TS") == "FAILS" and r.get("gold") != "FAILS":
-                wrong[cid] += 1
-            elif r.get("TS") in ("MEETS", "FAILS") and r.get("TS") == r.get("gold"):
+            ts = r.get("TS")
+            # A wrong commitment is a committed verdict that disagrees with gold,
+            # in either direction, including where gold is INDETERMINATE. That is
+            # the repository's own definition of a silent error, in
+            # `evaluation/score.py`. This used to count `FAILS` only, so a
+            # closed-world assertion that over-accepted rather than over-excluded
+            # scored zero, the function returned None, and the guard test skipped
+            # with the message "no closed-world assertion in this run, which is
+            # the good case". There were three, and one of them made 22 wrong
+            # MEETS: half the run's over-acceptances, reported as nothing.
+            if ts not in ("MEETS", "FAILS"):
+                continue
+            if ts == r.get("gold"):
                 right[cid] += 1
+                continue
+            wrong[cid] += 1
+            (fails if ts == "FAILS" else meets)[cid] += 1
         for cid, n in wrong.most_common(1):
-            best = (cid, right[cid], n, closed[cid][0], closed[cid][1])
+            best = (cid, right[cid], n, fails[cid], meets[cid],
+                    closed[cid][0], closed[cid][1])
     return best
 
 
@@ -947,8 +962,8 @@ def main() -> int:
         md.append("")
 
     wc = worst_closed_world_criterion(run, groups)
-    worst_absence = wc[:4] if wc else None
-    worst_absence_text = (wc[4][:120] if wc else "")
+    worst_absence = wc[:6] if wc else None
+    worst_absence_text = (wc[6][:120] if wc else "")
 
     # What the compiler's closed-world assertions cost, computed rather than
     # asserted. Every number in the prose below is read back out of the two
@@ -993,21 +1008,37 @@ def main() -> int:
                   f"{bp['false_exclusions'] - op['false_exclusions']} of "
                   f"{bp['false_exclusions']} false exclusions, and costs "
                   f"{(base['coverage'] - ow['coverage']) * 100:.1f} points of "
-                  f"coverage. Almost all of the system's error is the model "
-                  f"deciding that a silent record is an answer.")
+                  f"coverage. Read that the way it falls: after the repairs in "
+                  f"entries 29 and 30, the closed-world assertions left in this run "
+                  f"are not where its error is. This section used to close by saying "
+                  f"the opposite, that almost all of the error was the model reading "
+                  f"a silent record as an answer, which is what the run looked like "
+                  f"before those repairs and is contradicted by the row above it now. "
+                  f"The remaining flags sit inside disjunctions where another term "
+                  f"settles the verdict anyway, so flipping them moves nothing.")
         md.append("")
         # the single worst offender, named, with its own cell counts
         if worst_absence:
-            cid, right, wrong, code = worst_absence
-            md.append(f"One predicate accounts for most of it. `{cid}` compiles "
-                      f"*{worst_absence_text}* to an age bound and an existence check "
-                      f"on `{code}` with `absent_means` set to `false`. "
-                      f"{right} patients in the panel carry that code, and it is "
-                      f"right about every one of them. The other {wrong} do not carry "
-                      f"it, and rather than reporting that their record does not say, "
-                      f"it rules them out. That is {wrong} of the "
-                      f"{base['n_false_fails']} false FAILS in the scored run, from a "
-                      f"single field.")
+            cid, right, wrong, n_fails, n_meets, code = worst_absence
+            md.append(f"The criterion that still carries one, and what it gets "
+                      f"wrong. This is a correlation and not the cause: the row "
+                      f"above already shows that flipping the flag changes nothing, "
+                      f"so these are errors made by a criterion that happens to hold "
+                      f"a closed-world assertion, not errors the assertion produced. "
+                      f"`{cid}` compiles "
+                      f"*{worst_absence_text}* against `{code}` with `absent_means` "
+                      f"set to `false`. It commits {right + wrong} verdicts on the "
+                      f"scored panel, is right about {right} of them, and is wrong "
+                      f"about {wrong}: **{n_fails} wrong FAILS** against "
+                      f"{base['n_false_fails']} in the run, and **{n_meets} wrong "
+                      f"MEETS** against {base['n_false_meets']}. Both directions are "
+                      f"printed because only one of them was counted here until an "
+                      f"independent reader checked: the search for the worst offender "
+                      f"scored wrong exclusions and ignored wrong acceptances, so a "
+                      f"criterion that over-accepted came back as no offender at all. "
+                      f"A silent error is a committed verdict that is wrong, and the "
+                      f"direction it is wrong in decides who pays, not whether it "
+                      f"counts.")
             md.append("")
         md.append("The compiler prompt states that a wrong `false` rules a patient out "
                   "on the strength of a gap in their record and to choose `unknown` "

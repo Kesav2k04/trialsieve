@@ -113,7 +113,9 @@ def build() -> str:
         # how a comparison stops being one.
         L.append(f"| **Human time per task**, as judgements a person is left "
                  f"holding *(one trial, {wl['n_screens']} patients, not the "
-                 f"sample above)* | {wl['n_cells']:,} cell judgements, the manual "
+                 f"sample above, and against the {len(wl['criteria_used'])} "
+                 f"criteria this operating point applies rather than the trial's "
+                 f"full set)* | {wl['n_cells']:,} cell judgements, the manual "
                  f"process today | {wl['n_review']:,} screens carrying **{n_q} "
                  f"distinct questions** | {len(sets)} question "
                  f"{'set' if len(sets) == 1 else 'sets'} instead of "
