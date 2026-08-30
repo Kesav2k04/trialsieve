@@ -44,6 +44,7 @@ sys.path.insert(0, str(ROOT / "src"))
 # Importable as a module, not only runnable as a script: the tests import these.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _md_tables import align as align_tables
+from trialsieve import redact
 
 NCT_RE = re.compile(r"NCT\d{8}")
 
@@ -305,7 +306,7 @@ def counterfactual(run: Path, provider: str, model: str | None, mode: str,
             # key and not the line that wanted it, and this loop wraps a call
             # chain several modules deep.
             row.update(status="error", reason=f"{type(exc).__name__}: {exc}",
-                       traceback=traceback.format_exc()[-1400:])
+                       traceback=redact.paths(traceback.format_exc(), ROOT)[-1400:])
         rows.append(row)
         # The reason goes on the progress line, not only into the JSON written at
         # the end. A long run that prints `error` fifteen times and explains none
