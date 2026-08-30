@@ -20,15 +20,16 @@ ROOT = Path(__file__).resolve().parents[1]
 #: Modules that are part of this project, resolved by path rather than installed.
 LOCAL = {"trialsieve", "criteria_set", "plainview", "score", "dev_criteria",
          "vocab_probe", "contamination", "checker_b", "segmentation",
-         "_video_figures", "_video_render", "_video_shots", "_video_capture",
+         "_video_figures",
          "_verify_blind", "_md_tables"}
 
-#: Third-party imports that are allowed, and only in these files. The video build
-#: is not on the reproduction path: nothing `python run.py reproduce` executes
-#: reaches either of these.
+#: Third-party imports that are allowed, and only in these files.
+#:
+#: This used to carry `edge_tts` and `playwright`, for a video build that
+#: synthesised a voice and screenshotted pages. The film is a Remotion project in
+#: `film/` now, which is Node rather than Python, so both went away with it and
+#: the only third-party import left in the whole tree is the test runner.
 ALLOWED = {
-    "edge_tts": {"scripts/make_video.py"},
-    "playwright": {"scripts/_video_render.py"},
     "pytest": {"tests/"},
 }
 

@@ -4,7 +4,7 @@ Three commands, no API key, no network, no model. Then a fourth that proves the
 first three were not theatre.
 
 ```bash
-git clone <this repo> && cd trialsieve
+git clone https://github.com/Kesav2k04/trialsieve.git && cd trialsieve
 python -m pip install pytest          # the only install, and only for the gate
 python run.py reproduce
 ```
@@ -19,9 +19,9 @@ no `make` and the reproduction should not depend on one.
 |---|---|
 | Python | 3.10 or newer. Developed on 3.14.2, CI runs 3.10 and 3.13. |
 | Install | `pytest`, for the test gate. Nothing else. |
-| Runtime dependencies | none. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. The one exception is the video build, `scripts/make_video.py`, which uses a speech synthesiser and a browser and is not on this path. |
+| Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The film is a Remotion project in [`film/`](film/README.md), which is Node rather than Python and is not reachable from anything here. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | about 120 MB for a clone: 61 MB of tracked files and about 55 MB of history. The tracked bulk is `runs/` at 42 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/video/` at 11 MB for the rendered walkthrough and its narration, then the vendored panel at 6 MB. Measure it yourself with `git ls-tree -r -l HEAD`. This row has been wrong twice, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, so it is worth measuring rather than reading.
+| Disk | about 165 MB for a clone: 85 MB of tracked files and about 80 MB of history. The tracked bulk is `runs/` at 43 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/` at 19 MB, almost all of it the rendered walkthrough, then `film/` at 14 MB, almost all of it the narration the walkthrough is cut to, then the vendored panel at 7 MB. Measure it yourself with `git ls-tree -r -l HEAD`. This row has been wrong three times, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, then at 61 MB before the film was, so it is worth measuring rather than reading. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB
@@ -48,7 +48,7 @@ was read as a count of zero by the document a reviewer signs.
 1. **`results/environment.json`** is written: Python version, platform, git commit,
    and whether the tree was dirty. A number that differs on your machine has
    somewhere to point.
-2. **The engine gate runs.** 271 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
+2. **The engine gate runs.** 277 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
    Kleene truth tables, both boundaries of every date window, both directions of
    every unit conversion, absent distinguished from zero. The protocol makes this
    a precondition for a scored run, so `reproduce` stops here if it fails. The
@@ -121,9 +121,14 @@ and an estimate of what the same work would cost at published per-token rates.
 
 Two numbers are worth reading before the rest.
 
-**Reproducing costs nothing and takes minutes.** `python run.py reproduce` makes no
-model call. Every recorded call replays from `runs/tierA/cassettes/`, and replay
-never falls through to a live call.
+**Reproducing costs nothing and takes about three minutes.** `python run.py
+reproduce` makes no model call, so it costs $0.00 in tokens and needs no key.
+Every recorded call replays from `runs/tierA/cassettes/`, and replay never falls
+through to a live call. Measured end to end on this machine, a Windows laptop
+with a 14-core CPU: **157.8 seconds from a fresh clone into an empty directory**,
+and 285.6 seconds on a second run while the same machine was busy rendering
+video. Both are printed by the command itself as its last line, so the figure a
+judge sees is the one their own run measured rather than this one.
 
 **Screening is free, and that is the architecture showing up as a runtime fact.**
 The step that touches all 385 patients across all 40 criteria makes zero model

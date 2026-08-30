@@ -94,8 +94,8 @@ def _render() -> str:
         "# declares `dependencies = []`, and `python scripts/lockfile.py --imports`",
         "# is the check that keeps it true: it parses every module the",
         "# reproduction touches and fails on an import that is not standard",
-        "# library. What is pinned below is the test gate and the video build,",
-        "# and no published number depends on either.",
+        "# library. What is pinned below is the test gate and nothing else,",
+        "# and no published number depends on it.",
         "#",
         f"# python {sys.version.split()[0]} ({sys.implementation.name})",
         "",
@@ -130,11 +130,10 @@ def _parse(text: str) -> dict[str, str]:
 STDLIB = set(sys.stdlib_module_names)
 
 #: Directories whose imports must stay standard library for the claim to hold.
-#: The video helpers are the documented exception: the video is a deliverable
+#: The video script is the documented exception: the video is a deliverable
 #: rather than a number, and nothing under `run.py reproduce` imports them.
 REPRO_DIRS = ["src", "evaluation"]
-REPRO_SCRIPT_SKIP = {"make_video.py", "_video_capture.py", "_video_figures.py",
-                     "_video_render.py", "_video_shots.py", "lockfile.py"}
+REPRO_SCRIPT_SKIP = {"make_video.py", "_video_figures.py", "lockfile.py"}
 
 
 def _module_files() -> list[Path]:
@@ -239,7 +238,7 @@ def check_lock() -> int:
     if drift:
         print(f"\n{len(drift)} package(s) differ from the lock. Nothing in "
               f"`run.py reproduce` imports them, so this does not invalidate a number. "
-              f"It is reported so a difference in the test gate or the video build has "
+              f"It is reported so a difference in the test gate has "
               f"somewhere to point.", file=sys.stderr)
         return 4
     print("\nPASS: every locked package is installed at the locked version.")

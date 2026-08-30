@@ -49,7 +49,11 @@ def main() -> int:
     from trialsieve.signoff import load
 
     run_dir = Path(a.run)
-    scratch = ROOT / "docs" / "video" / "shots"
+    # Somewhere the gate can be told to write that nothing publishes. It used
+    # to be the video build's screenshot directory, which stopped existing
+    # when the film moved to `film/`, and a demo of a refusal that fails
+    # because its scratch path is gone reads exactly like the refusal.
+    scratch = ROOT / "docs" / "video"
     scratch.mkdir(parents=True, exist_ok=True)
     tmp = scratch / "_gate_demo.md"
 

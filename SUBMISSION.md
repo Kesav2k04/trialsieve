@@ -75,7 +75,7 @@ either finds their own categories rather than a mapping to the other one.
 |---|---|---|---|
 | Agent Solution & Engineering | 30 | 30 | [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md), `src/trialsieve/`, and the trajectories. Six agents, one of which makes zero model calls on purpose. |
 | Reproducibility (& Verification) | 15 | 25 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under three minutes on a clean clone; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
-| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 34 entries each tied to the command that shows it. |
+| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 37 entries each tied to the command that shows it. |
 | End to End Quality (& Presentation) | 20 | 20 | `docs/sample_worklist.md` is the artifact a coordinator opens, produced by a script that exits 3 rather than write it from unsigned predicates. |
 | Problem & User Value | 15 | not scored separately | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Hot Take / Insights | 5 | not scored separately | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
@@ -119,9 +119,11 @@ There are **zero runtime dependencies**. `pyproject.toml` declares
 `dependencies = []`, the engine and the evaluation run on the Python standard
 library alone, and `tests/test_dependencies.py` fails if any module outside an
 allow-list is imported. So there is no pre-existing framework doing the work and
-no library boundary where the interesting part could be hiding. The only
-third-party code involved at all is `pytest` for the test run, and `edge_tts` and
-`playwright` for building the video, which is not on the reproduction path.
+no library boundary where the interesting part could be hiding. `pytest`, for the
+test run, is the only third-party package this repository declares. The film in
+[`film/`](film/README.md) is a separate Node project with its own lockfile,
+reachable from nothing in the Python tree, and its tooling is listed under
+[What made the video](#what-made-the-video).
 
 What did exist before, and was not written here, is the input data:
 
@@ -174,6 +176,30 @@ authenticated to. That is why `docs/COST.md` reports the marginal cost of this
 run as zero and publishes a hosted-rate estimate beside it: reporting zero would
 be true and useless to anyone deciding whether to run it themselves.
 
+### What made the video
+
+Separated again, because none of it is reachable from `run.py` and none of it
+produced a number. It lives in [`film/`](film/README.md).
+
+| tool | licence | what it did |
+|---|---|---|
+| Remotion 4.0.489 | Remotion Licence, free for individuals and small companies | renders the sixteen cards to 1920x1080 |
+| React 19.1.1 | MIT | the cards are components |
+| IBM Plex Sans and Mono | SIL Open Font Licence 1.1 | the two faces, loaded from the package rather than from a font host |
+| Chatterbox TTS 0.1.7 (Resemble AI) | MIT | speaks the narration in a clone of my own voice, offline, at a fixed seed |
+| ffmpeg | LGPL/GPL | measures the committed mp4 in `python scripts/make_video.py check` |
+
+The voice is mine and the reference recording is not committed. Its sha256 and
+duration are in `film/receipts/NARRATION.json` so a reader can tell whether two
+renders share a source, and nothing that could reconstruct the voice is
+published. The opening greeting is that recording itself rather than the clone,
+because a clone generates a name and does not replay it.
+
+Remotion's licence is the one worth naming rather than listing. It is free for
+individuals and for companies under a size threshold, and requires a paid licence
+above it. This is an individual entry, so the free grant applies, and it is
+stated here rather than left for a reader to check.
+
 ## The trajectory requirement, point by point
 
 The brief asks for instructions, tool responses, the feedback that shaped the next
@@ -192,10 +218,15 @@ recorded JSONL, not a reconstruction:
 **One of those rows describes a mechanism with no instances in the scored run,
 and saying which is part of the deliverable.** The counts below come from
 `python scripts/trajectories.py`, which reads the JSONL rather than being told.
+Read them against the index that command writes, which reports 31 critic
+findings: that headline is the whole of `runs/tierA/trajectories/`, so it sums
+the 7 below with the 24 the critic probe produced. The two are counted apart
+here because the probe plants its own defects and a number that mixes findings
+on real predicates with findings on planted ones flatters the first.
 
 | event kind | instances in the scored run | where |
 |---|---|---|
-| `critic_finding` | 26 | the compile trajectories across three seeds, each confirmed or dismissed by executing the counterexample |
+| `critic_finding` | 7 | `runs/tierA/trajectories/critic/`, each confirmed or dismissed by executing the counterexample |
 | `revision` | 5 | predicates a confirmed counterexample changed |
 | `human_checkpoint` | **0** | nothing in this repository performs one |
 
@@ -272,12 +303,12 @@ shown, so the trajectory is checkable rather than narrated.
 | rule | how this submission satisfies it |
 |---|---|
 | What existed before the competition, and what was added | Everything in this repository was written after the problem was released: first commit 20:03 UTC on 28 August, five hours after the 15:00 UTC kickoff. `dependencies = []`, so no pre-existing framework is doing the work. The pre-existing inputs are the synthetic panel and the public trial protocols, each named with its licence above. |
-| Every tool and component used within its licence | Synthea sample data is Apache-2.0 and the archive sha256 is pinned; ClinicalTrials.gov API v2 output is US Government public domain. Runtime model calls go through a local shim to a vendor CLI the author is authenticated to, under that vendor's own terms, and no key is in the tree. `pytest`, `edge_tts` and `playwright` are the only third-party packages, all permissively licensed, and the last two are off the reproduction path. |
+| Every tool and component used within its licence | Synthea sample data is Apache-2.0 and the archive sha256 is pinned; ClinicalTrials.gov API v2 output is US Government public domain. Runtime model calls go through a local shim to a vendor CLI the author is authenticated to, under that vendor's own terms, and no key is in the tree. `pytest` is the only third-party Python package. The film is a Node project in `film/`, and every tool that built it is named with its licence under [What made the video](#what-made-the-video). |
 | Public or synthetic data only | Synthea sample FHIR R4 (Apache-2.0, sha256 pinned) and ClinicalTrials.gov API v2 (US Government, public domain). No real patient data. |
 | Legal and ethical use case | Trial prescreening that produces a document for a coordinator. It enrols nobody and contacts nobody. |
 | Consequential actions sandboxed, with human approval before the action | There is no outward action at all. The only artifact that could affect a person is the worklist. From predicates nobody has signed, `scripts/worklist.py` exits 3 and writes no document. `tests/test_worklist_gate.py` runs the script and asserts the exit code, rather than testing the library call underneath it, because a library test passes even when the script ignores what the library returned. There is one way past: `--allow-unsigned` produces the document with NOT FOR USE stamped across it, so that the gate can be demonstrated and so that the override marks the artifact instead of only the shell history. `docs/GATE.md` is that demonstration, exit codes captured rather than transcribed. |
 | A qualified human reviewer in the loop | The sign-off gate. It is a human action and it is left to a human, so whether it has been cleared in this checkout is a fact rather than a claim here: `python scripts/signoff.py --run runs/tierA --list` prints it, reading `runs/tierA/signoffs.jsonl`, a file that does not exist here because nobody has signed. Any signature here is the author's, who is not a clinician, and `reviewer_role` records that. A deployment puts a clinician in that slot. |
-| No credentials or private information in the submission | No key, token or credential in the tree **or anywhere in its history**, which is the claim that matters for a repository handed to strangers: a secret committed once and deleted in the next commit is invisible to `git grep` and still in the object store. `tests/test_no_credentials.py` scans the working tree and then every commit reachable from every ref, for eight credential shapes. It carries a positive control that plants a key and requires the scan to catch it, and a negative control that requires it not to fire on code merely reading an environment variable. The model shim copies an auth token to a temporary directory outside the repository and deletes it at exit, and that is asserted too. |
+| No credentials or private information in the submission | No key, token or credential in the tree **or anywhere in its history**, which is the claim that matters for a repository handed to strangers: a secret committed once and deleted in the next commit is invisible to `git grep` and still in the object store. `tests/test_no_credentials.py` scans the working tree and then every commit reachable from every ref, for eight credential shapes. It carries a positive control that plants a key and requires the scan to catch it, and a negative control that requires it not to fire on code merely reading an environment variable. The model shim copies an auth token to a temporary directory outside the repository and deletes it at exit, and that is asserted too. The rule names private information as well as credentials, and the thing that had actually leaked here was neither a key nor a token: a crashed local shim returned an error quoting the absolute path of the binary that had just exited, and the recorder wrote it into 82 places across 57 trajectory files. `tests/test_no_private_paths.py` scans every tracked text file for a home directory, in Windows and POSIX shape, and carries a positive control that plants each shape and requires the scan to find it. Entry 36 of the changelog is how it was found and what the first attempt at redacting it got wrong. |
 | Every claim tied to submitted evidence | Numbers come from `results/results.json`, generated by `scripts/report.py` from recorded cells. The opening example in the README is generated by `scripts/counterexample.py` and says so if it fails to hold. Three registered trials with public identifiers is the setup where recall can masquerade as reading, so `scripts/contamination.py` checks it three ways and `docs/CONTAMINATION.md` is the output: no prompt template has a slot for an identifier, no recorded request contains one, and a perturbed threshold has to reach the predicate. On the last of those, 6 of 6 compiled criteria carry the changed number and none carries the original. |
 
 ## What is deliberately not here

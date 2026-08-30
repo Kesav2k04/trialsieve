@@ -4,8 +4,8 @@
 # declares `dependencies = []`, and `python scripts/lockfile.py --imports`
 # is the check that keeps it true: it parses every module the
 # reproduction touches and fails on an import that is not standard
-# library. What is pinned below is the test gate and the video build,
-# and no published number depends on either.
+# library. What is pinned below is the test gate and nothing else,
+# and no published number depends on it.
 #
 # python 3.14.2 (cpython)
 
@@ -19,22 +19,3 @@ pygments==2.19.2
 pytest==9.0.2
 typing-extensions==4.15.0
 # tomli: declared, not installed when this lock was written
-
-# --- video: edge-tts, playwright
-aiohappyeyeballs==2.7.1
-aiohttp==3.14.1
-aiosignal==1.4.0
-attrs==26.1.0
-certifi==2026.1.4
-edge-tts==7.2.8
-frozenlist==1.8.0
-greenlet==3.3.2
-idna==3.11
-multidict==6.7.1
-playwright==1.61.0
-propcache==0.5.2
-pyee==13.0.1
-tabulate==0.10.0
-typing-extensions==4.15.0
-yarl==1.24.2
-# async-timeout: declared, not installed when this lock was written

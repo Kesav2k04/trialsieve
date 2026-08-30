@@ -9,6 +9,12 @@ cost 358 wrong exclusions out of 424. The repair, and what it cost in coverage,
 are measured below rather than claimed away: the run now makes 66 wrong
 exclusions in total.
 
+**Judging this?** [SUBMISSION.md](SUBMISSION.md) is the index: every deliverable
+and every ground rule, each pointing at the file that answers it, including what
+existed before the competition started and what was built during it.
+[REPRODUCE.md](REPRODUCE.md) is one command from a clean environment.
+[docs/VIDEO.md](docs/VIDEO.md) is the five minute walkthrough.
+
 ---
 
 ## Start here: what a per-cell model does with a missing lab

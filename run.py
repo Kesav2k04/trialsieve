@@ -84,7 +84,7 @@ def t_environment() -> None:
         "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     # The interpreter alone did not say enough. Two machines can both report
-    # 3.14.2 and differ in the packages the test gate and the video build run on,
+    # 3.14.2 and differ in the packages the test gate runs on,
     # so the lock is read back here and any drift is recorded beside the run
     # rather than left for a reader to discover.
     lock = ROOT / "requirements-lock.txt"

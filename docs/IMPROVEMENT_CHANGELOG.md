@@ -34,11 +34,12 @@ same data. Neither is an estimate.
 | silent error rate per cell | 3.05% | **0.72%** | `groups.k0_seed7.cell_scores.TS.ser` |
 | silent errors the open-world arm would still remove | 358 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
 | third-party imports on the reproduction path | never checked | **0 of 53 modules, parsed** | `python scripts/lockfile.py --imports` |
-| narration lines that reached a frame | 24 of every 30 | **30 of 30** | `tests/test_video_geometry.py`, measured in a browser |
+| cards whose length was measured rather than guessed | 0 of 6 | **16 of 16** | `film/src/timings.json`, written from the rendered audio; entry 35 |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
 | silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
 | false exclusions at 40% record damage | 206 | **31** | `degradation_curve` in `results/results.json` |
 | `python run.py reproduce` on a clean clone | fails, then DIFFERENT | **IDENTICAL** | clone into an empty directory and run it; entry 34 |
+| tracked files carrying a home directory | 57 | **0** | `python -m pytest tests/test_no_private_paths.py`; entry 36 |
 
 One row that is **not** in this table: `runs/probe-weak/probe.json` scores 1 of 6
 on broader-only concepts against 6 of 6 for `runs/probe-before/probe.json`. That
@@ -1781,3 +1782,163 @@ which is what produced the failure and now prints IDENTICAL in about two minutes
 The reproduction takes 131s rather than 99s because it now regenerates five more
 groups.
 
+
+---
+
+## 35. A video whose every card was the wrong length
+
+**Found by** watching the first cut with the sound on. Six sections, each
+rendered to a length somebody chose, each narrated over afterwards. Four of the
+six ended while the line spoken over them was still going, and the seams were
+audible: a sentence about coverage finished over a card about reproduction.
+
+**What was wrong, and it was not the lengths.** The order was. Frames were
+composed first and narration was fitted to them, so every mismatch could only be
+fixed by re-rendering the frames, which meant it mostly was not fixed. The
+renderer paged documents into fixed screens and screenshotted them through a
+browser, so what a viewer saw was a scrolling markdown file. There was no card
+that showed one run from protocol text to the document a coordinator opens, which
+is the one thing the brief's video section asks for by name.
+
+**What changed.** The film is sixteen cards built as React components and
+rendered by Remotion, and the order is inverted. Each line is synthesised first,
+its wav measured, and the card's frame count computed from that measurement:
+`film/scripts/narrate.py` writes `film/src/timings.json` and `film/src/Film.tsx`
+reads the durations out of it. No card's length is chosen.
+
+The same measurement decides when things appear. The renderer records where each
+spoken sentence starts inside its beat, and `film/src/cues.ts` is how a card sits
+on a word, so a figure lands as the voice says it rather than on a keyframe
+somebody picked by eye. Reword a line and every element on that card moves with
+it on the next render. Delete a sentence and the card that referred to it fails
+the type check rather than drifting silently on screen: that guard fired three
+times while the script was being cut to length, on cards 9, 14 and 15.
+
+Nothing on screen is drawn from a value typed into it. `film/scripts/extract.py`
+writes `film/src/data.json` from `results/results.json` and the scored cells, so the
+15,400-cell grid is 15,400 real verdicts and the four-arm comparison is the four
+arms. `film/scripts/check_grid.py` re-counts what the grids draw, with the
+`silent_error` rule from `evaluation/score.py` transcribed into TypeScript and
+compared line for line against a copy in the checker, and requires the totals to
+equal the published ones. `film/scripts/capture.py` re-runs the commands whose
+output is shown and redacts them, so a card showing a passing gate cannot go on
+showing it after the gate stops passing.
+
+The voice is mine rather than a synthetic one. The opening greeting is the
+reference recording itself, cut at the word boundary after the name and levelled
+to the clone; everything after it is cloned from that same recording, offline, at
+a fixed seed. A clone generates a name, it does not replay it, and the name is
+the one word that has to be exactly right.
+
+**What it cost.** Two third-party packages, and they went the right way. The old
+build needed `edge-tts` and `playwright`; the new one needs Node, which lives in
+`film/` and is not reachable from anything in `src/`, `scripts/` or `run.py`. So
+`pyproject.toml` now declares exactly one optional dependency, `pytest`, and
+`scripts/lockfile.py --imports` still reports zero third-party imports across 53
+modules on the reproduction path.
+
+| | before | now |
+|---|---|---|
+| cards whose length was measured | 0 of 6 | **16 of 16** |
+| elements whose entry frame was measured | 0 | **every one** |
+| lines that overrun the card spoken over them | 4 of 6 | **0 of 16** |
+| a card showing one run from protocol text to worklist | none | **cards 7, 8 and 9** |
+| third-party Python packages the repository declares | 3 | **1** |
+| length against the five minute limit | 4:54 | **4:58** |
+
+**Evidence.** `cd film && python scripts/narrate.py --check` measures every wav
+against the card holding it. `python scripts/check_grid.py` re-counts the grids.
+`python scripts/capture.py --check` re-runs the terminals. `npx tsc --noEmit`
+fails on a card that names a sentence the script no longer has. `python
+scripts/make_video.py check` measures the committed mp4.
+
+---
+
+## 36. A home directory in eighty-two places nobody would have read
+
+**Found by** an independent audit run against the competition's ground rules
+rather than against the code, asked only whether anything private had reached the
+tree. It found one file. There were fifty-seven.
+
+**What was wrong.** Rule 08 says to keep credentials and private information out
+of the submission, and `tests/test_no_credentials.py` scanned for credentials.
+The thing that had leaked was not a credential. During recording, the local model
+shim died and returned an HTTP 502 whose message quoted the absolute path of the
+CLI binary that had just exited. The recorder wrote that error into the
+trajectory, faithfully, as it is supposed to. The path ran through a home
+directory, so it named a person.
+
+`scripts/agent_traces.py` already redacts home directories, and
+`tests/test_agent_traces.py` already enforces it, but only over
+`docs/agent-traces/`, because a coding-agent transcript is obviously a shell
+session on a laptop. The trajectories the system writes about its own runs are a
+different artifact and nobody had thought of them as transcripts. Eighty-two
+copies, across the Checker B trajectories, both vocabulary probes and the
+segmenter.
+
+**What changed.** The paths are collapsed to `~`, which is the form the exported
+markdown already carried, and `tests/test_no_private_paths.py` scans **every
+tracked text file** rather than a directory somebody remembered to list. That
+distinction is the whole fix: a scan over a named directory would have passed on
+this repository on the day the leak went in.
+
+The first redaction wrote `C:\...\Users\...\` and the new scanner flagged its own
+redaction, because a marker made of dots still matches a pattern that allows dots
+in a directory name. That is recorded here rather than quietly corrected: a
+redaction that a scanner cannot distinguish from the thing it redacts is not a
+redaction.
+
+| | before | now |
+|---|---|---|
+| tracked files carrying a home directory | 57 | **0** |
+| occurrences | 82 | **0** |
+| files the private-information scan covers | `docs/agent-traces/` | **every tracked text file** |
+
+**Evidence.** `python -m pytest tests/test_no_private_paths.py -q`. It carries a
+positive control that plants each shape and requires the pattern to find it, so a
+regex broken by an editor fails there rather than in front of a judge.
+
+## 37. The film counted to thirty-four while the voice said thirty-six
+
+**Found by** reading `film/src/data.json` before a render, for an unrelated
+reason. Nothing had failed. The claims gate passed, the grid recount passed,
+`npx tsc --noEmit` passed, and the film would have rendered without complaint.
+
+**What was wrong.** Two entries were added to this changelog. The narration is
+generated through this repository's own figure table, so the spoken line picked
+the new count up immediately and said "thirty-six". The film's data file is
+generated too, by `film/scripts/extract.py`, but it is generated **once and then
+committed**, and nobody re-ran it. The card that counts up on screen was reading
+its own stale copy, so it would have animated to thirty-four under a voice saying
+thirty-six.
+
+Every gate the film has was pointed at something else. `film/scripts/check_grid.py` re-counts
+the cells the grids draw. `film/scripts/narrate.py --check` proves each line fits its card.
+`film/scripts/capture.py --check` re-runs the captured commands. `scripts/make_video.py claims` binds
+every spoken quantity to the repository. Not one of them looked at the file that
+sits between the repository and the screen, because it was output, and output was
+assumed to be current.
+
+**What changed.** `film/scripts/extract.py --check` re-derives the whole file and exits
+non-zero if the committed copy differs by a byte. It is the fifth check in
+`film/README.md`, and it fails loudly on the exact state this repository was in
+ten minutes before it was written. The generator no longer writes a machine
+absolute path into its output either, so the file is a function of the run and
+nothing else.
+
+| | before | now |
+|---|---|---|
+| entries the on-screen counter reaches | 34 | **36** |
+| entries the narration says | 36 | 36 |
+| checks that would catch the two disagreeing | 0 | **1** |
+
+**What re-rendering measured, as a side effect.** All sixteen narration sections
+were re-cut so the changed line could be replaced. Fifteen came back to the same
+duration to the millisecond, and the only length that moved was the section whose
+words had changed. Twelve of sixteen came back byte for byte; four matched in
+length but not in bytes. So the fixed seed pins what is said and how long it
+takes, and it does not pin the last bit of every sample. That is stated in
+`film/README.md` rather than left as an implied "deterministic".
+
+**Evidence.** `python film/scripts/extract.py --check`, which prints the path it
+disagrees with and the command that fixes it.
