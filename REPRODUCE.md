@@ -79,10 +79,10 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 380 tests, now that every artifact they read
+8. **The full suite runs**, all 382 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
-   trust if this sentence has drifted. From a clone that is 380 passed. From an
-   unpacked source archive it is 373 passed and 7 skipped, because seven of
+   trust if this sentence has drifted. From a clone that is 382 passed. From an
+   unpacked source archive it is 375 passed and 7 skipped, because seven of
    them resolve a commit or read history and an archive carries the tree without
    an object database. The pre-registration freeze is no longer among them:
    `docs/protocol_registration.json` carries the registering commit and the
