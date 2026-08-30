@@ -21,7 +21,7 @@ no `make` and the reproduction should not depend on one.
 | Install | `pytest`, for the test gate. Nothing else. |
 | Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The film is a Remotion project in [`film/`](film/README.md), which is Node rather than Python and is not reachable from anything here. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | about 165 MB for a clone: 85 MB of tracked files and about 80 MB of history. The tracked bulk is `runs/` at 43 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/` at 19 MB, almost all of it the rendered walkthrough, then `film/` at 14 MB, almost all of it the narration the walkthrough is cut to, then the vendored panel at 7 MB. Measure it yourself with `git ls-tree -r -l HEAD`. This row has been wrong three times, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, then at 61 MB before the film was, so it is worth measuring rather than reading. |
+| Disk | **85 MB of tracked files, and a fresh clone measured 185 MB** including history. The tracked bulk is `runs/` at 43 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/` at 19 MB, almost all of it the rendered walkthrough, then `film/` at 14 MB, almost all of it the narration the walkthrough is cut to, then the vendored panel at 7 MB. The gap between 85 and 185 is history, and most of it is five versions of the video: a 19 MB binary does not delta-compress, and the film was rebuilt. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong three times, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, then at 61 MB before the film was, so it is worth measuring rather than reading. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB
@@ -125,7 +125,7 @@ Two numbers are worth reading before the rest.
 reproduce` makes no model call, so it costs $0.00 in tokens and needs no key.
 Every recorded call replays from `runs/tierA/cassettes/`, and replay never falls
 through to a live call. Measured end to end on this machine, a Windows laptop
-with a 14-core CPU: **145.7 seconds from a fresh clone into an empty directory**,
+with a 14-core CPU: **154.1 seconds from a fresh clone into an empty directory**,
 and 285.6 seconds on a second run while the same machine was busy rendering
 video. Both are printed by the command itself as its last line, so the figure a
 judge sees is the one their own run measured rather than this one.
