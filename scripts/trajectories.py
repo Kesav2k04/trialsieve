@@ -375,9 +375,11 @@ def main() -> int:
                  "model calls. It is a pure function of predicate, chart and unit policy, "
                  "so there is no trajectory to record: run it twice and it returns the "
                  "same bytes. Its behaviour is in `tests/`, not in a log. |")
-        L.append("| `worklist` | **none.** It renders a document and refuses to render it "
-                 "without a signature. The signature is a `human_checkpoint` event, and it "
-                 "lives in the compiler trajectory of the predicate that was signed. |")
+        L.append(f"| `worklist` | **none.** It renders a document and refuses to "
+                 f"render it without a signature. A signature is recorded as a "
+                 f"`human_checkpoint` event in the compiler trajectory of the predicate "
+                 f"that was signed, so the count of them in the table above is the "
+                 f"count that exist: {tot['human_checkpoints']}. |")
         L.append("")
         L.append("The baselines and the second labeller are recorded the same way and to "
                  "the same standard, under `baseline-b2/` here and under "

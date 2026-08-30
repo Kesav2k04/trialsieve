@@ -36,7 +36,7 @@ Six agents. Four of them make model calls and appear below. Two do not, and thei
 | `compiler` | `compiler/`, one per criterion per seed. |
 | `critic` | `critic/`, one per compiled criterion. |
 | `adjudicator` | **none, and this is the whole bet.** It makes zero model calls. It is a pure function of predicate, chart and unit policy, so there is no trajectory to record: run it twice and it returns the same bytes. Its behaviour is in `tests/`, not in a log. |
-| `worklist` | **none.** It renders a document and refuses to render it without a signature. The signature is a `human_checkpoint` event, and it lives in the compiler trajectory of the predicate that was signed. |
+| `worklist` | **none.** It renders a document and refuses to render it without a signature. A signature is recorded as a `human_checkpoint` event in the compiler trajectory of the predicate that was signed, so the count of them in the table above is the count that exist: 0. |
 
 The baselines and the second labeller are recorded the same way and to the same standard, under `baseline-b2/` here and under [runs/checker_b/trajectories/index.md](../../checker_b/trajectories/index.md), so an arm this project is measured against cannot be a weaker implementation than the one it is compared to. The three vocabulary probes are indexed the same way, under [probe-weak](../../probe-weak/trajectories/index.md), [probe-before](../../probe-before/trajectories/index.md) and [probe-after](../../probe-after/trajectories/index.md).
 
