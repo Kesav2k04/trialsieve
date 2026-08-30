@@ -21,7 +21,7 @@ no `make` and the reproduction should not depend on one.
 | Install | `pytest`, for the test gate. Nothing else. |
 | Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The film is a Remotion project in [`film/`](film/README.md), which is Node rather than Python and is not reachable from anything here. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | **85 MB of tracked files, and a fresh clone measured 185 MB** including history. The tracked bulk is `runs/` at 43 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/` at 19 MB, almost all of it the rendered walkthrough, then `film/` at 14 MB, almost all of it the narration the walkthrough is cut to, then the vendored panel at 7 MB. The gap between 85 and 185 is history, and most of it is five versions of the video: a 19 MB binary does not delta-compress, and the film was rebuilt. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong three times, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, then at 61 MB before the film was, so it is worth measuring rather than reading. |
+| Disk | **85 MB of tracked files, and a fresh clone measured 185 MB** including history. Every figure in this row is decimal MB. That command prints bytes, so divide by a million to land on these numbers; dividing by 1024 squared instead reads 81 rather than 85, which looks like the row is wrong again and is not. The tracked bulk is `runs/` at 43 MB, the recorded cassettes and trajectories that make the replay possible, then `docs/` at 19 MB, almost all of it the rendered walkthrough, then `film/` at 14 MB, almost all of it the narration the walkthrough is cut to, then the vendored panel at 7 MB. The gap between 85 and 185 is history, and most of it is five versions of the video: a 19 MB binary does not delta-compress, and the film was rebuilt. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong three times, first at 12 MB naming the panel as the bulk, then at 65 MB before the video was committed, then at 61 MB before the film was, so it is worth measuring rather than reading. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB
@@ -48,7 +48,7 @@ was read as a count of zero by the document a reviewer signs.
 1. **`results/environment.json`** is written: Python version, platform, git commit,
    and whether the tree was dirty. A number that differs on your machine has
    somewhere to point.
-2. **The engine gate runs.** 300 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
+2. **The engine gate runs.** 302 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
    Kleene truth tables, both boundaries of every date window, both directions of
    every unit conversion, absent distinguished from zero. The protocol makes this
    a precondition for a scored run, so `reproduce` stops here if it fails. The
