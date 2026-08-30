@@ -56,7 +56,6 @@ results/RESULTS.md
 results/contamination.json
 results/critic_probe.json
 results/environment.json
-results/probe_comparison.json
 results/probe_comparison_before_after.json
 results/probe_weak_comparison.json
 results/published/RESULTS.md

@@ -117,7 +117,12 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("before")
     ap.add_argument("after")
-    ap.add_argument("--json", default="results/probe_comparison.json")
+    # No default. A shared default path made every invocation overwrite the last
+    # one, and `results/probe_comparison.json` ended up holding the weak-model
+    # comparison under a name that reads like the before-and-after repair. A
+    # comparison that is worth keeping is worth naming.
+    ap.add_argument("--json", required=True,
+                    help="where to write the comparison, named for what it compares")
     ap.add_argument("--out", default="", help="also write a markdown report here")
     a = ap.parse_args()
     before_p, after_p = Path(a.before), Path(a.after)
