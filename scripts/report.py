@@ -990,6 +990,26 @@ def main() -> int:
     md.append("")
     md.append("## Label noise floor")
     md.append("")
+    # Who wrote the labels every number above is scored against. This is stated
+    # here rather than left to be inferred from the protocol's description of two
+    # routes, because a reader comparing arms is entitled to know that one of the
+    # two labellers is the person who wrote the system being scored.
+    md.append("**Who wrote gold.** Checker A is hand-authored by the author of this "
+              "system. There was no independent clinical annotator, and neither "
+              "labeller is a trial coordinator. That is a real bias in the direction "
+              "of this system looking correct: a gold predicate written by the same "
+              "person who wrote the compiler can encode the same reading of a "
+              "criterion, and agreement would then measure one mind against itself. "
+              "Checker B exists to bound it. B works from the criterion prose and a "
+              "flattened patient table on a different model family, with no sight of "
+              "the IR, of A, or of any system output, and B's labels are committed "
+              "before any commit carrying system output. What that buys is a "
+              "published disagreement rate, below which no difference in this report "
+              "is called interpretable. What it does not buy is clinical ground "
+              "truth. Read every number above as agreement with two independent "
+              "readings of the protocol text, one of them the author's, rather than "
+              "as agreement with a clinician.")
+    md.append("")
     if floor is None:
         md.append("**NOT MEASURED.** `evaluation/checker_b/agreement.json` is absent, so "
                   "no second independent labelling exists in this checkout and there is "

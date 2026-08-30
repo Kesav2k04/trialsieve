@@ -8,7 +8,7 @@
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 57 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 58 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 169.8s measured, no key, no network. |
 | The video | submitted as a link on the entry form, 4:54. It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
@@ -149,6 +149,15 @@ what the design buys is abstention discipline, which is a narrower claim than th
 headline pair invites. That split is in `results/RESULTS.md` under *The k = 0
 gap*, and it is there because `docs/EVAL_PROTOCOL.md` registered before the run
 that a large gap would be investigated rather than reported.
+
+**And gold was written by the person who wrote the system.** There was no
+independent clinical annotator on this, and neither labeller is a trial
+coordinator. That biases in the direction of this system looking correct, so a
+second labeller works from the criterion prose alone, on a different model
+family, with no sight of the compiled predicate, and the rate at which the two
+disagree is published as a floor under which no difference here is called
+interpretable. Read every number as agreement with two readings of the protocol
+text, one of them the author's, rather than with a clinician.
 
 **Read that pair with its sample size.** Those 400 cells are **10 patients**
 against 40 criteria, not 400 people. Ten is what the arm costs: $22.19 for a full
@@ -408,7 +417,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 57 entries, each naming the evidence that found
+- **The Improvement Changelog**, 58 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.

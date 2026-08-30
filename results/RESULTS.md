@@ -586,6 +586,8 @@ It does rule out the reading prediction 4 was written to catch. If the gap came 
 
 ## Label noise floor
 
+**Who wrote gold.** Checker A is hand-authored by the author of this system. There was no independent clinical annotator, and neither labeller is a trial coordinator. That is a real bias in the direction of this system looking correct: a gold predicate written by the same person who wrote the compiler can encode the same reading of a criterion, and agreement would then measure one mind against itself. Checker B exists to bound it. B works from the criterion prose and a flattened patient table on a different model family, with no sight of the IR, of A, or of any system output, and B's labels are committed before any commit carrying system output. What that buys is a published disagreement rate, below which no difference in this report is called interpretable. What it does not buy is clinical ground truth. Read every number above as agreement with two independent readings of the protocol text, one of them the author's, rather than as agreement with a clinician.
+
 Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.
 
 |                                                              |                                                   |

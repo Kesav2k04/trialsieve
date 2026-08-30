@@ -5,7 +5,7 @@ Every required deliverable, and the file that satisfies it.
 | required | where |
 |---|---|
 | Full working code | this repository. Zero runtime dependencies, standard library only. |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 57 entries behind it stay in the order they were found. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 58 entries behind it stay in the order they were found. |
 | Reproduction guide, clean environment | [REPRODUCE.md](REPRODUCE.md). One command: `python run.py reproduce`. |
 | Exact commands | [REPRODUCE.md](REPRODUCE.md) and `python run.py help` |
 | Data | `data/vendor/`, with source URL and archive sha256 in `data/vendor/panel_provenance.json` |
@@ -83,7 +83,7 @@ where the two disagree, the work follows whichever asks for more.
 |---|---|---|---|
 | Agent Solution & Engineering | 30 | 30 | [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md), `src/trialsieve/`, and the trajectories. Six agents. Two of them make zero model calls on purpose: the adjudicator, which is a pure function over the compiled predicate, and the worklist, which refuses to render without a signature. |
 | Reproducibility (& Verification) | 15 | 25 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under three minutes on a clean clone; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
-| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 57 entries each tied to the command that shows it. |
+| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 58 entries each tied to the command that shows it. |
 | End to End Quality (& Presentation) | 20 | 20 | `docs/sample_worklist.md` is the artifact a coordinator opens, produced by a script that exits 3 rather than write it from unsigned predicates. |
 | Problem & User Value | 15 | not scored separately | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Hot Take / Insights | 5 | not scored separately | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
@@ -206,6 +206,36 @@ Remotion's licence is the one worth naming rather than listing. It is free for
 individuals and for companies under a size threshold, and requires a paid licence
 above it. This is an individual entry, so the free grant applies, and it is
 stated here rather than left for a reader to check.
+
+## Who wrote the labels every number is scored against
+
+Checker A, the gold predicates, is hand-authored by the author of this system.
+There was no independent clinical annotator, and neither labeller is a trial
+coordinator. It is stated here rather than left to be worked out from the protocol,
+because it is the strongest available reason to discount every accuracy number in
+this repository, and a reader is owed it before they read one.
+
+The bias runs one way: a gold predicate written by the same person who wrote the
+compiler can encode the same reading of a criterion, and agreement would then
+measure one mind against itself. Three things bound it rather than remove it.
+
+- Checker B labels the same cells from the criterion prose and a flattened patient
+  table only, on a different model family, with no sight of the compiled predicate,
+  of Checker A, or of any system output. `python scripts/verify.py blind` reads
+  that claim out of B's own recorded prompts rather than taking it on trust.
+- B's labels are committed before any commit that carries system output, so the
+  blindness is a fact about this repository's history rather than a description of
+  a process.
+- The two labellers disagree on 23.3% of 180 double-labelled cells. That
+  disagreement is published as a floor, reweighted to the scored panel's own label
+  mix, and every comparison below it is reported uninterpretable, including two
+  that TrialSieve loses.
+
+What none of that buys is clinical ground truth. The right way to read every
+accuracy figure here is agreement with two independent readings of the protocol
+text, one of them the author's. A named clinical annotator on a sample is the thing
+that would replace this paragraph, and it is the first thing this project would buy
+with another week.
 
 ## The trajectory requirement, point by point
 
