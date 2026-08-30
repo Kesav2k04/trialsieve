@@ -2520,6 +2520,7 @@ tests/test_cited_commits_resolve.py
 tests/test_contamination.py
 tests/test_coverage_numerator.py
 tests/test_critic_probe.py
+tests/test_critic_probe_matches_the_trajectories.py
 tests/test_dependencies.py
 tests/test_dependency_surface.py
 tests/test_disk_row_is_measured.py

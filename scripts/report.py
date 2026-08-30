@@ -414,9 +414,10 @@ def main() -> int:
             md.append(GROUP_BLURB[tag])
             md.append("")
         md.append(f"{len(rows)} cells, {n_screens} screens, arms {', '.join(present)}.\n")
-        md.append("| arm | coverage | SER | silent | false-FAILS | false-MEETS | "
-                  "unnecessary abstention | errors | unique criteria |")
-        md.append("|---|---|---|---|---|---|---|---|---|")
+        md.append("| arm | coverage | SER | **resolved correct / screen** | silent | "
+                  "false-FAILS | false-MEETS | unnecessary abstention | errors | "
+                  "unique criteria |")
+        md.append("|---|---|---|---|---|---|---|---|---|---|")
 
         scores = {}
         for arm in present:
@@ -424,9 +425,36 @@ def main() -> int:
             s = score_arm(arm, cells, n_screens)
             scores[arm] = s
             block.setdefault("cell_scores", {})[arm] = s.as_dict()
-            md.append(f"| {arm} | {s.coverage:.1%} | {s.ser:.1%} | {s.n_silent} | "
+            md.append(f"| {arm} | {s.coverage:.1%} | {s.ser:.1%} | "
+                      f"**{s.resolved_correct_per_screen:.2f}** | {s.n_silent} | "
                       f"{s.n_false_fails} | {s.n_false_meets} | "
                       f"{s.unnecessary_abstention} | {s.n_error} | {s.n_unique_criteria} |")
+
+        # The registered co-primary, in the column a reader is looking at when they
+        # decide whether low coverage is a design or a shortfall. It was computed
+        # from the first run and printed nowhere, and the arm it favours is not
+        # this one.
+        rc = {arm: scores[arm].resolved_correct_per_screen for arm in present}
+        if "TS" in rc and len(rc) > 1:
+            best = max(rc, key=lambda a: rc[a])
+            if best != "TS":
+                md.append(f"\n**The co-primary goes to {best}.** "
+                          f"`docs/EVAL_PROTOCOL.md` registers `resolved_correct_per_"
+                          f"screen` as a co-primary outcome, in its own words *so an "
+                          f"arm cannot win by abstaining*, and on this group "
+                          f"{best} resolves {rc[best]:.2f} cells correctly per screen "
+                          f"against TrialSieve's {rc['TS']:.2f}. Abstaining costs nothing "
+                          f"on silent error rate and it costs exactly this. Both "
+                          f"numbers are in the table above rather than in a footnote, "
+                          f"because the outcome was registered before the run and the "
+                          f"arm it favours does not change that.")
+            else:
+                md.append(f"\n**The co-primary goes to TS**, {rc['TS']:.2f} cells resolved "
+                          f"correctly per screen against "
+                          f"{max(v for a, v in rc.items() if a != 'TS'):.2f} for the next "
+                          f"arm. It is registered in `docs/EVAL_PROTOCOL.md` so that an "
+                          f"arm cannot win by abstaining, so it is printed whichever "
+                          f"way it falls.")
 
 
         # The per-cell baseline puts a whole chart in one prompt and 20% of these

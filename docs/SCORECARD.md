@@ -16,13 +16,16 @@ The rows below are scored on **the same 400 cells**: 30 screens, meaning ten pat
 | Screens wrongly ruled out, of 30 | 10 | **2** | 8 fewer |
 | Silent error rate per cell, each at the coverage beside it | 43.75% at 68.00% coverage | **1.00%** at 21.75% coverage | 44x lower, at a third of the coverage |
 | Cells answered with a definite verdict | 68.00% | 21.75% | lower on purpose, see below |
+| Cells resolved correctly per screen, the registered co-primary | 3.23 | 2.77 | **the baseline wins this row** |
 | Wrong MEETS, the verdict that enrols someone who should not be | 145 | **0** | 145 fewer |
 | **Human time per task**, as judgements a person is left holding *(one trial, 385 patients, not the sample above, and against the 3 criteria this operating point applies rather than the trial's full set)* | 1,155 cell judgements, the manual process today | 190 screens carrying **2 distinct open questions** | 2 thing(s) to go and find instead of 1,155 separate readings. Each still returns a value per patient; what collapses is the search, not the answers |
-| **Cost per panel** of 385 patients, at published rates | $22.19 | **$0.13** | the crossover is in `docs/COST.md` |
+| **Cost per panel** of 385 patients, at an illustrative hosted rate | $22.19 | **$0.13** | the crossover is in `docs/COST.md` |
 
 **On the ratio in that row.** It is the arithmetic and it is not the result. `evaluation/score.py` states that a comparison against an arm at higher coverage is not admissible, and this is that comparison: TrialSieve answers 21.75% of cells and B2 answers 68.00%. The row that does settle it is the paired bootstrap in `results/RESULTS.md`, where `TS - B2` on `ser` is reported with an interval and against the label noise floor. The ratio is here because the brief's table has a change column, not because it is the finding.
 
 ## Reading the coverage row honestly
+
+**Start with the row this project loses.** `docs/EVAL_PROTOCOL.md` registered `resolved_correct_per_screen` as a co-primary outcome before the first scored run, in its own words *so an arm cannot win by abstaining*. B2 resolves 3.23 cells correctly per screen and TrialSieve resolves 2.77, so the guard registered against this design's central objection finds against it by 17%. Abstaining is free on the silent error rate row above and it is not free here. Everything below is the argument for paying that price; the price is this row.
 
 TrialSieve answers fewer cells than B2 and that is the design, not a shortfall. B2 commits to 68.00% of cells and is wrong on 43.75% of all cells; TrialSieve commits to 21.75% and is wrong on 1.00%. A coordinator cannot use an answer that is wrong two times in five, because checking which two costs the same as reading the chart. What the abstentions buy is that the remaining answers can be acted on without re-reading, and that the abstentions arrive grouped: `docs/sample_worklist.md` is what a person is actually handed.
 

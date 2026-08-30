@@ -28,10 +28,14 @@ from _md_tables import align as align_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 
-#: Published rates for a mid-tier hosted model, dollars per million tokens, as a
-#: yardstick rather than a quote. Named and dated so a reader can check whether it
-#: has moved rather than wondering what it was.
-RATE_LABEL = "a mid-tier hosted model at $0.30 in / $2.50 out per million tokens"
+#: An illustrative mid-tier hosted rate, dollars per million tokens, as a yardstick
+#: rather than a quote. It names no vendor and carries no date, so it is not a
+#: published price and this file used to call it one. What it is for is the shape of
+#: the comparison, which does not turn on the third significant figure: the crossover
+#: in `docs/COST.md` moves by patients, not by orders of magnitude, at any rate in
+#: this band. A reader who wants a real quote should substitute their own vendor's.
+RATE_LABEL = ("an illustrative mid-tier hosted rate of $0.30 in / $2.50 out per "
+              "million tokens, not a quote from a named vendor")
 RATE_IN, RATE_OUT = 0.30 / 1e6, 2.50 / 1e6
 
 
@@ -307,7 +311,7 @@ def main() -> int:
          "call, and its wall clock is seconds.", "",
          "## Recorded", "",
          "| step | model calls | from cassette | prompt tokens | completion tokens | "
-         "wall clock | at published rates |", "|---|---|---|---|---|---|---|"]
+         "wall clock | at an illustrative rate |", "|---|---|---|---|---|---|---|"]
     for r in R:
         if r.get("missing"):
             L.append(f"| {r['step']} | _not run yet_ | | | | | |")

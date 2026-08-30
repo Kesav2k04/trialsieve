@@ -18,6 +18,18 @@ Both numbers or neither. A critic that answered REVISE to everything would
 catch every defect and be worthless, and the control column is the only thing
 that separates the two.
 
+**Every probe in this tree, which is more than this table scores.** The table above is one run: 6 predicates, 19 applicable mutations, 6 controls, regenerated from the recorded cassettes. An earlier and wider probe ran before it and its logs were kept when its numbers were not published, so `runs/tierA/trajectories/critic_probe/` holds 35 trajectories across 10 predicates. Counting every one of them:
+
+| defect    | planted, every probe | caught |
+|-----------|----------------------|--------|
+| boundary  | 3                    | 3      |
+| threshold | 3                    | 3      |
+| window    | 4                    | 4      |
+| direction | 10                   | 10     |
+| absence   | 5                    | 3      |
+
+That is **23 of 25** planted defects and 1 false alarm on 10 controls. The difference that matters is `absence`: 3 of 5 across every probe against 3 of 4 in the scored run, because one of the predicates outside that run is an absence miss. **The wider figure is the one to hold this component to.** The scored run is kept because it is the one that regenerates from cassettes, and the extra predicates are `NCT06717698-EXC-05`, `NCT06983054-INC-02`, `NCT06983054-INC-03`, `NCT06983054-INC-07`.
+
 ## By defect class
 
 These are the classes the critic's own prompt says it looks for, in its order.
@@ -30,7 +42,7 @@ These are the classes the critic's own prompt says it looks for, in its order.
 | direction | 6       | 6      |
 | absence   | 4       | 3      |
 
-**Every class but one is caught every time.** The critic catches 15 of 15 planted defects across 4 classes and **3 of 4** in the `absence` class. That is not a rounding difference and it is not the class it would be convenient to be weak in: `absence` is silence in the record becoming proof of absence, which is the defect that produced 358 of the 424 wrong exclusions in the run this probe was first written against, and entry 30 of the improvement changelog is the repair. The critic passed the real one, and planting it deliberately says the miss is a property of the reviewer rather than bad luck on one predicate.
+**Every class but one is caught every time.** The critic catches 15 of 15 planted defects across 4 classes and **3 of 4** in the `absence` class, which is 3 of 5 counting every probe in the tree. That is not a rounding difference and it is not the class it would be convenient to be weak in: `absence` is silence in the record becoming proof of absence, which is the defect that produced 358 of the 424 wrong exclusions in the run this probe was first written against, and entry 30 of the improvement changelog is the repair. The critic passed the real one, and planting it deliberately says the miss is a property of the reviewer rather than bad luck on one predicate.
 
 ## Every case
 

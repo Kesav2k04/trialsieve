@@ -44,6 +44,12 @@ GENERATED = [
     "docs/sample_worklist.json",
     "docs/sample_worklist.csv",
     "runs/*/trajectories/index.md",
+    # Captured stdout, which is the one generated artifact written by copying a
+    # console rather than by formatting values, and therefore the one most
+    # likely to carry a path. It shipped with `wrote D:` and the repository root
+    # spelled out, on line 1157, past every gate here, because this list is a
+    # list and nothing had added it.
+    "docs/reproduce_transcript.txt",
 ]
 
 

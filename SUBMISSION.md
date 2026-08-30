@@ -111,6 +111,24 @@ with the same gold labels. The comparison is in [docs/SCORECARD.md](docs/SCORECA
 and, with confidence intervals and the label noise floor beside it, in
 `results/RESULTS.md`.
 
+**Three things that comparison says, which a summary would drop.** They are here
+because a reader who only opens this page should still meet them.
+
+- **The registered primary outcome is VOID for both arms.** It is panel reduction
+  at zero false exclusions, and neither arm reaches zero: B2 wrongly rules out 10
+  screens of 30 and TrialSieve rules out 2. A void primary is a void primary. What
+  the run supports is the secondary reading, that the harm behind the void falls
+  from 10 to 2.
+- **The registered co-primary goes to the baseline.**
+  `resolved_correct_per_screen` was registered before the run in the words *so an
+  arm cannot win by abstaining*. B2 resolves 3.23 cells correctly per screen and
+  TrialSieve resolves 2.77. Abstention is free on the silent error rate and it is
+  not free here.
+- **The headline error-rate gap is abstention, not accuracy.** Split the same
+  cells by whether an answer exists and the baseline is the more accurate arm on
+  the 105 where it does. `results/RESULTS.md` carries the split under *The k = 0
+  gap*, which `docs/EVAL_PROTOCOL.md` required before that gap could be reported.
+
 ## Tools used, and what existed before the competition
 
 The rules require both of these to be stated, so they are stated here rather than

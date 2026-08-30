@@ -88,7 +88,7 @@ reported as a pair for that reason, and neither is reported alone.
 
 | 385 patients, 40 criteria, 15,400 judgements | today | TrialSieve |
 |---|---|---|
-| model spend per screening pass, at published rates | $22.19, asking per cell | **$0.13**, paid once per protocol |
+| model spend per screening pass, at an illustrative hosted rate | $22.19, asking per cell | **$0.13**, paid once per protocol |
 | the same panel rescreened next month | $22.19 again | **$0.00**, the predicates are already compiled |
 | wall clock for the pass | a nurse reading charts | under 5 seconds, zero model calls |
 | what a coordinator is handed *(one trial, the 3 criteria the zero-false-exclusion operating point applies, so 1,155 of those judgements)* | 1,155 chart readings | 190 screens carrying 2 open questions, [grouped](docs/sample_worklist.md) |

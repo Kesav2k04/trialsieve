@@ -32,9 +32,9 @@
   "prompt_tokens": 19497,
   "completion_tokens": 3710,
   "wall_s": 682.57,
-  "cassette_hits": 12
+  "cassette_hits": 25
  },
- "wall_s": 317.6,
+ "wall_s": 0.2,
  "rows": [
   {
    "criterion_id": "NCT06983054-EXC-05",

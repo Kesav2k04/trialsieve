@@ -35,11 +35,12 @@ ABSOLUTE = re.compile("^(?:[A-Za-z]:[" + chr(92) * 2 + "/]|/(?:home|Users)/)")
 
 
 def _tracked() -> list[Path]:
-    p = subprocess.run(["git", "ls-files", "--", "*.py"], cwd=ROOT,
-                       capture_output=True, text=True)
-    if p.returncode != 0:
-        pytest.skip("no git in this checkout")
-    return [ROOT / n for n in p.stdout.split()
+    # Via the shared helper, which falls back to MANIFEST.txt where there is no
+    # object database. This used to skip instead, so in the source archive, the
+    # only form most readers will hold, the gate reported a pass having read
+    # nothing.
+    from _shipped import shipped
+    return [ROOT / n for n in shipped("*.py")
             if any(n.startswith(d) for d in SHIPPED)]
 
 

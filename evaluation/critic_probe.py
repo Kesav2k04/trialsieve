@@ -305,7 +305,61 @@ def main() -> int:
          f"| false alarms on controls | **{false_alarms}** |", "",
          "Both numbers or neither. A critic that answered REVISE to everything would",
          "catch every defect and be worthless, and the control column is the only thing",
-         "that separates the two.", "",
+         "that separates the two.", "",]
+
+    # Every probe trajectory in the tree, not only the run this table scores. An
+    # earlier and wider probe left its logs here and its numbers were never
+    # published, and one of them is an `absence` miss, so reporting the scored run
+    # alone makes the critic look better in the one class it is weak in. Counted
+    # from the files rather than described, so it cannot drift from them.
+    traj = run / "trajectories" / "critic_probe"
+    disk: dict[str, list[int]] = {}
+    disk_ids = set()
+    for f in sorted(traj.glob("*.jsonl")) if traj.is_dir() else []:
+        crit, defect = f.stem.split("--")
+        disk_ids.add(crit)
+        finals = [e for e in (json.loads(x) for x in
+                              f.read_text(encoding="utf-8").split(chr(10)) if x.strip())
+                  if e.get("event") == "final"]
+        if not finals:
+            continue
+        n = finals[-1].get("n_findings", 0)
+        right = (n == 0) if defect == "control" else (n >= 1)
+        row = disk.setdefault(defect, [0, 0])
+        row[0] += 1
+        row[1] += int(right)
+    scored_ids = {r["criterion_id"] for r in rows}
+    extra = sorted(disk_ids - scored_ids)
+    if extra and disk:
+        planted_d = sum(v[0] for k, v in disk.items() if k != "control")
+        caught_d = sum(v[1] for k, v in disk.items() if k != "control")
+        ctrl_d = disk.get("control", [0, 0])
+        absence_d = disk.get("absence", [0, 0])
+        L += [f"**Every probe in this tree, which is more than this table scores.** "
+              f"The table above is one run: {len(scored_ids)} predicates, "
+              f"{len(defects)} applicable mutations, {len(controls)} controls, "
+              f"regenerated from the recorded cassettes. An earlier and wider probe "
+              f"ran before it and its logs were kept when its numbers were not "
+              f"published, so `{traj.as_posix()}/` holds "
+              f"{sum(v[0] for v in disk.values())} trajectories across "
+              f"{len(disk_ids)} predicates. Counting every one of them:", ""]
+        L += ["| defect | planted, every probe | caught |", "|---|---|---|"]
+        for name, _ in MUTATIONS:
+            if name in disk:
+                L.append(f"| {name} | {disk[name][0]} | {disk[name][1]} |")
+        L += ["",
+              f"That is **{caught_d} of {planted_d}** planted defects and "
+              f"{ctrl_d[0] - ctrl_d[1]} false alarm on {ctrl_d[0]} controls. The "
+              f"difference that matters is `absence`: {absence_d[1]} of "
+              f"{absence_d[0]} across every probe against {by_class['absence']} of "
+              f"{tot_class['absence']} in the scored run, because one of the "
+              f"predicates outside that run is an absence miss. **The wider figure "
+              f"is the one to hold this component to.** The scored run is kept "
+              f"because it is the one that regenerates from cassettes, and the "
+              f"extra predicates are "
+              f"{', '.join('`' + e + '`' for e in extra)}.", ""]
+
+    L += [
          "## By defect class", "",
          "These are the classes the critic's own prompt says it looks for, in its order.", "",
          "| defect | planted | caught |", "|---|---|---|"]
@@ -330,7 +384,10 @@ def main() -> int:
             L += ["", f"**Every class but one is caught every time.** The critic "
                       f"catches {rest_c} of {rest_t} planted defects across "
                       f"{len(scored) - 1} classes and "
-                      f"**{weakest[1]} of {weakest[2]}** in the `{weakest[0]}` class. "
+                      f"**{weakest[1]} of {weakest[2]}** in the `{weakest[0]}` class, which is "
+                      f"{disk.get(weakest[0], [0, 0])[1]} of "
+                      f"{disk.get(weakest[0], [0, 0])[0]} counting every probe in "
+                      f"the tree. "
                       f"That is not a rounding difference and it is not the class it "
                       f"would be convenient to be weak in: `absence` is silence in the "
                       f"record becoming proof of absence, which is the defect that "

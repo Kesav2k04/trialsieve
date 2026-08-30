@@ -117,6 +117,16 @@ def build() -> str:
              f"{_ratio(b2['ser'], ts['ser'])}, at a third of the coverage |")
     L.append(f"| Cells answered with a definite verdict | {_pct(b2['coverage'])} | "
              f"{_pct(ts['coverage'])} | lower on purpose, see below |")
+    # The registered co-primary, which exists so that an arm cannot win by
+    # abstaining, and which the baseline wins. Printed in the same table as the
+    # row it is supposed to check, because a guard reported somewhere else is not
+    # a guard.
+    if "resolved_correct_per_screen" in b2 and "resolved_correct_per_screen" in ts:
+        rb, rt = b2["resolved_correct_per_screen"], ts["resolved_correct_per_screen"]
+        verdict = ("**the baseline wins this row**" if rb > rt
+                   else "TrialSieve wins this row")
+        L.append(f"| Cells resolved correctly per screen, the registered co-primary | "
+                 f"{rb:.2f} | {rt:.2f} | {verdict} |")
     L.append(f"| Wrong MEETS, the verdict that enrols someone who should not be | "
              f"{b2['n_false_meets']} | **{ts['n_false_meets']}** | "
              f"{b2['n_false_meets'] - ts['n_false_meets']} fewer |")
@@ -153,6 +163,18 @@ def build() -> str:
           "ratio is here because the brief's table has a change column, not "
           "because it is the finding.", ""]
     L += ["## Reading the coverage row honestly", ""]
+    if "resolved_correct_per_screen" in b2 and "resolved_correct_per_screen" in ts:
+        rb, rt = b2["resolved_correct_per_screen"], ts["resolved_correct_per_screen"]
+        if rb > rt:
+            L += [f"**Start with the row this project loses.** `docs/EVAL_PROTOCOL.md` "
+                  f"registered `resolved_correct_per_screen` as a co-primary outcome "
+                  f"before the first scored run, in its own words *so an arm cannot "
+                  f"win by abstaining*. B2 resolves {rb:.2f} cells correctly per "
+                  f"screen and TrialSieve resolves {rt:.2f}, so the guard registered "
+                  f"against this design's central objection finds against it by "
+                  f"{(rb - rt) / rt:.0%}. Abstaining is free on the silent error rate "
+                  f"row above and it is not free here. Everything below is the "
+                  f"argument for paying that price; the price is this row.", ""]
     L += [f"TrialSieve answers fewer cells than B2 and that is the design, not a "
           f"shortfall. B2 commits to {_pct(b2['coverage'])} of cells and is wrong "
           f"on {_pct(b2['ser'])} of all cells; TrialSieve commits to "
@@ -223,7 +245,7 @@ def _cost_rows() -> str:
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if len(cells) == 3 and cells[0].isdigit() and int(cells[0]) > 100:
             return (f"| **Cost per panel** of {int(cells[0])} patients, at "
-                    f"published rates | {cells[2]} | **{cells[1]}** | the "
+                    f"an illustrative hosted rate | {cells[2]} | **{cells[1]}** | the "
                     f"crossover is in `docs/COST.md` |")
     return ""
 

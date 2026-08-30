@@ -1154,7 +1154,7 @@ missing cassette raises and stops the run. So the reproduction is free, offline,
 and needs no key.
 
 
-wrote D:\trialsieve\docs\COST.md
+wrote docs/COST.md
 
 ========================================================================
 score and report

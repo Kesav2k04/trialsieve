@@ -43,9 +43,8 @@ def _resolves(rev: str) -> bool:
 
 
 def _tracked_docs() -> list[Path]:
-    out = subprocess.run(["git", "ls-files", "*.md"], cwd=ROOT,
-                         capture_output=True, text=True, check=False).stdout
-    return [ROOT / n for n in out.split("\n") if n.strip()]
+    from _shipped import shipped_paths
+    return shipped_paths("*.md")
 
 
 def test_every_cited_commit_is_in_this_repository():

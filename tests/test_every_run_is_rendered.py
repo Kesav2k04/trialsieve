@@ -30,12 +30,9 @@ def _tracked_runs() -> dict[str, list[Path]]:
     Disk here also holds development and smoke runs that `.gitignore` keeps out.
     Those are nobody else's problem; what a reader receives is what git tracks.
     """
-    p = subprocess.run(["git", "ls-files", "--", "runs/*/trajectories/*.jsonl"],
-                       cwd=ROOT, capture_output=True, text=True)
-    if p.returncode != 0:
-        pytest.skip("no git in this checkout")
+    from _shipped import shipped
     out: dict[str, list[Path]] = {}
-    for line in p.stdout.split():
+    for line in shipped("runs/*/trajectories/*.jsonl"):
         out.setdefault(line.split("/")[1], []).append(ROOT / line)
     return out
 
