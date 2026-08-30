@@ -33,6 +33,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from grounding_audit import audit, promotions  # noqa: E402
+import pytest
 
 #: The violations in the committed scored run, named so a change is visible.
 #: Empty since the allow-list became slot-aware. Kept as a ledger rather than
@@ -74,7 +75,7 @@ def test_a_code_that_is_both_exact_and_broader_is_not_a_violation():
 def test_the_committed_run_carries_exactly_the_known_violations():
     src = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
     if not src.exists():
-        return  # a checkout without a compiled run has nothing to audit
+        pytest.skip("no compiled run in this checkout; nothing to audit")
 
     res = audit(src)
     got = {r["criterion_id"]: r["promoted"] for r in res["violations"]}

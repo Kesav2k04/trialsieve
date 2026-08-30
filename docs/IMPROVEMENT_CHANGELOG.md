@@ -2596,3 +2596,44 @@ twice from scratch, once to see the failure and once to see it gone.
 `python run.py check` is now the 52 and `python run.py suite` is the 342, and
 `tests/test_makefile_matches.py` caught that the new target was not reachable
 through `make`, which is the second gate doing its job on the first.
+
+### Three more gates from the same reading, all of them reporting success on absence
+
+The same reviewer found three smaller versions of the same problem, and they share
+a shape worth naming separately from the one above: **absence read as success.**
+
+**Three tests reported PASSED having checked nothing.**
+`tests/test_replay_is_sealed.py`, `tests/test_grounding_audit.py` and
+`tests/test_critic_probe.py` each opened with a bare `return` when the artifact
+they read was missing. Pytest cannot tell that apart from a test that ran and
+agreed. The first is the worst of them: it is guarded on `runs/tierA/cells/`,
+which `.gitignore` excludes, so on every clone it was vacuous and green. All three
+now call `pytest.skip` with the reason, so a checkout that cannot run a check says
+so instead of claiming it passed.
+
+**`run.py diff` printed IDENTICAL when the file it compares against was missing.**
+`md_same = (not md_theirs.exists() or ...)` short-circuited: delete
+`results/published/RESULTS.md` and the reproduction claim came back clean. The
+missing `results.json` beside it was already a hard exit, so the same claim had two
+different answers depending on which half of it went missing. Both now fail.
+Verified by moving the file and running it: exit 1, `missing
+results/published/RESULTS.md, so there is nothing to compare and nothing to claim`,
+then exit 0 with it restored.
+
+**The gold labels' independence was a docstring.** `evaluation/gold/plainview.py`
+opens by saying it and everything importing it must never reach
+`trialsieve.evaluator`, `ir`, `units` or `logic`, and gives the reason: shared
+execution code puts the same defect on both sides of the comparison, where a wrong
+window boundary or an inverted unit factor cancels and is scored as agreement. It
+was true. Nothing checked it. `tests/test_gold_is_engine_free.py` now walks the
+import graph transitively, and its own positive control plants the leak **two hops
+away**, because a resolver that quietly finds nothing would pass a direct-import
+probe and pass every real case forever.
+
+| | before | now |
+|---|---|---|
+| tests that report PASSED without checking anything | 3 | **0** |
+| of those, vacuous on any clone | 1 | 0 |
+| ways a missing published file reports IDENTICAL | 1 | **0** |
+| gates on the gold-independence claim | 0 | **1**, with a two-hop control |
+| tests collected | 342 | **346** |

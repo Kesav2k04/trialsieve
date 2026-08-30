@@ -135,7 +135,11 @@ def test_reproduce_replays_under_the_model_that_recorded():
     cells = ROOT / "runs" / "tierA" / "cells"
     metas = sorted(cells.glob("meta_B2_*.json"))
     if not metas:
-        return  # a checkout without the sampled arm reproduces everything else
+        # Reported PASSED, having checked nothing, on any checkout without the
+        # sampled arm. A test that cannot run is not a test that succeeded, and
+        # this one is guarded on a path `.gitignore` excludes, so it was vacuous
+        # on every clone. Skipping says so out loud.
+        pytest.skip("no sampled B2 arm in this checkout; nothing to seal-check")
 
     for meta_path in metas:
         tag = meta_path.stem.split("_", 2)[-1]

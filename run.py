@@ -344,10 +344,18 @@ def t_diff() -> None:
     # results.json can express would have reproduced "IDENTICAL" while the report
     # said something else. Compared byte for byte, because unlike results.json it
     # carries no timestamp to canonicalise away.
+    # An absent published copy used to satisfy this: `not md_theirs.exists()`
+    # short-circuited the whole comparison to true, so deleting the file being
+    # compared against printed IDENTICAL. The missing `results.json` beside it was
+    # already a hard exit, and these two are the same claim, so they now fail the
+    # same way. Absence is not agreement.
     md_mine, md_theirs = ROOT / "results" / "RESULTS.md", PUBLISHED / "RESULTS.md"
-    md_same = (not md_theirs.exists()
-               or (md_mine.exists()
-                   and md_mine.read_bytes() == md_theirs.read_bytes()))
+    for path in (md_theirs, md_mine):
+        if not path.exists():
+            print(f"missing {path.relative_to(ROOT)}, so there is nothing to "
+                  f"compare and nothing to claim")
+            raise SystemExit(1)
+    md_same = md_mine.read_bytes() == md_theirs.read_bytes()
 
     if a == b and md_same:
         print("IDENTICAL: every published number reproduced on this machine, and "

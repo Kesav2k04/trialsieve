@@ -185,7 +185,7 @@ def test_the_selection_plants_every_class_that_is_plantable_anywhere():
 
     src = ROOT / "runs" / "tierA" / "compiled" / "criteria_seed7.json"
     if not src.exists():
-        return  # a checkout without a compiled run has nothing to select from
+        pytest.skip("no compiled run in this checkout; nothing to select from")
     compiled = [c for c in json.loads(src.read_text(encoding="utf-8"))["criteria"]
                 if c.get("compilable")]
 
