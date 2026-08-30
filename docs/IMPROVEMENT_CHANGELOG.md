@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Fifty-four entries is
+iteration, each with its evidence and what it decided. Fifty-five entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -421,9 +421,9 @@ The request layer now survives a transient failure: 429, 500, 502, 503, 504 and
 A 4xx that is not 429 is not retried, because the request was rejected for being
 wrong and sending it again sends the same wrong request.
 
-This entry said four until it was audited. The budget was widened to six in
-commit `7e0faaa`, after a `TransportError` still got through during the Checker B
-run, and the entry was not updated with it. The code even carries a comment at
+This entry said four until it was audited. The budget was widened to six after a
+`TransportError` still got through during the Checker B run, and the entry was
+not updated with it. The code even carries a comment at
 `src/trialsieve/llm.py` saying "Six attempts, not four" and explaining why, so
 the change was documented in the place a reader is least likely to look and
 contradicted in the place they are most likely to. `TRANSPORT_ATTEMPTS` and
@@ -2191,8 +2191,9 @@ forty and the test failed on section 12 until the wav was re-rendered.
 | gates that read what a card says | 0 | **2** |
 | gates that read what the voice says | 0 | **1** |
 
-**Evidence.** `python -m pytest the film-codes gate the terminal-capture gate the narration gate -q`,
-28 tests. Planting `73211009` back into the card fails the first with *"shows
+**Evidence.** Three gates, over the codes on the cards, the terminal captures and
+the narration, 28 tests. They ship with the video build rather than here, because
+what they read is the video's own source. Planting `73211009` back into the card fails the first with *"shows
 terminology code 73211009 and it does not appear in
 runs/tierA/compiled/criteria_seed7.json"*, and planting `270 passed, 1 skipped`
 back into the second card fails the other with *"shows 1 line(s) that
@@ -2952,8 +2953,8 @@ README and the register names the file, the claim and both values.
 
 ## 52. Two checks that reported a pass without running
 
-**Found by** an independent engineering review reading commit `0019b90`, which
-converted three files from a bare `return` to `pytest.skip` and stopped there.
+**Found by** an independent engineering review, reading the change that converted
+three files from a bare `return` to `pytest.skip` and stopped there.
 
 **What was wrong.** `tests/test_coverage_numerator.py` and
 `tests/test_not_compilable.py` still held six of them. Each guards on
@@ -3071,11 +3072,12 @@ each printed by the command itself. The spread is given rather than a single num
 chosen from it, because a cold clone pays for reading 90 MB off disk and that is the
 honest answer to how long it takes. The rate carries the scorecard's two decimals.
 
-the transcript gate compares the quoted block against
-the captured reproduce transcript line by line, requires it to be the transcript's
-**ending** rather than a passage from its middle, counts the line count in the prose,
-and requires the README's clean-clone figure to be the one `REPRODUCE.md` states for
-the same thing. Its first version folded two indented blocks in that section into
+`tests/test_quoted_transcript_is_the_capture.py` compares the quoted block against
+`docs/reproduce_transcript.txt` line by line, requires it to be that transcript's
+**ending** rather than a passage from its middle, checks the line count stated in the
+prose, and requires the README's clean-clone figure to be the one `REPRODUCE.md`
+states for the same thing. The transcript is 1,925 lines of one real run's stdout,
+and it is in `docs/` because what a reader wants from it is what output to expect. Its first version folded two indented blocks in that section into
 one and compared a seven-line block against a six-line tail, which is the failure a
 looser check would have shipped as a pass.
 
@@ -3090,6 +3092,48 @@ they are true and they belong beside the claim rather than in front of the proje
 | lines before the README names its user | 69 | **25** |
 | gates on the quoted transcript | 0 | **4** |
 
-**Evidence.** `python -m pytest -q the transcript gate`.
+**Evidence.** `python -m pytest tests/test_quoted_transcript_is_the_capture.py -q`.
 Change one digit in the quoted block and it names the line and tells you to re-run
 the capture or stop calling it captured.
+
+## 55. Two citations pointed at a commit this repository does not contain
+
+**Found by** assembling the submission and running `git show` on the two commit
+hashes this changelog quotes. One of them did not resolve.
+
+**What was wrong.** Entry 24 named a seven-character hash, `7e0faaa`, as the
+change that widened the retry budget. It is not in this repository. The history was rewritten
+between the sentence being written and the submission being assembled, every hash
+moved, and nothing compared the prose to the object database, so a reader who
+pasted it into `git show` got `unknown revision`. Entry 52 cited a second hash
+which still resolved and would have stopped resolving on the next rewrite.
+
+A hash in a document is a fixed point. It is right until the next rewrite, it
+cannot be regenerated from anything, and it is the one kind of reference where
+being wrong looks exactly like being right until somebody tries it. That makes it
+the worst carrier for the thing both sentences actually wanted to say, which was
+what changed.
+
+**What changed.** Both sentences now name the change rather than the commit, so
+there is nothing left to go stale. `tests/test_cited_commits_resolve.py` reads
+every tracked document, finds the explicit `commit `-then-backticks form a reader
+would paste, and requires `git cat-file -t` to return `commit` for each one. It
+skips rather than fails when there is no object database, because an unpacked
+source archive carries the documents without one and a gate that fails on a reader
+following the reproduction guide is a broken gate.
+
+It carries a positive control, because a gate over zero occurrences reports a pass
+it did not earn: a fabricated hash must fail to resolve and `HEAD` must resolve. If
+the resolver ever starts rejecting everything, that is where it shows.
+
+| | before | now |
+|---|---|---|
+| commit hashes quoted in prose | 2 | **0** |
+| of those, resolvable in this repository | 1 | **not applicable** |
+| gates over a cited hash | 0 | **1, with a control** |
+
+**Evidence.** `python -m pytest tests/test_cited_commits_resolve.py -q`. Write the
+word commit followed by a backticked hash into any tracked document and the gate
+names the document and the hash. This entry is written so that it does not trip
+its own rule, which is the second time a scanner in this repository has flagged
+the sentence describing it.

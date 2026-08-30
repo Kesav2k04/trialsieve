@@ -1,0 +1,1925 @@
+$ python run.py reproduce
+
+========================================================================
+environment
+========================================================================
+{
+ "python": "3.14.2",
+ "implementation": "CPython",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "machine": "AMD64",
+ "utc": "2026-08-30T15:03:22Z",
+ "locked_packages": 8,
+ "lock_drift": {},
+ "git_commit": "b6b1459dee887d80e55d9efd11100752296c4e26",
+ "git_dirty": true,
+ "git_dirty_excludes": "results/"
+}
+
+========================================================================
+engine gate
+========================================================================
+
+$ python -m pytest -q tests/test_engine.py
+....................................................                     [100%]
+52 passed in 0.18s
+
+========================================================================
+dependency surface
+========================================================================
+
+$ python scripts/lockfile.py --imports
+{
+ "files_parsed": 54,
+ "third_party_imports": [],
+ "pass": true
+}
+
+PASS: 54 modules on the reproduction path import nothing but the standard library and each other. That is what lets a judge run `python run.py reproduce` with no install step at all.
+
+========================================================================
+replay the compile, every published seed
+========================================================================
+
+$ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider shim --seed 7
+  [ 1/40] NCT06983054-INC-01   COMPILED
+  [ 2/40] NCT06983054-INC-02   COMPILED
+  [ 3/40] NCT06983054-INC-03   COMPILED
+  [ 4/40] NCT06983054-INC-04   COMPILED
+  [ 5/40] NCT06983054-INC-05   refused(plan)
+  [ 6/40] NCT06983054-INC-06   refused(plan)
+  [ 7/40] NCT06983054-INC-07   COMPILED
+  [ 8/40] NCT06983054-INC-08   refused(plan)
+  [ 9/40] NCT06983054-INC-09   COMPILED
+  [10/40] NCT06983054-INC-10   refused(vocab)
+  [11/40] NCT06983054-EXC-01   COMPILED
+  [12/40] NCT06983054-EXC-02   COMPILED
+  [13/40] NCT06983054-EXC-03   refused(vocab)
+  [14/40] NCT06983054-EXC-04   refused(vocab)
+  [15/40] NCT06983054-EXC-05   COMPILED
+  [16/40] NCT06989723-INC-01   COMPILED
+  [17/40] NCT06989723-INC-02   COMPILED
+  [18/40] NCT06989723-INC-03   refused(vocab)
+  [19/40] NCT06989723-INC-04   refused(plan)
+  [20/40] NCT06989723-INC-05   COMPILED
+  [21/40] NCT06989723-EXC-01   COMPILED
+  [22/40] NCT06989723-EXC-02   refused(vocab)
+  [23/40] NCT06989723-EXC-03   refused(vocab)
+  [24/40] NCT06989723-EXC-04   refused(vocab)
+  [25/40] NCT06989723-EXC-05   refused(plan)
+  [26/40] NCT06717698-INC-01   COMPILED
+  [27/40] NCT06717698-INC-02   refused(vocab)
+  [28/40] NCT06717698-INC-03   COMPILED
+  [29/40] NCT06717698-INC-04   refused(vocab)
+  [30/40] NCT06717698-INC-05   COMPILED
+  [31/40] NCT06717698-INC-06   refused(plan)
+  [32/40] NCT06717698-INC-07   COMPILED
+  [33/40] NCT06717698-EXC-01   refused(vocab)
+  [34/40] NCT06717698-EXC-02   COMPILED
+  [35/40] NCT06717698-EXC-03   refused(vocab)
+  [36/40] NCT06717698-EXC-04   refused(vocab)
+  [37/40] NCT06717698-EXC-05   COMPILED
+  [38/40] NCT06717698-EXC-06   refused(plan)
+  [39/40] NCT06717698-EXC-07   refused(vocab)
+  [40/40] NCT06717698-EXC-08   refused(plan)
+
+{"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 1, "critic_dismissed": 1, "revised": 1}
+usage: {'calls': 202, 'prompt_tokens': 136765, 'completion_tokens': 34225, 'wall_s': 13981.92, 'cassette_hits': 202}
+wrote runs\tierA\compiled\criteria_seed7.json
+
+$ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider shim --seed 8
+  [ 1/40] NCT06983054-INC-01   COMPILED
+  [ 2/40] NCT06983054-INC-02   COMPILED
+  [ 3/40] NCT06983054-INC-03   COMPILED
+  [ 4/40] NCT06983054-INC-04   COMPILED
+  [ 5/40] NCT06983054-INC-05   refused(plan)
+  [ 6/40] NCT06983054-INC-06   refused(plan)
+  [ 7/40] NCT06983054-INC-07   COMPILED
+  [ 8/40] NCT06983054-INC-08   refused(plan)
+  [ 9/40] NCT06983054-INC-09   COMPILED
+  [10/40] NCT06983054-INC-10   refused(plan)
+  [11/40] NCT06983054-EXC-01   COMPILED
+  [12/40] NCT06983054-EXC-02   COMPILED
+  [13/40] NCT06983054-EXC-03   refused(vocab)
+  [14/40] NCT06983054-EXC-04   refused(vocab)
+  [15/40] NCT06983054-EXC-05   COMPILED
+  [16/40] NCT06989723-INC-01   COMPILED
+  [17/40] NCT06989723-INC-02   COMPILED
+  [18/40] NCT06989723-INC-03   refused(vocab)
+  [19/40] NCT06989723-INC-04   refused(plan)
+  [20/40] NCT06989723-INC-05   COMPILED
+  [21/40] NCT06989723-EXC-01   COMPILED
+  [22/40] NCT06989723-EXC-02   refused(vocab)
+  [23/40] NCT06989723-EXC-03   refused(vocab)
+  [24/40] NCT06989723-EXC-04   refused(vocab)
+  [25/40] NCT06989723-EXC-05   refused(plan)
+  [26/40] NCT06717698-INC-01   COMPILED
+  [27/40] NCT06717698-INC-02   refused(plan)
+  [28/40] NCT06717698-INC-03   COMPILED
+  [29/40] NCT06717698-INC-04   refused(vocab)
+  [30/40] NCT06717698-INC-05   COMPILED
+  [31/40] NCT06717698-INC-06   refused(plan)
+  [32/40] NCT06717698-INC-07   COMPILED
+  [33/40] NCT06717698-EXC-01   refused(vocab)
+  [34/40] NCT06717698-EXC-02   COMPILED
+  [35/40] NCT06717698-EXC-03   refused(vocab)
+  [36/40] NCT06717698-EXC-04   refused(vocab)
+  [37/40] NCT06717698-EXC-05   COMPILED
+  [38/40] NCT06717698-EXC-06   refused(plan)
+  [39/40] NCT06717698-EXC-07   refused(vocab)
+  [40/40] NCT06717698-EXC-08   refused(plan)
+
+{"compiled": 19, "refused_plan": 10, "refused_grounding": 11, "errors": 0, "critic_confirmed": 2, "critic_dismissed": 0, "revised": 2}
+usage: {'calls': 201, 'prompt_tokens': 140245, 'completion_tokens': 34522, 'wall_s': 7041.73, 'cassette_hits': 201}
+wrote runs\tierA\compiled\criteria_seed8.json
+
+$ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider shim --seed 9
+  [ 1/40] NCT06983054-INC-01   COMPILED
+  [ 2/40] NCT06983054-INC-02   COMPILED
+  [ 3/40] NCT06983054-INC-03   COMPILED
+  [ 4/40] NCT06983054-INC-04   COMPILED
+  [ 5/40] NCT06983054-INC-05   refused(plan)
+  [ 6/40] NCT06983054-INC-06   refused(plan)
+  [ 7/40] NCT06983054-INC-07   COMPILED
+  [ 8/40] NCT06983054-INC-08   refused(plan)
+  [ 9/40] NCT06983054-INC-09   COMPILED
+  [10/40] NCT06983054-INC-10   refused(vocab)
+  [11/40] NCT06983054-EXC-01   COMPILED
+  [12/40] NCT06983054-EXC-02   COMPILED
+  [13/40] NCT06983054-EXC-03   refused(vocab)
+  [14/40] NCT06983054-EXC-04   refused(vocab)
+  [15/40] NCT06983054-EXC-05   COMPILED
+  [16/40] NCT06989723-INC-01   COMPILED
+  [17/40] NCT06989723-INC-02   COMPILED
+  [18/40] NCT06989723-INC-03   refused(vocab)
+  [19/40] NCT06989723-INC-04   refused(plan)
+  [20/40] NCT06989723-INC-05   COMPILED
+  [21/40] NCT06989723-EXC-01   COMPILED
+  [22/40] NCT06989723-EXC-02   refused(vocab)
+  [23/40] NCT06989723-EXC-03   refused(vocab)
+  [24/40] NCT06989723-EXC-04   refused(vocab)
+  [25/40] NCT06989723-EXC-05   refused(plan)
+  [26/40] NCT06717698-INC-01   COMPILED
+  [27/40] NCT06717698-INC-02   refused(vocab)
+  [28/40] NCT06717698-INC-03   COMPILED
+  [29/40] NCT06717698-INC-04   refused(vocab)
+  [30/40] NCT06717698-INC-05   COMPILED
+  [31/40] NCT06717698-INC-06   refused(plan)
+  [32/40] NCT06717698-INC-07   COMPILED
+  [33/40] NCT06717698-EXC-01   refused(vocab)
+  [34/40] NCT06717698-EXC-02   COMPILED
+  [35/40] NCT06717698-EXC-03   refused(vocab)
+  [36/40] NCT06717698-EXC-04   refused(vocab)
+  [37/40] NCT06717698-EXC-05   COMPILED
+  [38/40] NCT06717698-EXC-06   refused(plan)
+  [39/40] NCT06717698-EXC-07   refused(vocab)
+  [40/40] NCT06717698-EXC-08   refused(plan)
+
+{"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 2, "critic_dismissed": 1, "revised": 2}
+usage: {'calls': 210, 'prompt_tokens': 142845, 'completion_tokens': 36038, 'wall_s': 5022.77, 'cassette_hits': 210}
+wrote runs\tierA\compiled\criteria_seed9.json
+
+========================================================================
+run the free arms over the whole panel, every published seed
+========================================================================
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 0s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 1s
+  240/385 patients, 9600 cells, 1s
+  250/385 patients, 10000 cells, 1s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 2s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 7,
+ "k": 0.0,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 0,
+ "degradation_manifest_sha256": null,
+ "wall_s": 2.4,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k0_seed7.jsonl
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 8
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 0s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 1s
+  240/385 patients, 9600 cells, 1s
+  250/385 patients, 10000 cells, 1s
+  260/385 patients, 10400 cells, 1s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 2s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 8,
+ "k": 0.0,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 0,
+ "degradation_manifest_sha256": null,
+ "wall_s": 2.3,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k0_seed8.jsonl
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 9
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 0s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 1s
+  240/385 patients, 9600 cells, 1s
+  250/385 patients, 10000 cells, 1s
+  260/385 patients, 10400 cells, 1s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 2s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 9,
+ "k": 0.0,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 0,
+ "degradation_manifest_sha256": null,
+ "wall_s": 2.3,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k0_seed9.jsonl
+
+========================================================================
+run the degradation curve
+========================================================================
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7 --k 0.1 --degrade-seed 101
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 1s
+  90/385 patients, 3600 cells, 1s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 2s
+  230/385 patients, 9200 cells, 2s
+  240/385 patients, 9600 cells, 2s
+  250/385 patients, 10000 cells, 2s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 3s
+  370/385 patients, 14800 cells, 3s
+  380/385 patients, 15200 cells, 3s
+  385/385 patients, 15400 cells, 3s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 7,
+ "k": 0.1,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 2482,
+ "degradation_manifest_sha256": "36d4dbc2f9cb98a433ebecf0eacaee24583b07eb2c6448c7ad6bb163d5015ffe",
+ "wall_s": 2.8,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k10_seed7.jsonl
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7 --k 0.2 --degrade-seed 101
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 1s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 2s
+  230/385 patients, 9200 cells, 2s
+  240/385 patients, 9600 cells, 2s
+  250/385 patients, 10000 cells, 2s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 3s
+  370/385 patients, 14800 cells, 3s
+  380/385 patients, 15200 cells, 3s
+  385/385 patients, 15400 cells, 3s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 7,
+ "k": 0.2,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 4745,
+ "degradation_manifest_sha256": "12cad59781e256a6c0452799a9be7b5b76e2d030a11ef718d9d49b05fb77dbfd",
+ "wall_s": 2.7,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k20_seed7.jsonl
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7 --k 0.4 --degrade-seed 101
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 1s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 2s
+  240/385 patients, 9600 cells, 2s
+  250/385 patients, 10000 cells, 2s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 3s
+  385/385 patients, 15400 cells, 3s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 7,
+ "k": 0.4,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 9652,
+ "degradation_manifest_sha256": "7e31e857c75247b993f596560e3e0172a8ce2b17dda939de57ac67ad02f4028e",
+ "wall_s": 2.6,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k40_seed7.jsonl
+
+========================================================================
+run the open-world sensitivity arm
+========================================================================
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS --absent-means-override unknown --tag ow
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 0s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 1s
+  240/385 patients, 9600 cells, 1s
+  250/385 patients, 10000 cells, 1s
+  260/385 patients, 10400 cells, 1s
+  270/385 patients, 10800 cells, 1s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 2s
+
+{
+ "arms": [
+  "TS"
+ ],
+ "seed": 7,
+ "k": 0.0,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": "unknown",
+ "degradation_changes": 0,
+ "degradation_manifest_sha256": null,
+ "wall_s": 2.2,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS_ow.jsonl
+
+========================================================================
+replay the per-cell baseline over its sample
+========================================================================
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms B2 --patients 10 --tag b2_10p --model gemini-3.7-flash-medium
+  1/10 patients, 40 cells, 0s
+  2/10 patients, 80 cells, 0s
+  3/10 patients, 120 cells, 0s
+  4/10 patients, 160 cells, 0s
+  5/10 patients, 200 cells, 0s
+  6/10 patients, 240 cells, 0s
+  7/10 patients, 280 cells, 0s
+  8/10 patients, 320 cells, 0s
+  9/10 patients, 360 cells, 0s
+  10/10 patients, 400 cells, 0s
+
+{
+ "arms": [
+  "B2"
+ ],
+ "seed": 7,
+ "k": 0.0,
+ "degrade_seed": 101,
+ "b2_max_chars": 26000,
+ "provider": "ollama",
+ "model": "gemini-3.7-flash-medium",
+ "cells_with_trimmed_record": 80,
+ "n_patients": 10,
+ "n_criteria": 40,
+ "n_cells": 400,
+ "patient_sample": 10,
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 0,
+ "degradation_manifest_sha256": null,
+ "wall_s": 0.3,
+ "usage": {
+  "calls": 400,
+  "prompt_tokens": 1656168,
+  "completion_tokens": 31769,
+  "wall_s": 20061.2,
+  "cassette_hits": 400
+ },
+ "panel_ids_sha256": "405e736f8a1df48d7259f5eab6a239da651ed2a420d0bf70ce49508109192b04"
+}
+wrote runs\tierA\cells\cells_B2_b2_10p.jsonl
+
+========================================================================
+audit for recall
+========================================================================
+
+$ python scripts/contamination.py --run runs/tierA --counterfactual --mode replay
+  [ 1/15] compiled  NCT06983054-INC-02       10.0 -> 13.7 literals [6.5, 13.7]
+  [ 2/15] compiled  NCT06983054-INC-03       85.0 -> 116.5 literals [18.0, 116.5]
+  [ 3/15] compiled  NCT06983054-INC-04       25.0 -> 34.2 literals [34.2]
+  [ 4/15] refused   NCT06983054-INC-05       31.0 -> 42.5  Menstrual history (no menses >1 year) is not available in structured record data, and the 
+  [ 5/15] compiled  NCT06983054-INC-07       90.0 -> 123.3 literals [60.0, 123.3]
+  [ 6/15] refused   NCT06983054-INC-08       200.0 -> 274.0  Dietary sodium intake is a lifestyle and nutritional measurement that is not routinely cap
+  [ 7/15] compiled  NCT06983054-INC-09       30.0 -> 41.1 literals [41.1]
+  [ 8/15] compiled  NCT06983054-EXC-01       90.0 -> 123.3 literals [60.0, 123.3]
+  [ 9/15] error     NCT06983054-EXC-02       30.0 -> 41.1  CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-02-CF#a0 (key 96e2c483377494d1)
+  [10/15] error     NCT06983054-EXC-04       1.0 -> 1.4  CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-04-CF#a0 (key 11cc12893dfa6cfc)
+  [11/15] error     NCT06983054-EXC-05       6.0 -> 8.2  CassetteMiss: no cassette for compile-plan:NCT06983054-EXC-05-CF#a0 (key 68aee2650f51c338)
+  [12/15] error     NCT06989723-INC-01       20.0 -> 27.4  CassetteMiss: no cassette for compile-plan:NCT06989723-INC-01-CF#a0 (key 6dbf057c9f299807)
+  [13/15] error     NCT06989723-INC-02       10.0 -> 13.7  CassetteMiss: no cassette for compile-plan:NCT06989723-INC-02-CF#a0 (key 03b762cfa2eb3e3b)
+  [14/15] error     NCT06989723-INC-03       4.0 -> 5.5  CassetteMiss: no cassette for compile-plan:NCT06989723-INC-03-CF#a0 (key 4552d5a5796c63ff)
+  [15/15] error     NCT06989723-INC-04       268.0 -> 367.2  CassetteMiss: no cassette for compile-plan:NCT06989723-INC-04-CF#a0 (key 46228746cc79a01a)
+# Recall, or reading?
+
+Generated by `python scripts/contamination.py`. Everything below is output.
+
+Three registered trials with public identifiers is the setup where a good
+result can come from having memorised the protocol rather than from having
+read it. These are the checks that separate the two.
+
+## 1. No identifier reaches a prompt
+
+Every prompt in this system is a `str.format` template, so the substitutions
+are enumerable without running anything. 6 templates carry a slot.
+None has a slot for a trial identifier or title.
+
+| template | substitutions |
+|---|---|
+| `baselines.B2_INSTRUCTIONS` | `criterion`, `index_date`, `kind`, `record` |
+| `compiler.EMIT` | `category`, `examples`, `grammar`, `grounded`, `kind`, `text` |
+| `compiler.PLAN` | `category`, `kind`, `text` |
+| `critic.INSTRUCTIONS` | `codes`, `expr`, `kind`, `text` |
+| `grounder.EXPAND` | `concept`, `domain` |
+| `grounder.SELECT` | `candidates`, `concept`, `domain`, `intent` |
+
+**PASS.**
+
+## 2. No identifier is in any recorded request
+
+A template audit cannot see a string joined on by hand, so this reads the
+requests that were actually sent. Every model call in this system is recorded
+in full. 1047 recorded requests were searched for the
+identifiers and for 77 title-specific three-word sequences.
+
+Title-specific is doing work in that sentence. A registered title contains the
+disease name, and so does the criterion text the segmenter is given on purpose,
+so the 3016 sequences occurring anywhere in the
+vendored eligibility text are subtracted first. Without that subtraction the scan
+fires on 'chronic kidney disease' and returns positive on any corpus that mentions
+the disease, which is a check that cannot fail and therefore cannot pass.
+
+What is left is wording only the title uses, for example: '2 t1dm while', '888 digital medical', 'a randomized placebo-controlled', 'ai platform for'.
+
+**PASS.** 0 hits.
+
+
+## 3. The numbers move when the criterion moves
+
+The check worth arguing with. A threshold is changed to a value the real
+protocol does not contain, the criterion is recompiled, and the emitted
+predicate has to carry the changed number. A compiler that reproduces the
+original threshold is reciting rather than reading.
+
+The perturbation is the largest number in the criterion multiplied by 1.37
+and rounded. Largest, because criteria often carry an incidental small number
+beside the threshold that matters. Rounded rather than randomised, because a
+wildly implausible threshold would be rejected on its face and the check would
+pass for the wrong reason.
+
+15 criteria carried a perturbable number. 6 compiled.
+
+| criterion | protocol says | criterion was changed to | predicate carries | follows |
+|---|---|---|---|---|
+| `NCT06983054-INC-02` | 10.0 | 13.7 | [6.5, 13.7] | yes |
+| `NCT06983054-INC-03` | 85.0 | 116.5 | [18.0, 116.5] | yes |
+| `NCT06983054-INC-04` | 25.0 | 34.2 | [34.2] | yes |
+| `NCT06983054-INC-05` | 31.0 | 42.5 | refused | n/a |
+| `NCT06983054-INC-07` | 90.0 | 123.3 | [60.0, 123.3] | yes |
+| `NCT06983054-INC-08` | 200.0 | 274.0 | refused | n/a |
+| `NCT06983054-INC-09` | 30.0 | 41.1 | [41.1] | yes |
+| `NCT06983054-EXC-01` | 90.0 | 123.3 | [60.0, 123.3] | yes |
+| `NCT06983054-EXC-02` | 30.0 | 41.1 | error | n/a |
+| `NCT06983054-EXC-04` | 1.0 | 1.4 | error | n/a |
+| `NCT06983054-EXC-05` | 6.0 | 8.2 | error | n/a |
+| `NCT06989723-INC-01` | 20.0 | 27.4 | error | n/a |
+| `NCT06989723-INC-02` | 10.0 | 13.7 | error | n/a |
+| `NCT06989723-INC-03` | 4.0 | 5.5 | error | n/a |
+| `NCT06989723-INC-04` | 268.0 | 367.2 | error | n/a |
+
+**6 of 6 follow the perturbation. 0 of 6 reproduce the original number.**
+
+
+wrote docs\CONTAMINATION.md and results\contamination.json
+
+========================================================================
+regenerate the documents that quote numbers
+========================================================================
+
+$ python scripts/counterexample.py --run runs/tierA --mode replay
+# One criterion, one patient, two arms
+
+Generated by `python scripts/counterexample.py`. Everything below is output, not illustration.
+
+**Criterion** `NCT06983054-INC-09` (inclusion): UACR < 30 mg/mmol
+
+**Patient** `03e502b6-b810-06c1-7d65-83db077ed3ee`, age 54, female. 1819 laboratory results, 29 problems, 90 medication orders on file.
+
+**The hole in the record.** LOINC `14959-1` appears nowhere in this patient's chart. It appears nowhere in 359 of the 385 charts in this panel (93%), so this is the normal case rather than an unlucky one.
+
+---
+
+## What the per-cell baseline says
+
+Model `gemini-3.7-flash-medium`, temperature 0, given the criterion text and the same flattened record the engine reads, with an explicit instruction and a worked example for answering INDETERMINATE.
+
+```
+verdict  : INDETERMINATE
+reasoning: The patient record does not contain any measurement of urine albumin-to-creatinine ratio (UACR).
+```
+
+## What TrialSieve says
+
+```
+verdict  : INDETERMINATE
+reason   : no observation with code 14959-1 in the record
+```
+
+The predicate it executed, rendered for review:
+
+```
+  the most recent value of 14959-1 (Microalbumin Creatinine Ratio, 26 patient(s) in this panel) in mg/mmol, at any time in the record  <  30 mg/mmol
+```
+
+## Gold
+
+Checker A: **INDETERMINATE**
+
+---
+
+| arm | verdict | agrees with gold |
+|---|---|---|
+| per-cell baseline (B2) | INDETERMINATE | yes |
+| TrialSieve | INDETERMINATE | yes |
+
+The baseline abstained here and was right. That is reported rather than hidden: the claim in the README is the rate at which it commits across the panel, not that it fails on every pair.
+
+
+wrote docs\COUNTEREXAMPLE.md
+
+$ python scripts/gate_demo.py --run runs/tierA
+# The human checkpoint, demonstrated by running into it
+
+Generated by `python scripts/gate_demo.py`. Exit codes and output are captured,
+not transcribed.
+
+The only artifact in this project that could affect a person is the worklist a
+coordinator opens. It cannot be produced from predicates a named human has not
+signed. That is enforced by exit code, and the refusal is tested.
+
+---
+
+## 1. Unsigned
+
+```
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/video/_gate_demo.md  ; echo $?
+REFUSED.
+
+9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
+3
+```
+
+Exit code **3**. No document was written. The message names the command that clears the gate, and clearing it means reading one predicate at a time: `scripts/signoff.py` has no bulk approval and no `--approve-all`, because a gate you can clear without reading reports approval nobody gave.
+
+## 2. Unsigned, overridden on purpose
+
+```
+$ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsigned --out docs/sample_worklist.md  ; echo $?
+{
+ "nct_id": "NCT06983054",
+ "panel": 385,
+ "ruled_out": 187,
+ "needs_review": 190,
+ "eligible": 8,
+ "reduction": 0.4857
+}
+wrote docs\sample_worklist.md
+wrote docs\sample_worklist.csv
+WARNING, running unsigned: 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
+0
+```
+
+The document is produced and the first thing on it is this:
+
+> **NOT FOR USE.** No human has reviewed the compiled criteria behind this document. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
+
+The override leaves a mark in the artifact rather than only in a shell
+history, which is the point. A reader who is handed the file can tell.
+
+It marks both halves. For a while it marked only this one: `sample_worklist.json`
+carried no trace of the override, so an unsigned worklist was byte-identical in shape
+to a signed one for anything downstream that reads JSON rather than prose. The
+sidecar now carries `not_for_use` and the reviewer, and `tests/test_worklist_sidecar_is_complete.py`
+checks the two against each other and against this document.
+
+## 3. Signed
+
+**Nothing is signed in this checkout, and that is not an oversight.**
+
+Signing is a human action. This script does not perform it and no automated
+step in this repository does either, because a signature an agent applied on
+a human's behalf is the exact failure the gate exists to prevent. What is
+shipped here is the mechanism and its refusal.
+
+To clear it:
+
+```bash
+python scripts/signoff.py --run runs/tierA --list
+python scripts/signoff.py --run runs/tierA --reviewer "Your Name" \
+    --role "clinical research coordinator"
+```
+
+One predicate at a time, rendered into English with the codes resolved to
+the display names this site's own records use. The reviewer's role is
+recorded in the signature, so a signature from someone who is not a
+clinician says so.
+
+
+wrote docs\GATE.md
+
+$ python scripts/trajectories.py --run runs/tierA
+rendered 235 trajectories, wrote runs\tierA\trajectories\index.md
+{
+ "events": 4094,
+ "llm_calls": 1077,
+ "tool_calls": 265,
+ "validation_errors": 3,
+ "retries": 8,
+ "retries_schema": 3,
+ "retries_critic": 5,
+ "transport_retries": 1,
+ "critic_findings": 31,
+ "revisions": 5,
+ "normalisations": 72,
+ "human_checkpoints": 0,
+ "completion_tokens": 148878
+}
+
+$ python scripts/trajectories.py --run runs/checker_b
+rendered 180 trajectories, wrote runs\checker_b\trajectories\index.md
+{
+ "events": 977,
+ "llm_calls": 181,
+ "tool_calls": 0,
+ "validation_errors": 1,
+ "retries": 1,
+ "retries_schema": 1,
+ "retries_critic": 0,
+ "transport_retries": 73,
+ "critic_findings": 0,
+ "revisions": 0,
+ "normalisations": 0,
+ "human_checkpoints": 0,
+ "completion_tokens": 4782
+}
+
+$ python scripts/trajectories.py --run runs/probe-after
+rendered 21 trajectories, wrote runs\probe-after\trajectories\index.md
+{
+ "events": 192,
+ "llm_calls": 42,
+ "tool_calls": 21,
+ "validation_errors": 0,
+ "retries": 0,
+ "retries_schema": 0,
+ "retries_critic": 0,
+ "transport_retries": 3,
+ "critic_findings": 0,
+ "revisions": 0,
+ "normalisations": 0,
+ "human_checkpoints": 0,
+ "completion_tokens": 8493
+}
+
+$ python scripts/trajectories.py --run runs/probe-before
+rendered 21 trajectories, wrote runs\probe-before\trajectories\index.md
+{
+ "events": 193,
+ "llm_calls": 42,
+ "tool_calls": 21,
+ "validation_errors": 0,
+ "retries": 0,
+ "retries_schema": 0,
+ "retries_critic": 0,
+ "transport_retries": 4,
+ "critic_findings": 0,
+ "revisions": 0,
+ "normalisations": 0,
+ "human_checkpoints": 0,
+ "completion_tokens": 8276
+}
+
+$ python scripts/trajectories.py --run runs/probe-weak
+rendered 21 trajectories, wrote runs\probe-weak\trajectories\index.md
+{
+ "events": 190,
+ "llm_calls": 42,
+ "tool_calls": 21,
+ "validation_errors": 1,
+ "retries": 0,
+ "retries_schema": 0,
+ "retries_critic": 0,
+ "transport_retries": 0,
+ "critic_findings": 0,
+ "revisions": 0,
+ "normalisations": 0,
+ "human_checkpoints": 0,
+ "completion_tokens": 7184
+}
+
+========================================================================
+check every path a document points at
+========================================================================
+
+$ python scripts/linkcheck.py
+checked 789 path reference(s) across 27 document(s)
+every path a document points at exists
+
+========================================================================
+cost and runtime
+========================================================================
+
+$ python scripts/costs.py
+# What it cost, and how long it took
+
+Generated by `python scripts/costs.py` from the files the run produced.
+
+## The claim this table exists to support
+
+The model reads each protocol once and never reads a patient, so screening a
+patient costs arithmetic. That is an architectural claim and it should be
+visible as a runtime fact: the row that touches every patient makes no model
+call, and its wall clock is seconds.
+
+## Recorded
+
+| step | model calls | from cassette | prompt tokens | completion tokens | wall clock | at published rates |
+|---|---|---|---|---|---|---|
+| compile the held-out protocols, 40 criteria | 202 | 202 | 136,765 | 34,225 | 1 s | $0.13 |
+| segmenter, 3 trials | 3 | 0 | 3,362 | 3,929 | 4 min 15 s | $0.01 |
+| recompile under seed 8, for the noise floor | 201 | 201 | 140,245 | 34,522 | 1 s | $0.13 |
+| recompile under seed 9, for the noise floor | 210 | 210 | 142,845 | 36,038 | 1 s | $0.13 |
+| vocabulary probe, before | 42 | 36 | 14,333 | 8,276 | 9 min 50 s | $0.02 |
+| vocabulary probe, after | 42 | 38 | 22,981 | 8,493 | 7 min 58 s | $0.03 |
+| vocabulary probe, weak model | 42 | 0 | 26,753 | 7,184 | 5 min 21 s | $0.03 |
+| counterfactual thresholds, contamination check 3 | 24 | 24 | 19,373 | 3,569 | 0 s | $0.01 |
+| critic probe, planted defects | 25 | 12 | 19,497 | 3,710 | 5 min 18 s | $0.02 |
+| arms B2 over 10 patients, group b2_10p | 400 | 400 | 1,656,168 | 31,769 | 0 s | $0.58 |
+| arms TS, B0, B1 over 385 patients, group k0_seed7 | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k0_seed8 | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k0_seed9 | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k10_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k20_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k40_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
+| arms TS over 385 patients, group k0_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
+| arms TS over 385 patients, group ow | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| second blind labeller, Checker B | 100 | 0 | 444,910 | 2,680 | 1 h 55 min | $0.14 |
+| **total** | **1,291** | | **2,627,232** | **174,395** | **2 h 28 min** | **$1.22** |
+
+The right-hand column is an estimate at a mid-tier hosted model at $0.30 in / $2.50 out per million tokens. Each row is rounded to the cent, so adding the column comes to a cent or two more than the total, which is computed once from the raw token counts rather than by summing rounded rows. It is not what this
+run cost. This ran on a locally authenticated vendor CLI on a subscription, so
+the marginal cost of a call was zero, and reporting zero would be true and
+useless to anyone deciding whether to run it themselves.
+
+Token counts come from the provider where it returns them. The local shim does
+not, so those rows fall back to an estimate of four characters per token, and
+the report says which rather than averaging the distinction away.
+
+## Where the two curves cross
+
+Both arms answer the same 40 questions about the same patient. They differ in what the model is asked to do, and that difference is a cost curve rather than a constant.
+
+Compiling the 40 criteria cost **$0.13** and is paid once per criterion set. Screening a patient after that is arithmetic over the compiled predicate: the row above that adjudicates 385 patients on all 40 criteria makes **zero model calls** and finishes in **2 s**.
+
+The per-cell baseline pays per question per patient. Measured over its 400 recorded cells, that is **$0.0014** a cell, or **$0.06** to put one patient through 40 criteria.
+
+| patients screened | compile once, then arithmetic | ask per cell |
+|---|---|---|
+| 1 | $0.13 | $0.06 |
+| 3 | $0.13 | $0.17 |
+| 385 | $0.13 | $22.19 |
+| 385 again next month | $0.00 | $22.19 |
+
+The two cross at **2.2 patients**. Past that the compiled path is cheaper, and the gap grows with every patient and every rescreen, because one side of it is flat.
+
+Cheaper is not the same as worse here, and the two arms are scored on the same 400 cells. Silent error rate: **1.0%** compiled against **43.8%** per cell. Screens wrongly ruled out, of thirty, which is ten patients each read against three trials: **2** against **10**. Both arms are VOID against the registered primary outcome, which requires zero.
+
+Three things this does not say. The dollar figures are the published list rate in the table above, not what this run was billed. The per-cell figure is measured on these 40 criteria against records of this size, and a longer record moves it. And it counts model spend only: the compiled predicates go to a human reviewer before deployment, which is the control `README.md` describes and the one that failed here, and that reviewer's time is a real cost this table does not carry.
+
+## The other currency
+
+Money is the cheap half. The expensive half is a person reading charts, and `docs/sample_worklist.md` is what this run leaves them. It is one trial (NCT06983054) at the zero-false-exclusion operating point, so the panel is 385 screens against 3 criteria.
+
+| | count |
+|---|---|
+| cell judgements, one per patient per criterion | 1,155 |
+| screens the engine ruled out with no person involved | 187 |
+| screens it cleared to contact | 8 |
+| screens left open for a human | 190 |
+| distinct question sets those screens contain | 2 |
+| **distinct criteria a person has to answer** | **2** |
+| screens sharing the single largest question set | 188 |
+
+The last two rows are the point. 188 of the 190 open screens are stuck on the same question, so a coordinator has one thing to go and find rather than 190 charts to read. Getting it still returns 188 separate values, one per patient: what collapses is the search, not the answers. The document groups them that way instead of listing patients one after another, so the work in front of a coordinator is 2 data-gathering questions rather than 1,155 readings.
+
+That shape follows from compiling once rather than asking per cell. A predicate fails the same way for everyone it fails for, so what it cannot settle comes out sorted into questions. A per-cell model answers each patient independently, so what it cannot settle comes out sorted into patients, and there is nothing to group.
+
+Two limits worth stating. This is one trial on one synthetic corpus at an operating point chosen in sample, so the number 2 is not a claim about clinical trials; the grouping is what generalises, not the count. And a question answered once still has to be answered by someone with access to data the record does not hold.
+
+## Reproducing costs nothing
+
+`python run.py reproduce` makes no model call. Every recorded call replays from
+`runs/tierA/cassettes/`, and replay never falls through to a live call: a
+missing cassette raises and stops the run. So the reproduction is free, offline,
+and needs no key.
+
+
+wrote D:\trialsieve\docs\COST.md
+
+========================================================================
+score and report
+========================================================================
+
+$ python scripts/report.py --run runs/tierA --out results
+
+## b2_10p  
+
+400 cells, 30 screens, arms TS, B0, B1, B2.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 21.8% | 1.0% | 4 | 4 | 0 | 18 | 0 | 40 |
+| B0 | 100.0% | 93.8% | 375 | 375 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 75 | 0 | 40 |
+| B2 | 68.0% | 43.8% | 175 | 30 | 145 | 6 | 0 | 40 |
+
+#### Fairness check: the 320 cells where no record was trimmed
+
+80 of 400 cells (20%) put a chart in front of the per-cell baseline that had been trimmed by age to fit the prompt. TrialSieve reads the record through the engine and is not subject to that limit, so the arms were not given the same input on those cells. Rescored over only the cells where nothing was cut:
+
+| arm | SER, all cells | SER, untrimmed only | difference |
+|---|---|---|---|
+| TS | 1.0% | 1.2% | +0.3% |
+| B0 | 93.8% | 93.8% | +0.0% |
+| B1 | 0.0% | 0.0% | +0.0% |
+| B2 | 43.8% | 44.7% | +0.9% |
+
+The gap between the per-cell baseline and TrialSieve is **42.8%** over all cells and **43.4%** over the untrimmed ones, a change of +0.7%. No arm moves by more than 0.9%. The trimming is therefore not where the difference comes from, which is the claim this table exists to let a reader reject rather than the one it exists to assert.
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 2 | 53.3% |
+| B0 | **VOID** | 14 | 100.0% |
+| B1 | 0.0% | 0 | 0.0% |
+| B2 | **VOID** | 10 | 86.7% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 30 | 16 | 53.3% | **2** | 8 | n/a |
+| B0 | 30 | 30 | 100.0% | **14** | 40 | n/a |
+| B1 | 30 | 0 | 0.0% | **0** | 0 | n/a |
+| B2 | 30 | 26 | 86.7% | **10** | 14 | n/a |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 43.3% | 13 | 0 | 6 |
+| 1 | 43.3% | 13 | 0 | 6 |
+| 2 | 53.3% | 16 | 2 | 7 |
+| 5 | 53.3% | 16 | 2 | 8 |
+| 10 | 53.3% | 16 | 2 | 8 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 33.3% | 10 | 0 | 6 |
+| 1 | 33.3% | 10 | 0 | 6 |
+| 2 | 40.0% | 12 | 2 | 7 |
+| 5 | 43.3% | 13 | 2 | 8 |
+| 10 | 43.3% | 13 | 2 | 8 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 8 criteria that ever exclude a patient, 6 make no false exclusion anywhere in 10 patients and the remaining 2 make 2, 2. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9275 | [-0.9750, -0.8625] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7825 | [-0.8975, -0.6525] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9275 | [-0.9750, -0.8625] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0100 | [+0.0000, +0.0375] | yes | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1425 | [+0.0525, +0.2500] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0100 | [+0.0000, +0.0375] | yes | 40 criteria | **below, uninterpretable** |
+| TS - B2 | ser | -0.4275 | [-0.5700, -0.2850] | no | 40 criteria | above |
+| TS - B2 | coverage | -0.4625 | [-0.6075, -0.3175] | no | 40 criteria | above |
+| TS - B2 | false_fails | -0.0650 | [-0.1550, +0.0050] | yes | 40 criteria | above |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.7%** (95% CI 1.5% to 4.2%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 400 cells are 6.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+**What B2 is, and what it is not.** B2 is one model call per cell at temperature 0, sampled once. The protocol also registers B3, the same baseline sampled three times with a majority vote, and B3 was not run: the cassette key is a hash of the full request including temperature and the store keeps one response per key, so three draws of one request replay as one answer counted three times (`docs/EVAL_PROTOCOL.md:65`, entry 26 of the improvement changelog). So the gap measured here is against a single-sample per-cell baseline, not against the best per-cell baseline money can buy. Self-consistency would plausibly close some of it, and this evaluation cannot say how much.
+
+## k0_seed7  (the scored run)
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 19.1% | 0.7% | 111 | 66 | 45 | 618 | 0 | 40 |
+| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 18 | 46.1% |
+| B0 | **VOID** | 592 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 533 | 46.1% | **18** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **592** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 9 |
+| 1 | 43.5% | 502 | 0 | 9 |
+| 2 | 43.5% | 502 | 0 | 9 |
+| 5 | 43.6% | 504 | 1 | 10 |
+| 10 | 43.6% | 504 | 1 | 10 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 9 |
+| 1 | 43.5% | 502 | 0 | 9 |
+| 2 | 43.5% | 502 | 0 | 9 |
+| 5 | 43.6% | 504 | 1 | 10 |
+| 10 | 43.6% | 504 | 1 | 10 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 4. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9405 | [-0.9732, -0.9012] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.8085 | [-0.9100, -0.6919] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9434 | [-0.9742, -0.9066] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0072 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1165 | [+0.0426, +0.2066] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0110] | yes | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k0_seed8  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 19.2% | 0.7% | 112 | 67 | 45 | 605 | 0 | 40 |
+| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 18 | 46.1% |
+| B0 | **VOID** | 592 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 533 | 46.1% | **18** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **592** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 9 |
+| 1 | 43.5% | 502 | 0 | 9 |
+| 2 | 43.5% | 502 | 0 | 9 |
+| 5 | 43.7% | 505 | 1 | 10 |
+| 10 | 43.7% | 505 | 1 | 10 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 9 |
+| 1 | 43.5% | 502 | 0 | 9 |
+| 2 | 43.5% | 502 | 0 | 9 |
+| 5 | 43.7% | 505 | 1 | 10 |
+| 10 | 43.7% | 505 | 1 | 10 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9404 | [-0.9731, -0.9012] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.8076 | [-0.9092, -0.6913] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9433 | [-0.9740, -0.9065] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0073 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1174 | [+0.0436, +0.2077] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0111] | yes | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k0_seed9  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 21.6% | 0.7% | 112 | 67 | 45 | 235 | 0 | 40 |
+| B0 | 100.0% | 94.8% | 14594 | 14594 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2401 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 18 | 46.1% |
+| B0 | **VOID** | 592 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 533 | 46.1% | **18** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **592** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 9 |
+| 1 | 43.5% | 502 | 0 | 9 |
+| 2 | 43.5% | 502 | 0 | 9 |
+| 5 | 43.7% | 505 | 1 | 10 |
+| 10 | 43.7% | 505 | 1 | 10 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 43.5% | 502 | 0 | 9 |
+| 1 | 43.5% | 502 | 0 | 9 |
+| 2 | 43.5% | 502 | 0 | 9 |
+| 5 | 43.7% | 505 | 1 | 10 |
+| 10 | 43.7% | 505 | 1 | 10 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 12 criteria that ever exclude a patient, 9 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 5. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9404 | [-0.9731, -0.9012] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.7836 | [-0.8921, -0.6623] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9433 | [-0.9740, -0.9065] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0073 | [+0.0003, +0.0164] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1414 | [+0.0571, +0.2412] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0043 | [+0.0000, +0.0111] | yes | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.3%** (95% CI 1.2% to 3.6%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.2% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k10_seed7  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 18.8% | 0.8% | 116 | 65 | 51 | 635 | 0 | 40 |
+| B0 | 100.0% | 95.0% | 14623 | 14623 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2357 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 19 | 44.2% |
+| B0 | **VOID** | 608 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 510 | 44.2% | **19** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **608** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 16.8% | 194 | 0 | 6 |
+| 1 | 27.3% | 315 | 1 | 7 |
+| 2 | 37.1% | 428 | 1 | 8 |
+| 5 | 41.7% | 482 | 3 | 9 |
+| 10 | 41.8% | 483 | 4 | 10 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 21.0% | 243 | 1 | 8 |
+| 1 | 21.0% | 243 | 1 | 8 |
+| 2 | 29.3% | 339 | 1 | 8 |
+| 5 | 40.1% | 463 | 3 | 9 |
+| 10 | 41.8% | 483 | 4 | 10 |
+
+1 of 5 rows lose their guarantee under cross-fitting. The in-sample row is the optimism, and the cross-fitted row is the one to read.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9420 | [-0.9742, -0.9034] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.8119 | [-0.9121, -0.6973] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9453 | [-0.9753, -0.9099] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0075 | [+0.0004, +0.0169] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1131 | [+0.0412, +0.2009] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0042 | [+0.0003, +0.0104] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.1% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k20_seed7  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 18.5% | 0.7% | 105 | 60 | 45 | 662 | 0 | 40 |
+| B0 | 100.0% | 95.0% | 14625 | 14625 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2320 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 17 | 43.7% |
+| B0 | **VOID** | 611 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 505 | 43.7% | **17** | 12 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **611** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 14.8% | 171 | 0 | 5 |
+| 1 | 24.9% | 287 | 1 | 6 |
+| 2 | 34.1% | 394 | 2 | 7 |
+| 5 | 35.9% | 415 | 2 | 8 |
+| 10 | 41.0% | 474 | 3 | 10 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 20.7% | 239 | 2 | 9 |
+| 1 | 20.7% | 239 | 2 | 9 |
+| 2 | 28.8% | 333 | 2 | 9 |
+| 5 | 37.2% | 430 | 3 | 10 |
+| 10 | 41.0% | 474 | 3 | 10 |
+
+3 of 5 rows lose their guarantee under cross-fitting. The in-sample row is the optimism, and the cross-fitted row is the one to read.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9429 | [-0.9743, -0.9052] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.8155 | [-0.9141, -0.7020] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9458 | [-0.9754, -0.9102] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0068 | [+0.0006, +0.0150] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.1095 | [+0.0397, +0.1956] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0039 | [+0.0003, +0.0095] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.2%** (95% CI 1.2% to 3.5%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 5.0% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## k40_seed7  
+
+15400 cells, 1155 screens, arms TS, B0, B1.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 17.5% | 0.9% | 135 | 81 | 54 | 706 | 0 | 40 |
+| B0 | 100.0% | 95.3% | 14677 | 14677 | 0 | 0 | 0 | 40 |
+| B1 | 7.5% | 0.0% | 0 | 0 | 0 | 2183 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 31 | 40.1% |
+| B0 | **VOID** | 650 | 100.0% |
+| B1 | 2.2% | 0 | 2.2% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 463 | 40.1% | **31** | 14 | n/a |
+| B0 | 1155 | 1155 | 100.0% | **650** | 40 | n/a |
+| B1 | 1155 | 25 | 2.2% | **0** | 2 | 1.500 (rule of three, n_eff=2) |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 32.1% | 371 | 0 | 10 |
+| 1 | 32.1% | 371 | 0 | 10 |
+| 2 | 32.1% | 371 | 0 | 10 |
+| 5 | 32.2% | 372 | 1 | 11 |
+| 10 | 32.2% | 372 | 1 | 11 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 32.1% | 371 | 0 | 10 |
+| 1 | 32.1% | 371 | 0 | 10 |
+| 2 | 32.1% | 371 | 0 | 10 |
+| 5 | 32.2% | 372 | 1 | 11 |
+| 10 | 32.2% | 372 | 1 | 11 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 14 criteria that ever exclude a patient, 10 make no false exclusion anywhere in 385 patients and the remaining 4 make 29, 29, 20, 3. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+### Paired difference, two-way bootstrap (B=10000, resampling unique criteria and patients)
+
+| comparison | metric | difference | 95% CI | crosses zero | n_eff | vs label floor |
+|---|---|---|---|---|---|---|
+| TS - B0 | ser | -0.9443 | [-0.9755, -0.9068] | no | 40 criteria | above |
+| TS - B0 | coverage | -0.8251 | [-0.9197, -0.7162] | no | 40 criteria | above |
+| TS - B0 | false_fails | -0.9478 | [-0.9766, -0.9133] | no | 40 criteria | above |
+| TS - B1 | ser | +0.0088 | [+0.0002, +0.0210] | no | 40 criteria | **below, uninterpretable** |
+| TS - B1 | coverage | +0.0999 | [+0.0361, +0.1789] | no | 40 criteria | above |
+| TS - B1 | false_fails | +0.0053 | [+0.0002, +0.0122] | no | 40 criteria | **below, uninterpretable** |
+
+The last column compares the absolute difference against the rate at which the two independent labellers contradict each other, **2.1%** (95% CI 1.1% to 3.3%). That is measured on 180 doubly-labelled cells and then reweighted to this group's own mix of labels, because the sample was drawn with equal shares of each and these 15,400 cells are 4.7% FAILS. The unweighted sample rate is 10.6%, and using it here would hold every comparison to the disagreement rate of a population made of the hardest cells. A CI that excludes zero says the difference is not noise from resampling; it says nothing about whether the labels themselves could support a difference that small.
+
+## ow  (sensitivity: every absence forced to unknown)
+
+**This is not a different system and it is not the headline.** It is the same compiled predicates from the same run, executed with `--absent-means-override unknown`, which ignores every `absent_means` decision the compiler made and treats a silent record as silent everywhere. The flag predates this run and exists to answer one question: how much of TrialSieve's error is the model asserting a closed world it was not entitled to? The section at the end of this document has the answer with the numbers attached.
+
+The scored arm above remains the pre-registered result.
+
+15400 cells, 1155 screens, arms TS.
+
+| arm | coverage | SER | silent | false-FAILS | false-MEETS | unnecessary abstention | errors | unique criteria |
+|---|---|---|---|---|---|---|---|---|
+| TS | 18.4% | 0.7% | 111 | 66 | 45 | 727 | 0 | 40 |
+
+### Primary outcome, as registered
+
+`docs/EVAL_PROTOCOL.md` registers the primary outcome as panel reduction **at zero false exclusions**, and VOID otherwise, reported with the count. VOID is not a formatting choice. An arm that rules out a patient who was in fact eligible has done the one thing this system exists to prevent, and no reduction figure earns credit beside it. The rule was registered before any run and then not implemented, so the report printed a bare reduction and left the reader to apply it.
+
+| arm | primary outcome | false exclusions | reduction, descriptive only |
+|---|---|---|---|
+| TS | **VOID** | 18 | 41.1% |
+
+### Panel reduction
+
+| arm | screens | ruled out | reduction | false exclusions | criteria used | 95% upper bound |
+|---|---|---|---|---|---|---|
+| TS | 1155 | 475 | 41.1% | **18** | 11 | n/a |
+
+### TrialSieve operating curve
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used |
+|---|---|---|---|---|
+| 0 | 38.4% | 444 | 0 | 8 |
+| 1 | 38.4% | 444 | 0 | 8 |
+| 2 | 38.4% | 444 | 0 | 8 |
+| 5 | 38.6% | 446 | 1 | 9 |
+| 10 | 38.6% | 446 | 1 | 9 |
+
+The curve above is **in-sample**: each row picks the criterion subset using the gold labels of the patients it then scores, so it reports that a clean subset existed rather than that one could have been chosen in advance. Below is the same greedy rule cross-fitted over 5 folds of patients, so no patient contributes to the decision that scores them. The gap between the two is the selection's optimism.
+
+### TrialSieve operating curve, cross-fitted (5-fold over patients)
+
+| false-exclusion budget | reduction | ruled out | actual false exclusions | criteria used (union) |
+|---|---|---|---|---|
+| 0 | 38.4% | 444 | 0 | 8 |
+| 1 | 38.4% | 444 | 0 | 8 |
+| 2 | 38.4% | 444 | 0 | 8 |
+| 5 | 38.6% | 446 | 1 | 9 |
+| 10 | 38.6% | 446 | 1 | 9 |
+
+The two curves agree on every row. That is a property of this panel rather than a curve that was not recomputed: of the 11 criteria that ever exclude a patient, 8 make no false exclusion anywhere in 385 patients and the remaining 3 make 31, 31, 4. Nothing sits near the threshold, so every fold selects the same subset. `tests/test_score.py` carries a panel where they do differ, so the agreement here is a measurement and not a no-op.
+
+
+## What did not compile, and why
+
+40 criteria were put to the compiler and 19 produced predicates. Of the 21 that did not, **21 are refusals with a named blocker** and **0 ran out of retries**. Those two are not the same event and this report does not report them as one number.
+
+Nothing in this run was lost to the validator, and that is a change rather than a property. In the run this report first described, `NCT06989723-EXC-01` had a concept the grounder returned as broader-only, with no exact code at all. `src/trialsieve/ir.py:103` required every query to carry at least one exact code, so the shape `README.md` asks for, `codes: []` with the coarse code in `broader_codes`, could not be written down. The model sent it first, was rejected, hedged into declaring the code both ways, was rejected by the disjointness rule, dropped `codes` again, and ran out of retries. The only shape the validator accepted was the one that puts a coarse code where presence settles a verdict.
+
+The IR now accepts an empty `codes` list when `broader_codes` carries the concept, and refuses only a query with no code in either slot. `tests/test_not_compilable.py` keeps the split visible so a future crash cannot be absorbed into the refusal count the way that one was. Entries 27 and 29 of the improvement changelog have the rest.
+
+## Noise floor
+
+TrialSieve SER across 3 compilation seeds: `{"mean": 0.00727, "sd": 6e-05, "min": 0.0072, "max": 0.0073, "range": 0.0001, "n_seeds": 3}`.
+
+An effect smaller than this spread is reported as not detected. The execution engine is deterministic and would report a floor of exactly zero, so the floor is measured where the randomness actually is, in compilation.
+
+**The registered floor is the spread of the primary metric, and that is not SER.** Panel reduction across the same seeds: `{"mean": 0.4615, "sd": 0.0, "min": 0.4615, "max": 0.4615, "range": 0.0, "n_seeds": 3}`. False exclusions: `{"mean": 18.0, "sd": 0.0, "min": 18.0, "max": 18.0, "range": 0.0, "n_seeds": 3}`.
+
+**Both are flat.** Across 3 seeds the panel reduction and the false-exclusion count do not move at all: the range is 0 on each. That is a change from an earlier run of this same report, where reduction moved more than ten points across seeds and this paragraph said so; entry 30 of the changelog is what removed the movement. A zero floor is not a licence to call every difference detected. It means seed choice is no longer a source of variation here, and the floor that does bound this report is the label noise floor above, measured between two independent labellers rather than between two seeds.
+
+## Degradation curve
+
+Synthea records are complete by construction, so the failure mode this design exists for barely occurs at k=0, and any silent error rate measured there is a lower bound. Each row damages k percent of the resources the *gold* predicates read, never the ones the system compiled, so the harness cannot favour the arm under test.
+
+| k | coverage | SER | false-FAILS | panel reduction | false exclusions |
+|---|---|---|---|---|---|
+| 0% | 19.1% | 0.7% | 66 | 46.1% | **18** |
+| 10% | 18.8% | 0.8% | 65 | 44.2% | **19** |
+| 20% | 18.4% | 0.7% | 60 | 43.7% | **17** |
+| 40% | 17.5% | 0.9% | 81 | 40.1% | **31** |
+
+Real missingness is not random. It tracks fragmented care and sicker patients, which is the one property this harness cannot reproduce, so the curve is a floor on the effect rather than an estimate of it.
+
+## Label noise floor
+
+Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.
+
+| | |
+|---|---|
+| cells labelled twice | 180 |
+| raw percent agreement | 76.7% |
+| Cohen's kappa | 0.650 |
+| Gwet's AC1 | 0.651 |
+| **contradictions** (MEETS against FAILS) | **19 = 10.6% of the sample** |
+| confidence splits (a definite verdict against INDETERMINATE) | 23 = 12.8% of the sample |
+| Checker A marginals | `{"FAILS": 60, "MEETS": 60, "INDETERMINATE": 60}` |
+| Checker B marginals | `{"FAILS": 46, "MEETS": 63, "INDETERMINATE": 71}` |
+
+The two labellers disagree on 23.3% of cells, and that total is split rather than quoted whole because the two halves bound different things. 19 cells are contradictions, where one labeller says a patient meets a criterion and the other says they fail it; those are the cells where at least one label is simply wrong. The other 23 are one labeller committing where the other abstained. That is a disagreement about how much a record has to say before it counts as saying it, which is the same judgement this whole system is built to make explicit, so counting it as label error would be scoring the question rather than the answer.
+
+### What that rate is a rate of
+
+The sample was drawn with equal shares of each Checker A label, deliberately: a uniform draw would have been almost all INDETERMINATE and a labeller who abstained on everything would have scored well. The cost is that 10.6% is the contradiction rate in a population that is one third FAILS, and the scored panel is 5.2% FAILS.
+
+| Checker A label | contradicted | share of the sample | share of the scored panel |
+|---|---|---|---|
+| FAILS | 16 of 60 = 26.7% | 33.3% | 5.2% |
+| INDETERMINATE | 0 of 60 = 0.0% | 33.3% | 76.9% |
+| MEETS | 3 of 60 = 5.0% | 33.3% | 17.9% |
+
+Reweighting those rates to the panel's own mix gives **2.3%** (95% CI 1.2% to 3.6%, resampled within stratum), and that is the figure the comparison tables above are marked against. Using 10.6% instead was not conservative: it is the rate for a population made of the hardest cells, it is 4.6 times the panel's own, and every comparison it covered was reported uninterpretable. Two of those were comparisons TrialSieve loses.
+
+Checker B abstains more than A does (71 against 60 of 180), which is the direction that matters: B was not simply noisier, it drew a stricter line. Kappa is printed beside AC1 because kappa collapses under skewed marginals and would understate agreement that is real.
+
+
+## Sensitivity: what the closed-world assertions cost
+
+| | as compiled | absence forced to unknown | change |
+|---|---|---|---|
+| coverage | 19.1% | 18.4% | -0.7 points |
+| silent error rate | 0.7% | 0.7% | +0.0 points |
+| silent errors | 111 | 111 | +0, +0% |
+| false FAILS | 66 | 66 | +0, +0% |
+| false MEETS | 45 | 45 | +0, +0% |
+| panel reduction | 46.1% | 41.1% | -5.0 points |
+| false exclusions | 18 | 18 | +0, +0% |
+
+Ignoring every closed-world decision the compiler made removes 0 of 111 silent errors (0%) and 0 of 18 false exclusions, and costs 0.7 points of coverage. Read that the way it falls: after the repairs in entries 29 and 30, the closed-world assertions left in this run are not where its error is. This section used to close by saying the opposite, that almost all of the error was the model reading a silent record as an answer, which is what the run looked like before those repairs and is contradicted by the row above it now. The remaining flags sit inside disjunctions where another term settles the verdict anyway, so flipping them moves nothing.
+
+The criterion that still carries one, and what it gets wrong. This is a correlation and not the cause: the row above already shows that flipping the flag changes nothing, so these are errors made by a criterion that happens to hold a closed-world assertion, not errors the assertion produced. `NCT06989723-INC-05` compiles *Presence of at least one of the following metabolic abnormalities: blood pressure >=130 mmHg systolic or >=85 mmHg diast* against `197361` with `absent_means` set to `false`. It commits 336 verdicts on the scored panel, is right about 307 of them, and is wrong about 29: **0 wrong FAILS** against 66 in the run, and **29 wrong MEETS** against 45. Both directions are printed because only one of them was counted here until an independent reader checked: the search for the worst offender scored wrong exclusions and ignored wrong acceptances, so a criterion that over-accepted came back as no offender at all. A silent error is a committed verdict that is wrong, and the direction it is wrong in decides who pays, not whether it counts.
+
+The compiler prompt states that a wrong `false` rules a patient out on the strength of a gap in their record and to choose `unknown` when in doubt. The critic's fourth review rule is the same check. Both are model-side, both had the information in front of them, and both passed it. What stops it reaching a coordinator is the sign-off gate, where a human reads the predicate in English before any worklist exists: `docs/GATE.md`.
+
+
+## Criterion coverage, both denominators
+
+Two numbers, and until this run the wrong one was published. **24** criteria in the gold set are marked `checkable`, which is a human deciding a structured record *could* settle them. The compiler produced predicates for **19**. The first is a ceiling on what any system here could reach; only the second is this system.
+
+| numerator | of the 40-criterion gold set | of the 65 the segmenter produced |
+|---|---|---|
+| 24 the gold set calls checkable | 60% | 37% |
+| **19 the compiler produced** | **48%** | **29.2%** |
+
+`docs/EVAL_PROTOCOL.md` registered, before any scored run, that coverage would land at 30% to 40% **of segmented criteria**, following Kopcke et al., and that a number far above that would suggest the criteria had been cherry-picked. The registered denominator is 65, not 40.
+
+**Against the registered band this run is at 29.2%, which is below it.** The 37% this report used to print was the checkable count against the same denominator, so it was the answer key's number wearing the system's name, and it happened to land inside the band the system missed. Entry 28 of the improvement changelog has how that went unnoticed.
+
+The 6 criteria the gold set calls checkable and the compiler did not produce:
+
+| criterion | why not |
+|---|---|
+| `NCT06717698-EXC-01` | cannot be represented in this site's vocabulary |
+| `NCT06717698-EXC-07` | cannot be represented in this site's vocabulary |
+| `NCT06983054-EXC-03` | cannot be represented in this site's vocabulary |
+| `NCT06989723-EXC-03` | cannot be represented in this site's vocabulary |
+| `NCT06989723-EXC-04` | cannot be represented in this site's vocabulary |
+| `NCT06989723-INC-03` | cannot be represented in this site's vocabulary |
+
+6 of those 6 are the vocabulary refusing, which is the design working: a concept with no code in this site's terminology stops the criterion instead of clearing every patient on it. There is no other kind in this run; every one of them is the vocabulary. An earlier version of this report claimed one more lost to the IR validator, which entry 29 had already fixed. So the gap between the ceiling and the result is the price of the refusal policy, and that price belongs in the coverage number rather than in a footnote under a higher one.
+
+Against 40 the compiled figure is 48%. The 25 criteria the gold set drops are listed in full in `docs/SEGMENTATION.md` and they are not a random 25: informed consent, psychiatric history, substance use, site affiliation, pregnancy intent, allergy to study agents. A structured record cannot settle any of them, so removing them raises coverage without the system having answered anything more. Beating a registered prediction by picking the denominator afterwards is not beating it, and neither is picking the numerator.
+
+| trial | segmenter | hand-authored |
+|---|---|---|
+| `NCT06717698` | 17 | 15 |
+| `NCT06983054` | 29 | 15 |
+| `NCT06989723` | 19 | 10 |
+
+The panel-reduction figures above inherit the same denominator: a screen is ruled ineligible on the 40 hand-authored criteria, and a coordinator runs the whole protocol. The reduction is therefore what these criteria achieve, not what the protocol would.
+
+
+## Provenance
+
+The commit that last touched each prompt-carrying file. If any of these is later than the commit that produced these numbers, the run is invalid and is rerun. See `docs/DEV_SPLIT.md`.
+
+| file | last touched by |
+|---|---|
+| `compiler.py` | `343b29cb013a4552` 2026-08-30T00:03:20+05:30 |
+| `critic.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
+| `grounder.py` | `270ed8190f8f1af6` 2026-08-29T05:12:12+05:30 |
+| `segmenter.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
+
+wrote results\RESULTS.md and results\results.json
+
+========================================================================
+the full test suite
+========================================================================
+
+$ python -m pytest -q
+........................................................................ [ 18%]
+........................................................................ [ 37%]
+........................................................................ [ 55%]
+........................................................................ [ 74%]
+........................................................................ [ 93%]
+...........................                                              [100%]
+387 passed in 28.20s
+
+========================================================================
+verification
+========================================================================
+
+$ python scripts/verify.py all --run runs/tierA
+
+========================================================================
+cassettes
+========================================================================
+{
+ "files": 1047,
+ "ok": 1047,
+ "mismatched": [],
+ "corpus_digest": "6c98020864fa3f45930a0ba68e6cc67d4c8d0d4164e91cbcc0b247924e292325"
+}
+
+PASS: 1047/1047 cassettes re-hash to their stored key.
+corpus digest 6c98020864fa3f45930a0ba68e6cc67d
+
+========================================================================
+trajectories
+========================================================================
+{
+ "trajectory_files": 235,
+ "llm_requests_checked": 1077,
+ "llm_answers_checked": 1077,
+ "mismatched": [],
+ "n_mismatched": 0,
+ "non_contiguous_seq": []
+}
+
+PASS: 1077 recorded model calls all resolve to a cassette whose stored request is byte-identical to the prompt in the trajectory, and 1077 of their answers are byte-identical to the recorded response.
+
+========================================================================
+prove-replay
+========================================================================
+cassette under test: 003466900ea32420.json
+request key        : 003466900ea324208fd4b467ad9ecc6f
+
+1. unmodified request  -> replayed 573 chars (from_cassette=True)
+2. one space added     -> key becomes 9712b98e90c2a2418930bf486fd1a536
+                          CassetteMiss raised, as required
+                          no cassette for request (key 9712b98e90c2a241). Replay never falls through to a live call. Run in record mode to create it.
+
+PASS: replay is keyed on the request bytes. A changed prompt stops the run instead of returning the previous answer, which is what separates a cassette store from a saved answer file.
+
+========================================================================
+prove-sensitivity
+========================================================================
+criterion      : NCT06983054-INC-03
+perturbation   : between.low 18 -> 21.2
+before         : {'MEETS': 119, 'FAILS': 1, 'INDETERMINATE': 0}
+after          : {'MEETS': 113, 'FAILS': 7, 'INDETERMINATE': 0}
+verdicts moved : 6 of 120
+predicates moved by a flipped comparison: 6 of 13
+unmoved, decided by something other than a comparison: NCT06983054-INC-02, NCT06983054-INC-04, NCT06983054-INC-09, NCT06983054-EXC-01, NCT06983054-EXC-02
+
+PASS: the compiled predicates are load-bearing. Flipping one comparison moves the verdicts, so the reported numbers are computed by executing the predicate rather than read from a table stored beside it.
+
+========================================================================
+blind
+========================================================================
+{
+ "cassettes_scanned": 181,
+ "compiled_digests_searched": 85,
+ "ir_tokens_searched": 12,
+ "answer_lines_searched": 79,
+ "empty_term_sets": [],
+ "pass": true
+}
+probe: planted one contaminated prompt, the scan reported ['predicate digest', 'predicate vocabulary']
+
+PASS: none of 181 recorded Checker B prompts contains a predicate, a digest, or any part of the compiled output. The two labellings are independent readings of the same record.
+
+========================================================================
+compare against the published numbers
+========================================================================
+IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
+
+OK  (reproduce in 151.3s)
+
+exit 0

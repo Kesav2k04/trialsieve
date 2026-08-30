@@ -79,7 +79,7 @@ was read as a count of zero by the document a reviewer signs.
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
 7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 339 tests, now that every artifact they read
+8. **The full suite runs**, all 345 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
    trust if this sentence has drifted. Beyond the engine they cover the recorder,
    the sign-off gate, the cassette seal, the contamination perturbation, the
@@ -138,8 +138,11 @@ re-hashing 1,047 cassettes.
 
 ## What a successful run looks like
 
-The last lines of a real run, captured from stdout rather than typed into this
-file. Run the command yourself and compare your own last lines against these:
+The last lines of a real run, copied out of
+[`docs/reproduce_transcript.txt`](docs/reproduce_transcript.txt), which is
+captured stdout rather than a sample typed into this file. The whole 1,925-line
+transcript is in there, so there is more than a tail to compare against. Run the
+command yourself and read your own last lines beside these:
 
     ========================================================================
     compare against the published numbers
