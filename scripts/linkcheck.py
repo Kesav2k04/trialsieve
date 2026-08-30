@@ -85,18 +85,33 @@ def targets(text: str) -> set[str]:
     return out
 
 
-def main() -> int:
+def _shipped() -> tuple[set[str], str]:
+    """What a reader receives, and how that was decided.
+
+    Asked of git, because the working tree is not what a judge gets. Every link
+    once resolved here with `Path.exists()` and reported clean across 771
+    references while four of them pointed at files that were generated and never
+    added, so the one gate that would have caught it was the one gate that could
+    not see the difference.
+
+    An unpacked source archive has no object database, and it also has no
+    untracked files, so there the directory walk answers the same question. This
+    used to pass `check=True` and raise instead, which failed `run.py reproduce`
+    for a reader who downloaded the zip rather than cloning.
+    """
     import subprocess
-    tracked = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT,
-                             capture_output=True, text=True,
-                             check=True).stdout.split(chr(0))
-    by_name = {n.rsplit("/", 1)[-1] for n in tracked if n}
-    # Resolved against what git has, not against this disk. Every link resolved
-    # here with `Path.exists()` and reported clean across 771 references while
-    # four of them pointed at files that were generated and never added, so the
-    # one gate that would have caught it was the one gate that could not see the
-    # difference. A judge clones; the working tree is not what they get.
-    tracked_set = {n for n in tracked if n}
+    r = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT,
+                       capture_output=True, text=True)
+    if r.returncode == 0 and r.stdout.strip():
+        return {n for n in r.stdout.split(chr(0)) if n}, "git"
+    walked = {q.relative_to(ROOT).as_posix() for q in ROOT.rglob("*")
+              if q.is_file() and ".git" not in q.parts}
+    return walked, "this directory, which has no git"
+
+
+def main() -> int:
+    tracked_set, source = _shipped()
+    by_name = {n.rsplit("/", 1)[-1] for n in tracked_set}
     tracked_dirs = {d for n in tracked_set
                     for d in _parents(n)} if tracked_set else set()
 
@@ -140,12 +155,14 @@ def main() -> int:
             if "/" not in base and base in by_name:
                 continue
             if any(c.exists() for c in cands):
-                missing.append(f"{f.relative_to(ROOT).as_posix()} -> {t} "
-                               f"(present here, absent from git, so a clone 404s)")
+                note = ("present here, absent from git, so a clone 404s"
+                        if source == "git" else "present but not readable as shipped")
+                missing.append(f"{f.relative_to(ROOT).as_posix()} -> {t} ({note})")
             else:
                 missing.append(f"{f.relative_to(ROOT).as_posix()} -> {t}")
 
-    print(f"checked {checked} path reference(s) across {len(files)} document(s)")
+    print(f"checked {checked} path reference(s) across {len(files)} "
+          f"document(s), resolved against {source}")
     if missing:
         print(f"\n{len(missing)} point at something that is not there:", file=sys.stderr)
         for m in missing:

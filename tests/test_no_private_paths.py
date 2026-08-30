@@ -40,10 +40,9 @@ ALLOWED = {
 
 
 def _tracked_text_files() -> list[Path]:
-    out = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True,
-                         text=True, check=False).stdout.split("\n")
+    from _shipped import shipped
     files = []
-    for name in out:
+    for name in shipped():
         name = name.strip()
         if not name or name in ALLOWED:
             continue

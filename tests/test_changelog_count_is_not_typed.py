@@ -60,9 +60,8 @@ def _spelled(word: str) -> int | None:
 
 
 def _tracked_markdown() -> list[Path]:
-    out = subprocess.run(["git", "ls-files", "-z", "*.md"], cwd=ROOT,
-                         capture_output=True, text=True, check=True).stdout
-    return [ROOT / rel for rel in out.split("\0") if rel.endswith(".md")]
+    from _shipped import shipped_paths
+    return [p for p in shipped_paths("*.md") if p.suffix == ".md"]
 
 
 def _entries() -> int:

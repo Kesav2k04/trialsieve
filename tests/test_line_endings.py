@@ -37,9 +37,8 @@ TEXT_SUFFIXES = {".py", ".md", ".json", ".jsonl", ".yml", ".yaml", ".txt",
 
 
 def _tracked() -> list[Path]:
-    out = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True,
-                         text=True, check=True).stdout
-    return [ROOT / n for n in out.split("\0") if n]
+    from _shipped import shipped_paths
+    return shipped_paths()
 
 
 def test_no_tracked_text_file_contains_a_carriage_return():

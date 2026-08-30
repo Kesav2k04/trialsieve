@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 #: Modules that are part of this project, resolved by path rather than installed.
 LOCAL = {"trialsieve", "criteria_set", "plainview", "score", "dev_criteria",
          "vocab_probe", "contamination", "checker_b", "segmentation",
-         "_verify_blind", "_md_tables"}
+         "_verify_blind", "_md_tables", "_shipped"}
 
 #: Third-party imports that are allowed, and only in these files.
 #:

@@ -28,9 +28,8 @@ ROW = re.compile(r"^\|\s*`([^`]+)`\s*\|\s*([\d,]+)\s*\|", re.M)
 
 
 def _tracked_cassettes() -> list[Path]:
-    out = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT,
-                         capture_output=True, text=True, check=True).stdout
-    return [ROOT / rel for rel in out.split("\0")
+    from _shipped import shipped
+    return [ROOT / rel for rel in shipped()
             if "/cassettes/" in rel and rel.endswith(".json")]
 
 

@@ -24,6 +24,8 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 PUBLISHED = ROOT / "results" / "published" / "environment.json"
 CURRENT = ROOT / "results" / "environment.json"
@@ -62,6 +64,10 @@ def test_it_names_the_same_interpreter_as_the_current_run() -> None:
 
 
 def test_it_names_a_commit_this_history_contains() -> None:
+    from _shipped import has_git
+    if not has_git():
+        pytest.skip("no object database here, so a commit cannot be resolved. "
+                    "An unpacked source archive carries the tree without it.")
     commit = _published().get("git_commit")
     assert commit, "the published environment records no commit"
     seen = subprocess.run(["git", "cat-file", "-e", f"{commit}^{{commit}}"],

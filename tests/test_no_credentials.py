@@ -31,6 +31,8 @@ import json
 import re
 import subprocess
 import sys
+
+import pytest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,9 +59,8 @@ PATTERNS = [
 ]
 
 def _tracked() -> list[Path]:
-    out = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True,
-                         text=True, check=True).stdout
-    return [ROOT / n for n in out.split("\0") if n]
+    from _shipped import shipped_paths
+    return shipped_paths()
 
 
 def test_no_tracked_file_contains_a_credential():
@@ -256,6 +257,11 @@ def test_no_credential_is_reachable_anywhere_in_the_history():
     for a linear history and is fast enough to keep in the gate.
     """
     import subprocess
+
+    from _shipped import has_git
+    if not has_git():
+        pytest.skip("no object database here, so there is no history to scan. "
+                    "An unpacked source archive carries the tree without it.")
 
     revs = subprocess.run(["git", "rev-list", "--all"], cwd=ROOT,
                           capture_output=True, text=True, check=True).stdout.split()

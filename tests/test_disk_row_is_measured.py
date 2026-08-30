@@ -31,9 +31,17 @@ HEADLINE = re.compile(r"\*\*(\d+) MB of tracked files")
 
 
 def _tracked_bytes() -> int:
-    out = subprocess.run(["git", "ls-tree", "-r", "-l", "HEAD"], cwd=ROOT,
-                         capture_output=True, text=True, check=True).stdout
-    return sum(int(line.split()[3]) for line in out.splitlines() if line.strip())
+    """Blob sizes from git, or the sizes on disk when there is no git.
+
+    The two agree here because a separate gate requires every text file to be
+    stored with LF, so nothing gains a byte on checkout.
+    """
+    from _shipped import has_git, shipped_paths
+    if has_git():
+        out = subprocess.run(["git", "ls-tree", "-r", "-l", "HEAD"], cwd=ROOT,
+                             capture_output=True, text=True, check=True).stdout
+        return sum(int(line.split()[3]) for line in out.splitlines() if line.strip())
+    return sum(p.stat().st_size for p in shipped_paths() if p.is_file())
 
 
 def test_the_disk_row_matches_what_is_tracked() -> None:
