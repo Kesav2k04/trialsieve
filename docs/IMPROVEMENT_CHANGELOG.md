@@ -59,7 +59,7 @@ same data. Neither is an estimate.
 | patients wrongly ruled out, 385-patient panel | 182 | **18** | `groups.k0_seed7.panel_scores.TS.false_exclusions` |
 | silent error rate per cell | 3.05% | **0.72%** | `groups.k0_seed7.cell_scores.TS.ser` |
 | silent errors the open-world arm would still remove | 358 | **0** | `groups.ow` against `groups.k0_seed7`; the two now agree at 111 |
-| third-party imports on the reproduction path | never checked | **0 of 53 modules, parsed** | `python scripts/lockfile.py --imports` |
+| third-party imports on the reproduction path | never checked | **0 of 54 modules, parsed** | `python scripts/lockfile.py --imports` |
 | cards whose length was measured rather than guessed | 0 of 6 | **16 of 16** | the film's measured timings, written from the rendered audio; entry 35 |
 | eligible patients the worklist rendered | 0 of 8 | **8 of 8** | `docs/sample_worklist.md`, "Ready to contact" |
 | silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
@@ -1696,7 +1696,7 @@ is a claim that no gate parses, and the entry describing it had become one.
 file and fails if any of them disagrees with what the checker walks, so the
 prose and the command cannot drift apart again.
 
-**Evidence.** `python scripts/lockfile.py --imports` reports 53 modules parsed
+**Evidence.** `python scripts/lockfile.py --imports` reports 54 modules parsed
 and zero third-party imports. `requirements-lock.txt` carries 23 pins under
 `python 3.14.2 (cpython)`, and seven tests hold the lock exact, complete against
 what pyproject declares, interpreter-stamped, and matched to the count this file
