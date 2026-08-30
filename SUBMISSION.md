@@ -271,7 +271,7 @@ on real predicates with findings on planted ones flatters the first.
 |---|---|---|
 | `critic_finding` | 7 | `runs/tierA/trajectories/critic/`, each confirmed or dismissed by executing the counterexample |
 | `revision` | 5 asked for, **3 changed the predicate** | `changed` is on the event; on two of the five the critic proved a case, the predicate went back to the model, and what came out was what went in |
-| `human_checkpoint` | **0** | nothing in this repository performs one |
+| `human_checkpoint` | **0** | nothing here performs one, which is the gate holding rather than the deliverable missing. `scripts/worklist.py` exits 3 with no signature and writes no document, [docs/GATE.md](docs/GATE.md) is that refusal captured by exit code, and `tests/test_human_checkpoint.py` signs a fixture run end to end so the event's shape is checked without anyone signing the scored one. A signature an agent applied on a human's behalf is the exact failure the gate exists to prevent |
 
 Findings on the scored predicates alone are a thin sample, and a component that
 fires a handful of times is only marginally more checkable than one that never
