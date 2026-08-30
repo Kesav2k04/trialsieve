@@ -1224,7 +1224,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 16. llm_response (cassette, 52 tok, 33.56s)
+### 16. llm_response (cassette, 52 tok, 33.560s)
 
 ```
 ```json
@@ -4482,7 +4482,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 58. llm_response (cassette, 58 tok, 30.15s)
+### 58. llm_response (cassette, 58 tok, 30.150s)
 
 ```
 ```json
@@ -5876,7 +5876,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 76. llm_response (cassette, 82 tok, 27.76s)
+### 76. llm_response (cassette, 82 tok, 27.760s)
 
 ```
 ```json

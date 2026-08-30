@@ -2,6 +2,23 @@
 
 **The model reads the protocol once. It never reads a patient.**
 
+| 385 patients, 40 criteria, 15,400 judgements | today | TrialSieve |
+|---|---|---|
+| model spend per screening pass, at published rates | $22.19, asking per cell | **$0.13**, paid once per protocol |
+| the same panel rescreened next month | $22.19 again | **$0.00**, the predicates are already compiled |
+| wall clock for the pass | a nurse reading charts | under 5 seconds, zero model calls |
+| what a coordinator is handed *(one trial, the 3 criteria the zero-false-exclusion operating point applies, so 1,155 of those judgements)* | 1,155 chart readings | 190 screens carrying 2 open questions, [grouped](docs/sample_worklist.md) |
+
+Each row names the set it is counted over, because they are not the same set: the
+cost rows are the whole 15,400-cell panel and the last row is one trial at one
+operating point. Every money figure is read back out of
+[docs/COST.md](docs/COST.md) by `tests/test_readme_cost_claims.py`, which is the
+rule the rest of this repository runs on. A number that appears twice disagrees
+with itself eventually, so the second copy is checked against the first. The two
+costs cross at 2.2 patients, and past that the gap grows with every patient and
+every rescreen, because one side of it is flat.
+
+
 Clinical trial prescreening, built so that ruling a patient out on a fact that is
 missing from their record is a decision somebody has to make on purpose, in
 writing, where a reviewer can see it. One criterion in this repository's first published run made that decision and it
@@ -95,9 +112,11 @@ is worth anything.
 **And what is left is shaped like questions, not like patients.** On the published
 worklist (one trial, the zero-false-exclusion operating point) the engine settles
 187 of 385 screens and clears 8 to contact. The 190 that remain open contain **two
-distinct questions**, and 188 of them are open on the same one, so it is answered
-once and they resolve together. That is 1,155 cell judgements reduced to two
-things a person has to find out. It follows from compiling once instead of asking
+distinct questions**, and 188 of them are open on the same one: no HbA1c on file.
+So a coordinator has one thing to go and find rather than 190 charts to read.
+Getting it still returns 188 separate values, one per patient. What collapses is
+the search, not the answers, and that is the honest version of the claim: 1,155
+readings become 2 things to go and get. It follows from compiling once instead of asking
 per cell: a predicate fails the same way for everyone it fails for, so its residue
 sorts into questions, while a per-cell model answers each patient separately and
 leaves a residue that sorts into patients with nothing to group. The counts are

@@ -25,11 +25,12 @@ call, and its wall clock is seconds.
 | arms B2 over 10 patients, group b2_10p             | 400         | 400           | 1,656,168     | 31,769            | 0 s            | $0.58              |
 | arms TS, B0, B1 over 385 patients, group k0_seed7  | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k0_seed8  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
-| arms TS, B0, B1 over 385 patients, group k0_seed9  | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS, B0, B1 over 385 patients, group k0_seed9  | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k10_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k20_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
 | arms TS, B0, B1 over 385 patients, group k40_seed7 | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
-| arms TS over 385 patients, group ow                | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS over 385 patients, group k0_seed7          | 0           | 0             | 0             | 0                 | 3 s            | under a cent       |
+| arms TS over 385 patients, group ow                | 0           | 0             | 0             | 0                 | 2 s            | under a cent       |
 | second blind labeller, Checker B                   | 100         | 0             | 444,910       | 2,680             | 1 h 55 min     | $0.14              |
 | **total**                                          | **1,291**   |               | **2,627,232** | **174,395**       | **2 h 28 min** | **$1.22**          |
 
@@ -77,7 +78,7 @@ Money is the cheap half. The expensive half is a person reading charts, and `doc
 | **distinct criteria a person has to answer**         | **2** |
 | screens sharing the single largest question set      | 188   |
 
-The last two rows are the point. 188 of the 190 open screens are stuck on the same question, so it is answered once and they resolve together. The work in front of a coordinator is 2 questions, not 190 chart reviews and not 1,155 judgements, and the document groups them that way instead of listing patients one after another.
+The last two rows are the point. 188 of the 190 open screens are stuck on the same question, so a coordinator has one thing to go and find rather than 190 charts to read. Getting it still returns 188 separate values, one per patient: what collapses is the search, not the answers. The document groups them that way instead of listing patients one after another, so the work in front of a coordinator is 2 data-gathering questions rather than 1,155 readings.
 
 That shape follows from compiling once rather than asking per cell. A predicate fails the same way for everyone it fails for, so what it cannot settle comes out sorted into questions. A per-cell model answers each patient independently, so what it cannot settle comes out sorted into patients, and there is nothing to group.
 

@@ -552,7 +552,7 @@ An effect smaller than this spread is reported as not detected. The execution en
 
 **The registered floor is the spread of the primary metric, and that is not SER.** Panel reduction across the same seeds: `{"mean": 0.4615, "sd": 0.0, "min": 0.4615, "max": 0.4615, "range": 0.0, "n_seeds": 3}`. False exclusions: `{"mean": 18.0, "sd": 0.0, "min": 18.0, "max": 18.0, "range": 0.0, "n_seeds": 3}`.
 
-SER is stable across seeds and the primary metric is not, which is the finding rather than a footnote. Recompiling the same criteria under a different seed moves the number a coordinator would act on by more than ten points and moves the count of wrongly excluded patients by most of its own size. No difference in this report smaller than that spread is claimed as detected, and a floor quoted on SER alone would have hidden it.
+**Both are flat.** Across 3 seeds the panel reduction and the false-exclusion count do not move at all: the range is 0 on each. That is a change from an earlier run of this same report, where reduction moved more than ten points across seeds and this paragraph said so; entry 30 of the changelog is what removed the movement. A zero floor is not a licence to call every difference detected. It means seed choice is no longer a source of variation here, and the floor that does bound this report is the label noise floor above, measured between two independent labellers rather than between two seeds.
 
 ## Degradation curve
 
@@ -642,7 +642,7 @@ The 6 criteria the gold set calls checkable and the compiler did not produce:
 | `NCT06989723-EXC-04` | cannot be represented in this site's vocabulary |
 | `NCT06989723-INC-03` | cannot be represented in this site's vocabulary |
 
-Six of those are the vocabulary refusing, which is the design working: a concept with no code in this site's terminology stops the criterion instead of clearing every patient on it. The seventh is the one lost to the IR validator, above. So the gap between the ceiling and the result is mostly the price of the refusal policy, and that price belongs in the coverage number rather than in a footnote under a higher one.
+6 of those 6 are the vocabulary refusing, which is the design working: a concept with no code in this site's terminology stops the criterion instead of clearing every patient on it. There is no other kind in this run; every one of them is the vocabulary. An earlier version of this report claimed one more lost to the IR validator, which entry 29 had already fixed. So the gap between the ceiling and the result is the price of the refusal policy, and that price belongs in the coverage number rather than in a footnote under a higher one.
 
 Against 40 the compiled figure is 48%. The 25 criteria the gold set drops are listed in full in `docs/SEGMENTATION.md` and they are not a random 25: informed consent, psychiatric history, substance use, site affiliation, pregnancy intent, allergy to study agents. A structured record cannot settle any of them, so removing them raises coverage without the system having answered anything more. Beating a registered prediction by picking the denominator afterwards is not beating it, and neither is picking the numerator.
 

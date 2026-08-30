@@ -7,7 +7,8 @@
 | model calls | 1077 |
 | tool calls | 265 |
 | schema rejections fed back to the model | 3 |
-| retries after a schema rejection | 8 |
+| retries after a schema rejection | 3 |
+| recompiles after a confirmed counterexample | 5 |
 | requests resent after the endpoint failed | 1 |
 | critic findings | 31 |
 | predicates revised after a confirmed counterexample | 5 |

@@ -5,7 +5,7 @@ Every required deliverable, and the file that satisfies it.
 | required | where |
 |---|---|
 | Full working code | this repository. Zero runtime dependencies, standard library only. |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 38 entries behind it stay in the order they were found. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 45 entries behind it stay in the order they were found. |
 | Reproduction guide, clean environment | [REPRODUCE.md](REPRODUCE.md). One command: `python run.py reproduce`. |
 | Exact commands | [REPRODUCE.md](REPRODUCE.md) and `python run.py help` |
 | Data | `data/vendor/`, with source URL and archive sha256 in `data/vendor/panel_provenance.json` |
@@ -84,7 +84,7 @@ where the two disagree, the work follows whichever asks for more.
 |---|---|---|---|
 | Agent Solution & Engineering | 30 | 30 | [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md), `src/trialsieve/`, and the trajectories. Six agents. Two of them make zero model calls on purpose: the adjudicator, which is a pure function over the compiled predicate, and the worklist, which refuses to render without a signature. |
 | Reproducibility (& Verification) | 15 | 25 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under three minutes on a clean clone; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
-| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 39 entries each tied to the command that shows it. |
+| Measured Improvement | 15 | 25 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 45 entries each tied to the command that shows it. |
 | End to End Quality (& Presentation) | 20 | 20 | `docs/sample_worklist.md` is the artifact a coordinator opens, produced by a script that exits 3 rather than write it from unsigned predicates. |
 | Problem & User Value | 15 | not scored separately | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Hot Take / Insights | 5 | not scored separately | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
@@ -155,9 +155,9 @@ Coding-agent use is required by the rules and is disclosed here in full.
 | Claude Code | Claude Opus 5 | the primary coding agent. Wrote the engine, the compiler, the evaluation harness, the tests and the documentation, and ran the recorded evaluations. |
 
 Delegated subagents run inside Claude Code were used for fan-out work that
-returns a digest: independent blind review seats scoring this submission against
-the published rubric, and read-only searches across the tree. They wrote no code
-that was kept without being verified here first.
+returns a digest: independent blind review passes over this submission, and
+read-only searches across the tree. They wrote no code that was kept without
+being verified here first.
 
 ### Models the system calls at runtime
 
@@ -219,8 +219,9 @@ recorded JSONL, not a reconstruction:
 |---|---|---|
 | instructions given to the agent | `instructions` | verbatim prompt text, with its version tag |
 | tool call and what came back | `tool_call`, `tool_result` | the terminology search, its arguments and its full result |
-| feedback that shaped the next step | `validation_error`, `retry` | the validator's error text, then the exact message returned to the model |
-| retries | `retry` | numbered, with the budget that bounds them |
+| feedback that shaped the next step | `validation_error`, `retry`, `critic_finding` | the validator's error text or the critic's counterexample, then the exact message returned to the model. `retry` records which of the two sent the step round again |
+| retries | `retry` with `cause: a schema rejection` | numbered, with the budget that bounds them. 3 in this run |
+| recompiles after a confirmed counterexample | `retry` with `cause: a confirmed counterexample` | outside that budget and carrying no attempt number, because it is a different predicate rather than another try at the same reply. 5 in this run |
 | adversarial review | `critic_finding` | the counterexample, and whether running it confirmed or dismissed the finding |
 | human checkpoints | `human_checkpoint` | reviewer, role, decision, rationale, and the digest signed |
 

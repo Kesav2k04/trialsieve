@@ -97,7 +97,7 @@ def ask_json(client: Client, traj: Trajectory, messages: list[dict[str, str]],
                 "Do not restate the task. Fix exactly the error above and keep everything "
                 "else identical."
             )
-            traj.retry(attempt + 1, feedback)
+            traj.retry(attempt + 1, feedback, cause="a schema rejection")
             convo = convo + [{"role": "assistant", "content": resp.text},
                              {"role": "user", "content": feedback}]
     raise AgentError(f"{tag}: no valid reply after {max_repairs + 1} attempts. last: {last_err}")

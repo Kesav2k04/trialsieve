@@ -45,6 +45,15 @@ def stats(events: list[dict]) -> dict:
         "tools": tools,
         "validation_errors": kinds.get("validation_error", 0),
         "retries": kinds.get("retry", 0),
+        # Split by what sent the step round again. A bare count of the
+        # `retry` event read as "retries after a schema rejection" when
+        # five of the eight followed a confirmed counterexample instead.
+        "retries_schema": sum(
+            1 for e in events if e["event"] == "retry"
+            and (e.get("cause") or "a schema rejection") == "a schema rejection"),
+        "retries_critic": sum(
+            1 for e in events if e["event"] == "retry"
+            and (e.get("cause") or "") == "a confirmed counterexample"),
         "transport_retries": kinds.get("transport_retry", 0),
         "critic_findings": kinds.get("critic_finding", 0),
         "revisions": kinds.get("revision", 0),
@@ -200,6 +209,7 @@ def main() -> int:
         return 0
     tot = {k: sum(r[k] for r in rows) for k in
            ("events", "llm_calls", "tool_calls", "validation_errors", "retries",
+            "retries_schema", "retries_critic",
             "transport_retries", "critic_findings", "revisions", "normalisations",
             "human_checkpoints", "completion_tokens")}
 
@@ -221,7 +231,9 @@ def main() -> int:
     L.append(f"| model calls | {tot['llm_calls']} |")
     L.append(f"| tool calls | {tot['tool_calls']} |")
     L.append(f"| schema rejections fed back to the model | {tot['validation_errors']} |")
-    L.append(f"| retries after a schema rejection | {tot['retries']} |")
+    L.append(f"| retries after a schema rejection | {tot['retries_schema']} |")
+    L.append(f"| recompiles after a confirmed counterexample | "
+             f"{tot['retries_critic']} |")
     L.append(f"| requests resent after the endpoint failed | "
              f"{tot['transport_retries']} |")
     L.append(f"| critic findings | {tot['critic_findings']} |")

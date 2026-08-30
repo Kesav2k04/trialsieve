@@ -71,9 +71,25 @@ class Trajectory:
     def validation_error(self, message: str) -> None:
         self._add("validation_error", message=message)
 
-    def retry(self, attempt: int, feedback_to_model: str) -> None:
-        """`feedback_to_model` is stored verbatim: it is the thing that changed the next step."""
-        self._add("retry", attempt=attempt, feedback_to_model=feedback_to_model)
+    def retry(self, attempt: int | None, feedback_to_model: str,
+              cause: str = "a schema rejection") -> None:
+        """`feedback_to_model` is stored verbatim: it is the thing that changed the next step.
+
+        `cause` is what sent the step round again, and it is recorded because the
+        two causes are not the same event. A schema rejection is the validator
+        refusing a malformed reply, and it is numbered inside a bounded retry
+        budget. A confirmed counterexample is the critic having found a real
+        defect and the compiler being asked to produce a different predicate;
+        that is not an attempt at the same reply and it has no place in that
+        budget, so it carries `attempt=None`.
+
+        They used to be one event with one counter. The trajectory index read
+        "retries after a schema rejection | 8" when 3 were, and the critic-driven
+        five were logged with a hard-coded attempt number of 99 that rendered in
+        the published trajectories as "retry (attempt 99)".
+        """
+        self._add("retry", attempt=attempt, feedback_to_model=feedback_to_model,
+                  cause=cause)
 
     def critic_finding(self, verdict: str, finding: str, counterexample: Any = None) -> None:
         self._add("critic_finding", verdict=verdict, finding=finding,
@@ -179,7 +195,7 @@ def render_markdown(path: str | Path) -> str:
                       "```", body, "```", ""]
         elif k == "llm_response":
             lines += [head + f" ({e['source']}, {e['completion_tokens']} tok, "
-                             f"{e['latency_s']}s)", "", "```", e["text"], "```", ""]
+                             f"{float(e['latency_s']):.3f}s)", "", "```", e["text"], "```", ""]
         elif k == "tool_call":
             lines += [head + f" `{e['tool']}`", "", "```json",
                       json.dumps(e["args"], indent=1)[:1500], "```", ""]
@@ -188,7 +204,11 @@ def render_markdown(path: str | Path) -> str:
             lines += [head + f" `{e['tool']}`" + (f" ERROR: {e['error']}" if e.get("error") else ""),
                       "", "```json", body, "```", ""]
         elif k == "retry":
-            lines += [head + f" (attempt {e['attempt']}), verbatim feedback returned to the model:",
+            cause = e.get("cause") or "a schema rejection"
+            which = (f"attempt {e['attempt']}" if e.get("attempt") is not None
+                     else "recompiled")
+            lines += [head + f" after {cause} ({which}), verbatim feedback "
+                      f"returned to the model:",
                       "", "```", e["feedback_to_model"], "```", ""]
         elif k == "human_checkpoint":
             lines += [head + f": **{e['decision']}** by {e['reviewer']}", "",

@@ -54,7 +54,10 @@ def revise_with_finding(client, criterion, compiled, finding, traj):
         f"Issues raised: {'; '.join(f['issue'] for f in finding['findings'])}\n\n"
         "Produce a corrected predicate for the same criterion."
     )
-    traj.retry(99, note)
+    # Not an attempt at the same reply: the critic found a real defect and the
+    # compiler is asked for a different predicate. It is outside the schema
+    # retry budget, so it carries no attempt number rather than a sentinel.
+    traj.retry(None, note, cause="a confirmed counterexample")
     amended = dict(criterion)
     amended["text"] = criterion["text"] + "\n\n[REVIEW FEEDBACK]\n" + note
     return compile_criterion(client, amended, traj)

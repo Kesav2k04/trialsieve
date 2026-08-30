@@ -112,10 +112,14 @@ def human_time() -> list[str]:
         f"The last two rows are the point. {biggest['n_patients']:,} of the "
         f"{wl['n_review']:,} open screens are stuck on the same "
         f"{'question' if len(biggest['criteria']) == 1 else str(len(biggest['criteria'])) + ' questions'}, "
-        f"so it is answered once and they resolve together. The work in "
-        f"front of a coordinator is {n_q} questions, not {wl['n_review']:,} chart "
-        f"reviews and not {wl['n_cells']:,} judgements, and the document groups "
-        f"them that way instead of listing patients one after another.", "",
+        f"so a coordinator has one thing to go and find rather than "
+        f"{wl['n_review']:,} charts to read. Getting it still returns "
+        f"{biggest['n_patients']:,} separate values, one per patient: what "
+        f"collapses is the search, not the answers. The document groups them "
+        f"that way instead of listing patients one after another, so the "
+        f"work in front of a coordinator is {n_q} data-gathering "
+        f"{'question' if n_q == 1 else 'questions'} rather than "
+        f"{wl['n_cells']:,} readings.", "",
         "That shape follows from compiling once rather than asking per cell. A "
         "predicate fails the same way for everyone it fails for, so what it "
         "cannot settle comes out sorted into questions. A per-cell model answers "

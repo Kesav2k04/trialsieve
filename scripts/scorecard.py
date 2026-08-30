@@ -44,6 +44,13 @@ def _pct(x: float) -> str:
 
 
 def _ratio(worse: float, better: float) -> str:
+    """The ratio between two silent error rates.
+
+    Never print this on its own. `evaluation/score.py` opens by saying the unit
+    of result is the ordered pair (coverage, SER), because an arm that abstains
+    everywhere has a silent error rate of exactly zero and is worthless. Every
+    caller here prints the two coverages in the same row.
+    """
     if better <= 0:
         return "no error to divide by"
     return f"{worse / better:.0f}x lower"
@@ -97,8 +104,17 @@ def build() -> str:
     L.append(f"| Screens wrongly ruled out, of {n_screens} | "
              f"{b2p['false_exclusions']} | **{tsp['false_exclusions']}** | "
              f"{b2p['false_exclusions'] - tsp['false_exclusions']} fewer |")
-    L.append(f"| Silent error rate per cell | {_pct(b2['ser'])} | "
-             f"**{_pct(ts['ser'])}** | {_ratio(b2['ser'], ts['ser'])} |")
+    # The change column used to read a bare "44x lower". `evaluation/score.py`
+    # says in its opening docstring that a comparison against an arm at higher
+    # coverage is not admissible, and this is exactly that comparison: TS at
+    # 21.75% against B2 at 68%. Printing the ratio alone in the headline table,
+    # under a module that calls it inadmissible, is the submission arguing
+    # against itself. The row carries both coverages now and sends the reader to
+    # the paired interval.
+    L.append(f"| Silent error rate per cell, each at the coverage beside it | "
+             f"{_pct(b2['ser'])} at {_pct(b2['coverage'])} coverage | "
+             f"**{_pct(ts['ser'])}** at {_pct(ts['coverage'])} coverage | "
+             f"{_ratio(b2['ser'], ts['ser'])}, at a third of the coverage |")
     L.append(f"| Cells answered with a definite verdict | {_pct(b2['coverage'])} | "
              f"{_pct(ts['coverage'])} | lower on purpose, see below |")
     L.append(f"| Wrong MEETS, the verdict that enrols someone who should not be | "
@@ -117,15 +133,25 @@ def build() -> str:
                  f"criteria this operating point applies rather than the trial's "
                  f"full set)* | {wl['n_cells']:,} cell judgements, the manual "
                  f"process today | {wl['n_review']:,} screens carrying **{n_q} "
-                 f"distinct questions** | {len(sets)} question "
-                 f"{'set' if len(sets) == 1 else 'sets'} instead of "
-                 f"{wl['n_cells']:,} separate readings |")
+                 f"distinct open questions** | {len(sets)} thing(s) to go and "
+                 f"find instead of {wl['n_cells']:,} separate readings. Each "
+                 f"still returns a value per patient; what collapses is the "
+                 f"search, not the answers |")
 
     costs = _cost_rows()
     if costs:
         L.append(costs)
     L.append("")
 
+    L += ["**On the ratio in that row.** It is the arithmetic and it is not the "
+          "result. `evaluation/score.py` states that a comparison against an arm "
+          "at higher coverage is not admissible, and this is that comparison: "
+          f"TrialSieve answers {_pct(ts['coverage'])} of cells and B2 answers "
+          f"{_pct(b2['coverage'])}. The row that does settle it is the paired "
+          "bootstrap in `results/RESULTS.md`, where `TS - B2` on `ser` is "
+          "reported with an interval and against the label noise floor. The "
+          "ratio is here because the brief's table has a change column, not "
+          "because it is the finding.", ""]
     L += ["## Reading the coverage row honestly", ""]
     L += [f"TrialSieve answers fewer cells than B2 and that is the design, not a "
           f"shortfall. B2 commits to {_pct(b2['coverage'])} of cells and is wrong "

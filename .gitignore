@@ -89,8 +89,7 @@ docs/video/shots/
 # tracked beside it is everything needed to rebuild it from scratch: the script,
 # the narration audio, its cue timings, and the shot spec.
 
-# Internal planning and the internal review passes. These carry internal
-# notes and working notes, which is
-# working material and not a deliverable. SUBMISSION.md requires none of it, and
-# the pre-registration a reader needs is in docs/EVAL_PROTOCOL.md.
+# Internal planning notes and the review passes run over this repository while it
+# was built. Working material rather than a deliverable: SUBMISSION.md requires
+# none of it, and the pre-registration a reader needs is in docs/EVAL_PROTOCOL.md.
 plan/

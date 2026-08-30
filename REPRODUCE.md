@@ -48,7 +48,7 @@ was read as a count of zero by the document a reviewer signs.
 1. **`results/environment.json`** is written: Python version, platform, git commit,
    and whether the tree was dirty. A number that differs on your machine has
    somewhere to point.
-2. **The engine gate runs.** 302 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
+2. **The engine gate runs.** 342 tests, of which 52 are semantic tests over the evaluation engine alone (`tests/test_engine.py`):
    Kleene truth tables, both boundaries of every date window, both directions of
    every unit conversion, absent distinguished from zero. The protocol makes this
    a precondition for a scored run, so `reproduce` stops here if it fails. The
@@ -75,6 +75,53 @@ was read as a count of zero by the document a reviewer signs.
 8. **The five verification checks run** (see below).
 9. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
+
+## The solution, the baseline and the evaluation, as three separate commands
+
+`python run.py reproduce` runs all of them in order and is the command to use if
+you only run one thing. They are written out separately here because each is a
+different claim, and a reader who wants to check one of them should not have to
+read the task runner to find out how. All of these replay from
+`runs/tierA/cassettes/` and call no model, so they need no key and no network.
+
+**The solution.** Compile each criterion once, then execute the compiled
+predicates against all 385 patients. The second command makes no model call at
+all, which is the whole architecture in one line:
+
+    python scripts/compile_protocol.py --run runs/tierA --mode replay --provider shim --seed 7
+    python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7
+
+`TS` is the solution. `B0`, which fails everyone, and `B1`, which answers only
+what age and sex can decide, are the degenerate controls, and they ride along in
+the same command because they are scored against the same cells. Each command
+writes a JSON summary and then a path: `runs/tierA/compiled/` for the first,
+`runs/tierA/cells/cells_TS-B0-B1_k0_seed7.jsonl` for the second. About four
+seconds each on the machine recorded in `results/environment.json`.
+
+Pass the arms exactly as written. `report.py` scores every `cells_*.jsonl` file it
+finds, so running one arm under a new tag adds a row rather than replacing one,
+and the comparison table changes.
+
+**The baseline.** `B2` is the simple thing this is measured against: one model
+call per patient per criterion, handed the same flattened facts the engine reads
+and the criterion prose verbatim. It runs over 10 patients rather than 385
+because at $22.19 for a full pass, paying per cell is the cost the compile exists
+to avoid:
+
+    python scripts/run_arms.py --run runs/tierA --mode replay --arms B2 --patients 10 --tag b2_10p --model gemini-3.7-flash-medium
+
+It writes `runs/tierA/cells/cells_B2_b2_10p.jsonl`.
+
+**The evaluation.** Score every arm into `results/results.json`, then run the five
+checks that make the replay falsifiable rather than merely repeatable:
+
+    python scripts/report.py --run runs/tierA --out results
+    python scripts/verify.py all --run runs/tierA
+
+`report.py` prints the comparison table that `results/RESULTS.md` is built from.
+`verify.py` prints five lines, each beginning `PASS` or `FAIL`, and exits non-zero
+on the first failure. About 85 seconds together, nearly all of it in `verify.py`
+re-hashing 1,047 cassettes.
 
 ## The five checks, and what each one rules out
 
@@ -141,7 +188,14 @@ the order they are worth checking:
 
 1. A different Python version changed a float in the last decimal place. Compare
    `results/environment.json` against `results/published/environment.json`.
-2. The tree is dirty. `git_dirty` in `environment.json` says so.
+2. The tree is dirty. `git_dirty` in `environment.json` says so. Note that
+   `reproduce` dirties it itself: it rewrites the three compiled criteria
+   files and `docs/COST.md`, whose only changed bytes are wall-clock
+   readings (`"wall_s": 1.1` against `1.3`, "finishes in 2 s" against
+   3 s). None of it is a published number, so `IDENTICAL` is unaffected,
+   but a second run reports `git_dirty` true and it is this command's
+   doing rather than yours. `git checkout -- .` between runs if you want
+   the field to mean something.
 3. A cassette is missing, in which case the run stopped before the diff with a
    `CassetteMiss` naming the request.
 

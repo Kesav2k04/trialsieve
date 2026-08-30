@@ -341,7 +341,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 4. llm_response (cassette, 88 tok, 26.17s)
+### 4. llm_response (cassette, 88 tok, 26.170s)
 
 ```
 ```json
@@ -1229,7 +1229,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 14. llm_response (cassette, 90 tok, 33.83s)
+### 14. llm_response (cassette, 90 tok, 33.830s)
 
 ```
 ```json
@@ -1940,7 +1940,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 22. llm_response (cassette, 52 tok, 27.33s)
+### 22. llm_response (cassette, 52 tok, 27.330s)
 
 ```
 ```json
@@ -3361,7 +3361,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 38. llm_response (cassette, 55 tok, 27.38s)
+### 38. llm_response (cassette, 55 tok, 27.380s)
 
 ```
 ```json
@@ -3896,7 +3896,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 44. llm_response (cassette, 123 tok, 29.18s)
+### 44. llm_response (cassette, 123 tok, 29.180s)
 
 ```
 ```json
@@ -4430,7 +4430,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 50. llm_response (cassette, 124 tok, 35.7s)
+### 50. llm_response (cassette, 124 tok, 35.700s)
 
 ```
 ```json
@@ -5496,7 +5496,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 62. llm_response (cassette, 114 tok, 33.69s)
+### 62. llm_response (cassette, 114 tok, 33.690s)
 
 ```
 ```json
@@ -6745,7 +6745,7 @@ Return JSON only:
   "reasoning": "one sentence"}
 ```
 
-### 76. llm_response (cassette, 71 tok, 26.43s)
+### 76. llm_response (cassette, 71 tok, 26.430s)
 
 ```
 ```json

@@ -15,7 +15,7 @@ and it turns out to apply to the project itself.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Thirty-eight entries is
+iteration, each with its evidence and what it decided. Forty-five entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -41,11 +41,11 @@ same data. Neither is an estimate.
 | what was being measured | reported before | reports now | where to check |
 |---|---|---|---|
 | label disagreement floor for this panel | 10.6% | **2.3%** (95% CI 1.2 to 3.6) | `results/results.json`, `label_noise_floor` against `groups.k0_seed7.label_floor_poststratified` |
-| published differences that floor called uninterpretable | 2 of 6 | **0 of 6** | the `vs label floor` column, `results/RESULTS.md` |
+| published differences the floor calls uninterpretable, scored group | 2 of 6 | **2 of 6**, both `TS - B1` | the `vs label floor` column, `results/RESULTS.md`. This row claimed **0 of 6** and was wrong: `TS - B1` `ser` (+0.0072) and `false_fails` (+0.0043) are under 2.3% and were under 10.6%, so lowering the floor never moved them. The row now says what the column says, which is that the arm this system cannot separate itself from is the regular expressions |
 | defect classes the critic probe ever planted | 3 of 5 | **5 of 5** | `by_class` in `results/critic_probe.json` |
 | critic catch rate, absence defects | never planted, then 1 of 3 | **3 of 4** on the repaired predicates | same file |
 | critic catch rate, every other class | 9 of 9 | **15 of 15** | same file |
-| the B2 comparison, the arm the protocol calls the one that matters | run, never compared | **-0.4050 SER, CI [-0.5550, -0.2550]** | the B2 group in `results/RESULTS.md` |
+| the B2 comparison, the arm the protocol calls the one that matters | run, never compared | **-0.4275 SER, CI [-0.5700, -0.2850]** | the `TS - B2` `ser` row of the `b2_10p` group, `results/RESULTS.md`. This row read `-0.4050 [-0.5550, -0.2550]` until 2026-08-30: the value from before entry 30, left in the *now* column of the table that tells a reader to check it. B2 SER 0.4375 minus TS SER 0.0100 is 0.4275 |
 | criteria that did not compile | 22, as one number | **21 refusals and 0 lost to the validator** | "What did not compile, and why", `results/RESULTS.md` |
 | coverage against the registered denominator | 37% | **29.2%**, below the registered 30 to 40% band | `criterion_coverage` in `results/results.json`; the numerator was the gold set's `checkable` count, not the compiler's output |
 | broader-only codes used as exact codes | not checked, then 2 | **0** | `python scripts/grounding_audit.py --run runs/tierA` |
@@ -60,8 +60,13 @@ same data. Neither is an estimate.
 | `python run.py reproduce` on a clean clone | fails, then DIFFERENT | **IDENTICAL** | clone into an empty directory and run it; entry 34 |
 | tracked files carrying a home directory | 57 | **0** | `python -m pytest tests/test_no_private_paths.py`; entry 36 |
 
-One row that is **not** in this table: `runs/probe-weak/probe.json` scores 1 of 6
-on broader-only concepts against 6 of 6 for `runs/probe-before/probe.json`. That
+One row that is **not** in this table: on the six **absence** concepts,
+`results/probe_weak_comparison.json` scores the weak model 1 of 6 against 5 of 6
+for the frontier one. That sentence used to say "broader-only concepts ... against
+6 of 6". Both were wrong: the class with six members is `absent`, the class named
+`broader` has exactly one member (iron deficiency anaemia), and the frontier
+model's score on the six is 5. It was a point about the broader-code path made
+with numbers from the absence path. That
 pair is a local 8B model against a frontier one on the same 21 concepts, so it
 measures the model and not this repository's measurements, and putting it here
 would have read as a fix that never happened.
@@ -2050,9 +2055,9 @@ directory and run `python run.py reproduce`.
 
 ## 39. A one-directional error metric, and a skip that called its blindness a good result
 
-**Found by** four independent reviewers reading this submission cold,
-briefed separately, none shown the others' findings. Two of the
-three defects below came from the one asked to argue the case against the project.
+**Found by** four independent reviewers reading this submission cold, briefed
+separately, none shown the others' findings. Two of the three defects below came
+from the one asked to argue the case against the project.
 
 **What was wrong.** `scripts/report.py` picks the compiled criterion whose
 closed-world assertion costs the most, to name it rather than leave "most of the
@@ -2110,3 +2115,401 @@ is rather than the cause it was presented as.
 **Evidence.** `python -m pytest tests/test_sensitivity_section.py tests/test_perturb.py -q`.
 The first now counts the compiled closed-world queries itself and fails rather than
 skips if the search cannot find them, so the blindness cannot come back as a pass.
+
+## 40. The film showed a real SNOMED code that this run never compiled
+
+**Found by** an independent reviewer reading the film's frames, briefed on the
+deliverables rather than the code.
+
+**What was wrong.** The card that carries the whole argument of the film shows
+the compiled predicate for *"Adults with previously diagnosed T2DM"*, so that a
+viewer can watch one JSON field flip from `"false"` to `"unknown"` and see what it
+cost. It showed:
+
+```json
+"concept": "Type 2 diabetes mellitus",
+"codes": [],
+"broader_codes": ["73211009"],
+```
+
+The compiler produced `44054006`. `73211009` is diabetes mellitus, the parent
+concept. Both are valid SNOMED codes and they are indistinguishable by reading,
+which is the exact reason this system routes a concept it cannot map to a human
+instead of choosing. A search of the tracked tree found `73211009` in one file:
+the card itself. Nothing could contradict it, so nothing did.
+
+**The second one, on the reproduction card.** Its terminal read `270 passed, 1
+skipped` and `OK (reproduce in 285.6s)`. The suite is 302 tests with no skips, and
+removing that skip is entry 39 above; the run takes 144 seconds. Four more of its
+seven lines were summaries composed in the TSX that no command had printed, under
+a comment claiming the card could not go on showing a pass after the command
+stopped passing.
+
+**Why every gate missed both.** `film/scripts/extract.py --check` (entry 37)
+compares `film/src/data.json` against the repository, and both defects were string
+literals in TSX rather than data. `film/scripts/capture.py --check` re-runs the
+fast commands, and the stale capture was the slow one it skips. `npx tsc --noEmit`
+type-checks a string. The film rendered, the suite passed, and
+`python run.py reproduce` printed IDENTICAL, because none of them looks at what a
+card says.
+
+**What changed.** The code is `44054006`. The terminal is five verbatim lines of
+the current capture. Two tests were added, and each was run against the defect it
+was written for before being kept:
+
+- `tests/test_film_terminals_are_captured.py` reads every string literal out of
+  the three terminal cards and fails unless each line occurs in the capture that
+  card quotes. It refuses to pass on a card with no literals, and it fails if a
+  fourth `<Terminal>` is added to the film without being mapped to a capture.
+- `tests/test_film_codes_are_real.py` pulls every SNOMED and LOINC code out of
+  `film/src` and requires it to appear in `runs/tierA/compiled/criteria_seed7.json`.
+  Being a well-formed code is not enough, because `73211009` is one.
+
+**A third gate, from looking for the same shape one layer down.** The two defects
+above are a card saying something the repository does not. The voice can do it
+too, and `film/scripts/narrate.py --check` cannot see it: it re-measures each wav
+and compares the duration and digest against the file those measurements were
+written to, so it compares audio against its own record. Change a spoken figure in
+`docs/VIDEO.md`, re-render the film without re-running the speech model, and every
+check stays green while the voice says the old number over the new card.
+`tests/test_narration_matches_the_script.py` resolves the script through the same
+`scripts/_video_figures.py` the narration used and requires it to be
+sentence-for-sentence what `film/src/timings.json` records as spoken. It caught
+this entry's own edit: adding entry 40 moved the spoken count from thirty-nine to
+forty and the test failed on section 12 until the wav was re-rendered.
+
+| | before | now |
+|---|---|---|
+| terminology codes on screen that the run compiled | 2 of 3 | **3 of 3** |
+| terminal lines on screen the command printed | 12 of 16 | **16 of 16** |
+| gates that read what a card says | 0 | **2** |
+| gates that read what the voice says | 0 | **1** |
+
+**Evidence.** `python -m pytest tests/test_film_codes_are_real.py tests/test_film_terminals_are_captured.py tests/test_narration_matches_the_script.py -q`,
+28 tests. Planting `73211009` back into the card fails the first with *"shows
+terminology code 73211009 and it does not appear in
+runs/tierA/compiled/criteria_seed7.json"*, and planting `270 passed, 1 skipped`
+back into the second card fails the other with *"shows 1 line(s) that
+reproduce.txt, prove.txt does not contain"*.
+
+## 41. The one sentence in the film that took a rate over the wrong denominator
+
+**Found by** the same reviewer as entry 40, reading the resolved transcript
+against `results/results.json` rather than reading it for sense.
+
+**What was wrong.** Section 10 of the narration, the comparison a viewer is meant
+to carry away, said:
+
+> TrialSieve answers twenty-one point eight percent of cells and is wrong on one
+> percent **of those**. The per-cell baseline answers sixty-eight percent and is
+> wrong on forty-three point eight percent.
+
+"Of those" reads as the cells the arm answered. Both rates are over all of them.
+On the paired sample in `results/results.json`, group `b2_10p`:
+
+| | cells | committed | silent errors | wrong, of all cells | wrong, of the ones it answered |
+|---|---|---|---|---|---|
+| TrialSieve | 400 | 87 | 4 | **1.0%** | 4.6% |
+| B2 | 400 | 272 | 175 | **43.8%** | 64.3% |
+
+The spoken figures are the left column and the sentence points at the right one.
+It flatters this project by a factor of 4.6 and the baseline by 1.5, so it
+flatters the comparison, which is the direction that should have made it obvious.
+
+**What makes it worse than a slip.** Every written version of the same comparison
+names the denominator. `README.md` prints both. `docs/SCORECARD.md` says "wrong on
+43.75% of *all* cells", with the emphasis already there. The distinction is
+this project's own argument, since an arm that answers less can only be compared
+fairly if the rates share a denominator, and the one place it was dropped is the
+one a reviewer hears rather than reads.
+
+**Why the claims gate signed it.** `scripts/make_video.py claims` requires every
+spoken quantity to be read against the run and signed. Both numbers in that
+sentence are real numbers from `results.json`, so the sentence was signed. A gate
+that checks each figure cannot see a relation asserted between two of them. That
+is the same shape as entry 24, where a probe scored nine of nine because the
+defect that mattered was never planted: the check was sound and the thing it
+checked was not the thing at risk.
+
+**What changed.** The denominator is spoken, and it is derived rather than typed.
+`_paired_cells()` in `scripts/_video_figures.py` reads `n_cells` off the paired
+group, so the sentence now says "wrong on one percent of all four hundred" and the
+four hundred cannot drift from the run that produced the one percent. The old
+sentence's signature was removed rather than edited, so the corrected sentence had
+to be read against the run and signed on its own.
+
+| | before | now |
+|---|---|---|
+| denominator the spoken rate names | the answered cells, which is wrong | **all cells, from `n_cells`** |
+| the factor the sentence flattered by | 4.6 | **1** |
+| spoken figures typed rather than derived | 1 | **0** |
+
+**Evidence.** `python scripts/make_video.py claims` reports 27 sentences stating a
+quantity, all signed and none unchecked, and prints `paired_cells = four hundred`
+beside `ts_error_pct = one percent`, both out of the same group in
+`results/results.json`.
+
+## 42. The gate that decides what needs checking could not read half the numbers
+
+**Found by** rewriting the narration for a listener who is not an engineer, which
+put two money figures into it and made the gate say nothing at all.
+
+**What was wrong.** `scripts/make_video.py claims` is the rule that a spoken
+quantity must be read against the run and signed by a person before the film can
+be built. It finds quantities by matching number words against `WORD_NUM`. That
+table went one, two, three, up to twelve, then jumped to thirty, forty, fifty,
+sixty, eighty, hundred, thousand.
+
+Missing: **thirteen through nineteen, twenty, seventy and ninety.** A sentence
+whose only quantity used one of those words was not a claim as far as the gate was
+concerned, so it was never listed, never signed, and never read against anything.
+
+**What it hid.** Three sentences in the current narration, measured by running the
+old table and the new one over the same script:
+
+| sentence | why it was invisible |
+|---|---|
+| "Compiling cost thirteen cents, once." | `thirteen` |
+| "The per-call baseline pays twenty-two dollars nineteen for this panel, and again next month." | `twenty`, `nineteen` |
+| "Only nineteen of the sixty-five rules compile, under the band I registered." | `nineteen`, and `sixty-five` is one token so it never equalled `sixty` |
+
+The third is the one that matters. That sentence is the film admitting it missed
+the coverage band registered before the run, which is the most load-bearing
+honest claim in five minutes of film, and the gate built to make a person check
+every spoken figure had never once put it in front of anyone.
+
+**Why this is the same defect as three others here.** Entry 24 was a probe that
+scored nine of nine because the defect that mattered was never planted. Entry 41
+was a claims gate that signed a sentence because both its numbers were real,
+without seeing the false relation asserted between them. This is the third shape:
+a gate whose *input filter* is narrower than its subject, so the thing it never
+looks at reports as clean rather than as unmeasured. In all three the check was
+sound and the population it ran on was wrong.
+
+**What changed.** `WORD_NUM` covers zero through twenty and every ten to ninety.
+The three sentences appeared in the unsigned list on the next run and were read
+against `docs/COST.md` and `results/results.json` and signed.
+
+**Then the same defect one level down.** With the table completed, the gate still
+said nothing about *"Each of the forty-four entries names what I measured"*. It
+has two branches: a regular expression, and a fallback that compares tokens. The
+regular expression branch is guarded on the sentence containing a digit, which a
+narration spelled out for a speech synthesiser never does, so it never fires at
+all. Everything therefore fell to the fallback, which split on whitespace, so
+`forty-four` was one token that equalled no entry in the table. Every compound
+number the film speaks (forty-four, twenty-two, sixty-five, twenty-one) went
+through that gap, and completing the word list did not close it because the words
+were never being looked up separately. The fallback now splits on anything that is
+not a letter.
+
+| | before | now |
+|---|---|---|
+| number words the gate can read | 19 | **31** |
+| spoken quantities it offers for signature | 25 | **31** |
+| load-bearing claims never offered to a human | 1 | **0** |
+| compound figures the fallback could match | 0 | **all of them** |
+
+**Evidence.** `python scripts/make_video.py claims` reports 31 sentences stating a
+quantity, none unchecked. Running the old table and the old whitespace split over
+the same script finds 25.
+
+## 43. One event with two causes, counted as one thing and labelled with a sentinel
+
+**Found by** an independent reviewer reading `runs/tierA/trajectories/index.md`
+and then parsing the event files behind it, rather than taking the summary row.
+
+**What was wrong.** The index published this:
+
+> | retries after a schema rejection | 8 |
+
+Three were. The other five followed a **confirmed counterexample**: the critic had
+attacked a compiled predicate with a patient it should get wrong, the harness had
+run the attack and seen it fail, and the compiler was being asked for a different
+predicate. That is not another try at the same reply. `scripts/trajectories.py`
+counted the bare `retry` event kind with no filter on what preceded it, so the two
+became one number under the wrong name.
+
+**And the sentinel.** Those five were logged by `scripts/compile_protocol.py` as
+`traj.retry(99, note)`. 99 was a placeholder meaning "not part of the retry
+budget", uncommented. It rendered in five published trajectories as:
+
+> ### 11. retry (attempt 99), verbatim feedback returned to the model:
+
+`SUBMISSION.md` told a reader that retries are "numbered, with the budget that
+bounds them". 99 is outside any budget and is not a number a reader can act on. A
+deliverable whose whole purpose is to be followed by a stranger was asking that
+stranger to interpret an internal placeholder.
+
+**What changed.** `Trajectory.retry` takes a `cause` and stores it. A
+counterexample-driven recompile carries `attempt=None` and renders as
+`retry after a confirmed counterexample (recompiled)`; a schema rejection renders
+as `retry after a schema rejection (attempt 1)`. The index is two rows. The
+trajectories were re-recorded from cassettes, so the change is visible in the
+published files rather than only in the code.
+
+**Two smaller things from the same reading.** Sixteen trajectories printed a raw
+float latency, `70.58855390548706s`, where every compiler trajectory printed
+`90.994s`, because one render path rounded and the other did not; both round now.
+And `REPRODUCE.md` listed "the tree is dirty" as a cause of a failed diff without
+saying that `run.py reproduce` is what dirties it, by rewriting wall-clock
+readings into three compiled files and `docs/COST.md`. None of those bytes is a
+published number, so `IDENTICAL` was never at risk, but a reader running it twice
+saw `git_dirty` go true and had no way to know it was the command's doing.
+
+| | before | now |
+|---|---|---|
+| retries reported under the wrong cause | 5 of 8 | **0 of 8** |
+| sentinel values in published trajectories | 5 | **0** |
+| trajectories printing an unrounded latency | 16 | **0** |
+
+**Evidence.** `python scripts/trajectories.py --run runs/tierA` then
+`grep -rn "attempt 99" runs/` returns nothing, and `index.md` reads
+`retries after a schema rejection | 3` beside
+`recompiles after a confirmed counterexample | 5`.
+
+## 44. The claim that turned one hundred and ninety answers into two
+
+**Found by** the same reviewer, checking a sentence that appeared in five
+documents against the worklist it describes.
+
+**What was wrong.** Five places said a version of this:
+
+> The 190 that remain open contain **two distinct questions**, and 188 of them are
+> open on the same one, so it is answered once and they resolve together. That is
+> 1,155 cell judgements reduced to two things a person has to find out.
+
+`docs/sample_worklist.json` says the shared item is `NCT06983054-INC-02`, which
+resolves to *no observation with code 4548-4 in the record*: no HbA1c on file. One
+missing measurement, shared by 188 patients. **It is one question type, not one
+answer.** Ordering that lab returns 188 values, one per patient, and each of them
+decides that patient's verdict separately. What the grouping collapses is the
+search, not the answers, and "two things a person has to find out" claims the
+second.
+
+This one was uncomfortable because it is the project's most quotable line, it was
+in the README, the scorecard, the cost page, the worklist itself and the film, and
+the defensible version was already sitting in the worklist twenty lines below the
+overclaim: *"A criterion at the top of this table is where an extra data feed, or
+a single clarification with the sponsor, would buy the most time."* That sentence
+is right. It says the grouping tells you where to spend an acquisition, which is a
+real and useful thing, and it does not promise that 188 verdicts fall out of one
+answer.
+
+**What changed.** All five now say the same defensible thing, and four of the five
+are generated, so the fix is in `scripts/costs.py`, `scripts/scorecard.py` and
+`src/trialsieve/worklist.py` rather than in their output. The worklist reads "one
+thing to go and find, then 188 values to read back". The film's ninth section says
+"one missing test on almost every open case, so a nurse knows what to go and get".
+
+| | before | now |
+|---|---|---|
+| documents claiming 188 verdicts resolve from one answer | 5 | **0** |
+| of those that are generated rather than typed | 4 | fixed at the generator |
+
+**Evidence.** `python scripts/costs.py && python scripts/scorecard.py && python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsigned --out docs/sample_worklist.md`,
+then `grep -rn "resolve together" README.md docs/SCORECARD.md docs/COST.md docs/sample_worklist.md`
+returns nothing. It still appears twice in this file, which quotes the old
+claim on purpose, and once in `src/trialsieve/worklist.py` as a comment naming
+the sentence not to write. Those three are the record, not the claim.
+
+## 45. Six sentences that outlived the numbers they described
+
+**Found by** an independent reviewer briefed on the code and the evidence chain
+rather than the deliverables, who picked nineteen rows out of the summary table at
+the top of this file and checked each one against the file it cites. Seventeen
+resolved. Two did not, and four more defects came out of the same reading.
+
+**The shape.** Every one of these is a hard-coded sentence that was true when it
+was written, describing a number that later moved. Not one is a computed value:
+the reviewer's own note says the generated figures could not be broken. The
+defects are all in prose sitting next to correct arithmetic, which is the most
+comfortable place for one to survive.
+
+**The two in the report generator, which are the worst.**
+
+`results/RESULTS.md` printed, from the run:
+
+> Panel reduction across the same seeds: `{"mean": 0.4615, "sd": 0.0, "min":
+> 0.4615, "max": 0.4615, "range": 0.0, "n_seeds": 3}`
+
+and then, two lines below:
+
+> Recompiling the same criteria under a different seed moves the number a
+> coordinator would act on by **more than ten points**.
+
+The range is zero. The paragraph was fixed text inside `if len(reds) >= 2` at
+`scripts/report.py`, with no dependence on the spread it described. Entry 30
+collapsed that spread and the sentence stayed. Its closing clause, "no difference
+in this report smaller than that spread is claimed as detected", had quietly
+become vacuous, because the spread is 0. This is the failure this project is
+named for, aimed at the project: the pipeline kept running and reported something
+plausible.
+
+The second: the report listed **six** criteria the gold set calls checkable and
+the compiler did not produce, then said "Six of those are the vocabulary refusing
+... **The seventh** is the one lost to the IR validator". There is no seventh.
+Entry 29 fixed the validator and `results/results.json` has
+`not_compilable.exhausted_retries: []`. The sentence had outlived its own repair
+by fifteen entries.
+
+**Three in this file's own summary table**, which is the table the submission
+tells a reader to check first:
+
+| row | said | is |
+|---|---|---|
+| the B2 comparison | `-0.4050 SER, CI [-0.5550, -0.2550]` | `-0.4275, CI [-0.5700, -0.2850]`, the pre-entry-30 value never refreshed |
+| differences the floor calls uninterpretable | `2 of 6` to `0 of 6` | still `2 of 6`, both `TS - B1`; lowering the floor from 10.6% to 2.3% never moved them, because they are 0.0072 and 0.0043 |
+| the weak-model probe | `1 of 6 on broader-only concepts against 6 of 6` | 1 of 6 on **absence** concepts against **5 of 6**. The `broader` class has one member |
+
+The second of those is the one worth sitting with. It claimed the repair had made
+every published difference interpretable, and the two that are not interpretable
+are exactly the comparison against B1, the regular expressions, which is the arm
+this system is least able to distinguish itself from. The row was flattering in
+the one direction a reader cannot check without opening the file.
+
+**And the published environment record had come apart.**
+`results/published/` is meant to be one snapshot of three files.
+`environment.json` named a commit eighteen behind HEAD and `locked_packages: 23`
+against a lockfile holding 8, and had been written four and a half hours before
+the two files beside it. `run.py diff` compares `RESULTS.md` and `results.json`
+only, so it printed `IDENTICAL` over the top of it, and `SUBMISSION.md` points a
+judge at that third file for versions.
+
+**What changed.** Both report paragraphs are computed from the values they
+describe, and the seed one now has a branch for a zero spread that says what a
+zero floor does and does not license. The three table rows say what their cited
+files say, and each names what it used to say. The snapshot was republished with
+`run.py publish`, which had always written the three together; the failure was a
+hand copy of two of them.
+
+`tests/test_published_environment_is_current.py` is the guard: the published
+record has to count the lockfile that ships, name the interpreter the current run
+recorded, name a commit reachable from HEAD, and have been written within an hour
+of the two files beside it. Run against the broken state it failed on the
+lockfile count and on a 4.5 hour spread.
+
+**And one from the same reading that is not a stale sentence.** The headline
+table in `docs/SCORECARD.md` led with `44x lower` as the change column on silent
+error rate. `evaluation/score.py` opens by saying the unit of result is the
+ordered pair (coverage, SER), and that **a comparison against an arm at higher
+coverage is not admissible**, because an arm that abstains everywhere scores a
+silent error rate of exactly zero. TrialSieve answers 21.75% of cells and B2
+answers 68.00%. So the submission's own scoring module called its headline row
+inadmissible, and the row said it anyway, in the table the brief asks for. The
+row now carries both coverages, the ratio is labelled "at a third of the
+coverage", and a paragraph under the table sends the reader to the paired
+bootstrap in `results/RESULTS.md`, which is the comparison that settles it. The
+ratio stays because the brief's format has a change column, not because it is the
+finding.
+
+| | before | now |
+|---|---|---|
+| report paragraphs asserting a value they do not read | 2 | **0** |
+| rows of the summary table disagreeing with their cited file | 3 of 19 | **0 of 19** |
+| headline rows printing a ratio the scoring module calls inadmissible | 1 | **0** |
+| gates that read the published environment record | 0 | **1** |
+
+**Evidence.** `python scripts/report.py --run runs/tierA --out results` then
+`grep -n "seventh" results/RESULTS.md` returns nothing and the seed paragraph
+reads "Both are flat. Across 3 seeds ... the range is 0 on each".
+`python -m pytest tests/test_published_environment_is_current.py -q`, 4 tests.

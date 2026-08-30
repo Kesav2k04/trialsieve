@@ -234,8 +234,12 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
             if len(members) > 8:
                 asked = ("question" if len(q) == 1
                          else f"{len(q)} questions")
-                L.append(f"The same {asked} for all {len(members)}. Answered once, "
-                         f"they resolve together.")
+                # Not "answered once and they resolve together": one lab
+                # order returns one value per patient. What is shared is
+                # where to go, not what comes back.
+                L.append(f"The same {asked} for all {len(members)}: one thing "
+                         f"to go and find, then {len(members)} values to read "
+                         f"back.")
                 L.append("")
             ids = ", ".join(f"`{s['patient_id'][:8]}` ({s['age']}, {s['sex']})"
                             for s in members[:12])

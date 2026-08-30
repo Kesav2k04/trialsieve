@@ -813,13 +813,34 @@ def main() -> int:
                   f"`{json.dumps(seed_spread(reds))}`. False exclusions: "
                   f"`{json.dumps(seed_spread([float(x) for x in fxs]))}`.")
         md.append("")
-        md.append("SER is stable across seeds and the primary metric is not, which "
-                  "is the finding rather than a footnote. Recompiling the same "
-                  "criteria under a different seed moves the number a coordinator "
-                  "would act on by more than ten points and moves the count of "
-                  "wrongly excluded patients by most of its own size. No difference "
-                  "in this report smaller than that spread is claimed as detected, "
-                  "and a floor quoted on SER alone would have hidden it.")
+        # This paragraph used to be a fixed sentence saying the primary metric
+        # moved "by more than ten points". It was true when it was written. Entry
+        # 30 collapsed the spread to zero and the sentence stayed, sitting two
+        # lines under a printed range of 0.0, which is this project's own failure
+        # mode with the project on the receiving end. It is computed now, so it
+        # cannot outlive the numbers above it.
+        r_red = seed_spread(reds)["range"]
+        r_fx = seed_spread([float(x) for x in fxs])["range"]
+        if r_red == 0 and r_fx == 0:
+            md.append(
+                f"**Both are flat.** Across {len(reds)} seeds the panel reduction "
+                f"and the false-exclusion count do not move at all: the range is "
+                f"0 on each. That is a change from an earlier run of this same "
+                f"report, where reduction moved more than ten points across seeds "
+                f"and this paragraph said so; entry 30 of the changelog is what "
+                f"removed the movement. A zero floor is not a licence to call "
+                f"every difference detected. It means seed choice is no longer a "
+                f"source of variation here, and the floor that does bound this "
+                f"report is the label noise floor above, measured between two "
+                f"independent labellers rather than between two seeds.")
+        else:
+            md.append(
+                f"**The registered floor is the spread of the primary metric, and "
+                f"it is not zero.** Across {len(reds)} seeds the panel reduction "
+                f"moves by {r_red * 100:.1f} points and the false-exclusion count "
+                f"by {r_fx:.0f}. No difference in this report smaller than that "
+                f"spread is claimed as detected, and a floor quoted on SER alone "
+                f"would have hidden it, because SER is the stable one.")
 
     # degradation curve, read across the k groups rather than within one
     curve = []
@@ -1118,13 +1139,26 @@ def main() -> int:
                 why = why.split(".")[0].strip() if "." in why else why.strip()
                 md.append(f"| `{g['criterion_id']}` | {why} |")
             md.append("")
-            md.append("Six of those are the vocabulary refusing, which is the design "
-                      "working: a concept with no code in this site's terminology "
-                      "stops the criterion instead of clearing every patient on it. "
-                      "The seventh is the one lost to the IR validator, above. So "
-                      "the gap between the ceiling and the result is mostly the "
-                      "price of the refusal policy, and that price belongs in the "
-                      "coverage number rather than in a footnote under a higher one.")
+            # Counted, not asserted. This said "Six of those are the vocabulary
+            # refusing ... The seventh is the one lost to the IR validator" and
+            # listed exactly six rows, because the seventh stopped existing when
+            # entry 29 fixed the validator and the sentence did not follow.
+            vocab = sum(1 for g in gap if "vocab" in str(g["reason"] or "").lower()
+                        or "terminology" in str(g["reason"] or "").lower())
+            other = len(gap) - vocab
+            md.append(
+                f"{vocab} of those {len(gap)} are the vocabulary refusing, which is "
+                f"the design working: a concept with no code in this site's "
+                f"terminology stops the criterion instead of clearing every patient "
+                f"on it."
+                + (f" The remaining {other} stopped for another reason, listed in "
+                   f"the table above." if other else
+                   " There is no other kind in this run; every one of them is the "
+                   "vocabulary. An earlier version of this report claimed one more "
+                   "lost to the IR validator, which entry 29 had already fixed.")
+                + " So the gap between the ceiling and the result is the price of "
+                  "the refusal policy, and that price belongs in the coverage "
+                  "number rather than in a footnote under a higher one.")
             md.append("")
         md.append(f"Against {cd['n_gold']} the compiled figure is "
                   f"{cd['compiled_of_gold']:.0%}. The "

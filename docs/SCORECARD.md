@@ -14,11 +14,13 @@ The rows below are scored on **the same 400 cells**: 30 screens, meaning ten pat
 |---|---|---|---|
 | **Primary outcome** as registered: panel reduction at zero false exclusions | **VOID** (10 false exclusions, reduction 86.67%) | **VOID** (2 false exclusions, reduction 53.33%) | both void; the harm behind the void falls from 10 to 2 |
 | Screens wrongly ruled out, of 30 | 10 | **2** | 8 fewer |
-| Silent error rate per cell | 43.75% | **1.00%** | 44x lower |
+| Silent error rate per cell, each at the coverage beside it | 43.75% at 68.00% coverage | **1.00%** at 21.75% coverage | 44x lower, at a third of the coverage |
 | Cells answered with a definite verdict | 68.00% | 21.75% | lower on purpose, see below |
 | Wrong MEETS, the verdict that enrols someone who should not be | 145 | **0** | 145 fewer |
-| **Human time per task**, as judgements a person is left holding *(one trial, 385 patients, not the sample above, and against the 3 criteria this operating point applies rather than the trial's full set)* | 1,155 cell judgements, the manual process today | 190 screens carrying **2 distinct questions** | 2 question sets instead of 1,155 separate readings |
+| **Human time per task**, as judgements a person is left holding *(one trial, 385 patients, not the sample above, and against the 3 criteria this operating point applies rather than the trial's full set)* | 1,155 cell judgements, the manual process today | 190 screens carrying **2 distinct open questions** | 2 thing(s) to go and find instead of 1,155 separate readings. Each still returns a value per patient; what collapses is the search, not the answers |
 | **Cost per panel** of 385 patients, at published rates | $22.19 | **$0.13** | the crossover is in `docs/COST.md` |
+
+**On the ratio in that row.** It is the arithmetic and it is not the result. `evaluation/score.py` states that a comparison against an arm at higher coverage is not admissible, and this is that comparison: TrialSieve answers 21.75% of cells and B2 answers 68.00%. The row that does settle it is the paired bootstrap in `results/RESULTS.md`, where `TS - B2` on `ser` is reported with an interval and against the label noise floor. The ratio is here because the brief's table has a change column, not because it is the finding.
 
 ## Reading the coverage row honestly
 

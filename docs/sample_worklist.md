@@ -83,7 +83,7 @@ Ranked by how few questions remain. The questions are the ones the record could 
 - **HbA1c 6.5-10%**  
   no observation with code 4548-4 in the record
 
-The same question for all 188. Answered once, they resolve together.
+The same question for all 188: one thing to go and find, then 188 values to read back.
 
 `0288c42c` (41, female), `03777c32` (53, female), `03b291e7` (82, male), `03bb882e` (64, female), `03e502b6` (54, female), `055bcb42` (40, male), `05801c88` (27, female), `065e8a3d` (24, male), `0896b0af` (64, female), `0ad457cc` (25, male), `0ae08855` (35, female), `0b43ab26` (33, male) and 176 more in the machine-readable output.
 
