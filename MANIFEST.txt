@@ -611,6 +611,7 @@ runs/checker_b/trajectories/checker_b/NCT06989723-INC-05--f0aa92fa.md
 runs/checker_b/trajectories/checker_b/NCT06989723-INC-05--fdc21ebe.jsonl
 runs/checker_b/trajectories/checker_b/NCT06989723-INC-05--fdc21ebe.md
 runs/checker_b/trajectories/index.md
+runs/checker_b_usage.json
 runs/probe-after/cassettes/1a360cbddbe01124.json
 runs/probe-after/cassettes/1abf44799e69a8fd.json
 runs/probe-after/cassettes/1d87974509beb331.json

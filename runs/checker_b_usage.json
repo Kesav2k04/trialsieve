@@ -1,0 +1,13 @@
+{
+ "model": "gpt-oss-120b-medium",
+ "usage": {
+  "calls": 100,
+  "prompt_tokens": 444910,
+  "completion_tokens": 2680,
+  "wall_s": 6945.1,
+  "cassette_hits": 0
+ },
+ "wall_s": 6945.1,
+ "n_new_labels": 100,
+ "note": "backfilled from runs/checker_b.log; the script now writes this itself"
+}

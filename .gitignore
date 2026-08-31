@@ -14,6 +14,14 @@ data/work/
 # excluded directory to find a negated pattern, so `!runs/tierA/cassettes/`
 # alone would match nothing.
 runs/*
+# The Checker B usage record. `scripts/costs.py` reads it to write the second
+# labeller's row in docs/COST.md, and without it that step rewrote the
+# committed table with the row as `_not run yet_`, dropped the totals by 100
+# calls and 445k tokens, and stamped the page PARTIAL. A judge running
+# `python run.py reproduce` from a clean clone therefore ended holding a cost
+# document that contradicted the published one, over a file that was never
+# shipped rather than over anything they did.
+!runs/checker_b_usage.json
 !runs/tierA/
 runs/tierA/*
 !runs/tierA/cassettes/

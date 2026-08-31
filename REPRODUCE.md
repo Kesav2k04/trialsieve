@@ -118,7 +118,9 @@ archive and not in a clone:
 10. **The report is scored** into `results/results.json`.
 11. **The full suite runs**, all 400 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
-   trust if this sentence has drifted. From a clone that is 400 passed. From an
+   trust if this sentence has drifted. From a clone that is 400 passed, once
+   this command has run: a clone measured before it reports 396 passed and 4
+   skipped, because four tests read an artifact step 10 writes. From an
    unpacked source archive it is 393 passed and 7 skipped, because seven of them
    resolve a commit or read history and an archive carries the tree without an
    object database. Run `pytest` in an archive *before* this command rather than
