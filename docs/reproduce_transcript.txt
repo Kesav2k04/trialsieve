@@ -8,10 +8,10 @@ environment
  "implementation": "CPython",
  "platform": "Windows-11-10.0.26200-SP0",
  "machine": "AMD64",
- "utc": "2026-08-31T06:28:26Z",
+ "utc": "2026-08-31T06:49:19Z",
  "locked_packages": 8,
  "lock_drift": {},
- "git_commit": "d0a287a40a509eeeffe18b216bd5c0fd8d64ed8d",
+ "git_commit": "e0ec8a1537a6b44d6e010590acd7fa88bb6c99d5",
  "git_dirty": false,
  "git_dirty_excludes": "results/"
 }
@@ -22,7 +22,7 @@ engine gate
 
 $ python -m pytest -q tests/test_engine.py
 ....................................................                     [100%]
-52 passed in 0.20s
+52 passed in 0.19s
 
 ========================================================================
 dependency surface
@@ -247,7 +247,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.4,
+ "wall_s": 2.3,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -279,7 +279,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
-  260/385 patients, 10400 cells, 1s
+  260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
@@ -316,7 +316,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.3,
+ "wall_s": 2.4,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -347,7 +347,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   220/385 patients, 8800 cells, 1s
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
-  250/385 patients, 10000 cells, 1s
+  250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
@@ -431,7 +431,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   330/385 patients, 13200 cells, 2s
   340/385 patients, 13600 cells, 2s
   350/385 patients, 14000 cells, 2s
-  360/385 patients, 14400 cells, 3s
+  360/385 patients, 14400 cells, 2s
   370/385 patients, 14800 cells, 3s
   380/385 patients, 15200 cells, 3s
   385/385 patients, 15400 cells, 3s
@@ -458,82 +458,13 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 2482,
  "degradation_manifest_sha256": "36d4dbc2f9cb98a433ebecf0eacaee24583b07eb2c6448c7ad6bb163d5015ffe",
- "wall_s": 2.8,
+ "wall_s": 2.7,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
 wrote runs\tierA\cells\cells_TS-B0-B1_k10_seed7.jsonl
 
 $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7 --k 0.2 --degrade-seed 101
-  10/385 patients, 400 cells, 0s
-  20/385 patients, 800 cells, 0s
-  30/385 patients, 1200 cells, 0s
-  40/385 patients, 1600 cells, 0s
-  50/385 patients, 2000 cells, 0s
-  60/385 patients, 2400 cells, 0s
-  70/385 patients, 2800 cells, 0s
-  80/385 patients, 3200 cells, 0s
-  90/385 patients, 3600 cells, 1s
-  100/385 patients, 4000 cells, 1s
-  110/385 patients, 4400 cells, 1s
-  120/385 patients, 4800 cells, 1s
-  130/385 patients, 5200 cells, 1s
-  140/385 patients, 5600 cells, 1s
-  150/385 patients, 6000 cells, 1s
-  160/385 patients, 6400 cells, 1s
-  170/385 patients, 6800 cells, 1s
-  180/385 patients, 7200 cells, 1s
-  190/385 patients, 7600 cells, 1s
-  200/385 patients, 8000 cells, 1s
-  210/385 patients, 8400 cells, 1s
-  220/385 patients, 8800 cells, 1s
-  230/385 patients, 9200 cells, 2s
-  240/385 patients, 9600 cells, 2s
-  250/385 patients, 10000 cells, 2s
-  260/385 patients, 10400 cells, 2s
-  270/385 patients, 10800 cells, 2s
-  280/385 patients, 11200 cells, 2s
-  290/385 patients, 11600 cells, 2s
-  300/385 patients, 12000 cells, 2s
-  310/385 patients, 12400 cells, 2s
-  320/385 patients, 12800 cells, 2s
-  330/385 patients, 13200 cells, 2s
-  340/385 patients, 13600 cells, 2s
-  350/385 patients, 14000 cells, 2s
-  360/385 patients, 14400 cells, 2s
-  370/385 patients, 14800 cells, 2s
-  380/385 patients, 15200 cells, 3s
-  385/385 patients, 15400 cells, 3s
-
-{
- "arms": [
-  "TS",
-  "B0",
-  "B1"
- ],
- "seed": 7,
- "k": 0.2,
- "degrade_seed": 101,
- "b2_max_chars": null,
- "provider": null,
- "model": null,
- "cells_with_trimmed_record": 0,
- "n_patients": 385,
- "n_criteria": 40,
- "n_cells": 15400,
- "patient_sample": "full panel",
- "patient_seed": 23,
- "unit_policy": "code_authoritative",
- "absent_means_override": null,
- "degradation_changes": 4745,
- "degradation_manifest_sha256": "12cad59781e256a6c0452799a9be7b5b76e2d030a11ef718d9d49b05fb77dbfd",
- "wall_s": 2.7,
- "usage": null,
- "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
-}
-wrote runs\tierA\cells\cells_TS-B0-B1_k20_seed7.jsonl
-
-$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7 --k 0.4 --degrade-seed 101
   10/385 patients, 400 cells, 0s
   20/385 patients, 800 cells, 0s
   30/385 patients, 1200 cells, 0s
@@ -581,6 +512,75 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   "B1"
  ],
  "seed": 7,
+ "k": 0.2,
+ "degrade_seed": 101,
+ "b2_max_chars": null,
+ "provider": null,
+ "model": null,
+ "cells_with_trimmed_record": 0,
+ "n_patients": 385,
+ "n_criteria": 40,
+ "n_cells": 15400,
+ "patient_sample": "full panel",
+ "patient_seed": 23,
+ "unit_policy": "code_authoritative",
+ "absent_means_override": null,
+ "degradation_changes": 4745,
+ "degradation_manifest_sha256": "12cad59781e256a6c0452799a9be7b5b76e2d030a11ef718d9d49b05fb77dbfd",
+ "wall_s": 2.8,
+ "usage": null,
+ "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
+}
+wrote runs\tierA\cells\cells_TS-B0-B1_k20_seed7.jsonl
+
+$ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7 --k 0.4 --degrade-seed 101
+  10/385 patients, 400 cells, 0s
+  20/385 patients, 800 cells, 0s
+  30/385 patients, 1200 cells, 0s
+  40/385 patients, 1600 cells, 0s
+  50/385 patients, 2000 cells, 0s
+  60/385 patients, 2400 cells, 0s
+  70/385 patients, 2800 cells, 0s
+  80/385 patients, 3200 cells, 0s
+  90/385 patients, 3600 cells, 1s
+  100/385 patients, 4000 cells, 1s
+  110/385 patients, 4400 cells, 1s
+  120/385 patients, 4800 cells, 1s
+  130/385 patients, 5200 cells, 1s
+  140/385 patients, 5600 cells, 1s
+  150/385 patients, 6000 cells, 1s
+  160/385 patients, 6400 cells, 1s
+  170/385 patients, 6800 cells, 1s
+  180/385 patients, 7200 cells, 1s
+  190/385 patients, 7600 cells, 1s
+  200/385 patients, 8000 cells, 1s
+  210/385 patients, 8400 cells, 1s
+  220/385 patients, 8800 cells, 1s
+  230/385 patients, 9200 cells, 2s
+  240/385 patients, 9600 cells, 2s
+  250/385 patients, 10000 cells, 2s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
+  280/385 patients, 11200 cells, 2s
+  290/385 patients, 11600 cells, 2s
+  300/385 patients, 12000 cells, 2s
+  310/385 patients, 12400 cells, 2s
+  320/385 patients, 12800 cells, 2s
+  330/385 patients, 13200 cells, 2s
+  340/385 patients, 13600 cells, 2s
+  350/385 patients, 14000 cells, 2s
+  360/385 patients, 14400 cells, 2s
+  370/385 patients, 14800 cells, 2s
+  380/385 patients, 15200 cells, 2s
+  385/385 patients, 15400 cells, 3s
+
+{
+ "arms": [
+  "TS",
+  "B0",
+  "B1"
+ ],
+ "seed": 7,
  "k": 0.4,
  "degrade_seed": 101,
  "b2_max_chars": null,
@@ -596,7 +596,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 9652,
  "degradation_manifest_sha256": "7e31e857c75247b993f596560e3e0172a8ce2b17dda939de57ac67ad02f4028e",
- "wall_s": 2.8,
+ "wall_s": 2.6,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -632,7 +632,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS --absent-m
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
-  260/385 patients, 10400 cells, 2s
+  260/385 patients, 10400 cells, 1s
   270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
@@ -1891,7 +1891,9 @@ The panel-reduction figures above inherit the same denominator: a screen is rule
 
 ## Provenance
 
-What the model was sent, and where it lives. `prompt text` is a sha256 over every prompt constant in the module, parsed rather than grepped, so it moves when the prompt moves and not when a docstring does. If a digest changes after the run that produced these numbers, the run is invalid and is rerun. The commit is the file's last touch, which is what to go and read; it moves for prose too, so it is context rather than the rule. See `docs/DEV_SPLIT.md`.
+What the model was sent. `prompt text` is a sha256 over every prompt constant in the module, parsed rather than grepped, so it moves when the prompt moves and not when a docstring does. If a digest changes after the run that produced these numbers, the run is invalid and is rerun. It is computed from the files in this tree, so it is here whether or not there is a git history to read.
+
+The commit is the file's last touch, which is what to go and read; it moves for prose too, so it is context rather than the rule. See `docs/DEV_SPLIT.md`.
 
 | file | prompt text | file last touched by |
 |---|---|---|
@@ -1916,7 +1918,7 @@ $ python -m pytest -q
 ........................................................................ [ 72%]
 ........................................................................ [ 90%]
 .....................................                                    [100%]
-397 passed in 35.48s
+397 passed in 36.05s
 
 ========================================================================
 verification
@@ -1997,6 +1999,6 @@ compare against the published numbers
 ========================================================================
 IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
 
-OK  (reproduce in 163.6s)
+OK  (reproduce in 165.1s)
 
 exit 0
