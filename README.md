@@ -66,8 +66,8 @@ all until a named human has signed every predicate.
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
 | Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 78 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
-| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 152.3s captured, no key, no network. |
-| The video | submitted as a link on the entry form, 4:57 (297.4s of a 300s limit). It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
+| Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 155.0s captured, no key, no network. |
+| The video | submitted as a link on the entry form, 4:57 (297.0s of a 300s limit). It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
 | Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call. Five named exemplars first, then the rest with the failures at the top. The four other arms are indexed the same way beside it. |
 | Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
 
@@ -94,7 +94,7 @@ small because the baseline is the arm that costs money.
 | cells it answers at all | 68.00% | 21.75% |
 
 <div align="center">
-<img src="docs/img/comparison.png" alt="The same four hundred scored cells, three arms side by side. Regular expressions answer 7.5% and are wrong on 0.0%. TrialSieve answers 21.8% and is wrong on 1.0%, four silent errors. One model call per cell answers 68.0% and is wrong on 43.8%, a hundred and seventy-five silent errors." width="880">
+<img src="docs/img/comparison.png" alt="The same four hundred scored cells, four arms side by side. Regular expressions answer 7.5% and are wrong on 0.0%. TrialSieve answers 21.8% and is wrong on 1.0%, four silent errors. One model call per cell answers 68.0% and is wrong on 43.8%, a hundred and seventy-five silent errors. Treating a silent record as a FAILS answers 100% and is wrong on 93.8%, three hundred and seventy-five." width="880">
 </div>
 
 | cells resolved correctly per screen, the registered co-primary | **3.23** | 2.77 |
@@ -148,7 +148,7 @@ the test was never done, it answers anyway, and the answer reads exactly like th
 that are right.
 
 <div align="center">
-<img src="docs/img/gate.png" alt="Captured stdout of the worklist command. It prints REFUSED, states that nine compiled criteria have no human sign-off, and exits 3. Beside it, forcing it with the allow-unsigned flag writes the document with NOT FOR USE stamped on it." width="880">
+<img src="docs/img/gate.png" alt="Captured stdout of the worklist command. It prints REFUSED, states that one compiled criterion was reviewed and REJECTED so no worklist can be produced until it is recompiled, names it as NCT06983054-INC-01, and exits 3. Beside it, forcing it with the allow-unsigned flag writes the document with NOT FOR USE stamped on it." width="880">
 </div>
 
 ## Where everything is
@@ -461,6 +461,10 @@ of the 424 wrong FAILS in the whole evaluation. The control that was supposed to
   coverage. Entry 30 of the changelog puts the gain and the cost in the same table, before
 and after, and [docs/SCORECARD.md](docs/SCORECARD.md) puts the coverage cost
 next to the baseline's.
+
+<div align="center">
+<img src="docs/img/biggest.png" alt="One compiled query with an empty codes list, concept Type 2 diabetes mellitus, broader_codes 44054006, absent_means unknown. 358 patients do not carry that code, and before the repair the query ruled them out instead of saying the record does not say. The compiler's prompt warns about exactly this and the critic's fourth rule checks for it: both passed it. What caught it was a human reading the predicate in English. Patients wrongly excluded fall from 182 to 18, found by reading the held-out run, so the figure is in-sample and Amendment A8 says so." width="880">
+</div>
 - **Every other closed-world decision is still the model's, and the sensitivity
   arm is how you check it.** `--absent-means-override unknown` discards all of
   them at once. It used to remove 358 silent errors, taking 469 down to 111. It
@@ -532,6 +536,10 @@ question would be the overclaim this repository keeps catching itself in. It end
 trial has 15 criteria, the document answers 3, and the other 12 are still the
 coordinator's on every patient it hands back, with the six the compiler refused
 listed and its reason beside each one.
+
+<div align="center">
+<img src="docs/img/worklist.png" alt="The worklist as the film shows it: a NOT FOR USE banner over a panel of 385 patients and 1,155 cells, 187 ruled out with evidence, 190 left to review, 8 meeting every checkable criterion. Beside it, what is left to ask: 188 patients need one criterion asked, 2 need two, so a nurse asks two things instead of reading 1,155 cells." width="880">
+</div>
 
 Three files, same run, same provenance header:
 [docs/sample_worklist.md](docs/sample_worklist.md) to read,
