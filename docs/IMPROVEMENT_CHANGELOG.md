@@ -1905,14 +1905,14 @@ modules on the reproduction path.
 | lines that overrun the card spoken over them | 4 of 6 | **0 of 16** |
 | a card showing one run from protocol text to worklist | none | **cards 7, 8 and 9** |
 | third-party Python packages the repository declares | 3 | **1** |
-| length against the five minute limit | claimed, not read | **4:54, read from the file** |
+| length against the five minute limit | claimed, not read | **4:53, read from the file** |
 
 **Evidence.** Four gates, which ship with the video build rather than here. The
 narration check measures every wav against the card holding it, the grid checker
 re-counts the grids, the terminal capture re-runs the terminals, and `npx tsc
 --noEmit` fails on a card that names a sentence the script no longer has. The
-length is read from the rendered file with ffprobe rather than claimed: 294.06
-seconds, which is 4:54.
+length is read from the rendered file with ffprobe rather than claimed: 293.85
+seconds, which is 4:53.
 
 ---
 

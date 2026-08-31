@@ -11,7 +11,7 @@
 | Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 76 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 165.1s captured, no key, no network. |
-| The video | submitted as a link on the entry form, 4:54. It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
+| The video | submitted as a link on the entry form, 4:53 (293.8s of a 300s limit). It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
 | Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call. Five named exemplars first, then the rest with the failures at the top. The four other arms are indexed the same way beside it. |
 | Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
 
