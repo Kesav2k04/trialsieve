@@ -118,12 +118,17 @@ def build() -> str:
     ff = boot.get(("TS - B2", "false_fails"))
     ff_note = ""
     if ff:
+        # Built outside the f-string rather than inside its braces. A multi-line
+        # conditional between `{` and `}` is PEP 701, which landed in 3.12, and
+        # this repository declares `requires-python = ">=3.10"`. It parsed on the
+        # machine it was written on and was a SyntaxError on the version CI runs,
+        # which is a file the whole gate imports failing before any test ran.
+        crosses = ("which crosses zero, so this run cannot separate it from chance"
+                   if ff["crosses_zero"] else "which excludes zero")
         ff_note = (f"; paired bootstrap on the same cells puts the per-cell "
                    f"difference at {ff['observed_difference']:+.4f} "
                    f"(95% CI {ff['ci_low']:+.4f} to {ff['ci_high']:+.4f}), "
-                   f"{'which crosses zero, so this run cannot separate it from chance'
-                      if ff['crosses_zero'] else
-                      'which excludes zero'}")
+                   f"{crosses}")
     L.append(f"| Screens wrongly ruled out, of {n_screens} | "
              f"{b2p['false_exclusions']} | **{tsp['false_exclusions']}** | "
              f"{b2p['false_exclusions'] - tsp['false_exclusions']} fewer"
