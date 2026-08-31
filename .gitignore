@@ -73,7 +73,8 @@ runs/tierA/cells/
 # and `git add -A` will happily commit 167 MB of somebody else's Python.
 /Python/
 /%SystemDrive%/
-/dev-cachenpm-cache/
+/dev-cache/
+/npm-cache/
 /trace-runs/
 /.code-review-graph/
 /AppData/
