@@ -53,14 +53,48 @@ def test_it_counts_the_lockfile_that_ships() -> None:
         f"`python run.py publish`.")
 
 
-def test_it_names_the_same_interpreter_as_the_current_run() -> None:
-    published, current = _published(), json.loads(CURRENT.read_text(encoding="utf-8"))
-    for field in ("python", "implementation"):
-        assert published.get(field) == current.get(field), (
-            f"published environment says {field}={published.get(field)!r} and the "
-            f"current run recorded {current.get(field)!r}. Either the published "
-            f"numbers were produced on a different interpreter, in which case say "
-            f"so, or the snapshot is stale.")
+def test_the_published_snapshot_names_its_own_interpreter() -> None:
+    """The record has to say what produced the numbers, whoever is reading it."""
+    published = _published()
+    for field in ("python", "implementation", "platform"):
+        value = published.get(field)
+        assert isinstance(value, str) and value.strip(), (
+            f"results/published/environment.json has no {field}, so it does not "
+            f"say what the published numbers were produced on")
+
+
+def test_a_different_interpreter_reproduced_the_same_numbers() -> None:
+    """The claim is that the numbers come back, not that everyone runs 3.14.
+
+    This used to require the current run's interpreter to equal the published
+    one. On the machine that published, it passed. Everywhere else it could not:
+    `results/environment.json` is rewritten by whoever runs `run.py reproduce`,
+    so a judge on any other Python failed a test whose message told them the
+    snapshot was stale when nothing was stale. CI found it, on 3.13, against a
+    snapshot taken on 3.14.
+
+    What is worth asserting is the opposite of what it asserted. A different
+    interpreter is expected. What must not differ is the numbers, so that is what
+    is checked, and it is a stronger claim than the one it replaces: the
+    published figures are reproduced by an interpreter that did not produce them.
+    """
+    published = _published()
+    current = json.loads(CURRENT.read_text(encoding="utf-8"))
+    pub_results = ROOT / "results" / "published" / "results.json"
+    cur_results = ROOT / "results" / "results.json"
+    if not (pub_results.exists() and cur_results.exists()):
+        pytest.skip("no results pair in this checkout to compare")
+    same_interpreter = all(published.get(f) == current.get(f)
+                           for f in ("python", "implementation"))
+    a = json.loads(pub_results.read_text(encoding="utf-8"))
+    b = json.loads(cur_results.read_text(encoding="utf-8"))
+    where = "the same interpreter" if same_interpreter else (
+        f"{current.get('python')} against figures published on "
+        f"{published.get('python')}")
+    assert a == b, (
+        f"results/results.json does not match results/published/results.json, "
+        f"running on {where}. The published numbers did not reproduce here, "
+        f"which is the one thing `python run.py reproduce` claims.")
 
 
 def test_it_names_a_commit_this_history_contains() -> None:
