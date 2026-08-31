@@ -86,8 +86,18 @@ def test_a_different_interpreter_reproduced_the_same_numbers() -> None:
         pytest.skip("no results pair in this checkout to compare")
     same_interpreter = all(published.get(f) == current.get(f)
                            for f in ("python", "implementation"))
-    a = json.loads(pub_results.read_text(encoding="utf-8"))
-    b = json.loads(cur_results.read_text(encoding="utf-8"))
+    # The comparison `run.py` itself makes, rather than a fresh one. A raw dict
+    # equality here failed on CI over `wall_s`, which is how long the run took:
+    # a test written to check that the numbers reproduce, failing on a clock.
+    # `_canonical` is the project's own definition of which fields are numbers
+    # and which are timestamps, so borrowing it keeps this test and the command
+    # a judge runs from disagreeing about what reproduced.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("_ts_run", ROOT / "run.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    a = mod._canonical(pub_results, drop_provenance=True)
+    b = mod._canonical(cur_results, drop_provenance=True)
     where = "the same interpreter" if same_interpreter else (
         f"{current.get('python')} against figures published on "
         f"{published.get('python')}")
