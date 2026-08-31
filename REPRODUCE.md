@@ -197,7 +197,7 @@ command yourself and read your own last lines beside these:
     ========================================================================
     IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
 
-    OK  (reproduce in 165.1s)
+    OK  (reproduce in 152.3s)
 
     exit 0
 
@@ -279,7 +279,7 @@ key. Every recorded call replays from `runs/tierA/cassettes/`, and replay never
 falls through to a live call. The reading you can check rather than take on trust
 is the last line of
 [`docs/reproduce_transcript.txt`](docs/reproduce_transcript.txt), which is
-captured stdout from a clean tree: **165.1 seconds** on a Windows laptop with a
+captured stdout from a clean tree: **152.3 seconds** on a Windows laptop with a
 14-core CPU. Repeated runs landed between 143 and 188 seconds, and the spread is
 the honest answer to "how long does it take": a cold clone pays to read 57 MB off
 disk, and a machine that is busy pays twice. The 188 is a reading from an
