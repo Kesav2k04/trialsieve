@@ -95,12 +95,25 @@ def query(q: dict) -> str:
     absent = ("and if there is none, the record is trusted and this is false"
               if q.get("absent_means") == "false"
               else "and if there is none, this is undetermined rather than false")
+    codes = q.get("codes") or []
     broader = q.get("broader_codes") or []
     tail = ""
     if broader:
         tail = (f". If instead the record holds {_codes(broader, dom)}, which contains "
                 f"this concept without establishing it, the answer is undetermined")
-    return (f"{_DOMAIN.get(dom, dom)} {_codes(q.get('codes', []), dom)}, "
+    if not codes:
+        # An empty exact code list is a real and deliberate outcome: the grounder
+        # found nothing in this site's vocabulary that states the concept, only
+        # something broader that contains it. Rendered through the line below it
+        # came out as "a diagnosis of , at any time", with a blank where the
+        # concept belongs. The sign-off gate exists so that a human reads the
+        # predicate in English before a worklist exists, and a sentence with a
+        # hole in it is not something a reviewer can approve or reject. So the
+        # empty case gets its own sentence, which says what actually happened.
+        return ("nothing in this vocabulary that states the concept exactly, so "
+                "the record cannot establish it"
+                + (tail or ", and the answer is undetermined"))
+    return (f"{_DOMAIN.get(dom, dom)} {_codes(codes, dom)}, "
             f"{_window(q.get('within_days'))}, {absent}{tail}")
 
 

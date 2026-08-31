@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Seventy-one entries is
+iteration, each with its evidence and what it decided. Seventy-two entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -3803,3 +3803,48 @@ other.
 **Evidence.** `git cat-file -t $(grep git_commit docs/reproduce_transcript.txt)`
 returns `commit`, and `python -m pytest -q tests/test_no_private_paths.py
 tests/test_quoted_transcript_is_the_capture.py` covers the rest.
+
+## 72. The sentence the reviewer signs had a blank where the concept goes
+
+**Found by** rendering all nineteen compiled predicates through the sign-off view
+before anybody sat down to read them.
+
+**What was wrong.** `NCT06983054-INC-01` is *Adults with previously diagnosed T2DM
+according to American Diabetes Association criteria*. The grounder found nothing in
+this site's vocabulary that states that concept, only `44054006` (Diabetes), which
+contains it without establishing it, so the compiled query carries an empty `codes`
+list and one `broader_codes` entry. That is the design working. It is the whole of
+*A code can contain a concept without establishing it*, and the predicate returns
+undetermined rather than guessing.
+
+`explain.query` rendered it by dropping the code list into a sentence, and an empty
+list rendered as nothing:
+
+    there is a diagnosis of , at any time in the record, and if there is none,
+    this is undetermined rather than false
+
+The gate exists so that a human reads the predicate in English before any worklist
+is produced. A sentence with a hole in it cannot be approved or rejected, and the
+one criterion where the vocabulary failed is the one a reviewer most needs to
+understand. The predicate was right and unreadable, which is the worse of the two
+failures here, because the wrong one is visible.
+
+**What changed.** The empty case gets its own sentence rather than an empty slot in
+the general one, and it says what happened rather than what is missing:
+
+    there is nothing in this vocabulary that states the concept exactly, so the
+    record cannot establish it. If instead the record holds 44054006 (Diabetes,
+    27 patient(s) in this panel), which contains this concept without
+    establishing it, the answer is undetermined
+
+All nineteen renderings were then scanned for the same shape: an empty slot, a
+doubled comma, a stray `None`. There are no others.
+
+| | before | now |
+|---|---|---|
+| predicates whose English has a blank in it | 1 of 19 | **0 of 19** |
+| what the reviewer is told when the vocabulary has no exact code | nothing | **that, and what was found instead** |
+
+**Evidence.** `python scripts/signoff.py --run runs/tierA --show
+NCT06983054-INC-01`, and `python run.py reproduce` still prints IDENTICAL, because
+this wording appears only where a person reads it.

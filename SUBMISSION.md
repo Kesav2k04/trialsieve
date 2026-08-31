@@ -5,7 +5,7 @@ Every required deliverable, and the file that satisfies it.
 | required | where |
 |---|---|
 | Full working code | this repository. Zero runtime dependencies, standard library only. |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 71 entries behind it stay in the order they were found. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 72 entries behind it stay in the order they were found. |
 | Reproduction guide, clean environment | [REPRODUCE.md](REPRODUCE.md). One command: `python run.py reproduce`. |
 | Exact commands | [REPRODUCE.md](REPRODUCE.md) and `python run.py help` |
 | Data | `data/vendor/`, with source URL and archive sha256 in `data/vendor/panel_provenance.json` |
@@ -76,7 +76,7 @@ The weights are the table on page 5 of the challenge PDF, which sums to 100.
 |---|---|---|
 | Agent Solution & Engineering | 30 | [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md), `src/trialsieve/`, and the trajectories. Six agents. Two make zero model calls on purpose: the adjudicator, a pure function over the compiled predicate, and the worklist, which refuses to render without a signature. |
 | End to End Quality | 20 | `docs/sample_worklist.md` is the artifact a coordinator opens, produced by a script that exits 3 rather than write it from unsigned predicates. |
-| Measured Improvement | 15 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 71 entries each tied to the command that shows it. |
+| Measured Improvement | 15 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 72 entries each tied to the command that shows it. |
 | Problem & User Value | 15 | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Reproducibility & Verification | 15 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under three minutes on a clean clone; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
 | Hot Take / Insights | 5 | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
