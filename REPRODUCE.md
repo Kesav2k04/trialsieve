@@ -1,7 +1,9 @@
 # Reproducing every number in this repository
 
-Three commands, no API key, no network, no model. Then a fourth that proves the
-first three were not theatre.
+Three commands, no API key, no model. Then a fourth that proves the first three
+were not theatre. The reproduction itself touches no network: the clone and the
+one `pip install` do, and after those two nothing in this repository opens a
+socket. If `pytest` is already installed, the whole thing is offline.
 
 ```bash
 git clone https://github.com/Kesav2k04/trialsieve.git && cd trialsieve
