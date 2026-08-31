@@ -718,11 +718,11 @@ The panel-reduction figures above inherit the same denominator: a screen is rule
 
 ## Provenance
 
-The commit that last touched each prompt-carrying file. If any of these is later than the commit that produced these numbers, the run is invalid and is rerun. See `docs/DEV_SPLIT.md`.
+What the model was sent, and where it lives. `prompt text` is a sha256 over every prompt constant in the module, parsed rather than grepped, so it moves when the prompt moves and not when a docstring does. If a digest changes after the run that produced these numbers, the run is invalid and is rerun. The commit is the file's last touch, which is what to go and read; it moves for prose too, so it is context rather than the rule. See `docs/DEV_SPLIT.md`.
 
-| file           | last touched by                              |
-|----------------|----------------------------------------------|
-| `compiler.py`  | `db4180db117c9148` 2026-08-30T00:03:20+05:30 |
-| `critic.py`    | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
-| `grounder.py`  | `270ed8190f8f1af6` 2026-08-29T05:12:12+05:30 |
-| `segmenter.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
+| file           | prompt text        | file last touched by                         |
+|----------------|--------------------|----------------------------------------------|
+| `compiler.py`  | `5e95ca75b50346a9` | `db4180db117c9148` 2026-08-30T00:03:20+05:30 |
+| `critic.py`    | `6e7b95fb750d4bc9` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
+| `grounder.py`  | `8c956f85d3d5c996` | `96e2e4138c8ae74f` 2026-08-31T11:41:52+05:30 |
+| `segmenter.py` | `9656db2bef4c7bd7` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |

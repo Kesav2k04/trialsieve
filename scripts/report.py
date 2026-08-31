@@ -12,6 +12,8 @@ and committed before the first scored run.
 from __future__ import annotations
 
 import argparse
+import ast
+import hashlib
 import json
 import random
 import subprocess
@@ -461,6 +463,29 @@ def worst_closed_world_criterion(run: Path, groups: dict) -> tuple | None:
             best = (cid, right[cid], n, fails[cid], meets[cid],
                     closed[cid][0], closed[cid][1])
     return best
+
+
+def prompt_digest(path) -> str:
+    """A digest of the strings this module sends to a model.
+
+    Every module-level assignment to an UPPER_CASE name whose value is a string
+    constant, hashed in name order. Parsed with `ast` because the alternative is a
+    regex over the file, and a regex over a file cannot tell a prompt from a
+    sentence about a prompt. `PROMPT_VERSION` is included on purpose: a version
+    bump with no text change is still a change the reader should see.
+    """
+    tree = ast.parse(Path(path).read_text(encoding="utf-8"))
+    parts = []
+    for node in tree.body:
+        if not isinstance(node, ast.Assign):
+            continue
+        for t in node.targets:
+            if (isinstance(t, ast.Name) and t.id.isupper()
+                    and isinstance(node.value, ast.Constant)
+                    and isinstance(node.value.value, str)):
+                parts.append((t.id, node.value.value))
+    blob = "\n".join(f"{k}\n{v}" for k, v in sorted(parts))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 def main() -> int:
@@ -1489,8 +1514,10 @@ def main() -> int:
                   f"unreported would have been a defect in the reporting.")
 
 
-    # provenance: which commit last touched each prompt file
-    prompts = {}
+    # provenance: the prompt text itself, and the commit that last touched the
+    # file it lives in. The digest is what decides validity; the commit is what a
+    # reader goes and looks at.
+    prompts, digests = {}, {}
     for f in sorted((ROOT / "src" / "trialsieve" / "agents").glob("*.py")):
         if f.name in ("__init__.py", "common.py"):
             continue
@@ -1500,7 +1527,9 @@ def main() -> int:
                 cwd=ROOT, capture_output=True, text=True).stdout.strip()
         except OSError:
             prompts[f.name] = ""
+        digests[f.name] = prompt_digest(f)
     results["prompt_files_last_commit"] = prompts
+    results["prompt_text_sha256"] = digests
     md.append("\n## Provenance\n")
     if not any(prompts.values()):
         # An unpacked source archive has the prompt files and no object database,
@@ -1512,13 +1541,17 @@ def main() -> int:
                   "comparing an empty block against a full one. See "
                   "`docs/DEV_SPLIT.md`.\n")
     else:
-        md.append("The commit that last touched each prompt-carrying file. If any of these is "
-                  "later than the commit that produced these numbers, the run is invalid and "
-                  "is rerun. See `docs/DEV_SPLIT.md`.\n")
-        md.append("| file | last touched by |")
-        md.append("|---|---|")
+        md.append("What the model was sent, and where it lives. `prompt text` is a sha256 "
+                  "over every prompt constant in the module, parsed rather than grepped, so "
+                  "it moves when the prompt moves and not when a docstring does. If a digest "
+                  "changes after the run that produced these numbers, the run is invalid and "
+                  "is rerun. The commit is the file's last touch, which is what to go and "
+                  "read; it moves for prose too, so it is context rather than the rule. See "
+                  "`docs/DEV_SPLIT.md`.\n")
+        md.append("| file | prompt text | file last touched by |")
+        md.append("|---|---|---|")
         for k, v in prompts.items():
-            md.append(f"| `{k}` | `{v[:16]}` {v[41:]} |")
+            md.append(f"| `{k}` | `{digests.get(k, '')[:16]}` | `{v[:16]}` {v[41:]} |")
 
     out = Path(a.out or (run / "report"))
     out.mkdir(parents=True, exist_ok=True)

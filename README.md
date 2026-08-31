@@ -8,7 +8,7 @@
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 75 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 76 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 149.2s captured, no key, no network. |
 | The video | submitted as a link on the entry form, 4:54. It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
@@ -466,7 +466,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 75 entries, each naming the evidence that found
+- **The Improvement Changelog**, 76 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.

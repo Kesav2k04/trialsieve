@@ -2547,6 +2547,7 @@ tests/test_not_compilable.py
 tests/test_open_world_broader.py
 tests/test_perturb.py
 tests/test_probe_judge.py
+tests/test_prompt_provenance.py
 tests/test_protocol_amendments.py
 tests/test_protocol_outcome_sections_are_frozen.py
 tests/test_published_environment_is_current.py

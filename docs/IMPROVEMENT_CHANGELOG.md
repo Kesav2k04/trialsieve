@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Seventy-five entries is
+iteration, each with its evidence and what it decided. Seventy-six entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -4014,3 +4014,40 @@ the artifact, with the evaluation exemption stated once instead of twice.
 `python -m pytest -q` is green at 387, and each claim can be checked against the
 line it describes: `src/trialsieve/baselines.py`, `src/trialsieve/agents/grounder.py`
 and `src/trialsieve/agents/compiler.py`.
+
+## 76. A run was declared invalid because a docstring was corrected
+
+**Found by** entry 75. Fixing the grounder's module docstring, which said the
+agent has three outcomes when it has four, made `python run.py reproduce` exit 1.
+
+**What was wrong.** `results/RESULTS.md` carries a Provenance table naming the
+commit that last touched each prompt-carrying file, under the rule: *if any of
+these is later than the commit that produced these numbers, the run is invalid and
+is rerun.* The rule is right. What it was measured against was the file's last
+commit, and a file holds a prompt, a docstring, comments and helpers. Editing a
+sentence about the code moved the commit, and the report then said a run that
+replays byte for byte from its own cassettes was invalid.
+
+That is a false positive from a proxy, and this repository has the same shape
+several entries above: a gate that measures something adjacent to the property it
+names. Left alone it costs more than a rerun. A rule that fires on prose gets
+ignored, and a rule that is ignored is not a rule, so the next time it fires for a
+real prompt edit nobody will look.
+
+**What changed.** The table now carries a sha256 over the prompt text itself: every
+module-level assignment to an UPPER_CASE name whose value is a string constant,
+hashed in name order, read with `ast` rather than a regex, because a regex over a
+file cannot tell a prompt from a sentence about a prompt. The digest is what
+invalidates a run. The commit stays in the table as the thing a reader goes and
+looks at, and the sentence now says which of the two is the rule.
+
+| | before | now |
+|---|---|---|
+| what invalidates a scored run | the file's last commit | **a digest of the prompt text** |
+| effect of correcting a docstring | run declared invalid | **none** |
+| effect of changing one character of a prompt | run declared invalid | **run declared invalid** |
+
+**Evidence.** `python -m pytest -q tests/test_prompt_provenance.py`, which rewrites
+the docstring and appends a comment in each of the four modules and requires the
+digest not to move, then edits the first prompt constant in each and requires it to
+move. Both halves, because a digest hard-coded to a constant passes the first one.
