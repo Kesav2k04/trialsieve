@@ -27,7 +27,7 @@ all until a named human has signed every predicate.
 
 [![reproduce](https://img.shields.io/badge/reproduce-one%20command%2C%20no%20key%2C%20no%20network-fca50a?style=flat-square)](REPRODUCE.md)
 [![tests](https://img.shields.io/badge/tests-400%20passing-fca50a?style=flat-square)](tests/)
-[![changelog](https://img.shields.io/badge/improvement%20changelog-78%20entries-fca50a?style=flat-square)](docs/IMPROVEMENT_CHANGELOG.md)
+[![changelog](https://img.shields.io/badge/improvement%20changelog-79%20entries-fca50a?style=flat-square)](docs/IMPROVEMENT_CHANGELOG.md)
 [![trajectories](https://img.shields.io/badge/agent%20trajectories-1%2C077%20recorded%20calls-fca50a?style=flat-square)](runs/tierA/trajectories/index.md)
 <br>
 [![model calls](https://img.shields.io/badge/model%20calls%20at%20screening%20time-0-8a3ffc?style=flat-square)](docs/AGENT_DESIGN.md)
@@ -46,7 +46,7 @@ all until a named human has signed every predicate.
 **[Agent trajectories](runs/tierA/trajectories/index.md)** &nbsp;·&nbsp;
 **[Every deliverable, mapped](SUBMISSION.md)**
 
-*micro1 Frontier Engineering Challenge · August 2026 · theme: build at the frontier of agentic AI*
+*micro1 Agentic Workflows Hackathon · August 2026 · choose a problem worth solving and use agents to solve it*
 
 </div>
 
@@ -64,7 +64,7 @@ all until a named human has signed every predicate.
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 78 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 79 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 155.0s captured, no key, no network. |
 | The video | submitted as a link on the entry form, 4:57 (297.0s of a 300s limit). It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
@@ -628,7 +628,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 78 entries, each naming the evidence that found
+- **The Improvement Changelog**, 79 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.

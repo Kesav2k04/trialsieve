@@ -4200,3 +4200,62 @@ run, and the next one will not announce itself either.
 in `.github/workflows`, against `results/published/results.json`. The failing
 comparison named it exactly: `- "run": "runs/tierA"` against `+ "run":
 "runs\tierA"`, with 187,460 identical leading characters skipped in the diff.
+
+## 79. The film was quoting a repository that had moved under it
+
+**Found by** re-running the film's own capture tool before the last render, and
+by reading the frames the top-level README shows rather than assuming they were
+what they had been cut to show.
+
+**What was wrong.** Four separate things, all the same shape: a still artifact
+asserting something that used to be true.
+
+**The terminals had drifted.** Every terminal in the film is a selection from a
+real command's captured output, which is worth more than it costs. But a
+selection is chosen by hand, and two selections had gone stale. One read `398
+passed` against a suite at 400. The other showed the gate refusing because nine
+criteria carried no signature, which was the state of the run before any
+predicate had been read: all nineteen were read afterwards, four were rejected,
+and the gate now refuses over the rejection instead. That is the stronger refusal
+of the two, an unsigned predicate being one nobody looked at and a rejected one
+being a criterion a reader found wrong, and the film was claiming the weaker one.
+
+**A comment claimed a test that did not exist.** The card's source said a named
+test in this repository read every string literal in the file and failed unless
+each occurred in the capture. No such file existed, here or anywhere. That is
+worse than claiming no check at all, because it tells the next reader the drift is
+impossible, and it drifted twice underneath it. The check is real now, it covers
+three beats and 28 displayed lines, and it was written by breaking a line on
+purpose and watching it fail before it was trusted.
+
+**The stills were cut mid-animation.** The five frames the README shows were taken
+once at timestamps nobody wrote down. Every one of them landed early. The
+comparison showed three of its four arms and none of the two lines that qualify
+them. The worklist showed none of what a nurse is actually left to ask. Worst,
+the card about the change that contributed most read **179 patients wrongly
+excluded**, because that counter animates 182 down to 18 and the frame was taken
+two frames in. 179 is not a figure this project publishes. It is a tween, sitting
+in a README under a sentence about not publishing numbers you cannot source. The
+timestamps are now in a script beside the film with what each frame has to show.
+
+**And the film played five decibels too quiet.** The render measures -19.2 LUFS
+integrated. A video platform normalises to about -14 and only ever turns a loud
+upload down, never a quiet one up, so the film would have played quieter than
+every other entry a reviewer watched, and a reviewer with a queue does not reach
+for the volume. Two passes of `loudnorm` bring it to -14.2 LUFS at a -1.3 dBTP
+peak with the video stream copied rather than re-encoded. The cost is stated
+rather than hidden: reaching -14 needs 4.75 dB and only 3.4 dB of peak headroom
+exists, so the loudness range narrows from 3.80 to 3.20 LU.
+
+**What connects them.** Every one of these passed every gate the project had,
+because each gate checked the thing that was generated and none checked the thing
+that was chosen. A capture is regenerated; which of its 2,006 lines to put on
+screen is a choice. A frame is rendered; which frame is a choice. The checks
+added here all sit on the choosing.
+
+**Evidence.** `python scripts/check_terminals.py` in the film tree, which fails
+on a planted one-character edit and was confirmed to. `python
+scripts/stills.py`, which names the second and the content of each frame.
+`python scripts/loudness.py --check`, which measures both files. All three live
+with the film rather than in this repository, for the reason given at the top of
+this file.

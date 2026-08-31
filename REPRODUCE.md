@@ -119,9 +119,12 @@ archive and not in a clone:
 11. **The full suite runs**, all 400 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
    trust if this sentence has drifted. From a clone that is 400 passed. From an
-   unpacked source archive it is 391 passed and 7 skipped, because seven of
-   them resolve a commit or read history and an archive carries the tree without
-   an object database. The pre-registration freeze is no longer among them:
+   unpacked source archive it is 393 passed and 7 skipped, because seven of them
+   resolve a commit or read history and an archive carries the tree without an
+   object database. Run `pytest` in an archive *before* this command rather than
+   after it and you get 389 passed and 11 skipped instead: four more tests read
+   an artifact that step 10 above regenerates, and they skip rather than fail
+   when it is not there yet. All three numbers add up to 400. The pre-registration freeze is no longer among them:
    `docs/protocol_registration.json` carries the registering commit and the
    digest of each frozen section, so an archive checks the freeze against that
    file and a clone additionally checks the file against git. Each prints the reason it skipped rather than passing
