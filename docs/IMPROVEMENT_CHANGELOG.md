@@ -4110,7 +4110,7 @@ ceiling. The film opened at 124.1 words per minute, went to 159.6, and reached
 178.4 by the top of the second beat, with the loudness jumping 34 percent at the
 splice because each beat was peak normalised rather than levelled.
 
-**What changed.** `deliver.py` replaces the pacing pass. Each gap is chosen from
+**What changed.** A delivery pass replaces the pacing pass. Each gap is chosen from
 what the two sentences either side of it are doing, a list continuing, a figure
 landing, a short line about to arrive, then moved by an offset derived from the
 sentence's own text so no two seams match, and filled with room tone lifted from
@@ -4141,12 +4141,12 @@ between 228 and 246 words per minute, including both lines that carry the panel
 counts, so bringing them to target would have traded a rushed line for a mushy
 one. The renderer is seeded, and one seed is one take, so a different seed is a
 different reading of the same words in the same voice from the same reference
-recording. `takes.py` renders eleven such lines across twelve seeds each, measures
+recording. A second tool renders eleven such lines across twelve seeds each, measures
 every take and keeps the one whose natural rate is closest to what the line
 should be. The worst line went from 246 to 190 words per minute before any
 stretch, and *Then I removed it.*, which is too short to stretch at all and ran at
-205.9, came back at 177.5. The chosen seeds are written to `out/narrate/seeds.json`
-so the film still renders the same way twice.
+205.9, came back at 177.5. The chosen seeds are written down beside the film
+so it still renders the same way twice.
 
 **And the first version of the replacement rebuilt the plateau at a new number.**
 Every sentence carrying no figure resolved to exactly one target, and correcting
@@ -4157,11 +4157,11 @@ the fastest target above the ceiling the file says it has and the allowance abov
 target is then added to that. A symmetric offset left the hot take's middle line at
 190 words per minute, which is where the film asks a viewer to hold its argument.
 
-**Evidence.** `python scripts/deliver.py --plan` prints the rate spread, the count
-of sentences sitting on one rate, and the number of distinct gaps, and refuses to
+**Evidence.** The delivery pass has a plan mode that prints the rate spread, the
+count of sentences sitting on one rate, and the number of distinct gaps, and refuses to
 run at all unless every input wav still matches the digest the renderer recorded
 for it, because running the tool on its own output would stretch speech twice and
-would look identical from the outside. `python scripts/takes.py --plan` lists the
+would look identical from the outside. The take search has the same, listing the
 lines a stretch cannot reach and what each one needs. Both tools and their
 measurements live with the film rather than in this repository, for the reason
 given at the top of this file.
