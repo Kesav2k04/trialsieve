@@ -8,10 +8,10 @@ environment
  "implementation": "CPython",
  "platform": "Windows-11-10.0.26200-SP0",
  "machine": "AMD64",
- "utc": "2026-08-30T22:49:07Z",
+ "utc": "2026-08-31T06:28:26Z",
  "locked_packages": 8,
  "lock_drift": {},
- "git_commit": "329fb9b6a3cd29da6129f4ffeabe0f198840ab4b",
+ "git_commit": "d0a287a40a509eeeffe18b216bd5c0fd8d64ed8d",
  "git_dirty": false,
  "git_dirty_excludes": "results/"
 }
@@ -22,7 +22,7 @@ engine gate
 
 $ python -m pytest -q tests/test_engine.py
 ....................................................                     [100%]
-52 passed in 0.17s
+52 passed in 0.20s
 
 ========================================================================
 dependency surface
@@ -86,6 +86,7 @@ $ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider s
 {"compiled": 19, "refused_plan": 8, "refused_grounding": 13, "errors": 0, "critic_confirmed": 1, "critic_dismissed": 1, "revised": 0, "revised_unchanged": 1}
 usage: {'calls': 202, 'prompt_tokens': 136765, 'completion_tokens': 34225, 'wall_s': 13981.92, 'cassette_hits': 202}
 wrote runs\tierA\compiled\criteria_seed7.json
+restored 19 human checkpoint(s) into the compiler trajectories from runs\tierA\signoffs.jsonl
 
 $ python scripts/compile_protocol.py --run runs/tierA --mode replay --provider shim --seed 8
   [ 1/40] NCT06983054-INC-01   COMPILED
@@ -209,7 +210,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
-  260/385 patients, 10400 cells, 1s
+  260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
@@ -246,7 +247,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.2,
+ "wall_s": 2.4,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -330,7 +331,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   60/385 patients, 2400 cells, 0s
   70/385 patients, 2800 cells, 0s
   80/385 patients, 3200 cells, 0s
-  90/385 patients, 3600 cells, 0s
+  90/385 patients, 3600 cells, 1s
   100/385 patients, 4000 cells, 1s
   110/385 patients, 4400 cells, 1s
   120/385 patients, 4800 cells, 1s
@@ -347,8 +348,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
-  260/385 patients, 10400 cells, 1s
-  270/385 patients, 10800 cells, 1s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
   300/385 patients, 12000 cells, 2s
@@ -384,7 +385,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.2,
+ "wall_s": 2.4,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -402,7 +403,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   50/385 patients, 2000 cells, 0s
   60/385 patients, 2400 cells, 0s
   70/385 patients, 2800 cells, 0s
-  80/385 patients, 3200 cells, 0s
+  80/385 patients, 3200 cells, 1s
   90/385 patients, 3600 cells, 1s
   100/385 patients, 4000 cells, 1s
   110/385 patients, 4400 cells, 1s
@@ -416,8 +417,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   190/385 patients, 7600 cells, 1s
   200/385 patients, 8000 cells, 1s
   210/385 patients, 8400 cells, 1s
-  220/385 patients, 8800 cells, 1s
-  230/385 patients, 9200 cells, 1s
+  220/385 patients, 8800 cells, 2s
+  230/385 patients, 9200 cells, 2s
   240/385 patients, 9600 cells, 2s
   250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
@@ -430,9 +431,9 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   330/385 patients, 13200 cells, 2s
   340/385 patients, 13600 cells, 2s
   350/385 patients, 14000 cells, 2s
-  360/385 patients, 14400 cells, 2s
-  370/385 patients, 14800 cells, 2s
-  380/385 patients, 15200 cells, 2s
+  360/385 patients, 14400 cells, 3s
+  370/385 patients, 14800 cells, 3s
+  380/385 patients, 15200 cells, 3s
   385/385 patients, 15400 cells, 3s
 
 {
@@ -457,7 +458,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 2482,
  "degradation_manifest_sha256": "36d4dbc2f9cb98a433ebecf0eacaee24583b07eb2c6448c7ad6bb163d5015ffe",
- "wall_s": 2.6,
+ "wall_s": 2.8,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -486,8 +487,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   200/385 patients, 8000 cells, 1s
   210/385 patients, 8400 cells, 1s
   220/385 patients, 8800 cells, 1s
-  230/385 patients, 9200 cells, 1s
-  240/385 patients, 9600 cells, 1s
+  230/385 patients, 9200 cells, 2s
+  240/385 patients, 9600 cells, 2s
   250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
@@ -501,8 +502,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   350/385 patients, 14000 cells, 2s
   360/385 patients, 14400 cells, 2s
   370/385 patients, 14800 cells, 2s
-  380/385 patients, 15200 cells, 2s
-  385/385 patients, 15400 cells, 2s
+  380/385 patients, 15200 cells, 3s
+  385/385 patients, 15400 cells, 3s
 
 {
  "arms": [
@@ -526,7 +527,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 4745,
  "degradation_manifest_sha256": "12cad59781e256a6c0452799a9be7b5b76e2d030a11ef718d9d49b05fb77dbfd",
- "wall_s": 2.5,
+ "wall_s": 2.7,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -540,7 +541,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   50/385 patients, 2000 cells, 0s
   60/385 patients, 2400 cells, 0s
   70/385 patients, 2800 cells, 0s
-  80/385 patients, 3200 cells, 0s
+  80/385 patients, 3200 cells, 1s
   90/385 patients, 3600 cells, 1s
   100/385 patients, 4000 cells, 1s
   110/385 patients, 4400 cells, 1s
@@ -554,9 +555,9 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   190/385 patients, 7600 cells, 1s
   200/385 patients, 8000 cells, 1s
   210/385 patients, 8400 cells, 1s
-  220/385 patients, 8800 cells, 1s
-  230/385 patients, 9200 cells, 1s
-  240/385 patients, 9600 cells, 1s
+  220/385 patients, 8800 cells, 2s
+  230/385 patients, 9200 cells, 2s
+  240/385 patients, 9600 cells, 2s
   250/385 patients, 10000 cells, 2s
   260/385 patients, 10400 cells, 2s
   270/385 patients, 10800 cells, 2s
@@ -568,10 +569,10 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
   330/385 patients, 13200 cells, 2s
   340/385 patients, 13600 cells, 2s
   350/385 patients, 14000 cells, 2s
-  360/385 patients, 14400 cells, 2s
-  370/385 patients, 14800 cells, 2s
-  380/385 patients, 15200 cells, 2s
-  385/385 patients, 15400 cells, 2s
+  360/385 patients, 14400 cells, 3s
+  370/385 patients, 14800 cells, 3s
+  380/385 patients, 15200 cells, 3s
+  385/385 patients, 15400 cells, 3s
 
 {
  "arms": [
@@ -595,7 +596,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --se
  "absent_means_override": null,
  "degradation_changes": 9652,
  "degradation_manifest_sha256": "7e31e857c75247b993f596560e3e0172a8ce2b17dda939de57ac67ad02f4028e",
- "wall_s": 2.4,
+ "wall_s": 2.8,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -631,8 +632,8 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS --absent-m
   230/385 patients, 9200 cells, 1s
   240/385 patients, 9600 cells, 1s
   250/385 patients, 10000 cells, 1s
-  260/385 patients, 10400 cells, 1s
-  270/385 patients, 10800 cells, 1s
+  260/385 patients, 10400 cells, 2s
+  270/385 patients, 10800 cells, 2s
   280/385 patients, 11200 cells, 2s
   290/385 patients, 11600 cells, 2s
   300/385 patients, 12000 cells, 2s
@@ -666,7 +667,7 @@ $ python scripts/run_arms.py --run runs/tierA --mode replay --arms TS --absent-m
  "absent_means_override": "unknown",
  "degradation_changes": 0,
  "degradation_manifest_sha256": null,
- "wall_s": 2.2,
+ "wall_s": 2.3,
  "usage": null,
  "panel_ids_sha256": "debca8e9b5b7d068d64b98c98ba601cce7427419ce5e36ad7f96b0d9d578dfc8"
 }
@@ -895,7 +896,7 @@ signed. That is enforced by exit code, and the refusal is tested.
 $ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/_gate_demo.md  ; echo $?
 REFUSED.
 
-9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
+2 compiled criterion/criteria were reviewed and REJECTED, so no worklist can be produced until they are recompiled. A rejected predicate is not dropped and screened around: a criterion the reviewer found wrong would then be applied to nobody, and the document would not say so. Rejected: NCT06989723-INC-02, NCT06989723-EXC-01. Read them with `python scripts/signoff.py --run <run> --show <id>`.
 3
 ```
 
@@ -915,13 +916,13 @@ $ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsign
 }
 wrote docs\sample_worklist.md
 wrote docs\sample_worklist.csv
-WARNING, running unsigned: 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
+WARNING, running unsigned: 2 compiled criterion/criteria were reviewed and REJECTED, so no worklist can be produced until they are recompiled. A rejected predicate is not dropped and screened around: a criterion the reviewer found wrong would then be applied to nobody, and the document would not say so. Rejected: NCT06989723-INC-02, NCT06989723-EXC-01. Read them with `python scripts/signoff.py --run <run> --show <id>`.
 0
 ```
 
 The document is produced and the first thing on it is this:
 
-> **NOT FOR USE.** No human has reviewed the compiled criteria behind this document. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
+> **NOT FOR USE.** Every criterion behind this document carries an approval. The run it was compiled in does not: 2 other compiled criteria in the same run were REJECTED (NCT06989723-INC-02, NCT06989723-EXC-01), and a signature clears a run rather than a page of it. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
 
 The override leaves a mark in the artifact rather than only in a shell
 history, which is the point. A reader who is handed the file can tell.
@@ -934,25 +935,32 @@ checks the two against each other and against this document.
 
 ## 3. Signed
 
-**Nothing is signed in this checkout, and that is not an oversight.**
+19 predicate(s) carry a signature in this checkout, from Kesav (author, not a clinician): 14 approved, 1 approved with note, 4 rejected.
 
-Signing is a human action. This script does not perform it and no automated
-step in this repository does either, because a signature an agent applied on
-a human's behalf is the exact failure the gate exists to prevent. What is
-shipped here is the mechanism and its refusal.
+The signature is over the predicate digest. Recompiling changes the digest
+and the signature no longer applies, which is what stops an approval from
+carrying over to a predicate nobody read. Each one was read on its own:
+`scripts/signoff.py` renders a predicate into English with the codes
+resolved to this site's own display names, and it has no bulk approval and
+no `--approve-all`.
 
-To clear it:
+### What the reviewer refused
 
-```bash
-python scripts/signoff.py --run runs/tierA --list
-python scripts/signoff.py --run runs/tierA --reviewer "Your Name" \
-    --role "clinical research coordinator"
-```
+The half of a checkpoint worth reading. A gate that only ever records
+approval is a gate nobody used.
 
-One predicate at a time, rendered into English with the codes resolved to
-the display names this site's own records use. The reviewer's role is
-recorded in the signature, so a signature from someone who is not a
-clinician says so.
+| criterion | decision | the reviewer's reason |
+|---|---|---|
+| `NCT06717698-INC-07` | REJECTED | the vocabulary cannot establish the T2DM; negating undetermined leaves concept is unverified. |
+| `NCT06983054-INC-01` | REJECTED | because the vocabulary lacks the exact T2DM concept code and cannot establish ADA criteria. |
+| `NCT06989723-EXC-01` | REJECTED | it is missing exact type 1 diabetes concept code in vocabulary |
+| `NCT06989723-INC-02` | REJECTED | it is missing exact T2DM vocabulary code; only generic diabetes codes available |
+| `NCT06989723-INC-05` | APPROVED_WITH_NOTE | treats the absent prescriptions as proof of absence; four codes have 0 panel counts |
+
+A rejection is not a criterion quietly dropped. `signoff.enforce()`
+refuses the whole worklist until the predicate is recompiled, because a
+criterion the reviewer found wrong would otherwise be applied to nobody
+and the document would not say so.
 
 
 wrote docs\GATE.md
@@ -960,7 +968,7 @@ wrote docs\GATE.md
 $ python scripts/trajectories.py --run runs/tierA
 rendered 235 trajectories, wrote runs\tierA\trajectories\index.md
 {
- "events": 4094,
+ "events": 4113,
  "llm_calls": 1077,
  "tool_calls": 265,
  "validation_errors": 3,
@@ -972,7 +980,7 @@ rendered 235 trajectories, wrote runs\tierA\trajectories\index.md
  "revisions": 5,
  "revisions_changed": 3,
  "normalisations": 72,
- "human_checkpoints": 0,
+ "human_checkpoints": 19,
  "completion_tokens": 148878
 }
 
@@ -1057,7 +1065,7 @@ check every path a document points at
 ========================================================================
 
 $ python scripts/linkcheck.py
-checked 762 path reference(s) and 22 anchor(s) across 23 document(s), resolved against git
+checked 777 path reference(s) and 25 anchor(s) across 23 document(s), resolved against git
 every path a document points at exists, and every anchor names a heading that is there
 
 ========================================================================
@@ -1095,7 +1103,7 @@ call, and its wall clock is seconds.
 | arms TS, B0, B1 over 385 patients, group k0_seed9 | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | arms TS, B0, B1 over 385 patients, group k10_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
 | arms TS, B0, B1 over 385 patients, group k20_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
-| arms TS, B0, B1 over 385 patients, group k40_seed7 | 0 | 0 | 0 | 0 | 2 s | under a cent |
+| arms TS, B0, B1 over 385 patients, group k40_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
 | arms TS over 385 patients, group k0_seed7 | 0 | 0 | 0 | 0 | 3 s | under a cent |
 | arms TS over 385 patients, group ow | 0 | 0 | 0 | 0 | 2 s | under a cent |
 | second blind labeller, Checker B | 100 | 0 | 444,910 | 2,680 | 1 h 55 min | $0.14 |
@@ -1779,7 +1787,7 @@ It does rule out the reading prediction 4 was written to catch. If the gap came 
 
 ## Label noise floor
 
-**Who wrote gold.** Checker A is hand-authored by the author of this system. There was no independent clinical annotator, and neither labeller is a trial coordinator. That is a real bias in the direction of this system looking correct: a gold predicate written by the same person who wrote the compiler can encode the same reading of a criterion, and agreement would then measure one mind against itself. Checker B exists to bound it. B works from the criterion prose and a flattened patient table on a different model family, with no sight of the IR, of A, or of any system output, and B's labels are committed before any commit carrying system output. What that buys is a published disagreement rate, below which no difference in this report is called interpretable. What it does not buy is clinical ground truth. Read every number above as agreement with two independent readings of the protocol text, one of them the author's, rather than as agreement with a clinician.
+**Who wrote gold.** Checker A is hand-authored by the author of this system. There was no independent clinical annotator, and neither labeller is a trial coordinator. That is a real bias in the direction of this system looking correct: a gold predicate written by the same person who wrote the compiler can encode the same reading of a criterion, and agreement would then measure one mind against itself. Checker B exists to bound it. B works from the criterion prose and a flattened patient table on a different model family, with no sight of the IR, of A, or of any system output. This paragraph used to add that B's labels were committed before any commit carrying system output, which was true when it was written and stopped being true when B and the scored compile ended up running concurrently on one machine: commit order now records which process finished first and nothing else. Amendment A1 in `docs/EVAL_PROTOCOL.md` withdrew it, and `python scripts/verify.py blind` is the replacement, because blindness is a fact about what was in the prompt rather than about when a file was written. What the second labelling buys is a published disagreement rate, below which no difference in this report is called interpretable. What it does not buy is clinical ground truth. Read every number above as agreement with two independent readings of the protocol text, one of them the author's, rather than as agreement with a clinician.
 
 Checker A and Checker B labelled the same 180 cells independently. B saw the criterion prose and a flattened patient table, on a different model family, with no sight of the predicate IR, of A, or of any system output. `python scripts/verify.py blind` reads that claim out of B's own recorded prompts.
 
@@ -1883,14 +1891,14 @@ The panel-reduction figures above inherit the same denominator: a screen is rule
 
 ## Provenance
 
-The commit that last touched each prompt-carrying file. If any of these is later than the commit that produced these numbers, the run is invalid and is rerun. See `docs/DEV_SPLIT.md`.
+What the model was sent, and where it lives. `prompt text` is a sha256 over every prompt constant in the module, parsed rather than grepped, so it moves when the prompt moves and not when a docstring does. If a digest changes after the run that produced these numbers, the run is invalid and is rerun. The commit is the file's last touch, which is what to go and read; it moves for prose too, so it is context rather than the rule. See `docs/DEV_SPLIT.md`.
 
-| file | last touched by |
-|---|---|
-| `compiler.py` | `db4180db117c9148` 2026-08-30T00:03:20+05:30 |
-| `critic.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
-| `grounder.py` | `270ed8190f8f1af6` 2026-08-29T05:12:12+05:30 |
-| `segmenter.py` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
+| file | prompt text | file last touched by |
+|---|---|---|
+| `compiler.py` | `5e95ca75b50346a9` | `db4180db117c9148` 2026-08-30T00:03:20+05:30 |
+| `critic.py` | `6e7b95fb750d4bc9` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
+| `grounder.py` | `8c956f85d3d5c996` | `96e2e4138c8ae74f` 2026-08-31T11:41:52+05:30 |
+| `segmenter.py` | `9656db2bef4c7bd7` | `6901032c4e9d09b2` 2026-08-29T02:08:48+05:30 |
 
 wrote results\RESULTS.md and results\results.json
 
@@ -1903,12 +1911,12 @@ the full test suite
 
 $ python -m pytest -q
 ........................................................................ [ 18%]
-........................................................................ [ 37%]
-........................................................................ [ 56%]
-........................................................................ [ 75%]
-........................................................................ [ 93%]
-.......................                                                  [100%]
-383 passed in 31.10s
+........................................................................ [ 36%]
+........................................................................ [ 54%]
+........................................................................ [ 72%]
+........................................................................ [ 90%]
+.....................................                                    [100%]
+397 passed in 35.48s
 
 ========================================================================
 verification
@@ -1989,6 +1997,6 @@ compare against the published numbers
 ========================================================================
 IDENTICAL: every published number reproduced on this machine, and results/RESULTS.md is byte-identical to the published copy.
 
-OK  (reproduce in 149.2s)
+OK  (reproduce in 163.6s)
 
 exit 0
