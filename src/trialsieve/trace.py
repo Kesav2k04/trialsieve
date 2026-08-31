@@ -230,7 +230,15 @@ def render_markdown(path: str | Path) -> str:
                       f"returned to the model:",
                       "", "```", e["feedback_to_model"], "```", ""]
         elif k == "human_checkpoint":
-            lines += [head + f": **{e['decision']}** by {e['reviewer']}", "",
+            # The role is on the event because a signature that does not say what
+            # the signer is qualified to say cannot be audited against the ground
+            # rule it exists to satisfy. It reached the ledger and the gate
+            # document and stopped short of the page a reader actually opens.
+            who = e["reviewer"]
+            role = str(e.get("reviewer_role") or "").strip()
+            if role and role != "unspecified":
+                who = f"{who} ({role})"
+            lines += [head + f": **{e['decision']}** by {who}", "",
                       f"> {e['rationale']}", "",
                       f"artifact sha256 `{e['artifact_sha256'][:16]}`", ""]
         else:

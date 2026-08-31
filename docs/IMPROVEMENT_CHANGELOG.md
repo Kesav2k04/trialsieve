@@ -3920,10 +3920,21 @@ code that states type-2 diabetes exactly. That is the challenging case this
 submission already argues is the hard one, reached independently by a person reading
 the rendered predicate rather than by the harness that was built to look for it.
 
+**And the rendered page named the reviewer without saying what they are
+qualified to say.** `reviewer_role` is on every signature for one reason: the ground
+rule is that a qualified human reviews anything that could affect a person, and a
+signature that does not name the signer's qualification cannot be audited against
+it. The field reached `signoffs.jsonl` and `docs/GATE.md` and stopped short of the
+trajectory, which is the page a reader actually opens to check a human checkpoint.
+So that page read **APPROVED by Kesav** and left the only question worth asking
+unanswered. It now reads **APPROVED by Kesav (author, not a clinician)**.
+
 **Evidence.** `python -m pytest -q tests/test_human_checkpoint.py
 tests/test_worklist_gate.py`, which now includes a test that deletes the events the
-way a rebuild does and requires them back, and a test that rejects a criterion and
-requires the document not to report it as no review. Then `python run.py reproduce`,
+way a rebuild does and requires them back, a test that requires one decision to stay
+one event rather than multiply across seeds, a test that rejects a criterion and
+requires the document not to report it as no review, and a test that renders the page
+and requires the role on it. Then `python run.py reproduce`,
 and `runs/tierA/trajectories/index.md`.
 
 ## 74. Two gates reported a pass having looked at nothing

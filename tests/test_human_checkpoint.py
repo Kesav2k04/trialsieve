@@ -237,3 +237,30 @@ def test_one_decision_does_not_become_three_checkpoints(tmp_path):
     signed = run / "trajectories" / "compiler" / "NCT00000001-INC-01-seed7.jsonl"
     assert '"human_checkpoint"' in signed.read_text(encoding="utf-8"), (
         "the one checkpoint landed in a seed the reviewer never saw")
+
+
+def test_the_rendered_page_says_what_the_reviewer_is_qualified_to_say(run_dir):
+    """The one question a reader of a human checkpoint should be able to answer.
+
+    `reviewer_role` exists because the ground rule is that a qualified human
+    reviews anything that could affect a person, and a signature that does not
+    name the signer's qualification cannot be audited against it. It reached the
+    ledger and `docs/GATE.md`, and the trajectory page read "APPROVED by Kesav".
+    """
+    run, compiled = run_dir
+    sign(run, chr(10).join(["a", "fine", "q", ""]))
+    import sys as _sys
+
+    _sys.path.insert(0, str(ROOT / "src"))
+    from trialsieve.trace import render_markdown
+
+    # Signing appends to the JSONL; `scripts/trajectories.py` renders the page,
+    # and that is what the reproduce path runs. Render it here the same way.
+    src = next((t for t in (run / "trajectories" / "compiler").glob("*.jsonl")
+                if "human_checkpoint" in t.read_text(encoding="utf-8")), None)
+    assert src is not None, "nothing was signed, so there is nothing to render"
+    text = render_markdown(src)
+    assert "human_checkpoint" in text, "the renderer dropped the event"
+    assert "author, not a clinician" in text, (
+        "the rendered checkpoint names the reviewer and not their role, so a "
+        "reader cannot tell whether a clinician signed it")
