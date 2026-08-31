@@ -4165,3 +4165,38 @@ would look identical from the outside. The take search has the same, listing the
 lines a stretch cannot reach and what each one needs. Both tools and their
 measurements live with the film rather than in this repository, for the reason
 given at the top of this file.
+
+## 78. The reproduction claim was false on every machine but this one
+
+**Found by** the continuous integration job named *published numbers from a clean
+clone*, which runs `python run.py reproduce` on Linux. Reading its history: it had
+never once been green.
+
+**What was wrong.** `scripts/report.py` opened its results with `{"run": str(run)}`.
+`str` on a path writes the separator of the machine holding it, so `results.json`
+published from Windows recorded `runs\tierA` and the same run scored on Linux
+recorded `runs/tierA`. Every number in the file matched. The byte-compare did not,
+and `python run.py reproduce` printed DIFFERENT for the one thing this repository
+asks a reader to check. A judge on Linux or macOS, which is most of them, would
+have run the headline command and been told the numbers do not reproduce.
+
+**The tests could not see it and neither could I.** Every test ran on the machine
+that wrote the file, where the two separators agree, so the local suite was green
+at 399 while the claim was broken. The signal was in a place I had not looked: a
+red badge on a job I had assumed was failing for the reason I had already fixed.
+Two earlier defects this week hid in the same job, a syntax error valid on my
+interpreter and a test that pinned the interpreter version, and I fixed each and
+moved on without asking whether the job then passed.
+
+**What changed.** `report.py` and `scripts/compare_probes.py` write
+`Path(...).as_posix()`. `results/results.json` and its published copy were
+regenerated, and the two probe comparison files with them: four lines across four
+files, no number touched. A test now reads the `run` field out of both copies of
+`results.json` and fails on a backslash, because the class of defect is a
+published artifact carrying a string that describes the machine rather than the
+run, and the next one will not announce itself either.
+
+**Evidence.** `python run.py reproduce` on `ubuntu-latest`, which is the workflow
+in `.github/workflows`, against `results/published/results.json`. The failing
+comparison named it exactly: `- "run": "runs/tierA"` against `+ "run":
+"runs\tierA"`, with 187,460 identical leading characters skipped in the diff.

@@ -158,7 +158,9 @@ def main() -> int:
                   f"status {r['status']:14s} codes {r['got_codes']} "
                   f"broader {r['got_broader']}")
 
-    out = {"before": str(before_p), "after": str(after_p),
+    # Forward slashes here for the same reason as in `report.py`: the separator
+    # of the machine that ran the comparison is not one of the findings.
+    out = {"before": Path(before_p).as_posix(), "after": Path(after_p).as_posix(),
            "compared_on": common, "before_correct": b_ok, "after_correct": a_ok,
            "n_common": len(common),
            "by_class_before": score([before[k] for k in common]),

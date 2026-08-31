@@ -1,5 +1,5 @@
 {
- "run": "runs\\tierA",
+ "run": "runs/tierA",
  "groups": {
   "b2_10p": {
    "n_rows": 400,

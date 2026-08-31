@@ -143,3 +143,24 @@ def test_the_three_published_files_were_written_together() -> None:
         f"hours apart: {stamps}. `run.py publish` writes them together, so this "
         f"means two of them were copied by hand and the third was left behind. "
         f"Re-run `python run.py publish`.")
+
+
+def test_the_published_numbers_name_no_machine_specific_path() -> None:
+    """A path separator is not a finding, and it broke the byte-compare.
+
+    `results.json` recorded its run directory with `str(Path)`, which writes the
+    separator of whichever machine scored it. Published from Windows it read
+    `runs\tierA`; regenerated on Linux the same run read `runs/tierA`. Every
+    number matched and `python run.py reproduce` still printed DIFFERENT, so the
+    one claim this repository makes failed for every judge not on Windows, and
+    the CI job named "published numbers from a clean clone" had never been green.
+    """
+    for name in ("results.json", "published/results.json"):
+        path = ROOT / "results" / name
+        if not path.exists():
+            continue
+        run = json.loads(path.read_text(encoding="utf-8")).get("run", "")
+        assert chr(92) not in run, (
+            f"results/{name} records its run as {run!r}. A backslash there is "
+            f"the separator of the machine that wrote it, so this file cannot "
+            f"byte-compare against the same run scored anywhere else.")

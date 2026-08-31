@@ -1,6 +1,6 @@
 {
- "before": "runs\\probe-before\\probe.json",
- "after": "runs\\probe-after\\probe.json",
+ "before": "runs/probe-before/probe.json",
+ "after": "runs/probe-after/probe.json",
  "compared_on": [
   "Acute pancreatitis",
   "Anaemia",

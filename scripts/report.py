@@ -500,7 +500,13 @@ def main() -> int:
         print(f"no cell files in {run/'cells'}", file=sys.stderr)
         return 2
 
-    results: dict[str, dict] = {"run": str(run), "groups": {}}
+    # Forward slashes on every platform. `str(run)` writes the separator of the
+    # machine that scored the run, so `results.json` published from Windows read
+    # `runs\tierA` and the same file regenerated on Linux read `runs/tierA`. The
+    # numbers matched; the byte-compare did not, and `python run.py reproduce`
+    # printed DIFFERENT for every judge not on Windows, which is the one claim
+    # this repository makes.
+    results: dict[str, dict] = {"run": Path(run).as_posix(), "groups": {}}
     md: list[str] = []
 
     # The label noise floor is loaded first because the comparison tables below

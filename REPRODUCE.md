@@ -116,9 +116,9 @@ archive and not in a clone:
    token counts, so the money figures in the prose come from the run rather than
    from a memory of it.
 10. **The report is scored** into `results/results.json`.
-11. **The full suite runs**, all 399 tests, now that every artifact they read
+11. **The full suite runs**, all 400 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
-   trust if this sentence has drifted. From a clone that is 399 passed. From an
+   trust if this sentence has drifted. From a clone that is 400 passed. From an
    unpacked source archive it is 391 passed and 7 skipped, because seven of
    them resolve a commit or read history and an archive carries the tree without
    an object database. The pre-registration freeze is no longer among them:
