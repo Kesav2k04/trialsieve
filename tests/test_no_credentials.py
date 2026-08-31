@@ -73,15 +73,28 @@ def _readable_text(p: Path) -> str | None:
     tracked file in the repository, was never looked at. It happens to be clean,
     which is why the gap survived: nothing about the run looked different.
 
-    Returns None only for a file that is still not text after the right decoder
-    has been tried. The caller counts those rather than discarding them.
+    A file that is not text at all still gets scanned. An image is bytes, and a
+    tool that wrote it can put a source path or a username into those bytes: PNG
+    carries tEXt chunks and most encoders will happily fill them in. Returning
+    None for it would make the scan silent about exactly the files whose contents
+    nobody reads. So bytes that are not UTF-8 are decoded as latin-1, which cannot
+    fail and maps every byte to one character, leaving any ASCII path inside the
+    binary exactly where a search will find it.
+
+    Returns None only for a file that cannot be opened or decompressed at all.
+    The caller counts those rather than discarding them.
     """
     try:
         if p.suffix == ".gz":
             with gzip.open(p, "rt", encoding="utf-8", errors="strict") as fh:
                 return fh.read()
         return p.read_text(encoding="utf-8", errors="strict")
-    except (UnicodeDecodeError, OSError, gzip.BadGzipFile, EOFError):
+    except UnicodeDecodeError:
+        try:
+            return p.read_bytes().decode("latin-1")
+        except OSError:
+            return None
+    except (OSError, gzip.BadGzipFile, EOFError):
         return None
 
 
