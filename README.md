@@ -26,7 +26,7 @@ all until a named human has signed every predicate.
 </table>
 
 [![reproduce](https://img.shields.io/badge/reproduce-one%20command%2C%20no%20key%2C%20no%20network-fca50a?style=flat-square)](REPRODUCE.md)
-[![tests](https://img.shields.io/badge/tests-398%20passing-fca50a?style=flat-square)](tests/)
+[![tests](https://img.shields.io/badge/tests-399%20passing-fca50a?style=flat-square)](tests/)
 [![changelog](https://img.shields.io/badge/improvement%20changelog-77%20entries-fca50a?style=flat-square)](docs/IMPROVEMENT_CHANGELOG.md)
 [![trajectories](https://img.shields.io/badge/agent%20trajectories-1%2C077%20recorded%20calls-fca50a?style=flat-square)](runs/tierA/trajectories/index.md)
 <br>
@@ -182,7 +182,7 @@ that are right.
 
 | | |
 | --- | --- |
-| [`tests/`](tests) | 57 files, 398 tests. Including the ones that fail this README when a figure moves |
+| [`tests/`](tests) | 57 files, 399 tests. Including the ones that fail this README when a figure moves |
 | [`data/`](data) | 14 files. Synthea and ClinicalTrials.gov, with the licence notice and pinned digests |
 
 Also tracked: [`.github/`](.github), [`tools/`](tools), and the eleven files at the root.
