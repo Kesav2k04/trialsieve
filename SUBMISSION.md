@@ -203,8 +203,8 @@ produced a number, and none of it is in this repository.
 | Remotion 4.0.489 | Remotion Licence, free for individuals and small companies | renders the sixteen cards to 1920x1080 |
 | React 19.1.1 | MIT | the cards are components |
 | IBM Plex Sans and Mono | SIL Open Font Licence 1.1 | the two faces, loaded from the package rather than from a font host |
-| Chatterbox TTS 0.1.7 (Resemble AI) | MIT | speaks the narration in a clone of my own voice, offline, at a fixed seed |
-| ffmpeg | LGPL/GPL | time-stretches each spoken sentence toward an even pace with the pitch held, and measures the rendered mp4 so its duration is read rather than claimed |
+| Chatterbox TTS 0.1.7 (Resemble AI) | MIT | speaks the narration in a clone of my own voice, offline, at a fixed seed. Eleven lines came out fast enough that no time-stretch could slow them without smearing, so those carry a different recorded seed, chosen by measuring twelve takes of each and keeping the one nearest its target |
+| ffmpeg | LGPL/GPL | time-stretches each spoken sentence with the pitch held, toward a target set by how many of its words are quantities rather than toward one rate for the film, and measures the rendered mp4 so its duration is read rather than claimed |
 
 The voice is mine. The reference recording is not published, and neither is
 anything that could reconstruct it. The opening greeting is that recording
