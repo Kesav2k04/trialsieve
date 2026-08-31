@@ -8,7 +8,7 @@
 |---|---|
 | Solution code | [`src/trialsieve/`](src/trialsieve/), six agents. Runs offline, no dependencies. |
 | Agent instructions, verbatim | [`src/trialsieve/agents/`](src/trialsieve/agents/) as constants, and the first event of every trajectory. Mapped in [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md). |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 72 entries. Its opening table is the whole arc. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 75 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 149.2s captured, no key, no network. |
 | The video | submitted as a link on the entry form, 4:54. It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
@@ -386,16 +386,22 @@ every decision rather than the first 25, and
 [docs/sample_worklist.csv](docs/sample_worklist.csv), 1,155 rows of one patient per
 criterion, which is the form a screening log or a CTMS takes.
 
-The predicates behind it cannot run against anyone until a named human has read and
-signed each one:
+No document that could reach a coordinator can be produced from predicates a named
+human has not read and signed. The gate stops the artifact, not the arithmetic:
 
 ```bash
 python scripts/signoff.py --run runs/tierA --reviewer "..." --role "..."
 ```
 
+That has been done here, and it is why the sample above carries a banner: of the
+nineteen compiled predicates, four were rejected, so the gate is closed and the
+document only exists under `--allow-unsigned`. What the reviewer refused, in their
+own words, is in [docs/GATE.md](docs/GATE.md#3-signed).
+
 The signature is over the predicate digest, so recompiling invalidates it. There is
 no `--approve-all`, because a gate you can clear without reading is not a gate.
-Evaluation runs are exempt and say so: measuring your own error rate affects nobody.
+Evaluation runs execute the same predicates and are exempt, and say so where they
+are scored: measuring your own error rate affects nobody.
 
 ## Reproducing it
 
@@ -403,6 +409,21 @@ Evaluation runs are exempt and say so: measuring your own error rate affects nob
 python -m pip install pytest      # the only install
 python run.py reproduce           # offline, no API key, no model
 ```
+
+That one command runs all three arms. If you want them separately, the brief asks
+for the solution, the baseline and the evaluation as distinct commands, and they
+are:
+
+```bash
+python scripts/compile_protocol.py --run runs/tierA --mode replay --provider shim --seed 7
+python scripts/run_arms.py --run runs/tierA --mode replay --arms TS,B0,B1 --seed 7
+python scripts/run_arms.py --run runs/tierA --mode replay --arms B2 --patients 10 --tag b2_10p --model gemini-3.7-flash-medium
+python scripts/report.py --run runs/tierA --out results
+```
+
+The first two are the solution, the third is the per-cell baseline it is measured
+against, and the fourth scores both. [REPRODUCE.md](REPRODUCE.md#the-solution-the-baseline-and-the-evaluation-as-three-separate-commands)
+says what each one reads and writes.
 
 Zero runtime dependencies: every import in `src/`, `evaluation/`, `scripts/` and
 `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops
@@ -445,7 +466,7 @@ Results, the improvement history, and the trajectories:
 - **The comparison against the baseline**, four columns and one page:
   [docs/SCORECARD.md](docs/SCORECARD.md). Start here. Every number in it is read
   out of `results/results.json`.
-- **The Improvement Changelog**, 72 entries, each naming the evidence that found
+- **The Improvement Changelog**, 75 entries, each naming the evidence that found
   it and what moved afterwards:
   [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening
   table is the whole arc in one screen, baseline to final.
@@ -535,13 +556,14 @@ win and neither can answering everything.
 - Nothing consequential happens. The system produces a document. It enrols
   nobody, contacts nobody, and writes to no clinical system.
 - The sign-off gate is a human action and it is left to a human, so whether it
-  has been cleared in this checkout is a fact in the repository rather than a
-  claim in this file: `python scripts/signoff.py --run runs/tierA --list` prints
-  it. It reads `runs/tierA/signoffs.jsonl`, which does not exist here, and that
-  absence is the answer rather than an oversight. Until the gate is cleared,
-  `scripts/worklist.py` refuses with exit code 3. There is an `--allow-unsigned`
-  flag for showing the document anyway, and using it stamps **NOT FOR USE**
-  across every page.
+  has been cleared is a fact in the repository rather than a claim in this file:
+  `python scripts/signoff.py --run runs/tierA --list` prints it, reading
+  `runs/tierA/signoffs.jsonl`. Nineteen decisions are in that file and the run is
+  **not** cleared: fourteen approved, one approved with a note, four rejected, all
+  four for the same reason. So `scripts/worklist.py` refuses here with exit code
+  3. There is an `--allow-unsigned` flag for showing the document anyway, and
+  using it stamps **NOT FOR USE** across every page along with the reason it had
+  to. The reviewer is the author, not a clinician, and every line records that.
 
 Each ground rule the brief sets, against the thing that satisfies it, is in
 [SUBMISSION.md](SUBMISSION.md#ground-rules).

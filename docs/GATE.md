@@ -15,7 +15,7 @@ signed. That is enforced by exit code, and the refusal is tested.
 $ python scripts/worklist.py --run runs/tierA --operating-point 0 --out docs/_gate_demo.md  ; echo $?
 REFUSED.
 
-9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
+2 compiled criterion/criteria were reviewed and REJECTED, so no worklist can be produced until they are recompiled. A rejected predicate is not dropped and screened around: a criterion the reviewer found wrong would then be applied to nobody, and the document would not say so. Rejected: NCT06989723-INC-02, NCT06989723-EXC-01. Read them with `python scripts/signoff.py --run <run> --show <id>`.
 3
 ```
 
@@ -35,13 +35,13 @@ $ python scripts/worklist.py --run runs/tierA --operating-point 0 --allow-unsign
 }
 wrote docs\sample_worklist.md
 wrote docs\sample_worklist.csv
-WARNING, running unsigned: 9 compiled criterion/criteria have no human sign-off and 0 were rejected. A worklist cannot be produced from unreviewed predicates. Run `python scripts/signoff.py --run <run>` to review them. Unsigned: NCT06983054-INC-02, NCT06983054-INC-03, NCT06983054-INC-04, NCT06989723-INC-01, NCT06989723-INC-02, NCT06989723-INC-05 ...
+WARNING, running unsigned: 2 compiled criterion/criteria were reviewed and REJECTED, so no worklist can be produced until they are recompiled. A rejected predicate is not dropped and screened around: a criterion the reviewer found wrong would then be applied to nobody, and the document would not say so. Rejected: NCT06989723-INC-02, NCT06989723-EXC-01. Read them with `python scripts/signoff.py --run <run> --show <id>`.
 0
 ```
 
 The document is produced and the first thing on it is this:
 
-> **NOT FOR USE.** No human has reviewed the compiled criteria behind this document. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
+> **NOT FOR USE.** Every criterion behind this document carries an approval. The run it was compiled in does not: 2 other compiled criteria in the same run were REJECTED (NCT06989723-INC-02, NCT06989723-EXC-01), and a signature clears a run rather than a page of it. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
 
 The override leaves a mark in the artifact rather than only in a shell
 history, which is the point. A reader who is handed the file can tell.
@@ -54,22 +54,29 @@ checks the two against each other and against this document.
 
 ## 3. Signed
 
-**Nothing is signed in this checkout, and that is not an oversight.**
+19 predicate(s) carry a signature in this checkout, from Kesav (author, not a clinician): 14 approved, 1 approved with note, 4 rejected.
 
-Signing is a human action. This script does not perform it and no automated
-step in this repository does either, because a signature an agent applied on
-a human's behalf is the exact failure the gate exists to prevent. What is
-shipped here is the mechanism and its refusal.
+The signature is over the predicate digest. Recompiling changes the digest
+and the signature no longer applies, which is what stops an approval from
+carrying over to a predicate nobody read. Each one was read on its own:
+`scripts/signoff.py` renders a predicate into English with the codes
+resolved to this site's own display names, and it has no bulk approval and
+no `--approve-all`.
 
-To clear it:
+### What the reviewer refused
 
-```bash
-python scripts/signoff.py --run runs/tierA --list
-python scripts/signoff.py --run runs/tierA --reviewer "Your Name" \
-    --role "clinical research coordinator"
-```
+The half of a checkpoint worth reading. A gate that only ever records
+approval is a gate nobody used.
 
-One predicate at a time, rendered into English with the codes resolved to
-the display names this site's own records use. The reviewer's role is
-recorded in the signature, so a signature from someone who is not a
-clinician says so.
+| criterion | decision | the reviewer's reason |
+|---|---|---|
+| `NCT06717698-INC-07` | REJECTED | the vocabulary cannot establish the T2DM; negating undetermined leaves concept is unverified. |
+| `NCT06983054-INC-01` | REJECTED | because the vocabulary lacks the exact T2DM concept code and cannot establish ADA criteria. |
+| `NCT06989723-EXC-01` | REJECTED | it is missing exact type 1 diabetes concept code in vocabulary |
+| `NCT06989723-INC-02` | REJECTED | it is missing exact T2DM vocabulary code; only generic diabetes codes available |
+| `NCT06989723-INC-05` | APPROVED_WITH_NOTE | treats the absent prescriptions as proof of absence; four codes have 0 panel counts |
+
+A rejection is not a criterion quietly dropped. `signoff.enforce()`
+refuses the whole worklist until the predicate is recompiled, because a
+criterion the reviewer found wrong would otherwise be applied to nobody
+and the document would not say so.

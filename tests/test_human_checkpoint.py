@@ -138,3 +138,102 @@ def test_the_index_counts_what_was_written(run_dir):
     index = (run / "trajectories" / "index.md").read_text(encoding="utf-8")
     assert "| human checkpoints | 1 |" in index, (
         "the event was written and the index did not count it")
+
+
+def test_a_rebuild_cannot_lose_the_checkpoint(run_dir):
+    """The one event in a trajectory that no replay can reconstruct.
+
+    Everything else in these files records a model call, so a rebuild from the
+    cassettes puts it back. A human's decision has no cassette. It was appended
+    to the compiler trajectory after the compile, and `run.py reproduce` re-runs
+    the compile, which rewrites that file. The first reproduce after a sign-off
+    deleted all nineteen of them and the index went back to printing zero while
+    the ledger still held every decision.
+
+    So the ledger is the durable record and the trajectory is derived from it.
+    This deletes the events the way a rebuild does, then requires them back.
+    """
+    import json as _json
+    import sys as _sys
+
+    _sys.path.insert(0, str(ROOT / "src"))
+    from trialsieve.signoff import replay_into_trajectories
+
+    run, compiled = run_dir
+    sign(run, "a\nfine\nq\n")
+    traj = next((t for t in (run / "trajectories" / "compiler").glob("*.jsonl")
+                 if '"human_checkpoint"' in t.read_text(encoding="utf-8")), None)
+    assert traj is not None, "nothing was signed, so nothing is at risk"
+    before = traj.read_text(encoding="utf-8")
+
+    # What a rebuild does: rewrite the file without the appended event.
+    kept = [l for l in before.splitlines()
+            if l.strip() and _json.loads(l).get("event") != "human_checkpoint"]
+    traj.write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
+    assert '"human_checkpoint"' not in traj.read_text(encoding="utf-8")
+
+    restored = replay_into_trajectories(
+        run / "signoffs.jsonl", compiled, run / "trajectories", seed=7)
+    assert restored, "the ledger held a decision and nothing was put back"
+    assert '"human_checkpoint"' in traj.read_text(encoding="utf-8"), (
+        "a rebuild can still destroy the only event a human produced")
+
+    # And running it twice must not duplicate, because it sits on a path that
+    # runs on every reproduce.
+    again = replay_into_trajectories(
+        run / "signoffs.jsonl", compiled, run / "trajectories", seed=7)
+    assert again == [], f"re-applying wrote {again} a second time"
+    assert traj.read_text(encoding="utf-8").count('"human_checkpoint"') == 1
+
+
+def test_one_decision_does_not_become_three_checkpoints(tmp_path):
+    """Three seeds compile the same criterion, and a person read it once.
+
+    The signature is over the predicate digest, and seeds 7, 8 and 9 produce the
+    same digest wherever they compile the same thing. So a replay that restores a
+    decision into every trajectory whose digest matches turned 19 decisions into
+    44 human checkpoints, and the index published that. Defensible code, wrong
+    number, and the number overstated human review, which is the direction that
+    matters.
+    """
+    import json
+    import sys as _sys
+
+    _sys.path.insert(0, str(ROOT / "src"))
+    from trialsieve.signoff import replay_into_trajectories, reviewed_seed
+
+    run = tmp_path / "run"
+    (run / "compiled").mkdir(parents=True)
+    crit = {"criterion_id": "NCT00000001-INC-01", "nct_id": "NCT00000001",
+            "compilable": True, "predicate_sha256": "deadbeef"}
+    for seed in (7, 8, 9):
+        (run / "compiled" / f"criteria_seed{seed}.json").write_text(
+            json.dumps({"seed": seed, "criteria": [crit]}), encoding="utf-8",
+            newline=chr(10))
+        d = run / "trajectories" / "compiler"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / f"NCT00000001-INC-01-seed{seed}.jsonl").write_text(
+            json.dumps({"seq": 1, "event": "final", "compilable": True}) + "\n",
+            encoding="utf-8", newline="\n")
+
+    # A ledger line from before the seed was recorded. The seed it was taken
+    # against is derivable: signoff.py renders whichever file sorts first.
+    (run / "signoffs.jsonl").write_text(json.dumps({
+        "criterion_id": "NCT00000001-INC-01", "predicate_sha256": "deadbeef",
+        "reviewer": "A Reviewer", "reviewer_role": "author, not a clinician",
+        "decision": "REJECTED", "rationale": "no exact code for the concept",
+        "signed_at": "2026-08-31T00:00:00+00:00"}) + "\n",
+        encoding="utf-8", newline="\n")
+    assert reviewed_seed(run) == 7
+
+    for seed in (7, 8, 9):
+        replay_into_trajectories(run / "signoffs.jsonl", [crit],
+                                 run / "trajectories", seed=seed)
+    total = sum(t.read_text(encoding="utf-8").count('"human_checkpoint"')
+                for t in (run / "trajectories" / "compiler").glob("*.jsonl"))
+    assert total == 1, (
+        f"one decision produced {total} checkpoints; a signature matching every "
+        f"seed that shares a digest is not a person reviewing it that many times")
+    signed = run / "trajectories" / "compiler" / "NCT00000001-INC-01-seed7.jsonl"
+    assert '"human_checkpoint"' in signed.read_text(encoding="utf-8"), (
+        "the one checkpoint landed in a seed the reviewer never saw")

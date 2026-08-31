@@ -22,7 +22,7 @@ entry about the system itself still points at a file in this tree.
 ## The journey, in the shape the brief suggests
 
 The brief sketches a progression: baseline, then one row per meaningful
-iteration, each with its evidence and what it decided. Seventy-two entries is
+iteration, each with its evidence and what it decided. Seventy-five entries is
 more rows than that sketch has, so this is the spine. Every row links to the full
 entry, and the entries themselves stay in the order they were found rather than
 being rearranged into a story.
@@ -35,6 +35,7 @@ being rearranged into a story.
 | **Iteration 3** | Fix the instrument before believing the result. The noise floor, the coverage denominator, the operating point, three checks that could not fail. | The label disagreement floor moved 10.6% to 2.3%; coverage moved 37% to 29.2%, below the band the protocol registered in advance. | Kept. The run now misses its own prediction and says so. [Entries 12](#12-the-measuring-instrument-was-wrong-twice-and-both-errors-flattered-the-old-system), [15](#15-three-checks-that-could-not-fail-and-one-that-reported-a-pass-for-a-comparison-it-never-made), [19](#19-the-headline-operating-point-was-chosen-using-the-labels-it-was-scored-on), [23](#23-a-noise-floor-measured-on-the-hardest-cells-excused-the-losses), [28](#28-the-coverage-headline-was-the-answer-keys-number-not-the-systems). |
 | **Iteration 4** | Repair the design's own sharp edge: one criterion was reading a silent chart as proof of absence. First attempt widened what the validator accepted. | It made every headline worse: silent error 3.05% to 6.97%, patients wrongly ruled out 182 to 318. | Kept anyway, and published. [Entry 29](#29-the-fix-that-made-every-headline-number-worse) recovered a criterion that turned out worse than the abstention it replaced. The number getting worse was the measurement starting to work. |
 | **Iteration 5, the one that contributed most** | A query with no exact code for its concept may not read the record's silence as absence. | Patients wrongly ruled out 182 to **18**. Silent error 3.05% to **0.72%**. Cells answered 24.12% to 19.15%, in the same move. | Kept. [Entry 30](#30-closed-world-absence-on-a-concept-this-vocabulary-cannot-express) prints both columns of that trade in one table, because a coverage loss reported without the error it bought is not a result. |
+| **Iteration 6, the one a person found** | Clear the sign-off gate for real rather than shipping the mechanism unused: all 19 compiled predicates rendered into English and read one at a time. | 14 approved, 1 approved with a note, **4 rejected**, every rejection naming the same thing in the reviewer's own words: this corpus has no code that states type-2 diabetes exactly. | The gate is closed, so `scripts/worklist.py` refuses here. [Entry 73](#73-the-one-event-no-replay-can-reconstruct-was-stored-where-everything-is-rebuilt) is what that pass exposed: a rebuild silently deleted every checkpoint, because the only event no replay can reconstruct was kept in the file replay rewrites. |
 | **Removed** | B3, a self-consistency baseline: sample each cell three times, take the majority. | Under replay all three samples are the same recorded call, so the vote is unanimous by construction and the arm measures the cassette store. | Removed before it was run, and left registered in `docs/EVAL_PROTOCOL.md` with the reason. [Entry 26](#26-the-experiment-i-registered-and-then-could-not-honestly-run). The gap reported here is against a single sample, not a self-consistent one. |
 | **Final** | The arms above, run on the same cells with the same gold labels, plus the harness that keeps the claims honest. | Primary outcome **VOID**: 46.15% panel reduction with 18 false exclusions, against a registered rule that voids any result with more than zero. On the nine criteria that never produce one, 43.5% reduction with none. | The registered outcome is reported as VOID rather than replaced with the subset figure that passes. [The table below](#what-the-numbers-did-when-the-measurements-were-fixed) is what each measurement said before and after it was fixed. |
 
@@ -65,6 +66,8 @@ same data. Neither is an estimate.
 | silent error rate on seeds 8 and 9 | 3.18% and 3.18% | **0.73% and 0.73%** | `groups.k0_seed8` and `groups.k0_seed9` in `results/results.json`; the old figures came from cells computed before entry 30 |
 | false exclusions at 40% record damage | 206 | **31** | `degradation_curve` in `results/results.json` |
 | `python run.py reproduce` on a clean clone | fails, then DIFFERENT | **IDENTICAL** | clone into an empty directory and run it; entries 34 and 46 |
+| human checkpoints in the scored run's trajectories | 0 | **19**, of which **4 are refusals** | `runs/tierA/trajectories/index.md`; entry 73 |
+| tracked bytes the private-path scan opens | all but 6.4 MB | **all of them** | `python -m pytest -q tests/test_no_private_paths.py`; entry 74 |
 | tracked files carrying a home directory | 57 | **0** | `python -m pytest tests/test_no_private_paths.py`; entry 36 |
 
 One row that is **not** in this table: on the six **absence** concepts,
@@ -3848,3 +3851,166 @@ doubled comma, a stray `None`. There are no others.
 **Evidence.** `python scripts/signoff.py --run runs/tierA --show
 NCT06983054-INC-01`, and `python run.py reproduce` still prints IDENTICAL, because
 this wording appears only where a person reads it.
+
+## 73. The one event no replay can reconstruct was stored where everything is rebuilt
+
+**Found by** clearing the sign-off gate for real for the first time, nineteen
+predicates read in English and a decision recorded on each, and then running
+`python run.py reproduce` the way a judge would.
+
+**What was wrong.** `grep -rl human_checkpoint runs/` came back with two index
+files and no events. All nineteen were gone.
+
+`scripts/signoff.py` writes a decision to two places: `<run>/signoffs.jsonl`, which
+is what the gate reads, and the compiler trajectory of the predicate signed, which
+is what a reader follows. `run.py reproduce` re-runs `scripts/compile_protocol.py`,
+and that rewrites every compiler trajectory from the cassettes. Every other event
+in those files records a model call, so a rebuild puts it back byte for byte. A
+person's decision has no cassette. It was the only irreplaceable event in the whole
+log and the only one with no way of coming back, and the index went quietly back to
+printing `| human checkpoints | 0 |` while the ledger still held all nineteen.
+
+Two more things surfaced in the same pass, both about the difference between
+*nobody looked* and *somebody looked and said no*:
+
+- `signoff.enforce()` raised one message for both: *"N have no human sign-off and M
+  were rejected. A worklist cannot be produced from unreviewed predicates."* A
+  rejected predicate is the most reviewed thing in the run. Telling a reviewer their
+  refusal reads as an absence of review is how a gate teaches people to approve.
+- The worklist banner said *"No human has reviewed the compiled criteria behind this
+  document"* whenever the gate refused, so the four refusals, the only place in this
+  run where a person found something, were published as nothing having happened.
+
+And the last two lines of `enforce` filtered rejected predicates out of the list it
+returned, which cannot run, because `enforce` raises first. Reading that dead filter
+is how this repository came to describe its own behaviour backwards, as dropping a
+rejected criterion and screening around it. It does not, and it must not: a
+criterion the reviewer found wrong would then be applied to nobody, and nothing on
+the document would say so.
+
+**What changed.** The ledger is the durable record and the trajectory is derived
+from it. `signoff.replay_into_trajectories()` re-applies every recorded decision
+after a rebuild, matched on the predicate digest and skipping any checkpoint already
+carrying it, so it is idempotent and sits on the reproduce path without ever writing
+a duplicate. `compile_protocol.py` calls it and prints how many it restored. A
+signature whose predicate was recompiled has a different digest and is not restored,
+which is the intended behaviour: approval does not carry over to text nobody read.
+
+`enforce` now raises two different messages and filters nothing. The banner names
+which of the two happened, and scopes it to the criteria the document actually used:
+the gate covers a whole run, the sample worklist covers one trial at one operating
+point, and the first honest version of the banner named two rejected criteria from a
+trial that is not on the page.
+
+`docs/GATE.md` section 3 was written for a checkout where nothing was signed. It now
+prints the decision counts and a table of every refusal in the reviewer's own words,
+because a gate that only ever records approval is a gate nobody used.
+
+| | before | now |
+|---|---|---|
+| human checkpoints surviving `python run.py reproduce` | 0 of 19 | **19 of 19** |
+| refusal messages for the two ways the gate blocks | 1 | **2** |
+| unreachable lines in `enforce` describing a policy it forbids | 3 | **0** |
+| what the override banner says when a reviewer rejected something | "No human has reviewed" | **what was rejected, and by scope** |
+
+**The four refusals are one finding.** `NCT06983054-INC-01`,
+`NCT06989723-INC-02`, `NCT06989723-EXC-01` and `NCT06717698-INC-07` were all
+rejected for the same reason in the reviewer's own words: this corpus carries no
+code that states type-2 diabetes exactly. That is the challenging case this
+submission already argues is the hard one, reached independently by a person reading
+the rendered predicate rather than by the harness that was built to look for it.
+
+**Evidence.** `python -m pytest -q tests/test_human_checkpoint.py
+tests/test_worklist_gate.py`, which now includes a test that deletes the events the
+way a rebuild does and requires them back, and a test that rejects a criterion and
+requires the document not to report it as no review. Then `python run.py reproduce`,
+and `runs/tierA/trajectories/index.md`.
+
+## 74. Two gates reported a pass having looked at nothing
+
+**Found by** a blind sweep whose only job was to break each gate and see which
+ones noticed. Two did not, and both were proven rather than argued.
+
+**What was wrong.**
+
+`scripts/linkcheck.py` prints how many references it resolved and then returns 0
+regardless of the count. Break its three extractor regexes and it prints
+
+    checked 0 path reference(s) and 0 anchor(s) across 23 document(s)
+    every path a document points at exists, and every anchor names a heading that is there
+
+and exits 0. Both call sites in `run.py` read that as a pass, and no test asserts
+the script's output. The entire path arm was silently disableable, and the failure
+it would hide is not a broken link. It is the checker quietly stopping to look.
+
+`tests/test_no_private_paths.py` skipped `.gz` in a suffix list, so
+`data/vendor/panel.jsonl.gz`, the largest tracked file in the repository, was never
+opened by a scan whose docstring says it reads every tracked file. A home directory
+planted inside it passed. This is the same defect `tests/test_no_credentials.py`
+documents having fixed for itself, on the same file, in the same repository: the
+gzip-aware reader was written once and not carried across, so two scans claiming
+the same coverage disagreed about it. The same function also dropped any file it
+could not decode with a bare `except: continue`, so a file it could not vouch for
+and a file it read clean were indistinguishable.
+
+**What changed.** `linkcheck.py` carries a floor at roughly half the current counts
+and fails under it, naming which number collapsed. `test_no_private_paths.py` uses
+`test_no_credentials._readable_text`, the reader that already knew about gzip,
+counts the files it could not decode and asserts that list empty. A new control
+plants a home directory inside a real compressed file and requires the scan to see
+it, and separately requires a `.gz` to be in the file list at all, because a reader
+that can open compressed files changes nothing if none reach it.
+
+| | before | now |
+|---|---|---|
+| `linkcheck.py` exit status when every extractor is broken | 0 | **1** |
+| tracked bytes the private-path scan actually reads | 6.4 MB never opened | **every tracked file** |
+| files silently dropped by the scan without a record | unbounded | **0, asserted** |
+| controls proving the scan reads a compressed file | 0 | **1** |
+
+**Evidence.** `python scripts/linkcheck.py`, which still reports 772 paths and 25
+anchors clean, and `python -m pytest -q tests/test_no_private_paths.py`.
+
+## 75. Four descriptions of this system did not match the system
+
+**Found by** reading each module beside the sentence that describes it, rather than
+checking the sentences against each other.
+
+**What was wrong.** Three of the four made the project sound weaker or vaguer than
+it is, which is the direction that costs nothing to leave in and costs a reader's
+trust the moment they check.
+
+- **B1 was called "the regular-expression arm."** There is no regular expression in
+  it. `src/trialsieve/baselines.py:b1_demographics` runs the solution's own compiled
+  predicate whenever `is_demographic_only(expr)` holds and abstains otherwise, which
+  is a stronger and more defensible floor than a string matcher. `SUBMISSION.md` and
+  the generator behind `docs/SCORECARD.md` both said the weaker thing.
+- **B0 was said to answer "FAILS whenever it sees no evidence."** It returns FAILS
+  unconditionally and never reads the chart; its own reason string says "degenerate
+  control: always FAILS". The conditional phrasing made a 100% panel reduction look
+  less degenerate than it is, which is the opposite of what that arm is for.
+- **The grounder's docstring said three outcomes.** It has four, and the missing one
+  is `BROADER_ONLY`, which the same file returns and which the README calls this
+  design's sharp edge. A reader opening the file to check the argument found no sign
+  of the mechanism.
+- **The per-slot allow-list was attributed to the grounder.** It is in the
+  compiler's emit validator. The grounder's allow-list is a single set used for both
+  slots. Anyone grepping `grounder.py` for the guarantee would have concluded it did
+  not exist.
+
+Two more claims in the same sweep were wider than the code behind them. `README.md`
+said the predicates "cannot run against anyone until a named human has read and
+signed each one"; the gate stops a document being produced and does not stop a
+predicate being evaluated, which is why 15,400 cells are scored in a checkout where
+the gate refuses. And `LICENSE` named `edge-tts` and `playwright` as dependencies
+pinned in `requirements-lock.txt`, a file that carries the pytest chain and nothing
+else, for an extra that was removed.
+
+**What changed.** Every sentence above now says what the code does, in the document
+and in the generator where the document is written from. The gate claim is scoped to
+the artifact, with the evaluation exemption stated once instead of twice.
+
+**Evidence.** `python scripts/scorecard.py` regenerates the two corrected sentences,
+`python -m pytest -q` is green at 387, and each claim can be checked against the
+line it describes: `src/trialsieve/baselines.py`, `src/trialsieve/agents/grounder.py`
+and `src/trialsieve/agents/compiler.py`.

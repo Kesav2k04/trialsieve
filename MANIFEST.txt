@@ -1990,6 +1990,7 @@ runs/tierA/cassettes_critic_probe/f00cff12a8f463f6.json
 runs/tierA/compiled/criteria_seed7.json
 runs/tierA/compiled/criteria_seed8.json
 runs/tierA/compiled/criteria_seed9.json
+runs/tierA/signoffs.jsonl
 runs/tierA/trajectories/baseline-b2/0bbf4179-b2_10p.jsonl
 runs/tierA/trajectories/baseline-b2/0bbf4179-b2_10p.md
 runs/tierA/trajectories/baseline-b2/0fc183b2-b2_10p.jsonl

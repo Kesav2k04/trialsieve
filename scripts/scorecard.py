@@ -97,8 +97,9 @@ def build() -> str:
           "INDETERMINATE. It is the brief's first suggested baseline, one direct "
           "prompt with basic instructions, and it is the version of this task "
           "most people would build first. Two weaker arms are also carried "
-          "through the report: B0 answers FAILS whenever it sees no evidence, and "
-          "B1 answers only what a regular expression can settle.", ""]
+          "through the report: B0 answers FAILS on every cell without reading the "
+          "chart, and B1 runs the compiled predicate on the criteria age and sex "
+          "alone can settle and abstains on the rest.", ""]
 
     L += ["## The table", ""]
     L += ["| metric | simple baseline (B2) | TrialSieve | change |",
@@ -265,7 +266,7 @@ def build() -> str:
           "rate it replaced. Exactly one row changes verdict between them, and it "
           "is the false-exclusion row, which A7 moved from borderline to above. "
           "The comparison that falls below either floor is TrialSieve against B1, "
-          "the regular-expression arm, and `results/RESULTS.md` marks those rows "
+          "the demographics-only floor, and `results/RESULTS.md` marks those rows "
           "**below, uninterpretable** rather than reporting them as a result.", ""]
 
     L += ["## Where this differs from the suggested format", ""]

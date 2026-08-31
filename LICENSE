@@ -22,8 +22,11 @@ Third-party material carries its own terms and they are the ones that govern it:
   sha256 so the derivation can be checked.
 - The trial protocols are ClinicalTrials.gov API v2 responses, a United States
   Government work in the public domain.
-- `pytest`, `edge-tts` and `playwright` are used under their own permissive
-  licences. The last two are off the reproduction path and are pinned in
-  `requirements-lock.txt` for completeness.
+- `pytest` is the only third-party Python package this project uses, under its
+  own permissive licence, and `requirements-lock.txt` pins it and its chain.
+  Nothing on the reproduction path is pinned there because nothing on it is
+  third party: `pyproject.toml` declares `dependencies = []` and
+  `python scripts/lockfile.py --imports` fails on any import outside the
+  standard library.
 
 Author: Kesav2k04

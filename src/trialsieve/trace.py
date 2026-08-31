@@ -147,6 +147,13 @@ class Trajectory:
                 "by_kind": kinds}
 
 
+#: The filename a subject is written under. Public because rebuilding a
+#: trajectory path outside this module has to agree with it exactly, and a
+#: second copy of the rule is a second thing to get wrong.
+def safe_name(subject: str) -> str:
+    return _safe(subject)
+
+
 def append_human_checkpoint(root: str | Path, agent: str, subject: str,
                             **payload: Any) -> Path | None:
     """Add a checkpoint to a trajectory that was written and closed long ago.

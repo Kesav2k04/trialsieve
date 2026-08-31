@@ -6,7 +6,7 @@ Panel of 385 patients, screened on 2026-08-31.
 
 **Each patient is screened as of their own last encounter, not as of today.** In this panel those dates run from 2019-02-23 to 2021-11-18. Ages and lab values below are as of that patient's date. Where a criterion carries no recency window, an old result satisfies it, so a patient under *Ready to contact* may be resting on a years-old value that a coordinator has to confirm before the call.
 
-**NOT FOR USE.** No human has reviewed the compiled criteria behind this document. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
+**NOT FOR USE.** Every criterion behind this document carries an approval. The run it was compiled in does not: 2 other compiled criteria in the same run were REJECTED (NCT06989723-INC-02, NCT06989723-EXC-01), and a signature clears a run rather than a page of it. It was produced with the sign-off gate overridden, which is a thing you can only do on purpose.
 
 > This list does not decide anything. It removes patients who are provably ineligible on a dated fact in their record, and it ranks everyone else by how much is left to check. Every remaining patient needs a human. Nobody is enrolled by this document.
 

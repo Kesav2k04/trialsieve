@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT / "evaluation" / "gold"))
 
 from criteria_set import CRITERIA  # noqa: E402
 from trialsieve.agents.compiler import compile_criterion, predicate_sha256  # noqa: E402
+from trialsieve import signoff  # noqa: E402
 from trialsieve.agents.critic import review  # noqa: E402
 from trialsieve.llm import Client  # noqa: E402
 from trialsieve.trace import Trajectory  # noqa: E402
@@ -193,6 +194,20 @@ def main() -> int:
     print(f"\n{json.dumps(stats)}")
     print(f"usage: {client.usage.as_dict()}")
     print(f"wrote {path}")
+
+    # This command just rewrote every compiler trajectory from the cassettes,
+    # which deletes any human sign-off appended to them after the fact. Every
+    # other event in those files is a record of a model call and comes back on
+    # replay; a person's decision does not. So the ledger is re-applied here,
+    # matched by predicate digest and skipping anything already present. A
+    # signature whose predicate was recompiled has a different digest and is not
+    # restored, which is the intended behaviour: approval does not carry over to
+    # text nobody read.
+    restored = signoff.replay_into_trajectories(
+        run / "signoffs.jsonl", out, run / "trajectories", seed=a.seed)
+    if restored:
+        print(f"restored {len(restored)} human checkpoint(s) into the compiler "
+              f"trajectories from {run / 'signoffs.jsonl'}")
     return 0
 
 

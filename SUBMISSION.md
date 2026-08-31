@@ -5,7 +5,7 @@ Every required deliverable, and the file that satisfies it.
 | required | where |
 |---|---|
 | Full working code | this repository. Zero runtime dependencies, standard library only. |
-| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 72 entries behind it stay in the order they were found. |
+| Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md). Its opening section, [The journey](docs/IMPROVEMENT_CHANGELOG.md#the-journey-in-the-shape-the-brief-suggests), is the baseline-to-final progression in the four columns the brief sketches; the 75 entries behind it stay in the order they were found. |
 | Reproduction guide, clean environment | [REPRODUCE.md](REPRODUCE.md). One command: `python run.py reproduce`. |
 | Exact commands | [REPRODUCE.md](REPRODUCE.md) and `python run.py help` |
 | Data | `data/vendor/`, with source URL and archive sha256 in `data/vendor/panel_provenance.json` |
@@ -38,9 +38,13 @@ both columns of that trade in one table.
 ### The one challenging case, and what it revealed
 
 The brief asks for a challenging case and what it taught. It is SNOMED
-**44054006**, *Diabetes mellitus*, the parent code of the concept three criteria
-in this corpus actually need. It is the hardest case here because every wrong way
-to handle it looks reasonable in isolation:
+**44054006**, which is `Diabetes mellitus type 2 (disorder)` and is exactly the
+concept three criteria in this corpus need. What makes it hard is that this corpus
+does not say so. `data/vendor/terminology_catalog.json` displays it as the single
+word **`Diabetes`**, and the grounder reads displays, because a site that labels
+its type-2 code `Diabetes` cannot be assumed to have used it only for type 2. So
+the code is exact and the evidence for it is not, which is the position a real
+site puts you in. Every wrong way to handle it looks reasonable in isolation:
 
 - Treat it as an exact match and a criterion about type 2 diabetes silently
   answers MEETS from a code that cannot establish it. Presence now settles the
@@ -76,7 +80,7 @@ The weights are the table on page 5 of the challenge PDF, which sums to 100.
 |---|---|---|
 | Agent Solution & Engineering | 30 | [docs/AGENT_DESIGN.md](docs/AGENT_DESIGN.md), `src/trialsieve/`, and the trajectories. Six agents. Two make zero model calls on purpose: the adjudicator, a pure function over the compiled predicate, and the worklist, which refuses to render without a signature. |
 | End to End Quality | 20 | `docs/sample_worklist.md` is the artifact a coordinator opens, produced by a script that exits 3 rather than write it from unsigned predicates. |
-| Measured Improvement | 15 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 72 entries each tied to the command that shows it. |
+| Measured Improvement | 15 | [docs/SCORECARD.md](docs/SCORECARD.md) for the baseline comparison, [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md) for 75 entries each tied to the command that shows it. |
 | Problem & User Value | 15 | the opening of [README.md](README.md), and "The other currency" in [docs/COST.md](docs/COST.md). |
 | Reproducibility & Verification | 15 | `python run.py reproduce` prints IDENTICAL offline from recorded calls in under three minutes on a clean clone; [requirements-lock.txt](requirements-lock.txt); `python run.py verify` is five checks that would fail if replay were faked. |
 | Hot Take / Insights | 5 | ["Hot take"](README.md#hot-take) in the README, and the challenging case above. |
@@ -89,8 +93,8 @@ Three baselines ship, all runnable by the same command as the solution:
 
 | arm | what it is | why it is here |
 |---|---|---|
-| B0 | answers FAILS whenever it sees no evidence | the closed-world default, and the arm that shows why panel reduction alone is a worthless metric: it reduces the panel 100% and wrongly excludes 14 of 30 screens, which is ten patients read against three trials each |
-| B1 | answers only what a regular expression can settle | the no-model floor |
+| B0 | answers FAILS on every cell, without reading the chart | the closed-world default, and the arm that shows why panel reduction alone is a worthless metric: it reduces the panel 100% and wrongly excludes 14 of 30 screens, which is ten patients read against three trials each |
+| B1 | runs the compiled predicate on the criteria age and sex alone can settle, and abstains on the rest | the no-model floor |
 | B2 | one model call per cell, criterion text plus a flattened record | the brief's own first suggestion, and the arm the evaluation protocol registers as the one that matters |
 
 `python scripts/run_arms.py --arms TS,B0,B1,B2` runs all four on the same cells
@@ -228,9 +232,14 @@ measure one mind against itself. Three things bound it rather than remove it.
   table only, on a different model family, with no sight of the compiled predicate,
   of Checker A, or of any system output. `python scripts/verify.py blind` reads
   that claim out of B's own recorded prompts rather than taking it on trust.
-- B's labels are committed before any commit that carries system output, so the
-  blindness is a fact about this repository's history rather than a description of
-  a process.
+- Blindness is a fact about what was in B's prompts, not about commit order. An
+  earlier version of this bullet said B's labels were committed before any commit
+  carrying system output. That was true when written and stopped being true: B and
+  the scored compile ran concurrently on one machine, so commit order records which
+  process finished first. Amendment A1 in
+  [docs/EVAL_PROTOCOL.md](docs/EVAL_PROTOCOL.md) withdrew the claim rather than
+  quietly dropping it, and the bullet above is what replaced it, because a check
+  over 181 recorded prompts is stronger than an ordering that a scheduler decided.
 - The two labellers disagree on 23.3% of 180 double-labelled cells. That
   disagreement is published as a floor, reweighted to the scored panel's own label
   mix, and every comparison below it is reported uninterpretable, including two
@@ -271,7 +280,7 @@ on real predicates with findings on planted ones flatters the first.
 |---|---|---|
 | `critic_finding` | 7 | `runs/tierA/trajectories/critic/`, each confirmed or dismissed by executing the counterexample |
 | `revision` | 5 asked for, **3 changed the predicate** | `changed` is on the event; on two of the five the critic proved a case, the predicate went back to the model, and what came out was what went in |
-| `human_checkpoint` | **0** | nothing here performs one, which is the gate holding rather than the deliverable missing. `scripts/worklist.py` exits 3 with no signature and writes no document, [docs/GATE.md](docs/GATE.md) is that refusal captured by exit code, and `tests/test_human_checkpoint.py` signs a fixture run end to end so the event's shape is checked without anyone signing the scored one. A signature an agent applied on a human's behalf is the exact failure the gate exists to prevent |
+| `human_checkpoint` | **19**, one per compiled predicate: **14 approved, 1 approved with a note, 4 rejected** | a named human read every compiled predicate in `runs/tierA/trajectories/compiler/` and recorded a decision on it. The four rejections are one finding stated four times, that this corpus carries no code stating type-2 diabetes exactly, which is the challenging case above reached independently by a person reading the rendered predicate. The gate is therefore **closed**: `scripts/worklist.py` exits 3, and `docs/sample_worklist.md` exists only under `--allow-unsigned`, which stamps the reason across the top of it. [docs/GATE.md](docs/GATE.md) captures both, exit codes included. Nothing in this repository can write one of these events; a signature an agent applied on a human's behalf is the exact failure the gate exists to prevent |
 
 Findings on the scored predicates alone are a thin sample, and a component that
 fires a handful of times is only marginally more checkable than one that never
@@ -317,11 +326,13 @@ calling the model, so they were three copies of one run. Deleting the compiled
 output of a run that did not happen is not enough: its trajectories are evidence
 too, and they were being counted. Entry 22 in the changelog has the detail.
 
-`human_checkpoint` is the empty one, and it is not going to be fixed
-by a harness. Signing is a human action, nothing in this repository performs it,
-and no signature exists in this checkout. What is shipped is the mechanism and its
-refusal: `docs/GATE.md` is the gate demonstrated by running into it, exit codes
-captured rather than transcribed.
+`human_checkpoint` was the empty one, and it was never going to be filled
+by a harness. Signing is a human action and nothing in this repository performs it.
+It has now been performed: nineteen decisions, four of them refusals, recorded in
+`runs/tierA/signoffs.jsonl` by the author, who is not a clinician and whose
+`reviewer_role` says so on every line. The gate the mechanism exists for is
+consequently closed rather than untried, and `docs/GATE.md` is that state captured
+by running into it, exit codes included.
 
 The mechanism is wired at both ends. A decision taken in `scripts/signoff.py` is
 appended to `<run>/signoffs.jsonl`, which is what the gate reads, **and** appended
@@ -363,8 +374,8 @@ shown, so the trajectory is checkable rather than narrated.
 | Every tool and component used within its licence | Synthea sample data is Apache-2.0 and the archive sha256 is pinned; ClinicalTrials.gov API v2 output is US Government public domain. Runtime model calls go through a local shim to a vendor CLI the author is authenticated to, under that vendor's own terms, and no key is in the tree. `pytest` is the only third-party Python package. The video was made with a separate Node project, and every tool that built it is named with its licence under [What made the video](#what-made-the-video). |
 | Public or synthetic data only | Synthea sample FHIR R4 (Apache-2.0, sha256 pinned) and ClinicalTrials.gov API v2 (US Government, public domain). No real patient data. |
 | Legal and ethical use case | Trial prescreening that produces a document for a coordinator. It enrols nobody and contacts nobody. |
-| Consequential actions sandboxed, with human approval before the action | There is no outward action at all. The only artifact that could affect a person is the worklist. From predicates nobody has signed, `scripts/worklist.py` exits 3 and writes no document. `tests/test_worklist_gate.py` runs the script and asserts the exit code, rather than testing the library call underneath it, because a library test passes even when the script ignores what the library returned. There is one way past: `--allow-unsigned` produces the document with NOT FOR USE stamped across it, so that the gate can be demonstrated and so that the override marks the artifact instead of only the shell history. `docs/GATE.md` is that demonstration, exit codes captured rather than transcribed. |
-| A qualified human reviewer in the loop | The sign-off gate. It is a human action and it is left to a human, so whether it has been cleared in this checkout is a fact rather than a claim here: `python scripts/signoff.py --run runs/tierA --list` prints it, reading `runs/tierA/signoffs.jsonl`, a file that does not exist here because nobody has signed. Any signature here is the author's, who is not a clinician, and `reviewer_role` records that. A deployment puts a clinician in that slot. |
+| Consequential actions sandboxed, with human approval before the action | There is no outward action at all. The only artifact that could affect a person is the worklist. Unless every compiled predicate carries an approval, `scripts/worklist.py` exits 3 and writes no document. In this checkout it does exit 3, because the reviewer rejected four of the nineteen. `tests/test_worklist_gate.py` runs the script and asserts the exit code, rather than testing the library call underneath it, because a library test passes even when the script ignores what the library returned. There is one way past: `--allow-unsigned` produces the document with NOT FOR USE stamped across it, so that the gate can be demonstrated and so that the override marks the artifact instead of only the shell history. `docs/GATE.md` is that demonstration, exit codes captured rather than transcribed. |
+| A qualified human reviewer in the loop | The sign-off gate. It is a human action and it is left to a human, so whether it has been cleared is a fact in the repository rather than a claim in this file: `python scripts/signoff.py --run runs/tierA --list` prints it, reading `runs/tierA/signoffs.jsonl`. That file now holds nineteen decisions and the run is **not** cleared: fourteen approved, one approved with a note, four rejected. The reviewer is the author, who is not a clinician, and `reviewer_role` says so on every line rather than leaving it to be assumed. A deployment puts a clinician in that slot, and the four refusals are what that slot is for. |
 | No credentials or private information in the submission | No key, token or credential in the tree **or anywhere in its history**, which is the claim that matters for a repository handed to strangers: a secret committed once and deleted in the next commit is invisible to `git grep` and still in the object store. `tests/test_no_credentials.py` scans the working tree and then every commit reachable from every ref, for eight credential shapes. It carries a positive control that plants a key and requires the scan to catch it, and a negative control that requires it not to fire on code merely reading an environment variable. The model shim copies an auth token to a temporary directory outside the repository and deletes it at exit, and that is asserted too. The rule names private information as well as credentials, and the thing that had actually leaked here was neither a key nor a token: a crashed local shim returned an error quoting the absolute path of the binary that had just exited, and the recorder wrote it into 82 places across 57 trajectory files. `tests/test_no_private_paths.py` scans every tracked text file for a home directory, in Windows and POSIX shape, and carries a positive control that plants each shape and requires the scan to find it. Entry 36 of the changelog is how it was found and what the first attempt at redacting it got wrong. |
 | Every claim tied to submitted evidence | Numbers come from `results/results.json`, generated by `scripts/report.py` from recorded cells. The opening example in the README is generated by `scripts/counterexample.py` and says so if it fails to hold. Three registered trials with public identifiers is the setup where recall can masquerade as reading, so `scripts/contamination.py` checks it three ways and `docs/CONTAMINATION.md` is the output: no prompt template has a slot for an identifier, no recorded request contains one, and a perturbed threshold has to reach the predicate. On the last of those, 6 of 6 compiled criteria carry the changed number and none carries the original. |
 

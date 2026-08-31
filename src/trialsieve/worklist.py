@@ -167,7 +167,8 @@ def _still_owed(wl: dict, protocol: list[dict]) -> list[str]:
 
 
 def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
-                    max_listed: int = 25, protocol: list[dict] | None = None) -> str:
+                    max_listed: int = 25, protocol: list[dict] | None = None,
+                    override_reason: str = "") -> str:
     """`protocol` is every criterion the trial has, before any filtering.
 
     Without it this document reports what it did and leaves what it did not do to
@@ -206,6 +207,13 @@ def render_markdown(wl: dict, generated: str = "", reviewer: str = "",
         L.append("")
     if reviewer:
         L.append(f"Compiled criteria reviewed and signed by {reviewer}.")
+    elif override_reason:
+        # There are two ways to reach this line and they are not the same fact.
+        # Nobody looked, or somebody looked and said no. Reporting a rejection as
+        # "nobody has reviewed" hides the only place a human found something.
+        L.append(f"**NOT FOR USE.** {override_reason} It was produced with the "
+                 f"sign-off gate overridden, which is a thing you can only do on "
+                 f"purpose.")
     else:
         L.append("**NOT FOR USE.** No human has reviewed the compiled criteria behind "
                  "this document. It was produced with the sign-off gate overridden, "

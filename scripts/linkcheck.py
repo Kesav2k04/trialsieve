@@ -156,6 +156,13 @@ def _shipped() -> tuple[set[str], str]:
     return walked, "this directory, which has no git"
 
 
+#: What a healthy run finds. Set to roughly half of the counts at the time of
+#: writing (772 paths, 25 anchors), so ordinary editing never trips it and an
+#: extractor that stops matching always does.
+FLOOR_PATHS = 380
+FLOOR_ANCHORS = 12
+
+
 def main() -> int:
     tracked_set, source = _shipped()
     by_name = {n.rsplit("/", 1)[-1] for n in tracked_set}
@@ -241,6 +248,21 @@ def main() -> int:
 
     print(f"checked {checked} path reference(s) and {len(anchors)} anchor(s) across "
           f"{len(files)} document(s), resolved against {source}")
+
+    # A floor, because the failure that matters here is not a broken link. It is
+    # this script quietly stopping to look. Break the three extractor regexes and
+    # every number above goes to zero, the success line still prints, and both
+    # call sites in `run.py` read exit 0 as a pass. The counts only ever grow as
+    # documents are added, so a floor well under the current values cannot become
+    # a maintenance burden, and it turns "checked nothing" into a failure with a
+    # name.
+    if checked < FLOOR_PATHS or len(anchors) < FLOOR_ANCHORS:
+        print(f"\nthis run checked {checked} path(s) and {len(anchors)} anchor(s), "
+              f"under the floor of {FLOOR_PATHS} and {FLOOR_ANCHORS}. Either the "
+              f"documents shrank by more than half or an extractor stopped "
+              f"matching. A link checker that finds no links is not a pass.",
+              file=sys.stderr)
+        return 1
     missing.extend(bad_anchors)
     if missing:
         print(f"\n{len(missing)} point at something that is not there:", file=sys.stderr)

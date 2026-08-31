@@ -21,7 +21,9 @@ no `make` and the reproduction should not depend on one.
 | Install | `pytest`, for the test gate. Nothing else. |
 | Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The video was rendered by a separate Node project, which is not part of this submission and is not reachable from anything here. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | **57 MB of tracked files, and a fresh clone measured 72 MB** including history. Every figure in this row is decimal MB. `git ls-tree -r -l HEAD` prints bytes, so divide by a million to land on these numbers; dividing by 1024 squared instead reads 54 rather than 57, which looks like the row is wrong again and is not. The tracked bulk is `runs/` at 48 MB, the recorded cassettes and trajectories that make the replay possible, and then the vendored panel at 6.6 MB. Nothing else in the tree reaches one megabyte. The gap between 57 and 72 is history, and it is small because the one large binary this project produced, the video, is submitted as a link rather than carried here. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong six times, first at 12 MB naming the panel as the bulk, then at 65 MB, 61 MB, 185 MB, 231 MB and 247 MB as a 19 MB render was rebuilt and recommitted, so it is worth measuring rather than reading. |
+| Disk | **57 MB of tracked files, and a fresh clone measures 75 MB** including history, of which the pack is 13.7 MiB. Every figure in this row is decimal MB. `git ls-tree -r -l HEAD` prints bytes, so divide by a million to land on these numbers; dividing by 1024 squared instead reads 54 rather than 57, which looks like the row is wrong again and is not. The tracked bulk is `runs/` at 48 MB, the recorded cassettes and trajectories that make the replay possible, and then the vendored panel at 6.6 MB. Outside `runs/` and `data/`, nothing reaches one megabyte; inside `runs/` two
+trajectory logs do, at 1.11 MB and 1.08 MB, and they are part of the 48 MB
+already named. The gap between 57 and 75 is history, and it is small because the one large binary this project produced, the video, is submitted as a link rather than carried here. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong six times, first at 12 MB naming the panel as the bulk, then at 65 MB, 61 MB, 185 MB, 231 MB and 247 MB as a 19 MB render was rebuilt and recommitted, so it is worth measuring rather than reading. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB
@@ -48,6 +50,26 @@ artifact with no generator is the one that goes stale silently: `panel_code_coun
 did exactly that, listing 674 codes for a panel carrying 677, and the missing entry
 was read as a count of zero by the document a reviewer signs.
 
+### If you are holding the zip rather than a clone
+
+Three instructions in this file need a git object database, and a source archive
+carries the tree without one. Skip them, and nothing else changes:
+
+| line | why it cannot run | what to do instead |
+|---|---|---|
+| the `git clone` above | you already have the tree | unpack the zip and start at `pip install pytest` |
+| `git ls-tree -r -l HEAD` and `git count-objects -vH`, used below to check the disk figures | no object database | `python -c "import pathlib,sys; print(sum(p.stat().st_size for p in pathlib.Path('.').rglob('*') if p.is_file()))"` measures the unpacked tree |
+| `git checkout -- .`, offered at the end for resetting between runs | no index to reset to | unpack the zip again into an empty directory |
+
+Seven tests skip for the same reason and each prints why. That is the whole of
+the difference: `python run.py reproduce` itself needs no git and prints
+`IDENTICAL` either way. One line in its output says so, and it appears in the
+archive and not in a clone:
+
+    NOT COMPARED: the provenance block names the commit that last touched each
+    prompt file, and this tree has no object database, so there is nothing here
+    to compare it against.
+
 ## What `reproduce` does, in order
 
 1. **`results/environment.json`** is written: Python version, platform, git commit,
@@ -63,26 +85,39 @@ was read as a count of zero by the document a reviewer signs.
    an independent reviewer cloned this repository and hit nineteen failures on
    the one command everything else is advertised on. The whole suite runs at
    step 8, where the things it reads exist.
-3. **The compile is replayed** from `runs/tierA/cassettes/`. Each cassette is a
+3. **The dependency surface is walked.** `scripts/lockfile.py --imports` parses
+   every module on this path and fails on any import that is not standard library
+   or another file in this repository. The claim that there is nothing to install
+   is checked here rather than asserted in prose.
+4. **The compile is replayed** from `runs/tierA/cassettes/`. Each cassette is a
    recorded model call keyed on the sha256 of the full canonical request. Replay
    never falls through to a live call: a missing cassette raises `CassetteMiss`
    and stops the run.
-4. **The arms are run** over the panel. This step calls no model at all. The
-   compiled predicates are executed deterministically against every patient, which
-   is the point of the architecture and the reason screening is free.
-5. **The recall audit runs** into `docs/CONTAMINATION.md`. Three registered trials
+5. **The arms are run** over the panel, in four passes: the free arms over every
+   published seed, the degradation curve at k = 10, 20 and 40, the open-world
+   sensitivity arm, and the per-cell baseline over its ten-patient sample. This
+   step calls no model at all. The compiled predicates are executed
+   deterministically against every patient, which is the point of the
+   architecture and the reason screening is free.
+6. **The recall audit runs** into `docs/CONTAMINATION.md`. Three registered trials
    with public identifiers is the setup where a good result can come from having
    memorised the protocol rather than from having read it, so this enumerates the
    substitutions every prompt template accepts, searches every recorded request for
    the identifiers and for title-specific wording, and reports both.
-6. **The documents that quote numbers are regenerated**: the worked counterexample,
+7. **The documents that quote numbers are regenerated**: the worked counterexample,
    the sample worklist, and the trajectory index. They are output, not prose, so a
    number that moved shows up here rather than going stale in a committed file.
-7. **The report is scored** into `results/results.json`.
-8. **The full suite runs**, all 383 tests, now that every artifact they read
+8. **Every path a document points at is checked**, and every anchor, by
+   `scripts/linkcheck.py`. A link into a file that moved is the cheapest kind of
+   rot and the one a reader hits first.
+9. **The cost table is rebuilt** into `docs/COST.md` from the recorded call and
+   token counts, so the money figures in the prose come from the run rather than
+   from a memory of it.
+10. **The report is scored** into `results/results.json`.
+11. **The full suite runs**, all 387 tests, now that every artifact they read
    exists. `python -m pytest -q` prints the current count, which is the number to
-   trust if this sentence has drifted. From a clone that is 383 passed. From an
-   unpacked source archive it is 376 passed and 7 skipped, because seven of
+   trust if this sentence has drifted. From a clone that is 387 passed. From an
+   unpacked source archive it is 380 passed and 7 skipped, because seven of
    them resolve a commit or read history and an archive carries the tree without
    an object database. The pre-registration freeze is no longer among them:
    `docs/protocol_registration.json` carries the registering commit and the
@@ -94,8 +129,8 @@ was read as a count of zero by the document a reviewer signs.
    that produced it. The film's own checks are not among them: the film is built
    by a separate project that is not in this repository, so nothing here can
    verify it and nothing here claims to.
-9. **The five verification checks run** (see below).
-10. **The report is compared** byte for byte against `results/published/results.json`,
+12. **The five verification checks run** (see below).
+13. **The report is compared** byte for byte against `results/published/results.json`,
    with timestamps and wall-clock fields removed. It prints `IDENTICAL` or a diff.
 
 ## The solution, the baseline and the evaluation, as three separate commands
@@ -140,8 +175,12 @@ checks that make the replay falsifiable rather than merely repeatable:
 
 `report.py` prints the comparison table that `results/RESULTS.md` is built from.
 `verify.py` prints five lines, each beginning `PASS` or `FAIL`, and exits non-zero
-on the first failure. About 85 seconds together, nearly all of it in `verify.py`
-re-hashing 1,047 cassettes.
+on the first failure. About 85 seconds together, and **almost all of it is
+`report.py`**: it measured 82 seconds against `verify.py`'s 5. `report.py` prints
+nothing at all while it resamples the bootstrap, which is the one place in this
+run where a reader has good reason to think the thing has hung. It has not. This
+sentence used to attribute the time to `verify.py`, which is the worse mistake to
+make, because it points at the command that is not the one you are waiting for.
 
 ## What a successful run looks like
 
@@ -239,9 +278,12 @@ falls through to a live call. The reading you can check rather than take on trus
 is the last line of
 [`docs/reproduce_transcript.txt`](docs/reproduce_transcript.txt), which is
 captured stdout from a clean tree: **149.2 seconds** on a Windows laptop with a
-14-core CPU. Repeated runs on that machine landed between 143 and 164 seconds,
-and the spread is the honest answer to "how long does it take": a cold clone pays
-to read 57 MB off disk, and a machine that is busy pays twice. Every one of them
+14-core CPU. Repeated runs landed between 143 and 188 seconds, and the spread is
+the honest answer to "how long does it take": a cold clone pays to read 57 MB off
+disk, and a machine that is busy pays twice. The 188 is a reading from an
+unpacked archive on the same OS build and the same Python, taken while this
+machine was doing something else, so treat the top of that range rather than the
+bottom as what to expect. Every one of them
 is printed by the command itself as its last line, so the figure a judge sees is
 the one their own run measured rather than this one.
 

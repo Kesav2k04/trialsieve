@@ -101,8 +101,12 @@ of `codes` and `broader_codes`, so it established that a code is real and said
 nothing about which of the two slots it belongs in. A broader-only code emitted
 into `codes` passed. The asymmetry described above, the one the README calls this
 design's sharp edge, was enforced by the prompt and by nothing else, and two
-criteria in the published run broke it. The allow-list is now built per slot and
-rejects the promotion by name, telling the model where the code belongs.
+criteria in the published run broke it. The check is now per slot and it lives
+one agent downstream, in the compiler's emit validator
+(`src/trialsieve/agents/compiler.py`, `exact_allowed` and `broader_allowed`),
+which rejects the promotion by name and tells the model which slot the code
+belongs in. It is named here because this is the guarantee the grounder's output
+carries, and in the compiler because that is where it is enforced.
 `scripts/grounding_audit.py` measures the result on any compiled run and
 currently reports 9 criteria grounding a broader-only code with 0 promoted.
 Changelog entries 25 and 29 have the defect and the repair.

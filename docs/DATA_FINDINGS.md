@@ -20,10 +20,19 @@ properties of the data rather than to guesses.
 
 ## Cohort depth (alive, adult, n=385)
 
+Counts are patients carrying the code, read from
+`data/vendor/panel_code_counts.json`. The Diabetes row is the interesting
+one and it is not a typo: only 27 of 385 carry `44054006` itself, while 139
+have an HbA1c on file. That gap is the whole reason this project treats a
+broader code as containing a concept without establishing it, and it is why
+the compiled predicate for *previously diagnosed T2DM* returns undetermined
+rather than false. This row read 139 until it was checked against the
+artifact, having been copied from the cell beside it.
+
 | Condition | n | | Lab | n |
 |---|---|---|---|---|
 | Obesity | 182 | | BMI | 383 |
-| Diabetes | 139 | | HbA1c | 139 |
+| Diabetes | 27 | | HbA1c | 139 |
 | Prediabetes | 129 | | Lipid panel | 291 |
 | Hypertension | 129 | | Creatinine | 165 |
 | Anemia | 125 | | eGFR | present |

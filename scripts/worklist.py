@@ -31,7 +31,7 @@ from _md_tables import align as align_tables
 
 from trialsieve import worklist  # noqa: E402
 from trialsieve.chart import load_panel  # noqa: E402
-from trialsieve.signoff import NotSignedOff, enforce, load  # noqa: E402
+from trialsieve.signoff import NotSignedOff, check, enforce, load  # noqa: E402
 
 
 def main() -> int:
@@ -99,6 +99,8 @@ def main() -> int:
 
     signoffs = load(run / "signoffs.jsonl")
     reviewer = ""
+    override_reason = ""
+    status: dict | None = None
     try:
         compiled = enforce(compiled, signoffs)
         signers = {s.reviewer for s in signoffs.values()}
@@ -111,6 +113,7 @@ def main() -> int:
             return 3
         print(f"WARNING, running unsigned: {exc}\n", file=sys.stderr)
         reviewer = ""
+        status = check(compiled, signoffs)
 
     trials = json.loads((ROOT / "data" / "vendor" / "trials_index.json")
                         .read_text(encoding="utf-8"))["trials"]
@@ -122,8 +125,38 @@ def main() -> int:
     # One value, used by both halves. The document and the sidecar disagreeing
     # about when they were generated is the kind of thing nobody checks.
     generated = dt.date.today().isoformat()
+    if status is not None:
+        # Scoped to the criteria this document used, not to everything the gate
+        # looked at. The gate looks at the whole run; the document covers one
+        # trial and one operating point, and a warning about a criterion that is
+        # not on the page is a different warning.
+        used = set(wl.get("criteria_used") or [])
+        mine_rej = [c for c in status["rejected"] if c in used]
+        mine_missing = [c for c in status["missing"] if c in used]
+        if mine_rej:
+            override_reason = (
+                f"A human reviewed the compiled criteria behind this document and "
+                f"REJECTED {len(mine_rej)} of them ({', '.join(mine_rej)}).")
+        elif mine_missing:
+            override_reason = (
+                f"{len(mine_missing)} of the compiled criteria behind this document "
+                f"have not been reviewed by a human "
+                f"({', '.join(mine_missing)}).")
+        elif status["rejected"]:
+            override_reason = (
+                f"Every criterion behind this document carries an approval. The run "
+                f"it was compiled in does not: {len(status['rejected'])} other "
+                f"compiled criteria in the same run were REJECTED "
+                f"({', '.join(status['rejected'])}), and a signature clears a run "
+                f"rather than a page of it.")
+        else:
+            override_reason = (
+                f"{len(status['missing'])} compiled criteria in the run this "
+                f"document was built from have not been reviewed by a human.")
+
     md = worklist.render_markdown(wl, generated=generated, reviewer=reviewer,
-                                  max_listed=a.max_listed, protocol=protocol)
+                                  max_listed=a.max_listed, protocol=protocol,
+                                  override_reason=override_reason)
 
     if a.operating_point is not None:
         mine = wl.get("criteria_used") or sorted(c["criterion_id"] for c in compiled)

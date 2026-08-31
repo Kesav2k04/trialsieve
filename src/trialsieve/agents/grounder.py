@@ -1,10 +1,15 @@
 """Resolve a clinical concept to codes in this site's vocabulary, or refuse.
 
-Three outcomes, and the third is the one that matters.
+Four outcomes, and the last two are the ones that matter.
 
-  MAPPED       the concept resolves to codes that exist in these records
-  PARTIAL      some members resolve, others are absent from the vocabulary
-  UNMAPPABLE   nothing in this vocabulary can represent the concept
+  MAPPED        the concept resolves to codes that exist in these records
+  PARTIAL       some members resolve, others are absent from the vocabulary
+  BROADER_ONLY  nothing states the concept, but a code that contains it exists
+  UNMAPPABLE    nothing in this vocabulary can represent the concept
+
+BROADER_ONLY is the one the README calls this design's sharp edge, and this
+docstring used to omit it while the function below returned it. A reader opening
+the file to check the argument found three outcomes and no sign of the mechanism.
 
 UNMAPPABLE exists because of a failure that is easy to build and almost
 impossible to see. Asked to ground "SGLT2 inhibitors" against a corpus that

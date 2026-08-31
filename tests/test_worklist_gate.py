@@ -74,6 +74,49 @@ def test_override_is_visible_in_the_document(unsigned_run, tmp_path):
         "the shell history is a flag that reports approval nobody gave.")
 
 
+def test_the_override_banner_does_not_report_a_rejection_as_no_review(
+        unsigned_run, tmp_path):
+    """Two different facts were printed as the same sentence.
+
+    `--allow-unsigned` stamped "No human has reviewed the compiled criteria behind
+    this document" whenever the gate refused. The gate also refuses when a human
+    HAS reviewed them and rejected some, which is the one case in the whole run
+    where a person found a problem. Printing that as an absence of review tells a
+    coordinator to distrust the document for the wrong reason, and buries the
+    finding that mattered.
+    """
+    import json
+
+    blob = json.loads((unsigned_run / "compiled" / "criteria_seed7.json")
+                      .read_text(encoding="utf-8"))
+    compilable = [c for c in blob["criteria"] if c.get("compilable")]
+    assert compilable, "the fixture carries nothing that could be signed"
+
+    # Reject the first and approve the rest. The gate must still refuse, and the
+    # document must say which of the two reasons it refused for.
+    with open(unsigned_run / "signoffs.jsonl", "w", encoding="utf-8",
+              newline="\n") as fh:
+        for i, c in enumerate(compilable):
+            fh.write(json.dumps({
+                "criterion_id": c["criterion_id"],
+                "predicate_sha256": c["predicate_sha256"],
+                "reviewer": "A Reviewer", "reviewer_role": "author, not a clinician",
+                "decision": "REJECTED" if i == 0 else "APPROVED",
+                "rationale": "the vocabulary cannot state this concept",
+                "signed_at": "2026-08-31T00:00:00+00:00"}) + "\n")
+
+    dest = tmp_path / "w.md"
+    p = worklist(unsigned_run, "--allow-unsigned", "--out", str(dest))
+    assert p.returncode == 0, f"{p.stdout}\n{p.stderr}"
+    doc = dest.read_text(encoding="utf-8")
+    assert "NOT FOR USE" in doc, "a rejected criterion left no stamp on the document"
+    assert "No human has reviewed" not in doc, (
+        "the document reports a review that rejected a criterion as no review "
+        "having happened")
+    assert "REJECTED" in doc and compilable[0]["criterion_id"] in doc, (
+        "the banner does not name what was rejected, so a reader cannot check it")
+
+
 def test_no_bulk_approval_exists():
     """The gate is only as strong as the absence of a way around it.
 

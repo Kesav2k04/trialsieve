@@ -14,7 +14,7 @@
 | revisions asked for after a confirmed counterexample | 5 |
 | of those, the predicate actually changed | 3 |
 | malformed fields the harness repaired without a retry | 72 |
-| human checkpoints | 0 |
+| human checkpoints | 19 |
 | completion tokens | 148878 |
 
 ## The tools, and what calling one looks like in the log
@@ -36,7 +36,7 @@ Six agents. Four of them make model calls and appear below. Two do not, and thei
 | `compiler` | `compiler/`, one per criterion per seed. |
 | `critic` | `critic/`, one per compiled criterion. |
 | `adjudicator` | **none, and this is the whole bet.** It makes zero model calls. It is a pure function of predicate, chart and unit policy, so there is no trajectory to record: run it twice and it returns the same bytes. Its behaviour is in `tests/`, not in a log. |
-| `worklist` | **none.** It renders a document and refuses to render it without a signature. A signature is recorded as a `human_checkpoint` event in the compiler trajectory of the predicate that was signed, so the count of them in the table above is the count that exist: 0. |
+| `worklist` | **none.** It renders a document and refuses to render it without a signature. A signature is recorded as a `human_checkpoint` event in the compiler trajectory of the predicate that was signed, so the count of them in the table above is the count that exist: 19. |
 
 The baselines and the second labeller are recorded the same way and to the same standard, under `baseline-b2/` here and under [runs/checker_b/trajectories/index.md](../../checker_b/trajectories/index.md), so an arm this project is measured against cannot be a weaker implementation than the one it is compared to. The three vocabulary probes are indexed the same way, under [probe-weak](../../probe-weak/trajectories/index.md), [probe-before](../../probe-before/trajectories/index.md) and [probe-after](../../probe-after/trajectories/index.md).
 
@@ -155,6 +155,24 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | critic_probe | [NCT06983054-INC-09--boundary](critic_probe/NCT06983054-INC-09--boundary.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-09--direction](critic_probe/NCT06983054-INC-09--direction.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
 | critic_probe | [NCT06983054-INC-09--threshold](critic_probe/NCT06983054-INC-09--threshold.md) | 1 | 0 | 0 | 1 | 0 | REVISE |
+| compiler | [NCT06717698-EXC-02-seed7](compiler/NCT06717698-EXC-02-seed7.md) | 6 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06717698-EXC-05-seed7](compiler/NCT06717698-EXC-05-seed7.md) | 6 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06717698-INC-01-seed7](compiler/NCT06717698-INC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06717698-INC-03-seed7](compiler/NCT06717698-INC-03-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06717698-INC-05-seed7](compiler/NCT06717698-INC-05-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-EXC-01-seed7](compiler/NCT06983054-EXC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-EXC-02-seed7](compiler/NCT06983054-EXC-02-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-EXC-05-seed7](compiler/NCT06983054-EXC-05-seed7.md) | 12 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-01-seed7](compiler/NCT06983054-INC-01-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-02-seed7](compiler/NCT06983054-INC-02-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-03-seed7](compiler/NCT06983054-INC-03-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-04-seed7](compiler/NCT06983054-INC-04-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-07-seed7](compiler/NCT06983054-INC-07-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06983054-INC-09-seed7](compiler/NCT06983054-INC-09-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06989723-EXC-01-seed7](compiler/NCT06989723-EXC-01-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06989723-INC-01-seed7](compiler/NCT06989723-INC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06989723-INC-02-seed7](compiler/NCT06989723-INC-02-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
+| compiler | [NCT06989723-INC-05-seed7](compiler/NCT06989723-INC-05-seed7.md) | 14 | 0 | 0 | 0 | 0 | compiled |
 | counterexample | [NCT06983054-INC-09--03e502b6](counterexample/NCT06983054-INC-09--03e502b6.md) | 1 | 0 | 0 | 0 | 0 | INDETERMINATE |
 | segmenter | [NCT06989723](segmenter/NCT06989723.md) | 1 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [0bbf4179-b2_10p](baseline-b2/0bbf4179-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
@@ -167,56 +185,38 @@ Sorted so the trajectories that went wrong come first. Those are the ones worth 
 | baseline-b2 | [aade3c61-b2_10p](baseline-b2/aade3c61-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [d19face0-b2_10p](baseline-b2/d19face0-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
 | baseline-b2 | [d29560ea-b2_10p](baseline-b2/d29560ea-b2_10p.md) | 40 | 0 | 0 | 0 | 0 | done |
-| compiler | [NCT06717698-EXC-02-seed7](compiler/NCT06717698-EXC-02-seed7.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-02-seed8](compiler/NCT06717698-EXC-02-seed8.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-02-seed9](compiler/NCT06717698-EXC-02-seed9.md) | 6 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06717698-EXC-05-seed7](compiler/NCT06717698-EXC-05-seed7.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-05-seed8](compiler/NCT06717698-EXC-05-seed8.md) | 6 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-EXC-05-seed9](compiler/NCT06717698-EXC-05-seed9.md) | 6 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06717698-INC-01-seed7](compiler/NCT06717698-INC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-INC-01-seed8](compiler/NCT06717698-INC-01-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-INC-01-seed9](compiler/NCT06717698-INC-01-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06717698-INC-03-seed7](compiler/NCT06717698-INC-03-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-INC-03-seed8](compiler/NCT06717698-INC-03-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-INC-03-seed9](compiler/NCT06717698-INC-03-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06717698-INC-05-seed7](compiler/NCT06717698-INC-05-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-INC-05-seed8](compiler/NCT06717698-INC-05-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06717698-INC-05-seed9](compiler/NCT06717698-INC-05-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-EXC-01-seed7](compiler/NCT06983054-EXC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-01-seed8](compiler/NCT06983054-EXC-01-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-01-seed9](compiler/NCT06983054-EXC-01-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-EXC-02-seed7](compiler/NCT06983054-EXC-02-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-02-seed8](compiler/NCT06983054-EXC-02-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-02-seed9](compiler/NCT06983054-EXC-02-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-EXC-05-seed7](compiler/NCT06983054-EXC-05-seed7.md) | 12 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-05-seed8](compiler/NCT06983054-EXC-05-seed8.md) | 12 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-EXC-05-seed9](compiler/NCT06983054-EXC-05-seed9.md) | 12 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-INC-01-seed7](compiler/NCT06983054-INC-01-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-01-seed8](compiler/NCT06983054-INC-01-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-01-seed9](compiler/NCT06983054-INC-01-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-INC-02-seed7](compiler/NCT06983054-INC-02-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-02-seed8](compiler/NCT06983054-INC-02-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-02-seed9](compiler/NCT06983054-INC-02-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-INC-03-seed7](compiler/NCT06983054-INC-03-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-03-seed8](compiler/NCT06983054-INC-03-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-03-seed9](compiler/NCT06983054-INC-03-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-INC-04-seed7](compiler/NCT06983054-INC-04-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-04-seed8](compiler/NCT06983054-INC-04-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-04-seed9](compiler/NCT06983054-INC-04-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-INC-07-seed7](compiler/NCT06983054-INC-07-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-07-seed8](compiler/NCT06983054-INC-07-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-07-seed9](compiler/NCT06983054-INC-07-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06983054-INC-09-seed7](compiler/NCT06983054-INC-09-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-09-seed8](compiler/NCT06983054-INC-09-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06983054-INC-09-seed9](compiler/NCT06983054-INC-09-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06989723-EXC-01-seed7](compiler/NCT06989723-EXC-01-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06989723-INC-01-seed7](compiler/NCT06989723-INC-01-seed7.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-01-seed8](compiler/NCT06989723-INC-01-seed8.md) | 2 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-01-seed9](compiler/NCT06989723-INC-01-seed9.md) | 2 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06989723-INC-02-seed7](compiler/NCT06989723-INC-02-seed7.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-02-seed8](compiler/NCT06989723-INC-02-seed8.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-02-seed9](compiler/NCT06989723-INC-02-seed9.md) | 4 | 0 | 0 | 0 | 0 | compiled |
-| compiler | [NCT06989723-INC-05-seed7](compiler/NCT06989723-INC-05-seed7.md) | 14 | 0 | 0 | 0 | 0 | compiled |
 | compiler | [NCT06989723-INC-05-seed9](compiler/NCT06989723-INC-05-seed9.md) | 14 | 0 | 0 | 0 | 0 | compiled |
 | contamination | [NCT06983054-EXC-01-CF](contamination/NCT06983054-EXC-01-CF.md) | 4 | 0 | 0 | 0 | 0 | compiled |
 | contamination | [NCT06983054-INC-02-CF](contamination/NCT06983054-INC-02-CF.md) | 4 | 0 | 0 | 0 | 0 | compiled |

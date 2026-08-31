@@ -111,11 +111,33 @@ def main() -> int:
     if signoffs:
         who = sorted({s.reviewer for s in signoffs.values()})
         roles = sorted({s.reviewer_role for s in signoffs.values()})
+        by = {d: [s for s in signoffs.values() if s.decision == d]
+              for d in ("APPROVED", "APPROVED_WITH_NOTE", "REJECTED")}
+        counts = ", ".join(f"{len(v)} {k.lower().replace('_', ' ')}"
+                           for k, v in by.items() if v)
         L += [f"{len(signoffs)} predicate(s) carry a signature in this checkout, from "
-              f"{', '.join(who)} ({', '.join(roles)}).", "",
+              f"{', '.join(who)} ({', '.join(roles)}): {counts}.", "",
               "The signature is over the predicate digest. Recompiling changes the digest",
               "and the signature no longer applies, which is what stops an approval from",
-              "carrying over to a predicate nobody read.", ""]
+              "carrying over to a predicate nobody read. Each one was read on its own:",
+              "`scripts/signoff.py` renders a predicate into English with the codes",
+              "resolved to this site's own display names, and it has no bulk approval and",
+              "no `--approve-all`.", ""]
+        if by["REJECTED"] or by["APPROVED_WITH_NOTE"]:
+            L += ["### What the reviewer refused", "",
+                  "The half of a checkpoint worth reading. A gate that only ever records",
+                  "approval is a gate nobody used.", "",
+                  "| criterion | decision | the reviewer's reason |",
+                  "|---|---|---|"]
+            for s2 in sorted(by["REJECTED"] + by["APPROVED_WITH_NOTE"],
+                             key=lambda x: x.criterion_id):
+                reason = " ".join(s2.rationale.split()).replace("|", "/")
+                L += [f"| `{s2.criterion_id}` | {s2.decision} | {reason} |"]
+            L += ["",
+                  "A rejection is not a criterion quietly dropped. `signoff.enforce()`",
+                  "refuses the whole worklist until the predicate is recompiled, because a",
+                  "criterion the reviewer found wrong would otherwise be applied to nobody",
+                  "and the document would not say so.", ""]
     else:
         L += ["**Nothing is signed in this checkout, and that is not an oversight.**", "",
               "Signing is a human action. This script does not perform it and no automated",

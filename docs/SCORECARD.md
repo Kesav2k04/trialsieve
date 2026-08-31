@@ -6,7 +6,7 @@ The rows below are scored on **the same 400 cells**: 30 screens, meaning ten pat
 
 ## The simple baseline
 
-**B2: one model call per cell.** The criterion text and a flattened patient record go to the model, which answers MEETS, FAILS or INDETERMINATE. It is the brief's first suggested baseline, one direct prompt with basic instructions, and it is the version of this task most people would build first. Two weaker arms are also carried through the report: B0 answers FAILS whenever it sees no evidence, and B1 answers only what a regular expression can settle.
+**B2: one model call per cell.** The criterion text and a flattened patient record go to the model, which answers MEETS, FAILS or INDETERMINATE. It is the brief's first suggested baseline, one direct prompt with basic instructions, and it is the version of this task most people would build first. Two weaker arms are also carried through the report: B0 answers FAILS on every cell without reading the chart, and B1 runs the compiled predicate on the criteria age and sex alone can settle and abstains on the rest.
 
 ## The table
 
@@ -37,7 +37,7 @@ An arm can win the reduction row by ruling out everybody. B0 does exactly that, 
 
 **The one that does not separate from chance.** Of the three `TS - B2` differences, `false_fails` has a 95% interval that includes zero. That is the false-exclusion comparison, which is the headline figure of this project, and on 400 cells it is a real reduction that this evaluation is not powered to distinguish from a lucky draw. The silent error rate and the coverage differences do exclude zero. Nothing here is reported as significant that is not.
 
-**And the floor moved.** `results/RESULTS.md` prints every difference against two label noise floors: the poststratified one that amendment A7 introduced after the scored run existed, and the unweighted sample rate it replaced. Exactly one row changes verdict between them, and it is the false-exclusion row, which A7 moved from borderline to above. The comparison that falls below either floor is TrialSieve against B1, the regular-expression arm, and `results/RESULTS.md` marks those rows **below, uninterpretable** rather than reporting them as a result.
+**And the floor moved.** `results/RESULTS.md` prints every difference against two label noise floors: the poststratified one that amendment A7 introduced after the scored run existed, and the unweighted sample rate it replaced. Exactly one row changes verdict between them, and it is the false-exclusion row, which A7 moved from borderline to above. The comparison that falls below either floor is TrialSieve against B1, the demographics-only floor, and `results/RESULTS.md` marks those rows **below, uninterpretable** rather than reporting them as a result.
 
 ## Where this differs from the suggested format
 

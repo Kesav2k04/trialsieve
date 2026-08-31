@@ -49,9 +49,6 @@ def _tracked_text_files() -> list[Path]:
         p = ROOT / name
         if not p.is_file():
             continue
-        if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".mp4", ".mp3", ".wav",
-                                ".gz", ".zip", ".ico", ".woff", ".woff2"}:
-            continue
         files.append(p)
     return files
 
@@ -64,11 +61,18 @@ def test_the_repository_has_tracked_files():
 
 @pytest.mark.parametrize("name,pattern", PATTERNS, ids=[n for n, _ in PATTERNS])
 def test_no_home_directory_in_any_tracked_file(name, pattern):
-    hits = []
+    from test_no_credentials import _readable_text
+
+    hits, unread = [], []
     for path in _tracked_text_files():
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, OSError):
+        # The same reader the credential scan uses, because the two scans claim
+        # the same coverage and used to disagree about it. A suffix skip list
+        # here dropped `.gz`, so `data/vendor/panel.jsonl.gz`, the largest
+        # tracked file, was never opened by a scan whose docstring said it read
+        # every tracked file. A home directory planted inside it passed.
+        text = _readable_text(path)
+        if text is None:
+            unread.append(path.relative_to(ROOT).as_posix())
             continue
         for i, line in enumerate(text.splitlines(), 1):
             m = pattern.search(line)
@@ -77,6 +81,12 @@ def test_no_home_directory_in_any_tracked_file(name, pattern):
     assert not hits, (
         f"{name} appears in {len(hits)} place(s), first few: {hits[:5]}. "
         f"Run the redaction rather than adding the file to ALLOWED.")
+    # Counted rather than swallowed. A file this cannot decode is a file this
+    # cannot vouch for, and the old `except: continue` made that indistinguishable
+    # from a clean read.
+    assert not unread, (
+        f"{len(unread)} tracked file(s) could not be read as text, so this scan "
+        f"says nothing about them: {unread[:5]}")
 
 
 def test_the_scan_can_fail():
@@ -91,6 +101,39 @@ def test_the_scan_can_fail():
     assert PATTERNS[0][1].search(windows), "the Windows pattern no longer matches"
     assert PATTERNS[1][1].search(posix), "the POSIX pattern no longer matches"
     assert not PATTERNS[0][1].search("C:" + ("\\" * 4) + "Users" + ("\\" * 4) + "...")
+
+
+def test_the_scan_reads_compressed_files(tmp_path):
+    """The control for the file list rather than for the patterns.
+
+    Every assertion above passes if the scan simply never opens a file. It did
+    not open `.gz`, and `data/vendor/panel.jsonl.gz` is the largest tracked file
+    in the repository, so the biggest thing this scan claimed to cover was the
+    one thing it never read. The credential scan had already fixed exactly this
+    for itself in the same repository; the fix was not carried across.
+    """
+    import gzip
+    import sys as _sys
+
+    _sys.path.insert(0, str(ROOT / "tests"))
+    from test_no_credentials import _readable_text
+
+    planted = tmp_path / "planted.jsonl.gz"
+    secret = "/" + "home" + "/" + "someone" + "/secret"
+    with gzip.open(planted, "wt", encoding="utf-8", newline=chr(10)) as fh:
+        fh.write('{"note": "' + secret + '"}' + chr(10))
+
+    text = _readable_text(planted)
+    assert text is not None, "the reader still cannot open a gzip file"
+    assert any(pat.search(text) for _n, pat in PATTERNS), (
+        "a home directory inside a compressed file is invisible to this scan")
+
+    # And the file list has to actually contain the compressed files, or the
+    # reader being able to open them changes nothing.
+    tracked = {p.suffix.lower() for p in _tracked_text_files()}
+    assert ".gz" in tracked, (
+        "no .gz file reaches the scan, so it says nothing about the largest "
+        "tracked file in the repository")
 
 
 def test_the_runner_does_not_echo_the_interpreters_absolute_path():

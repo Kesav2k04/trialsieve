@@ -57,7 +57,8 @@ protocol makes, and saying so is cheaper than the alternative.
 
 The brief asks for one challenging case and what it revealed, and that is answered
 instead by a case found in the corpus rather than authored against it: SNOMED
-44054006, the parent code three criteria actually need. It is written up in
+44054006, the code three criteria actually need, which this corpus displays under
+a name that does not state the concept. It is written up in
 [`SUBMISSION.md`](../SUBMISSION.md), under *The one challenging case, and what it
 revealed*, with the four distinct ways it was handled wrongly and the changelog
 entry for each. A found case cannot be accused of having been chosen to be

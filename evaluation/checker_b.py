@@ -14,8 +14,12 @@ label, or any system output. It runs on a different model family from the one th
 compiles predicates, so a shared failure of one model cannot manufacture agreement.
 
 What B does not do: adjudicate. Where A and B disagree, the disagreement is
-recorded and a human resolves it, with arm identity stripped and case order
-shuffled. B is a second opinion, not a tiebreaker.
+published as the label noise floor rather than resolved. An earlier version of
+this paragraph said a human resolved each one with arm identity stripped and case
+order shuffled. Nobody did, and amendment A4 in `docs/EVAL_PROTOCOL.md` withdrew
+it: adjudication needs a clinician, this project has none, and an adjudication
+performed by the author would be one more model-shaped opinion wearing a label it
+had not earned. B is a second opinion, not a tiebreaker.
 
 Blindness is a property of the prompt, not of a timeline. Every one of B's model
 calls is recorded in full, so `python scripts/verify.py blind` answers "did B see
