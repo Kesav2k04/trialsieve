@@ -39,6 +39,15 @@ def run(args: list[str]) -> tuple[int, str]:
     return p.returncode, ((p.stdout or "") + (p.stderr or "")).strip()
 
 
+#: Small counts read as words in prose and as digits in a table. These are the
+#: only ones this document can produce.
+_WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
+
+
+def _count(n: int) -> str:
+    return _WORDS.get(n, str(n))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="runs/tierA")
@@ -90,7 +99,31 @@ def main() -> int:
          "Exit code **" + str(rc_refuse) + "**. No document was written. The message names "
          "the command that clears the gate, and clearing it means reading one predicate at "
          "a time: `scripts/signoff.py` has no bulk approval and no `--approve-all`, because "
-         "a gate you can clear without reading reports approval nobody gave.", "",
+         "a gate you can clear without reading reports approval nobody gave.", ""]
+    # The refusal above counts the rejections inside the criterion set that one
+    # invocation was asked to build a worklist from, and section 3 counts the run.
+    # Both numbers are right and a reader who sees only the two of them has no way
+    # to know that, so the difference is stated here rather than left to be
+    # noticed. It is computed rather than typed: an operating point that selected
+    # a different subset would otherwise leave a sentence behind describing the
+    # old one.
+    rejected_all = sorted(sg.criterion_id for sg in signoffs.values()
+                          if sg.decision == "REJECTED")
+    named_here = [cid for cid in rejected_all if cid in out_refuse]
+    only_in_run = [cid for cid in rejected_all if cid not in out_refuse]
+    if only_in_run and named_here:
+        L += ["**" + _count(len(named_here)).capitalize() + " here, " + _count(len(rejected_all))
+              + " in section 3, and both are right.** The operating point selects a "
+              "subset of the compiled criteria before the gate sees them, so the "
+              "refusal names the rejections inside the set this invocation was asked "
+              "to build a worklist from: " + ", ".join("`" + c + "`" for c in named_here)
+              + ". The run carries " + _count(len(rejected_all)) + " in total, adding "
+              + ", ".join("`" + c + "`" for c in only_in_run) + ", and section 3 counts "
+              "the run rather than one command's view of it. The gate refuses either "
+              "way; what the operating point changes is how many rejected criteria it "
+              "has to name. Read them all with `python scripts/signoff.py --run "
+              + run_dir.as_posix() + " --list`.", ""]
+    L += [
          "## 2. Unsigned, overridden on purpose", "",
          "```", "$ python " + " ".join(allow_cmd) + "  ; echo $?",
          out_allow[:1200], str(rc_allow), "```", ""]

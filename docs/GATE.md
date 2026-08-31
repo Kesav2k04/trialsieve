@@ -21,15 +21,7 @@ REFUSED.
 
 Exit code **3**. No document was written. The message names the command that clears the gate, and clearing it means reading one predicate at a time: `scripts/signoff.py` has no bulk approval and no `--approve-all`, because a gate you can clear without reading reports approval nobody gave.
 
-**Two here, four in section 3, and both are right.** `--operating-point 0` selects a
-subset of the compiled criteria at `scripts/worklist.py:89`, before the gate runs at
-`:105`, so the refusal counts the rejections inside the set that invocation was
-asked to produce a worklist from: `NCT06989723-INC-02` and `NCT06989723-EXC-01`.
-The run carries four in total, adding `NCT06983054-INC-01` and
-`NCT06717698-INC-07`, and section 3 counts the run rather than one command's view
-of it. The gate refuses either way; what changes with the operating point is how
-many rejected criteria it has to name. Read them all with
-`python scripts/signoff.py --run runs/tierA --list`.
+**Two here, four in section 3, and both are right.** The operating point selects a subset of the compiled criteria before the gate sees them, so the refusal names the rejections inside the set this invocation was asked to build a worklist from: `NCT06989723-EXC-01`, `NCT06989723-INC-02`. The run carries four in total, adding `NCT06717698-INC-07`, `NCT06983054-INC-01`, and section 3 counts the run rather than one command's view of it. The gate refuses either way; what the operating point changes is how many rejected criteria it has to name. Read them all with `python scripts/signoff.py --run runs/tierA --list`.
 
 ## 2. Unsigned, overridden on purpose
 
