@@ -1,6 +1,62 @@
+<div align="center">
+
+<img src="docs/img/panel.png" alt="One trial protocol against one panel: 385 patients across 40 eligibility criteria, drawn as 15,400 rectangles, one per patient-criterion judgement. Almost every one of them is a no, and today a nurse reads charts until the enrolment window closes." width="820">
+
 # TrialSieve
 
-**The model reads the protocol once. It never reads a patient.**
+### Eligibility prescreening that knows what it does not know.
+
+**One protocol, 385 candidates, 40 criteria: 15,400 patient-criterion judgements, and
+almost all of them are no.** The obvious build asks a model each one. On the same 400
+scored cells that arm is **wrong on 43.75% of them with nothing on the page to say so**,
+and 145 of those errors say a patient qualifies when they do not. TrialSieve compiles
+each criterion into an executable predicate once and then screens with **zero model
+calls**: 1.00% wrong, **0 wrong MEETS**, $0.13 per protocol against $22.19 per pass. It
+abstains where the record is silent instead of guessing, and it produces no worklist at
+all until a named human has signed every predicate.
+
+<table>
+<tr>
+<td align="center" width="20%"><a href="runs/tierA/cells/"><b>15,400</b></a><br><sub>judgements in<br>one panel</sub></td>
+<td align="center" width="20%"><a href="docs/SCORECARD.md"><b>43.75% &rarr; 1.00%</b></a><br><sub>wrong, with nothing<br>on the page to say so</sub></td>
+<td align="center" width="20%"><a href="docs/SCORECARD.md"><b>145 &rarr; 0</b></a><br><sub>wrong MEETS, the verdict<br>that enrols the wrong person</sub></td>
+<td align="center" width="20%"><a href="docs/COST.md"><b>$22.19 &rarr; $0.13</b></a><br><sub>model spend per panel,<br>then $0.00 to rescreen</sub></td>
+<td align="center" width="20%"><a href="https://europepmc.org/articles/PMC4433376"><b>92%</b></a><br><sub>workload cut reported for<br>automated prescreening</sub></td>
+</tr>
+</table>
+
+[![reproduce](https://img.shields.io/badge/reproduce-one%20command%2C%20no%20key%2C%20no%20network-fca50a?style=flat-square)](REPRODUCE.md)
+[![tests](https://img.shields.io/badge/tests-398%20passing-fca50a?style=flat-square)](tests/)
+[![changelog](https://img.shields.io/badge/improvement%20changelog-77%20entries-fca50a?style=flat-square)](docs/IMPROVEMENT_CHANGELOG.md)
+[![trajectories](https://img.shields.io/badge/agent%20trajectories-1%2C077%20recorded%20calls-fca50a?style=flat-square)](runs/tierA/trajectories/index.md)
+<br>
+[![model calls](https://img.shields.io/badge/model%20calls%20at%20screening%20time-0-8a3ffc?style=flat-square)](docs/AGENT_DESIGN.md)
+[![replay](https://img.shields.io/badge/every%20call-replayed%20from%20a%20request%20digest-8a3ffc?style=flat-square)](docs/EVAL_PROTOCOL.md)
+[![gate](https://img.shields.io/badge/no%20worklist%20without-a%20named%20human%20signature-8a3ffc?style=flat-square)](docs/GATE.md)
+[![primary outcome](https://img.shields.io/badge/registered%20primary%20outcome-VOID-8a3ffc?style=flat-square)](docs/EVAL_PROTOCOL.md)
+<br>
+[![python](https://img.shields.io/badge/Python-3.10%2B-0f62fe?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
+[![dependencies](https://img.shields.io/badge/third--party%20dependencies-pytest%2C%20and%20only%20to%20test-0f62fe?style=flat-square)](requirements-lock.txt)
+[![data](https://img.shields.io/badge/data-Synthea%20%2B%20ClinicalTrials.gov%2C%20both%20public-0f62fe?style=flat-square)](data/vendor/NOTICE)
+[![licence](https://img.shields.io/badge/licence-see%20LICENCE-0f62fe?style=flat-square)](LICENSE)
+
+**[Reproduce it](REPRODUCE.md)** &nbsp;·&nbsp;
+**[The comparison](docs/SCORECARD.md)** &nbsp;·&nbsp;
+**[Improvement changelog](docs/IMPROVEMENT_CHANGELOG.md)** &nbsp;·&nbsp;
+**[Agent trajectories](runs/tierA/trajectories/index.md)** &nbsp;·&nbsp;
+**[Every deliverable, mapped](SUBMISSION.md)**
+
+*micro1 Frontier Engineering Challenge · August 2026 · theme: build at the frontier of agentic AI*
+
+</div>
+
+> A wrong exclusion is not a metric. It is a person who never gets offered the trial,
+> and nobody re-reads the people who were screened out. **So the interesting number is
+> not how many cells an arm answers. It is how many it answers wrongly while looking
+> exactly as confident as when it is right.** That number is 43.75% for one model call
+> per cell, and 1.00% here.
+
+---
 
 **Reviewing this? Here is each deliverable and the one file that answers it.**
 
@@ -11,7 +67,7 @@
 | Improvement changelog | [docs/IMPROVEMENT_CHANGELOG.md](docs/IMPROVEMENT_CHANGELOG.md), 77 entries. Its opening table is the whole arc. |
 | Baseline comparison | [docs/SCORECARD.md](docs/SCORECARD.md), one page, four columns. |
 | Reproduction guide | [REPRODUCE.md](REPRODUCE.md). One command from a clean clone, 152.3s captured, no key, no network. |
-| The video | submitted as a link on the entry form, 4:53 (293.8s of a 300s limit). It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
+| The video | submitted as a link on the entry form, 4:57 (297.4s of a 300s limit). It is not a file in this repository: it is one of the four deliverables rather than part of the solution, and nothing here needs it to run. |
 | Agent trajectories | [runs/tierA/trajectories/index.md](runs/tierA/trajectories/index.md), every model call. Five named exemplars first, then the rest with the failures at the top. The four other arms are indexed the same way beside it. |
 | Everything else, and the ground rules | [SUBMISSION.md](SUBMISSION.md), including what existed before this started. |
 
@@ -36,6 +92,11 @@ small because the baseline is the arm that costs money.
 | wrong MEETS, the verdict that enrols someone who should not be | 145 | **0** |
 | model spend per 385-patient panel | $22.19 | **$0.13**, then $0.00 to rescreen |
 | cells it answers at all | 68.00% | 21.75% |
+
+<div align="center">
+<img src="docs/img/comparison.png" alt="The same four hundred scored cells, three arms side by side. Regular expressions answer 7.5% and are wrong on 0.0%. TrialSieve answers 21.8% and is wrong on 1.0%, four silent errors. One model call per cell answers 68.0% and is wrong on 43.8%, a hundred and seventy-five silent errors." width="880">
+</div>
+
 | cells resolved correctly per screen, the registered co-primary | **3.23** | 2.77 |
 
 **Read the first row first.** The primary outcome was registered before the run
@@ -58,6 +119,73 @@ work the tool was bought to remove. TrialSieve says *the record does not say*
 instead, and the residue it leaves is grouped by question rather than by patient.
 
 ---
+
+## What it decides, in one picture
+
+Six agents read the protocol. None of them reads a patient. What screens the panel is
+the compiled predicate, and its third answer is the one this project is about.
+
+```mermaid
+flowchart LR
+  P["One protocol criterion<br/>a sentence of English"]
+  C["Compiled once<br/>into a predicate a computer can check"]
+  R["The patient's record<br/>codes, values, dates"]
+  Q{"Does the record<br/>answer it?"}
+  Y["MEETS or FAILS<br/>with the test and the date range that decided it"]
+  U["THE RECORD DOES NOT SAY<br/>named, not guessed around"]
+  H(["A named human signs the predicate.<br/>No signature, no worklist."])
+
+  P --> C --> Q
+  R --> Q
+  Q -- "yes, the value is on file" --> Y
+  Q -- "no, that test was never done" --> U
+  Y --> H
+  U --> H
+```
+
+A per-cell model has no third branch. Asked whether a kidney test is under thirty when
+the test was never done, it answers anyway, and the answer reads exactly like the ones
+that are right.
+
+<div align="center">
+<img src="docs/img/gate.png" alt="Captured stdout of the worklist command. It prints REFUSED, states that nine compiled criteria have no human sign-off, and exits 3. Beside it, forcing it with the allow-unsigned flag writes the document with NOT FOR USE stamped on it." width="880">
+</div>
+
+## Where everything is
+
+**What decides a patient**
+
+| | |
+| --- | --- |
+| [`src/trialsieve/`](src/trialsieve) | 20 files. Six agents, the compiler, and the evaluator that screens with no model in it |
+| [`src/trialsieve/agents/`](src/trialsieve/agents) | 6 files. Each agent's instructions, as versioned string constants, verbatim |
+| [`scripts/`](scripts) | 27 files. One runnable step each, plus the sign-off gate and the replay verifier |
+
+**What the numbers rest on**
+
+| | |
+| --- | --- |
+| [`runs/`](runs) | 2,398 files. Every scored cell, every compiled predicate, every recorded model call |
+| [`runs/tierA/trajectories/`](runs/tierA/trajectories) | 471 files. One per model call, readable from the instructions through to the result |
+| [`results/`](results) | 11 files. The published numbers, and the prompt digest that invalidates them |
+| [`evaluation/`](evaluation) | 11 files. The gold labels, the scoring, and the second labeller |
+
+**What you read**
+
+| | |
+| --- | --- |
+| [`docs/`](docs) | 18 files. The changelog, the scorecard, the registered protocol, the gate |
+| [`REPRODUCE.md`](REPRODUCE.md) | One command from a clean clone. No key, no network, no cost |
+| [`SUBMISSION.md`](SUBMISSION.md) | Every deliverable mapped to the file that answers it |
+
+**What stops it drifting**
+
+| | |
+| --- | --- |
+| [`tests/`](tests) | 57 files, 398 tests. Including the ones that fail this README when a figure moves |
+| [`data/`](data) | 14 files. Synthea and ClinicalTrials.gov, with the licence notice and pinned digests |
+
+Also tracked: [`.github/`](.github), [`tools/`](tools), and the eleven files at the root.
 
 ## Who this is for, and what it is
 

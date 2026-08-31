@@ -34,6 +34,11 @@ docs/IMPROVEMENT_CHANGELOG.md
 docs/SCORECARD.md
 docs/SEGMENTATION.md
 docs/WEAK_MODEL.md
+docs/img/biggest.png
+docs/img/comparison.png
+docs/img/gate.png
+docs/img/panel.png
+docs/img/worklist.png
 docs/protocol_registration.json
 docs/reproduce_transcript.txt
 docs/sample_worklist.csv
