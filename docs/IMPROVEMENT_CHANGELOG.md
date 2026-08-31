@@ -4047,7 +4047,20 @@ looks at, and the sentence now says which of the two is the rule.
 | effect of correcting a docstring | run declared invalid | **none** |
 | effect of changing one character of a prompt | run declared invalid | **run declared invalid** |
 
+**And the first version of the fix hid it from the archive.** The Provenance block
+has two renderings: one for a clone and one for an unpacked source archive, which
+carries the tree without an object database and so has no commit to name. That split
+was right while a commit was the only thing in the table. The digest is computed from
+the files in the tree and needs no git, so dropping the whole block in an archive
+dropped the one column that archive can check, and it is the column that decides
+validity. Unpacking the zip and running the suite there is what caught it: the new
+test failed in the archive and passed in the clone, because the digest reached
+`results.json` and not the document that states the rule. The archive now gets the
+digest column and a sentence saying the commit column is absent rather than empty.
+
 **Evidence.** `python -m pytest -q tests/test_prompt_provenance.py`, which rewrites
 the docstring and appends a comment in each of the four modules and requires the
 digest not to move, then edits the first prompt constant in each and requires it to
 move. Both halves, because a digest hard-coded to a constant passes the first one.
+Then `git archive --format=zip HEAD`, unpacked into an empty directory, where
+`python run.py reproduce` runs the same suite with no git at all.

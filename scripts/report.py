@@ -1531,27 +1531,32 @@ def main() -> int:
     results["prompt_files_last_commit"] = prompts
     results["prompt_text_sha256"] = digests
     md.append("\n## Provenance\n")
-    if not any(prompts.values()):
-        # An unpacked source archive has the prompt files and no object database,
-        # so there is no commit to name. Saying that is the only honest rendering:
-        # an empty table would read as "no prompt file has ever been touched".
-        md.append("This tree has no object database, so the commit that last touched "
-                  "each prompt-carrying file cannot be read here. A clone of the "
-                  "repository shows it, and `python run.py diff` says so rather than "
-                  "comparing an empty block against a full one. See "
-                  "`docs/DEV_SPLIT.md`.\n")
-    else:
-        md.append("What the model was sent, and where it lives. `prompt text` is a sha256 "
-                  "over every prompt constant in the module, parsed rather than grepped, so "
-                  "it moves when the prompt moves and not when a docstring does. If a digest "
-                  "changes after the run that produced these numbers, the run is invalid and "
-                  "is rerun. The commit is the file's last touch, which is what to go and "
-                  "read; it moves for prose too, so it is context rather than the rule. See "
+    md.append("What the model was sent. `prompt text` is a sha256 over every prompt "
+              "constant in the module, parsed rather than grepped, so it moves when the "
+              "prompt moves and not when a docstring does. If a digest changes after the "
+              "run that produced these numbers, the run is invalid and is rerun. It is "
+              "computed from the files in this tree, so it is here whether or not there "
+              "is a git history to read.\n")
+    # The digest is the rule and it needs no object database. An unpacked source
+    # archive used to get neither column, because the block was written when the
+    # only thing in it was a commit, and dropping the commit dropped the check the
+    # archive can actually run.
+    if any(prompts.values()):
+        md.append("The commit is the file's last touch, which is what to go and read; it "
+                  "moves for prose too, so it is context rather than the rule. See "
                   "`docs/DEV_SPLIT.md`.\n")
         md.append("| file | prompt text | file last touched by |")
         md.append("|---|---|---|")
         for k, v in prompts.items():
             md.append(f"| `{k}` | `{digests.get(k, '')[:16]}` | `{v[:16]}` {v[41:]} |")
+    else:
+        md.append("This tree has no object database, so the commit that last touched each "
+                  "file cannot be read here and that column is absent rather than empty. A "
+                  "clone shows it. See `docs/DEV_SPLIT.md`.\n")
+        md.append("| file | prompt text |")
+        md.append("|---|---|")
+        for k in prompts:
+            md.append(f"| `{k}` | `{digests.get(k, '')[:16]}` |")
 
     out = Path(a.out or (run / "report"))
     out.mkdir(parents=True, exist_ok=True)

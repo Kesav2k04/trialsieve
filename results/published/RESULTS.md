@@ -718,7 +718,9 @@ The panel-reduction figures above inherit the same denominator: a screen is rule
 
 ## Provenance
 
-What the model was sent, and where it lives. `prompt text` is a sha256 over every prompt constant in the module, parsed rather than grepped, so it moves when the prompt moves and not when a docstring does. If a digest changes after the run that produced these numbers, the run is invalid and is rerun. The commit is the file's last touch, which is what to go and read; it moves for prose too, so it is context rather than the rule. See `docs/DEV_SPLIT.md`.
+What the model was sent. `prompt text` is a sha256 over every prompt constant in the module, parsed rather than grepped, so it moves when the prompt moves and not when a docstring does. If a digest changes after the run that produced these numbers, the run is invalid and is rerun. It is computed from the files in this tree, so it is here whether or not there is a git history to read.
+
+The commit is the file's last touch, which is what to go and read; it moves for prose too, so it is context rather than the rule. See `docs/DEV_SPLIT.md`.
 
 | file           | prompt text        | file last touched by                         |
 |----------------|--------------------|----------------------------------------------|
