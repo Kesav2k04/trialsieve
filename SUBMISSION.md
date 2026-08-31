@@ -200,7 +200,7 @@ produced a number, and none of it is in this repository.
 | React 19.1.1 | MIT | the cards are components |
 | IBM Plex Sans and Mono | SIL Open Font Licence 1.1 | the two faces, loaded from the package rather than from a font host |
 | Chatterbox TTS 0.1.7 (Resemble AI) | MIT | speaks the narration in a clone of my own voice, offline, at a fixed seed |
-| ffmpeg | LGPL/GPL | measures the rendered mp4, so its duration is read rather than claimed |
+| ffmpeg | LGPL/GPL | time-stretches each spoken sentence toward an even pace with the pitch held, and measures the rendered mp4 so its duration is read rather than claimed |
 
 The voice is mine. The reference recording is not published, and neither is
 anything that could reconstruct it. The opening greeting is that recording
