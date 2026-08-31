@@ -4075,3 +4075,93 @@ digest not to move, then edits the first prompt constant in each and requires it
 move. Both halves, because a digest hard-coded to a constant passes the first one.
 Then `git archive --format=zip HEAD`, unpacked into an empty directory, where
 `python run.py reproduce` runs the same suite with no git at all.
+
+## 77. The pacing pass held its band and made the film more mechanical
+
+**Found by** listening to the finished film, and by a viewer saying the tone and
+the speed change the moment the recorded greeting hands over to the cloned voice.
+
+**What was wrong.** Entry 68 pulled every spoken sentence into a 154 to 178 words
+per minute band and the band held, so the tool reported success. The film still
+sounded hurried. The rate was then measured against a film of mine that nobody
+called hurried: 169.9 words per minute over speech alone there, 169.8 here. The
+speaking rate was never the defect. Three other things were, and the pacing pass
+had made two of them worse.
+
+**Every seam was the same length.** The pass rebuilt each gap between sentences to
+one constant and its own docstring called that the point: *every seam in the film
+is now the same length, which is most of what a listener means by an even read.*
+Measured, 46 of 64 gaps came out at 0.29 seconds, nine distinct lengths in the
+whole film. The unhurried film has 23 distinct gaps in 25 and its longest pause is
+0.66 seconds against 0.48 here. The raw render, before pacing, had fifteen. So the
+pass took a delivery with some natural variation in it and flattened it, which is
+the opposite of what it was written to do.
+
+**The band was applied at its edge.** A sentence outside the band was mapped to the
+nearest boundary rather than into the band, so every sentence that was too fast
+landed on exactly the ceiling: 39 of 56 rated sentences sat between 178.2 and
+179.7 words per minute. That is a plateau, and the lines sitting on it include
+every line carrying figures, which are the ones a listener most needs room for.
+
+**The handover stepped.** The opening greeting is the author's own recording and
+everything after it is cloned from that recording. The pass excluded the greeting
+from pacing by name, which is right, and then paced the sentence after it to the
+ceiling. The film opened at 124.1 words per minute, went to 159.6, and reached
+178.4 by the top of the second beat, with the loudness jumping 34 percent at the
+splice because each beat was peak normalised rather than levelled.
+
+**What changed.** `deliver.py` replaces the pacing pass. Each gap is chosen from
+what the two sentences either side of it are doing, a list continuing, a figure
+landing, a short line about to arrive, then moved by an offset derived from the
+sentence's own text so no two seams match, and filled with room tone lifted from
+the quietest window of the same beat rather than with digital silence. Each
+sentence gets its own target from how many of its tokens are quantities, so a line
+of figures is given room and a line of plain prose is allowed to move. A sentence
+already near its target is left alone, with a wider allowance below the target
+than above it, because a slow line reads as weight and a fast one is the
+complaint. The clone's first two sentences take part of the stretch, and the
+greeting is levelled to the clone it hands over to and faded in over eight
+milliseconds instead of being peak normalised against its own loudest sample.
+
+| | before | after | the unhurried film |
+|---|---|---|---|
+| distinct gap lengths | 9 | **32** | 23 |
+| standard deviation of gaps | 0.074s | **0.122s** | 0.122s |
+| longest pause | 0.48s | **0.57s** | 0.66s |
+| rated sentences on one rate | **39 of 56** | **1** | none |
+| rate at the handover | 124.1 to 159.6 | 124.0 to **133.8** | eased |
+| loudness step at the handover | **34%** | **3%** | matched |
+| the two beats densest in figures | 152.6 and 163.6 | **146.3 and 160.9** | |
+| film length | 293.8s | 297.2s | under 300 |
+
+**Five lines a stretch could not reach.** Time stretching has a budget: past
+roughly a quarter, the algorithm smears consonants and a listener stops hearing
+words and starts hearing processing. Five sentences came out of the renderer
+between 228 and 246 words per minute, including both lines that carry the panel
+counts, so bringing them to target would have traded a rushed line for a mushy
+one. The renderer is seeded, and one seed is one take, so a different seed is a
+different reading of the same words in the same voice from the same reference
+recording. `takes.py` renders eleven such lines across twelve seeds each, measures
+every take and keeps the one whose natural rate is closest to what the line
+should be. The worst line went from 246 to 190 words per minute before any
+stretch, and *Then I removed it.*, which is too short to stretch at all and ran at
+205.9, came back at 177.5. The chosen seeds are written to `out/narrate/seeds.json`
+so the film still renders the same way twice.
+
+**And the first version of the replacement rebuilt the plateau at a new number.**
+Every sentence carrying no figure resolved to exactly one target, and correcting
+each one to its target put 30 of them within two words per minute of each other.
+The same defect, moved. The target now carries an offset derived from the sentence
+itself, and that offset only ever subtracts, because an offset either side raises
+the fastest target above the ceiling the file says it has and the allowance above a
+target is then added to that. A symmetric offset left the hot take's middle line at
+190 words per minute, which is where the film asks a viewer to hold its argument.
+
+**Evidence.** `python scripts/deliver.py --plan` prints the rate spread, the count
+of sentences sitting on one rate, and the number of distinct gaps, and refuses to
+run at all unless every input wav still matches the digest the renderer recorded
+for it, because running the tool on its own output would stretch speech twice and
+would look identical from the outside. `python scripts/takes.py --plan` lists the
+lines a stretch cannot reach and what each one needs. Both tools and their
+measurements live with the film rather than in this repository, for the reason
+given at the top of this file.
