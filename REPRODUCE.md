@@ -23,9 +23,9 @@ no `make` and the reproduction should not depend on one.
 | Install | `pytest`, for the test gate. Nothing else. |
 | Runtime dependencies | none, and no exception. Every import in `src/`, `evaluation/`, `scripts/` and `tools/` is standard library, and `tests/test_dependencies.py` fails if that stops being true. `pytest` is the only third-party package this repository declares at all. The video was rendered by a separate Node project, which is not part of this submission and is not reachable from anything here. |
 | Network | not used by `reproduce`. Replay mode refuses to make a live call. |
-| Disk | **57 MB of tracked files, and a fresh clone measures 75 MB** including history, of which the pack is 13.7 MiB. Every figure in this row is decimal MB. `git ls-tree -r -l HEAD` prints bytes, so divide by a million to land on these numbers; dividing by 1024 squared instead reads 54 rather than 57, which looks like the row is wrong again and is not. The tracked bulk is `runs/` at 48 MB, the recorded cassettes and trajectories that make the replay possible, and then the vendored panel at 6.6 MB. Outside `runs/` and `data/`, nothing reaches one megabyte; inside `runs/` two
+| Disk | **58 MB of tracked files, and a fresh clone measures 88 MB** including history, of which the pack is 13.7 MiB. Every figure in this row is decimal MB. `git ls-tree -r -l HEAD` prints bytes, so divide by a million to land on these numbers; dividing by 1024 squared instead reads 56 rather than 58, which looks like the row is wrong again and is not. The tracked bulk is `runs/` at 48 MB, the recorded cassettes and trajectories that make the replay possible, then the vendored panel at 6.6 MB, then `docs/img/` at 1.11 MB, the five frames the top-level README shows. Outside those three, nothing reaches one megabyte; inside `runs/` two
 trajectory logs do, at 1.11 MB and 1.08 MB, and they are part of the 48 MB
-already named. The gap between 57 and 75 is history, and it is small because the one large binary this project produced, the video, is submitted as a link rather than carried here. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong six times, first at 12 MB naming the panel as the bulk, then at 65 MB, 61 MB, 185 MB, 231 MB and 247 MB as a 19 MB render was rebuilt and recommitted, so it is worth measuring rather than reading. |
+already named. The gap between 58 and 88 is history, and it is small because the one large binary this project produced, the video, is submitted as a link rather than carried here. Measure it yourself with `git ls-tree -r -l HEAD` and `git count-objects -vH`. This row has been wrong six times, first at 12 MB naming the panel as the bulk, then at 65 MB, 61 MB, 185 MB, 231 MB and 247 MB as a 19 MB render was rebuilt and recommitted, so it is worth measuring rather than reading. |
 | API key | not needed to reproduce. Needed only to record new model calls. |
 
 The patient panel and the trial records are committed, so there is no 95 MB
@@ -281,7 +281,7 @@ is the last line of
 [`docs/reproduce_transcript.txt`](docs/reproduce_transcript.txt), which is
 captured stdout from a clean tree: **152.3 seconds** on a Windows laptop with a
 14-core CPU. Repeated runs landed between 143 and 188 seconds, and the spread is
-the honest answer to "how long does it take": a cold clone pays to read 57 MB off
+the honest answer to "how long does it take": a cold clone pays to read 58 MB off
 disk, and a machine that is busy pays twice. The 188 is a reading from an
 unpacked archive on the same OS build and the same Python, taken while this
 machine was doing something else, so treat the top of that range rather than the

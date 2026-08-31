@@ -360,15 +360,41 @@ which is which.
 
 TrialSieve splits the problem at the point where the work is reusable:
 
+The split is the argument, so here it is with the model calls on one side of it
+and the patients on the other.
+
+```mermaid
+flowchart TB
+  subgraph MODEL["Reads the protocol. Once per criterion, 1,077 recorded calls."]
+    direction LR
+    PT["protocol text<br/>65 segmented criteria"]
+    SEG["segmenter<br/>one rule per criterion"]
+    GRD["grounder<br/>what each term is called<br/>in this site's own vocabulary"]
+    CMP["compiler<br/>rule to typed predicate"]
+    CRT["critic<br/>builds a patient the rule should<br/>get wrong, then runs the attack"]
+    PT --> SEG --> GRD --> CMP --> CRT
+    CRT -. "the attack really failed" .-> CMP
+  end
+
+  subgraph ENGINE["Reads the patients. Zero model calls, under five seconds."]
+    direction LR
+    PAT["385 patient records"]
+    ENG["engine<br/>runs the predicate"]
+    VER["MEETS, FAILS, or<br/>THE RECORD DOES NOT SAY"]
+    PAT --> ENG --> VER
+  end
+
+  CRT --> IR["typed predicate IR<br/>19 of 65 compiled"]
+  IR --> SIGN{"a named human reads<br/>each predicate in English"}
+  SIGN -- "4 rejected" --> STOP(["refuses, exit 3<br/>no worklist is written"])
+  SIGN -- "15 signed" --> ENG
+  VER --> WL["worklist<br/>187 of 385 ruled out, each with the<br/>test and the date range that did it"]
 ```
-protocol text ──▶ [segmenter] ──▶ [grounder] ──▶ [compiler] ──▶ [critic]
-                                                                   │
-                                                     typed predicate IR
-                                                                   │
-                                                  [human sign-off, enforced]
-                                                                   │
-   385 patients ────────────────────────────────▶ [engine, no model] ──▶ worklist
-```
+
+Everything above the sign-off happens once and is reviewable in an afternoon.
+Everything below it happens 15,400 times and involves no model at all. The arrow
+that matters is the one that is missing: no patient record ever reaches the top
+box.
 
 **The scored pipeline starts at the compiler, not at the segmenter.** The
 segmenter runs and its output is measured in `docs/SEGMENTATION.md`, but the
